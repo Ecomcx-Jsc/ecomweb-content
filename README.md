@@ -74,6 +74,27 @@ Mọi khối có thể mang `attrs.blockStyle` (tên biến thể → class `ecx
 
 `theme.json › styles` (`colors`, `fontSizes`, `spacing`, `fonts`) + bản sửa của quản trị viên → `mergePresets(theme, user)` → `presetCss()` sinh `:root{--ecx-color-*;--ecx-font-size-*;--ecx-spacing-*;--ecx-font-family-*}`. Giá trị được kiểm: màu hex/rgb/hsl, độ dài hoặc `clamp()`, danh sách phông không có `; { }`.
 
+## Bố cục, hiệu ứng, Global Styles (1.15)
+
+Thêm vào `attrs.style`:
+
+```json
+{
+  "layout": { "type": "flex", "direction": { "base": "row", "mobile": "column" }, "justify": "between", "align": "center", "wrap": true },
+  "layout": { "type": "grid", "columns": { "base": 3, "tablet": 2, "mobile": 1 }, "minColumnWidth": "14rem" },
+  "gradient": "linear-gradient(135deg, #1a597b 0%, #f26251 100%)",
+  "shadow": "md", "aspectRatio": "16/9", "position": { "type": "sticky", "top": "md" },
+  "hover": { "color": { "text": "#fff", "background": "primary" }, "border": { "color": "accent" }, "shadow": "lg", "lift": true }
+}
+```
+
+- `layout`: `flex` (hàng ngang / xếp dọc — `direction`, `justify` start|center|end|between, `align` start|center|end|stretch, `wrap`) hoặc `grid` (`columns` 1–12 theo khổ, không có thì tự chia cột theo `minColumnWidth`). Không đặt `gap` thì dùng `--ecx-block-gap` (mặc định 1rem).
+- `gradient`: preset (`brand` → `var(--ecx-gradient-brand)`) hoặc `linear-gradient` / `radial-gradient` với 2–6 điểm màu hex/rgb/hsl (kèm %) — mọi phần được kiểm, không chèn được CSS.
+- `shadow`: preset (`sm` `md` `lg` `xl` có sẵn giá trị dự phòng, theme ghi đè) hoặc `none`. `aspectRatio`: `1/1` `4/3` `3/2` `16/9` `21/9` `3/4` `2/3` `9/16`.
+- `hover` → `:hover` kèm chuyển động. `ruleCss(selector, style)` sinh CSS cho bộ chọn bất kỳ (website, trình soạn, Global Styles).
+
+Preset có thêm `gradients`, `shadows` (tối đa 3 lớp bóng đã kiểm) và **Global Styles**: `blocks` (kiểu mặc định theo loại khối — `BLOCK_SELECTORS`) và `elements` (`link`, `button`, `heading`, `h1`–`h6`, `caption` — `ELEMENT_SELECTORS`). `presetCss` sinh luật trong `:where(.ecx-content)` (độ ưu tiên thấp: kiểu riêng của từng khối luôn thắng). Máy chủ chạy cùng quy tắc (`StyleFormat.cs`, fixture `style-layout-effects`).
+
 ## Nhúng theo đường dẫn — `embedInfo`
 
 Khối `embed` chỉ lưu `url` (+ `caption`). `embedInfo(url)` nhận ra nhà cung cấp trong danh sách (YouTube, Vimeo, Loom, Spotify, SoundCloud, TikTok, X, Instagram, Facebook video, CodePen, Figma, Google Maps dạng embed) và **tự dựng** địa chỉ khung từ mã trong đường dẫn — không dùng HTML nhúng do người dùng dán, nên bài viết không chèn được khung tới trang tuỳ ý. Không nhận ra → `null`, website hiện liên kết thường. Trình soạn (xem trước) và website dùng chung hàm này.

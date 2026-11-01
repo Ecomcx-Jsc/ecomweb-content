@@ -1,0 +1,47 @@
+{
+  "name": "style-layout-effects",
+  "note": "Kiểu dáng 1.15: bố cục flex/grid (theo khổ), nền chuyển màu đã kiểm, bóng, tỉ lệ, ghim, hover — giá trị lạ và CSS chèn bị bỏ; dạng gọn thành theo khổ",
+  "input": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "group", "attrs": { "style": {
+        "layout": { "type": "flex", "direction": { "base": "row", "mobile": "column" }, "justify": "between", "align": "middle", "wrap": "yes", "columns": 3 },
+        "gradient": "linear-gradient(135deg,#1a597b 0%,  rgb(242, 98, 81) 100%)",
+        "shadow": "lg",
+        "hover": { "color": { "background": "primary", "text": "red;}" }, "lift": true, "shadow": "0 0 1px red" }
+      } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Hàng ngang" }] }
+      ] },
+      { "type": "group", "attrs": { "style": {
+        "layout": { "type": "grid", "columns": { "base": "3", "tablet": 2, "mobile": 0 }, "minColumnWidth": "14rem", "direction": "row" },
+        "gradient": "url(javascript:alert(1))",
+        "aspectRatio": "16/9",
+        "position": { "type": "sticky", "top": "1e9px" }
+      } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Lưới" }] }
+      ] },
+      { "type": "image", "attrs": { "src": "https://a.vn/a.png", "style": { "aspectRatio": "7/3", "shadow": "none", "layout": "grid" } } }
+    ] } }]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "group", "attrs": { "style": {
+        "layout": { "type": "flex", "direction": { "base": "row", "mobile": "column" }, "justify": { "base": "between" } },
+        "gradient": "linear-gradient(135deg, #1a597b 0%, rgb(242, 98, 81) 100%)",
+        "shadow": "lg",
+        "hover": { "color": { "background": "primary" }, "lift": true }
+      } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Hàng ngang" }] }
+      ] },
+      { "type": "group", "attrs": { "style": {
+        "layout": { "type": "grid", "columns": { "base": 3, "tablet": 2 }, "minColumnWidth": "14rem" },
+        "aspectRatio": "16/9",
+        "position": { "type": "sticky" }
+      } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "Lưới" }] }
+      ] },
+      { "type": "image", "attrs": { "src": "https://a.vn/a.png", "style": { "shadow": "none" } } }
+    ] } }]
+  }
+}

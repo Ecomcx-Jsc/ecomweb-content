@@ -18,6 +18,104 @@ const FONT_STYLES = ["normal", "italic"];
 const DECORATIONS = ["none", "underline", "line-through"];
 const TRANSFORMS = ["none", "uppercase", "lowercase", "capitalize"];
 const preset = (v) => (typeof v === "string" && PRESET.test(v) ? v : undefined);
+const DIRECTIONS = ["row", "column"];
+const JUSTIFY = ["start", "center", "end", "between"];
+const ALIGN_ITEMS = ["start", "center", "end", "stretch"];
+const RATIOS = ["1/1", "4/3", "3/2", "16/9", "21/9", "3/4", "2/3", "9/16"];
+const columns = (v) => {
+    const n = typeof v === "number" ? v : typeof v === "string" && /^\d{1,2}$/.test(v) ? Number(v) : NaN;
+    return Number.isInteger(n) && n >= 1 && n <= 12 ? n : undefined;
+};
+/** Tách tham số CSS theo dấu phẩy ngoài ngoặc: "90deg, rgb(1,2,3) 0%, #fff" → 3 phần. */
+function splitArgs(s) {
+    const out = [];
+    let depth = 0, cur = "";
+    for (const ch of s) {
+        if (ch === "(")
+            depth++;
+        if (ch === ")")
+            depth--;
+        if (ch === "," && depth === 0) {
+            out.push(cur.trim());
+            cur = "";
+        }
+        else
+            cur += ch;
+        if (depth < 0)
+            return [];
+    }
+    out.push(cur.trim());
+    return out;
+}
+const STOP = /^(#[0-9a-f]{3,8}|(rgb|hsl)a?\([\d\s.,%/]{1,40}\))(\s+\d{1,3}%)?$/i;
+const LINEAR_DIR = /^(\d{1,3}deg|to (top|bottom|left|right)( (top|bottom|left|right))?)$/;
+const RADIAL_SHAPE = /^(circle|ellipse)( at center)?$/;
+/** Gradient: preset hoặc linear/radial-gradient(hướng?, 2–6 điểm màu hex/rgb/hsl kèm %) — dạng chuẩn hoá khoảng trắng. */
+export function normalizeGradient(v) {
+    if (typeof v !== "string")
+        return undefined;
+    const t = v.trim();
+    if (PRESET.test(t))
+        return t;
+    const m = /^(linear|radial)-gradient\((.{1,400})\)$/i.exec(t);
+    if (!m)
+        return undefined;
+    const kind = m[1].toLowerCase();
+    const args = splitArgs(m[2]).map((a) => a.replace(/\s+/g, " "));
+    if (!args.length || args.some((a) => !a))
+        return undefined;
+    const head = kind === "linear" ? LINEAR_DIR.test(args[0]) : RADIAL_SHAPE.test(args[0]);
+    const stops = head ? args.slice(1) : args;
+    if (stops.length < 2 || stops.length > 6 || !stops.every((x) => STOP.test(x)))
+        return undefined;
+    return `${kind}-gradient(${args.join(", ")})`;
+}
+/** Bóng: preset hoặc none (giá trị tuỳ ý chỉ khai báo được ở preset của theme). */
+const shadow = (v) => (v === "none" ? "none" : preset(v));
+function layout(v) {
+    if (!isObj(v) || (v.type !== "flex" && v.type !== "grid"))
+        return undefined;
+    const out = { type: v.type };
+    if (v.type === "flex") {
+        const d = responsive(v.direction, oneOf(DIRECTIONS));
+        if (d)
+            out.direction = d;
+    }
+    const j = responsive(v.justify, oneOf(JUSTIFY));
+    if (j)
+        out.justify = j;
+    const a = responsive(v.align, oneOf(ALIGN_ITEMS));
+    if (a)
+        out.align = a;
+    if (v.type === "flex" && typeof v.wrap === "boolean")
+        out.wrap = v.wrap;
+    if (v.type === "grid") {
+        const c = responsive(v.columns, columns);
+        if (c)
+            out.columns = c;
+        const w = size(v.minColumnWidth);
+        if (w)
+            out.minColumnWidth = w;
+    }
+    return out;
+}
+function hover(v) {
+    if (!isObj(v))
+        return undefined;
+    const out = {};
+    const c = group(v.color, { text: color, background: color });
+    if (c)
+        out.color = c;
+    const b = group(v.border, { color });
+    if (b)
+        out.border = b;
+    const sh = shadow(v.shadow);
+    if (sh)
+        out.shadow = sh;
+    if (v.lift === true)
+        out.lift = true;
+    return Object.keys(out).length ? out : undefined;
+}
 const isObj = (v) => !!v && typeof v === "object" && !Array.isArray(v);
 const size = (v) => (typeof v === "string" && (LENGTH.test(v) || PRESET.test(v)) ? v : undefined);
 const color = (v) => (typeof v === "string" && (COLOR.test(v.trim()) || PRESET.test(v)) ? v.trim() : undefined);
@@ -91,6 +189,15 @@ export function normalizeStyle(v) {
         if (h.length)
             out.hide = [...h];
     }
+    set("layout", layout(v.layout));
+    set("gradient", normalizeGradient(v.gradient));
+    set("shadow", shadow(v.shadow));
+    set("aspectRatio", oneOf(RATIOS)(v.aspectRatio));
+    if (isObj(v.position) && v.position.type === "sticky") {
+        const top = size(v.position.top);
+        set("position", top ? { type: "sticky", top } : { type: "sticky" });
+    }
+    set("hover", hover(v.hover));
     return Object.keys(out).length ? out : undefined;
 }
 // ---------------------------------------------------------------------------
@@ -158,6 +265,69 @@ function declarations(style) {
         out.base.push(`border:${style.border.width ? spacing(style.border.width) : "1px"} ${style.border.style ?? "solid"} ${style.border.color ? colorValue(style.border.color) : "currentColor"}`);
     if (style.radius)
         out.base.push(`border-radius:${spacing(style.radius)}`);
+    // 1.15: bố cục, nền chuyển màu, bóng, tỉ lệ, ghim
+    const l = style.layout;
+    if (l?.type === "flex") {
+        out.base.push("display:flex", `flex-wrap:${l.wrap === false ? "nowrap" : "wrap"}`);
+        if (!l.direction?.base)
+            out.base.push("flex-direction:row");
+        if (style.gap === undefined)
+            out.base.push("gap:var(--ecx-block-gap, 1rem)");
+    }
+    else if (l?.type === "grid") {
+        out.base.push("display:grid");
+        if (!l.columns?.base)
+            out.base.push(`grid-template-columns:repeat(auto-fill,minmax(min(${l.minColumnWidth ? spacing(l.minColumnWidth) : "12rem"},100%),1fr))`);
+        if (style.gap === undefined)
+            out.base.push("gap:var(--ecx-block-gap, 1rem)");
+    }
+    for (const d of DEVICES) {
+        const dir = l?.direction?.[d];
+        if (dir)
+            out[d].push(`flex-direction:${dir}`);
+        const j = l?.justify?.[d];
+        if (j)
+            out[d].push(`justify-content:${JUSTIFY_CSS[j]}`);
+        const a = l?.align?.[d];
+        if (a)
+            out[d].push(`align-items:${ALIGN_CSS[a]}`);
+        const c = l?.columns?.[d];
+        if (c)
+            out[d].push(`grid-template-columns:repeat(${c},minmax(0,1fr))`);
+    }
+    if (style.gradient)
+        out.base.push(`background:${gradientValue(style.gradient)}`);
+    if (style.shadow)
+        out.base.push(`box-shadow:${shadowValue(style.shadow)}`);
+    if (style.aspectRatio)
+        out.base.push(`aspect-ratio:${style.aspectRatio}`, "object-fit:cover");
+    if (style.position)
+        out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, "z-index:10");
+    if (style.hover)
+        out.base.push("transition:color .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease");
+    return out;
+}
+const JUSTIFY_CSS = { start: "flex-start", center: "center", end: "flex-end", between: "space-between" };
+const ALIGN_CSS = { start: "flex-start", center: "center", end: "flex-end", stretch: "stretch" };
+/** Bóng có sẵn (theme ghi đè bằng preset cùng tên). */
+const SHADOWS = {
+    sm: "0 1px 2px rgb(0 0 0 / .08)", md: "0 4px 12px rgb(0 0 0 / .1)", lg: "0 12px 32px rgb(0 0 0 / .14)", xl: "0 24px 64px rgb(0 0 0 / .18)",
+};
+const shadowValue = (v) => (v === "none" ? "none" : `var(--ecx-shadow-${v}${SHADOWS[v] ? `, ${SHADOWS[v]}` : ""})`);
+const gradientValue = (v) => (PRESET.test(v) ? `var(--ecx-gradient-${v})` : v);
+/** Khai báo khi rê chuột. */
+function hoverDeclarations(h) {
+    const out = [];
+    if (h.color?.text)
+        out.push(`color:${colorValue(h.color.text)}`);
+    if (h.color?.background)
+        out.push(`background:${colorValue(h.color.background)}`);
+    if (h.border?.color)
+        out.push(`border-color:${colorValue(h.border.color)}`);
+    if (h.shadow)
+        out.push(`box-shadow:${shadowValue(h.shadow)}`);
+    if (h.lift)
+        out.push("transform:translateY(-2px)");
     return out;
 }
 /** Độ dài / preset khoảng cách hợp lệ → giá trị CSS (preset thành biến); không hợp lệ → undefined. Dùng cho thuộc tính khối như chiều cao khoảng trống. */
@@ -180,9 +350,17 @@ export function styleClass(style) {
     }
     return `ecx-s-${h.toString(36)}`;
 }
-/** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ. Rỗng → "". */
+/** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ + :hover. Rỗng → "". */
 export function styleCss(style, cls = styleClass(style)) {
-    const sel = `.${cls}.${cls}`;
+    return ruleCss(`.${cls}.${cls}`, style);
+}
+/**
+ * CSS của một kiểu dáng cho bộ chọn bất kỳ (danh sách cách nhau dấu phẩy) — dùng cho kiểu của từng khối và Global Styles
+ * (kiểu mặc định theo loại khối / phần tử). Bộ chọn do mã gọi đưa vào, không lấy từ dữ liệu người dùng.
+ */
+export function ruleCss(selector, style) {
+    const sel = selector;
+    const each = (suffix) => sel.split(",").map((x) => `${x.trim()}${suffix}`).join(",");
     const d = declarations(style);
     let css = d.base.length ? `${sel}{${d.base.join(";")}}` : "";
     if (d.tablet.length)
@@ -192,6 +370,11 @@ export function styleCss(style, cls = styleClass(style)) {
     for (const h of style.hide ?? []) {
         const q = h === "desktop" ? `(min-width:${BREAKPOINTS.tablet + 1}px)` : h === "tablet" ? `(min-width:${BREAKPOINTS.mobile + 1}px) and (max-width:${BREAKPOINTS.tablet}px)` : `(max-width:${BREAKPOINTS.mobile}px)`;
         css += `@media ${q}{${sel}{display:none!important}}`;
+    }
+    if (style.hover) {
+        const hv = hoverDeclarations(style.hover);
+        if (hv.length)
+            css += `${each(":hover")}{${hv.join(";")}}`;
     }
     return css;
 }
@@ -234,11 +417,46 @@ export const CORE_BLOCK_STYLES = {
     button: ["pill"],
     group: ["card"],
 };
+/** Bộ chọn của khối lõi trên website (markup của renderer) — Global Styles theo loại khối. */
+export const BLOCK_SELECTORS = {
+    paragraph: "p", heading: "h1,h2,h3,h4,h5,h6", bulletList: "ul", orderedList: "ol", blockquote: "blockquote", codeBlock: "pre",
+    preformatted: ".ecx-pre", horizontalRule: "hr", image: ".ecx-image", gallery: ".ecx-gallery", table: ".ecx-table table", group: ".ecx-group",
+    columns: ".ecx-columns", column: ".ecx-column", buttons: ".ecx-buttons-group", button: ".ecx-button", spacer: ".ecx-spacer", callout: ".ecx-callout",
+    cover: ".ecx-cover", mediaText: ".ecx-media-text", pullquote: ".ecx-pullquote", details: ".ecx-details", socialLinks: ".ecx-social",
+    siteTitle: ".ecx-site-title", siteTagline: ".ecx-site-tagline", navigation: ".ecx-navigation", postTitle: ".ecx-post-title", postExcerpt: ".ecx-post-excerpt",
+    postDate: ".ecx-post-date", featuredImage: ".ecx-featured-image", query: ".ecx-query",
+};
+/** Bộ chọn của phần tử — Global Styles theo phần tử. */
+export const ELEMENT_SELECTORS = {
+    link: "a", button: ".ecx-button", heading: "h1,h2,h3,h4,h5,h6", h1: "h1", h2: "h2", h3: "h3", h4: "h4", h5: "h5", h6: "h6", caption: "figcaption",
+};
 const FLUID = /^clamp\(\s*-?[\d.]+(px|rem|em|vw|vh|%)?\s*,\s*[\d.\s+\-*()a-z%]{1,60},\s*-?[\d.]+(px|rem|em|vw|vh|%)?\s*\)$/;
 const FONT = /^[\w\s"',.\-]{1,200}$/;
 const presetSize = (v) => (typeof v === "string" && (LENGTH.test(v.trim()) || FLUID.test(v.trim())) ? v.trim() : undefined);
 const presetColor = (v) => (typeof v === "string" && COLOR.test(v.trim()) ? v.trim() : undefined);
 const presetFont = (v) => (typeof v === "string" && FONT.test(v.trim()) ? v.trim() : undefined);
+const presetGradient = (v) => { const g = normalizeGradient(v); return g && !PRESET.test(g) ? g : undefined; };
+const SHADOW_LAYER = /^(inset )?(-?\d{1,3}(\.\d{1,2})?(px|rem|em)? ){2,3}(-?\d{1,3}(\.\d{1,2})?(px|rem|em)? )?(#[0-9a-f]{3,8}|(rgb|hsl)a?\([\d\s.,%/]{1,40}\))$/i;
+const presetShadow = (v) => {
+    if (typeof v !== "string")
+        return undefined;
+    const layers = splitArgs(v.trim()).map((x) => x.replace(/\s+/g, " "));
+    return layers.length >= 1 && layers.length <= 3 && layers.every((x) => SHADOW_LAYER.test(x)) ? layers.join(", ") : undefined;
+};
+/** Kiểu dáng theo tên (khối / phần tử): tên trong danh sách, kiểu chuẩn hoá như attrs.style. */
+function styleMap(v, names) {
+    if (!isObj(v))
+        return undefined;
+    const out = {};
+    for (const [k, x] of Object.entries(v)) {
+        if (!(k in names))
+            continue;
+        const st = normalizeStyle(x);
+        if (st)
+            out[k] = st;
+    }
+    return Object.keys(out).length ? out : undefined;
+}
 /** Chuẩn hoá preset: tên preset hợp lệ, giá trị đã kiểm (màu hex/rgb/hsl, độ dài hoặc clamp(), danh sách phông không có ; { }). */
 export function normalizePresets(v) {
     const out = {};
@@ -262,6 +480,14 @@ export function normalizePresets(v) {
     pick("fontSizes", presetSize);
     pick("spacing", presetSize);
     pick("fonts", presetFont);
+    pick("gradients", presetGradient);
+    pick("shadows", presetShadow);
+    const blocks = styleMap(v.blocks, BLOCK_SELECTORS);
+    if (blocks)
+        out.blocks = blocks;
+    const elements = styleMap(v.elements, ELEMENT_SELECTORS);
+    if (elements)
+        out.elements = elements;
     return out;
 }
 /** Gộp preset theo thứ tự (sau đè trước): theme → bản sửa của quản trị viên. */
@@ -280,6 +506,15 @@ export function presetCss(presets, selector = ":root") {
         ...Object.entries(p.fontSizes ?? {}).map(([k, v]) => `--ecx-font-size-${k}:${v}`),
         ...Object.entries(p.spacing ?? {}).map(([k, v]) => `--ecx-spacing-${k}:${v}`),
         ...Object.entries(p.fonts ?? {}).map(([k, v]) => `--ecx-font-family-${k}:${v}`),
+        ...Object.entries(p.gradients ?? {}).map(([k, v]) => `--ecx-gradient-${k}:${v}`),
+        ...Object.entries(p.shadows ?? {}).map(([k, v]) => `--ecx-shadow-${k}:${v}`),
     ];
-    return decl.length ? `${selector}{${decl.join(";")}}` : "";
+    let css = decl.length ? `${selector}{${decl.join(";")}}` : "";
+    // Global Styles: :where() giữ độ ưu tiên thấp → kiểu riêng của từng khối (.ecx-s-…) luôn thắng
+    const scoped = (sel) => sel.split(",").map((x) => `:where(.ecx-content) ${x.trim()}`).join(",");
+    for (const [name, st] of Object.entries(p.elements ?? {}))
+        css += ruleCss(scoped(ELEMENT_SELECTORS[name]), st);
+    for (const [name, st] of Object.entries(p.blocks ?? {}))
+        css += ruleCss(scoped(BLOCK_SELECTORS[name]), st);
+    return css;
 }
