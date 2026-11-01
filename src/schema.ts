@@ -110,6 +110,11 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   postAuthor: { attrs: { avatar: b({ default: false }) } },
   postTerms: { attrs: { taxonomy: s({ default: "category" }), separator: s({ default: ", " }) } },
   comments: {},
+  // 1.15: khối theme cho SEO / điều hướng — H1 của trang lưu trữ, mô tả chuyên mục, breadcrumb, bài trước / sau
+  queryTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), prefix: b({ default: false }), textAlign: align } },
+  termDescription: { attrs: { textAlign: align } },
+  breadcrumbs: { attrs: { separator: s({ default: "›" }), showHome: b({ default: true }), showCurrent: b({ default: true }) } },
+  postNavigation: { attrs: { showTitle: b({ default: true }) } },
   query: {
     attrs: {
       inherit: b({ default: true }), postType: s({ default: "post" }), perPage: i({ min: 1, max: 50, default: 10 }),
@@ -128,6 +133,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
 export const DYNAMIC_NODES = [
   "siteTitle", "siteLogo", "siteTagline", "navigation", "search", "languageSwitcher", "copyright",
   "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments",
+  "queryTitle", "termDescription", "breadcrumbs", "postNavigation",
   "query", "postTemplate", "pagination", "queryEmpty", "templatePart", "syncedPattern",
 ] as const;
 

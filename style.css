@@ -130,6 +130,14 @@
   :where(.ecx-site-title) { margin: 0; font-weight: 700; }
   :where(.ecx-site-title) :where(a) { color: inherit; text-decoration: none; }
   :where(.ecx-site-tagline, .ecx-copyright, .ecx-post-date, .ecx-post-terms, .ecx-post-author) { color: var(--_muted, inherit); }
+  :where(.ecx-breadcrumbs) :where(ol) { display: flex; flex-wrap: wrap; gap: .35em; margin: 0 0 1em; padding: 0; list-style: none; font-size: .875em; color: var(--_muted, inherit); }
+  :where(.ecx-breadcrumbs) :where(a) { color: inherit; }
+  :where(.ecx-breadcrumbs-sep) { margin-right: .35em; opacity: .6; }
+  :where(.ecx-term-description) { color: var(--_muted, inherit); margin: 0 0 1.5em; }
+  :where(.ecx-post-navigation) { display: flex; justify-content: space-between; gap: 1em; margin: 2em 0; padding-top: 1em; border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
+  :where(.ecx-post-navigation) :where(a) { display: flex; flex-direction: column; gap: .2em; max-width: 48%; color: inherit; text-decoration: none; }
+  :where(.ecx-post-navigation-next) { text-align: right; margin-left: auto; }
+  :where(.ecx-post-navigation) :where(span) { font-size: .8em; text-transform: uppercase; letter-spacing: .04em; opacity: .65; }
   :where(.ecx-navigation-menu) :where(ul) { display: flex; flex-wrap: wrap; gap: .25em 1.25em; margin: 0; padding: 0; list-style: none; }
   :where(.ecx-navigation-menu) :where(ul ul) { display: none; }
   :where(.ecx-navigation-menu) :where(a) { color: inherit; text-decoration: none; }
