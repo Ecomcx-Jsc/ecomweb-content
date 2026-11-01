@@ -2,6 +2,7 @@ import { blockNodeSpec, migrateBlockAttrs, type BlockDefinition } from "./block.
 import { migrateContent } from "./migrate.js";
 import { CORE_MARKS, CORE_NODES, normalizeAttrs, type NodeSpec } from "./schema.js";
 import { normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizeStyle } from "./style.js";
+import { normalizeBindings, normalizeLock, normalizeTemplateLock } from "./bindings.js";
 import { CONTENT_VERSION, type Block, type ContentDoc, type RichMark, type RichNode } from "./types.js";
 
 export interface NormalizeOptions {
@@ -99,7 +100,7 @@ function normalizeNode(node: unknown, depth: number, state: State): RichNode | n
     if (style) attrs.style = style; else delete attrs.style;
   }
   // Biến thể kiểu, neo, class riêng (mọi khối)
-  for (const [k, fn] of [["blockStyle", normalizeBlockStyleName], ["anchor", normalizeAnchor], ["className", normalizeClassName]] as const) {
+  for (const [k, fn] of [["blockStyle", normalizeBlockStyleName], ["anchor", normalizeAnchor], ["className", normalizeClassName], ["bindings", normalizeBindings], ["lock", normalizeLock], ["templateLock", normalizeTemplateLock]] as const) {
     if (attrs && k in attrs) { const v = fn(attrs[k]); if (v === undefined) delete attrs[k]; else attrs[k] = v; }
   }
   if (attrs && Object.keys(attrs).length) out.attrs = attrs;

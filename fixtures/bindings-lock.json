@@ -1,0 +1,33 @@
+{
+  "name": "bindings-lock",
+  "note": "Gắn dữ liệu + khoá khối (1.15): attrs.bindings (nguồn nhóm/tên, tham số chữ/số/đúng-sai), attrs.lock (chỉ cờ bật), attrs.templateLock — giá trị lạ bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "heading", "attrs": { "level": 2, "bindings": {
+        "content": { "source": "core/post", "args": { "field": "title", "x;y": 1, "obj": { "a": 1 } } },
+        "bad key": { "source": "core/post" },
+        "alt": { "source": "javascript:alert(1)" },
+        "url": "core/post"
+      }, "lock": { "move": true, "remove": "yes" } }, "content": [{ "type": "text", "text": "Tiêu đề mẫu" }] },
+      { "type": "group", "attrs": { "templateLock": "everything" }, "content": [
+        { "type": "paragraph", "attrs": { "bindings": { "content": { "source": "shop/product", "args": { "id": 42, "field": "price", "sale": true } } } } }
+      ] },
+      { "type": "group", "attrs": { "templateLock": "contentOnly", "lock": { "move": false } }, "content": [
+        { "type": "paragraph", "attrs": { "bindings": {} } }
+      ] }
+    ] } }]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "heading", "attrs": { "level": 2, "bindings": { "content": { "source": "core/post", "args": { "field": "title" } } }, "lock": { "move": true } }, "content": [{ "type": "text", "text": "Tiêu đề mẫu" }] },
+      { "type": "group", "content": [
+        { "type": "paragraph", "attrs": { "bindings": { "content": { "source": "shop/product", "args": { "id": 42, "field": "price", "sale": true } } } } }
+      ] },
+      { "type": "group", "attrs": { "templateLock": "contentOnly" }, "content": [
+        { "type": "paragraph" }
+      ] }
+    ] } }]
+  }
+}

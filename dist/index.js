@@ -8,3 +8,4 @@ export { BLOCK_VERSION_ATTR, blockDefaults, blockNodeSpec, defineBlock, migrateB
 export { EMBED_PROVIDERS, embedInfo } from "./embed.js";
 export { BREAKPOINTS, DEVICES, collectStyles, colorCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss } from "./style.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss } from "./style.js";
+export { normalizeBindings, normalizeLock, normalizeTemplateLock } from "./bindings.js";
