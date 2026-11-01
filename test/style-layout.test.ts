@@ -10,6 +10,7 @@ test("bố cục flex: hướng / căn theo khổ, xuống dòng; giá trị l�
   const css = styleCss(s!, "x");
   assert.match(css, /\.x\.x\{display:flex;flex-wrap:nowrap;gap:var\(--ecx-block-gap, 1rem\);flex-direction:row;justify-content:space-between;align-items:center\}/);
   assert.match(css, /@media \(max-width:640px\)\{\.x\.x\{flex-direction:column\}\}/);
+  assert.match(css, /\.x\.x > \*\{margin-block:0\}/);
   assert.equal(normalizeStyle({ layout: { type: "table" } }), undefined);
   assert.equal(normalizeStyle({ layout: "flex" }), undefined);
 });

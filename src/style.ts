@@ -324,6 +324,8 @@ export function ruleCss(selector: string, style: BlockStyle): string {
     css += `@media ${q}{${sel}{display:none!important}}`;
   }
   if (style.hover) { const hv = hoverDeclarations(style.hover); if (hv.length) css += `${each(":hover")}{${hv.join(";")}}`; }
+  // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
+  if (style.layout) css += `${each(" > *")}{margin-block:0}`;
   return css;
 }
 

@@ -376,6 +376,9 @@ export function ruleCss(selector, style) {
         if (hv.length)
             css += `${each(":hover")}{${hv.join(";")}}`;
     }
+    // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
+    if (style.layout)
+        css += `${each(" > *")}{margin-block:0}`;
     return css;
 }
 /** Gom CSS cho cả một cây nội dung: trả về css (mỗi class một lần) — website và trình soạn dùng chung. */
