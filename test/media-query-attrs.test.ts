@@ -49,3 +49,15 @@ test("block mới: rating kẹp giá trị, countdown/accordion giữ thuộc t�
   assert.equal(run({ type: "languageSwitcher", attrs: { display: "dropdown" } }).display, "dropdown");
   assert.equal(run({ type: "postAuthor", attrs: { avatarSize: 9999, showName: false } }).avatarSize, 128);
 });
+
+test("tabs / tab / carousel / shortcode / readMore / pagination / lightbox giữ thuộc tính hợp lệ", () => {
+  assert.equal(run({ type: "tab", attrs: { title: "Giới thiệu" } }).title, "Giới thiệu");
+  assert.equal(run({ type: "carousel", attrs: { slidesPerView: 9 } }).slidesPerView, 4);
+  assert.equal(run({ type: "shortcode", attrs: { name: "hello", args: { a: "1" } } }).name, "hello");
+  assert.equal(run({ type: "readMore", attrs: { text: "Xem thêm" } }).text, "Xem thêm");
+  assert.equal(run({ type: "avatar", attrs: { size: 9999 } }).size, 256);
+  assert.equal(run({ type: "pagination", attrs: { type: "prevNext", midSize: 99 } }).type, "prevNext");
+  assert.equal(run({ type: "pagination", attrs: { type: "bogus" } }).type, undefined);
+  assert.equal(run({ type: "image", attrs: { src: "/a.jpg", lightbox: true } }).lightbox, true);
+  assert.equal(run({ type: "gallery", attrs: { images: [], lightbox: "true" } }).lightbox, true);
+});

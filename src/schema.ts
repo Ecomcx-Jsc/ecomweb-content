@@ -50,10 +50,10 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     attrs: {
       src: url(), alt: s(), title: s(), width: n({ min: 1 }), height: n({ min: 1 }), srcset: s(), webpSrcset: s(),
       mediaId: { type: "json" }, size: s({ default: "large" }), caption: s(), align: s({ enum: ["left", "right", "center", "wide", "full"] }),
-      href: url(), linkTarget: s({ enum: ["_self", "_blank"] }),
+      href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), lightbox: b({ default: false }),
     },
   },
-  gallery: { attrs: { images: { type: "json", default: [] }, columns: i({ min: 1, max: 6, default: 3 }), caption: s(), linkTo: s({ enum: ["none", "media"], default: "media" }), imageCrop: b({ default: true }) } },
+  gallery: { attrs: { images: { type: "json", default: [] }, columns: i({ min: 1, max: 6, default: 3 }), caption: s(), linkTo: s({ enum: ["none", "media"], default: "media" }), imageCrop: b({ default: true }), lightbox: b({ default: false }) } },
   // next: hành vi phát — autoplay chỉ chạy khi muted (trình duyệt chặn nếu có tiếng); controls / playsInline mặc định bật
   video: { attrs: { ...media, poster: url(), autoplay: b(), loop: b(), muted: b(), controls: b({ default: true }), playsInline: b({ default: true }), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
   audio: { attrs: { ...media, autoplay: b(), loop: b(), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
@@ -93,6 +93,11 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   pullquote: { attrs: { citation: s() } },
   details: { attrs: { summary: s(), open: b({ default: false }) } },
   // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown / rating là khối nguyên tử.
+  // tabs > tab(title) > nội dung; carousel: mỗi con trực tiếp là một slide; shortcode chèn shortcode của plugin/theme
+  tabs: {},
+  tab: { attrs: { title: s() } },
+  carousel: { attrs: { slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
+  shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },
   accordion: { attrs: { multiple: b({ default: false }) } },
   countdown: { attrs: { target: s(), label: s(), expiredText: s() } },
   rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
@@ -113,9 +118,13 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   postExcerpt: { attrs: { moreText: s() } },
   featuredImage: { attrs: { size: s({ default: "large" }), link: b({ default: false }), aspect: s({ enum: ["auto", "16/9", "4/3", "1/1", "3/4"], default: "auto" }) } },
   postDate: { attrs: { textAlign: align, displayType: s({ enum: ["published", "modified"], default: "published" }) } },
-  postAuthor: { attrs: { avatar: b({ default: false }), showName: b({ default: true }), avatarSize: i({ min: 16, max: 128, default: 32 }), link: b({ default: true }) } },
+  postAuthor: { attrs: { avatar: b({ default: false }), showName: b({ default: true }), avatarSize: i({ min: 16, max: 128, default: 32 }), link: b({ default: true }), showBio: b({ default: false }) } },
   postTerms: { attrs: { taxonomy: s({ default: "category" }), separator: s({ default: ", " }) } },
-  comments: {},
+  comments: { attrs: { title: s() } },
+  readMore: { attrs: { text: s(), textAlign: align } },
+  commentsCount: { attrs: { textAlign: align } },
+  avatar: { attrs: { size: i({ min: 16, max: 256, default: 48 }), link: b({ default: true }) } },
+  queryTotal: { attrs: { textAlign: align } },
   // 1.15: khối theme cho SEO / điều hướng — H1 của trang lưu trữ, mô tả chuyên mục, breadcrumb, bài trước / sau
   queryTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), prefix: b({ default: false }), textAlign: align } },
   termDescription: { attrs: { textAlign: align } },
@@ -130,7 +139,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     },
   },
   postTemplate: { attrs: { layout: s({ enum: ["list", "grid"], default: "list" }), columns: i({ min: 1, max: 6, default: 3 }) } },
-  pagination: {},
+  pagination: { attrs: { type: s({ enum: ["numbers", "prevNext", "both"], default: "both" }), midSize: i({ min: 0, max: 5, default: 2 }) } },
   queryEmpty: {},
   templatePart: { attrs: { slug: s(), tagName: s({ enum: ["div", "header", "footer", "aside", "section"], default: "div" }) } },
   /** Mẫu đồng bộ: tham chiếu tới mẫu (id) — sửa mẫu gốc thì mọi chỗ dùng đổi theo. */
@@ -140,7 +149,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
 /** Khối động: nội dung lấy theo ngữ cảnh lúc hiển thị (website, trang, bài trong vòng lặp). */
 export const DYNAMIC_NODES = [
   "siteTitle", "siteLogo", "siteTagline", "navigation", "search", "languageSwitcher", "copyright",
-  "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments",
+  "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments", "readMore", "commentsCount", "avatar", "queryTotal",
   "queryTitle", "termDescription", "breadcrumbs", "postNavigation",
   "query", "postTemplate", "pagination", "queryEmpty", "templatePart", "syncedPattern",
 ] as const;
