@@ -61,3 +61,43 @@ test("tabs / tab / carousel / shortcode / readMore / pagination / lightbox giữ
   assert.equal(run({ type: "image", attrs: { src: "/a.jpg", lightbox: true } }).lightbox, true);
   assert.equal(run({ type: "gallery", attrs: { images: [], lightbox: "true" } }).lightbox, true);
 });
+
+test("termList / pageList / archives: ép kiểu, enum sai bị bỏ, số kẹp vào khoảng", () => {
+  const t = run({ type: "termList", attrs: { taxonomy: "post_tag", display: "cloud", showCount: "true", style2: 1 } });
+  assert.equal(t.display, "cloud");
+  assert.equal(t.showCount, true);
+  assert.equal(run({ type: "termList", attrs: { display: "bogus" } }).display, undefined);
+  assert.equal(run({ type: "pageList", attrs: { parentId: "5", depth: 9 } }).depth, 3);
+  assert.equal(run({ type: "pageList", attrs: { parentId: "5" } }).parentId, 5);
+  assert.equal(run({ type: "archives", attrs: { limit: 999 } }).limit, 60);
+});
+
+test("mark kbd được giữ", () => {
+  const doc = normalizeContent({ version: 1, blocks: [{ id: "main", type: "richtext", data: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "Ctrl", marks: [{ type: "kbd" }] }] }] } }] } as never).doc as never as { blocks: { data: { content: { content: { marks?: { type: string }[] }[] }[] } }[] };
+  assert.equal(doc.blocks[0].data.content[0].content[0].marks?.[0].type, "kbd");
+});
+
+test("icon: tên ngoài danh sách bị bỏ, cỡ kẹp; loginout / footnotes / pageBreak / mark footnote", () => {
+  assert.equal(run({ type: "icon", attrs: { name: "<script>", size: 999 } }).name, undefined);
+  assert.equal(run({ type: "icon", attrs: { name: "mail", size: 999 } }).size, 128);
+  assert.equal(run({ type: "loginout", attrs: { loginText: "Vào" } }).loginText, "Vào");
+  assert.equal(run({ type: "footnotes", attrs: { title: "Chú thích" } }).title, "Chú thích");
+  const doc = normalizeContent({ version: 1, blocks: [{ id: "main", type: "richtext", data: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "a", marks: [{ type: "footnote", attrs: { note: "ghi chú" } }] }] }, { type: "pageBreak" }] } }] } as never).doc as never as { blocks: { data: { content: { type: string; content?: { marks?: { attrs?: { note: string } }[] }[] }[] } }[] };
+  assert.equal(doc.blocks[0].data.content[0].content?.[0].marks?.[0].attrs?.note, "ghi chú");
+  assert.equal(doc.blocks[0].data.content[1].type, "pageBreak");
+});
+
+test("comments: perPage kẹp 1–50, order chỉ asc|desc, avatarSize kẹp, showDate ép bool", () => {
+  const a = run({ type: "comments", attrs: { perPage: 999, order: "asc", avatarSize: 5, showDate: "false" } });
+  assert.equal(a.perPage, 50);
+  assert.equal(a.order, "asc");
+  assert.equal(a.avatarSize, 16);
+  assert.equal(a.showDate, false);
+  assert.equal(run({ type: "comments", attrs: { order: "random" } }).order, undefined);
+});
+
+test("search: postType chuỗi, showLabel bool, buttonPosition chỉ right|left|below", () => {
+  const a = run({ type: "search", attrs: { postType: "page", showLabel: "true", buttonPosition: "below" } });
+  assert.equal(a.postType, "page"); assert.equal(a.showLabel, true); assert.equal(a.buttonPosition, "below");
+  assert.equal(run({ type: "search", attrs: { buttonPosition: "top" } }).buttonPosition, undefined);
+});

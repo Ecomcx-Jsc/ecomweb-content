@@ -23,6 +23,9 @@ export const CORE_NODES = {
     codeBlock: { attrs: { language: s() } },
     hardBreak: {},
     horizontalRule: {},
+    // 1.18: pageBreak chia bài nhiều trang (?trang=N); footnotes liệt kê chú thích của mark `footnote` (attrs.note)
+    pageBreak: {},
+    footnotes: { attrs: { title: s() } },
     image: {
         attrs: {
             src: url(), alt: s(), title: s(), width: n({ min: 1 }), height: n({ min: 1 }), srcset: s(), webpSrcset: s(),
@@ -87,7 +90,7 @@ export const CORE_NODES = {
     siteLogo: { attrs: { width: n({ min: 16, max: 600, default: 120 }), link: b({ default: true }) } },
     siteTagline: { attrs: { textAlign: align } },
     navigation: { attrs: { location: s({ default: "primary" }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobile: b({ default: true }), overlayMenu: s({ enum: ["never", "mobile", "always"], default: "mobile" }) } },
-    search: { attrs: { placeholder: s(), buttonText: s() } },
+    search: { attrs: { placeholder: s(), buttonText: s(), postType: s(), showLabel: b({ default: false }), buttonPosition: s({ enum: ["right", "left", "below"], default: "right" }) } },
     languageSwitcher: { attrs: { display: s({ enum: ["inline", "dropdown"], default: "inline" }) } },
     copyright: { attrs: { text: s(), textAlign: align } },
     postTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), link: b({ default: false }), textAlign: align } },
@@ -97,11 +100,17 @@ export const CORE_NODES = {
     postDate: { attrs: { textAlign: align, displayType: s({ enum: ["published", "modified"], default: "published" }) } },
     postAuthor: { attrs: { avatar: b({ default: false }), showName: b({ default: true }), avatarSize: i({ min: 16, max: 128, default: 32 }), link: b({ default: true }), showBio: b({ default: false }) } },
     postTerms: { attrs: { taxonomy: s({ default: "category" }), separator: s({ default: ", " }) } },
-    comments: { attrs: { title: s() } },
+    comments: { attrs: { title: s(), perPage: i({ min: 1, max: 50 }), order: s({ enum: ["asc", "desc"] }), avatarSize: i({ min: 16, max: 128, default: 40 }), showDate: b({ default: true }) } },
     readMore: { attrs: { text: s(), textAlign: align } },
     commentsCount: { attrs: { textAlign: align } },
     avatar: { attrs: { size: i({ min: 16, max: 256, default: 48 }), link: b({ default: true }) } },
     queryTotal: { attrs: { textAlign: align } },
+    // 1.18: danh sách chuyên mục/thẻ (list|cloud), cây trang con, lưu trữ theo tháng
+    icon: { attrs: { name: s({ enum: ["check", "x", "star", "heart", "arrowRight", "phone", "mail", "mapPin", "clock", "info", "alert", "externalLink"], default: "star" }), size: i({ min: 12, max: 128, default: 24 }), label: s(), textAlign: align } },
+    loginout: { attrs: { loginText: s(), logoutText: s(), textAlign: align } },
+    termList: { attrs: { taxonomy: s({ default: "category" }), display: s({ enum: ["list", "cloud"], default: "list" }), showCount: b({ default: false }), hierarchical: b({ default: false }), hideEmpty: b({ default: true }) } },
+    pageList: { attrs: { parentId: i({ min: 1 }), depth: i({ min: 1, max: 3, default: 2 }) } },
+    archives: { attrs: { showCount: b({ default: true }), limit: i({ min: 1, max: 60, default: 12 }) } },
     // 1.15: khối theme cho SEO / điều hướng — H1 của trang lưu trữ, mô tả chuyên mục, breadcrumb, bài trước / sau
     queryTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), prefix: b({ default: false }), textAlign: align } },
     termDescription: { attrs: { textAlign: align } },
@@ -125,12 +134,12 @@ export const CORE_NODES = {
 /** Khối động: nội dung lấy theo ngữ cảnh lúc hiển thị (website, trang, bài trong vòng lặp). */
 export const DYNAMIC_NODES = [
     "siteTitle", "siteLogo", "siteTagline", "navigation", "search", "languageSwitcher", "copyright",
-    "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments", "readMore", "commentsCount", "avatar", "queryTotal",
+    "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments", "readMore", "commentsCount", "avatar", "queryTotal", "termList", "pageList", "archives", "loginout",
     "queryTitle", "termDescription", "breadcrumbs", "postNavigation",
     "query", "postTemplate", "pagination", "queryEmpty", "templatePart", "syncedPattern",
 ];
 export const CORE_MARKS = {
-    bold: {}, italic: {}, underline: {}, strike: {}, code: {}, subscript: {}, superscript: {},
+    bold: {}, italic: {}, underline: {}, strike: {}, code: {}, kbd: {}, footnote: { attrs: { note: s() } }, subscript: {}, superscript: {},
     highlight: { attrs: { color: s() } },
     textStyle: { attrs: { color: s() } },
     link: { attrs: { href: url(), target: s(), rel: s() } },
