@@ -42,6 +42,23 @@ export interface BlockStyle {
   position?: { type: "sticky"; top?: string };
   /** Khi rê chuột (1.15): màu chữ / nền / viền, bóng, nhấc lên. */
   hover?: { color?: { text?: string; background?: string }; border?: { color?: string }; shadow?: string; lift?: boolean };
+  /** Chuyển động (1.16): hiệu ứng khi cuộn tới (`in`) và khi rê chuột (`hover`). */
+  motion?: BlockMotion;
+}
+
+/**
+ * Chuyển động của khối (1.16). `in` là mã hiệu ứng: hiệu ứng lõi (`MOTION_IN`) hoặc của plugin (CSS `@keyframes ecx-in-<mã>`);
+ * mã lạ vẫn được giữ — khối hiện bình thường nếu website không có keyframes đó. `stagger`: hiệu ứng áp cho từng khối con, lần lượt.
+ */
+export interface BlockMotion {
+  in?: string;
+  duration?: "fast" | "normal" | "slow";
+  /** Độ trễ (ms), 0–3000. */
+  delay?: number;
+  /** Chạy lại mỗi lần cuộn tới (mặc định: một lần). */
+  repeat?: true;
+  stagger?: true;
+  hover?: "lift" | "grow" | "brighten" | "glow";
 }
 
 /** Bố cục của khối chứa. Không có `type` = luồng thường (khối con xếp dọc như văn bản). */
@@ -75,6 +92,12 @@ const DIRECTIONS = ["row", "column"];
 const JUSTIFY = ["start", "center", "end", "between"];
 const ALIGN_ITEMS = ["start", "center", "end", "stretch"];
 const RATIOS = ["1/1", "4/3", "3/2", "16/9", "21/9", "3/4", "2/3", "9/16"];
+/** Hiệu ứng khi cuộn tới có sẵn ở lõi (keyframes `ecx-in-<mã>` trong style.css). Plugin thêm mã khác. */
+export const MOTION_IN = ["fade", "slide-up", "slide-down", "slide-left", "slide-right", "zoom-in", "zoom-out", "blur-in"] as const;
+/** Hiệu ứng khi rê chuột có sẵn ở lõi. */
+export const MOTION_HOVER = ["lift", "grow", "brighten", "glow"] as const;
+const MOTION_DURATIONS = { fast: 300, normal: 600, slow: 1000 } as const;
+const MOTION_ID = /^[a-z][a-z0-9-]{0,39}$/;
 const columns = (v: unknown) => {
   const n = typeof v === "number" ? v : typeof v === "string" && /^\d{1,2}$/.test(v) ? Number(v) : NaN;
   return Number.isInteger(n) && n >= 1 && n <= 12 ? n : undefined;
@@ -138,6 +161,23 @@ function hover(v: unknown): BlockStyle["hover"] | undefined {
   return Object.keys(out).length ? out : undefined;
 }
 
+function motion(v: unknown): BlockMotion | undefined {
+  if (!isObj(v)) return undefined;
+  const out: BlockMotion = {};
+  if (typeof v.in === "string" && v.in !== "none" && MOTION_ID.test(v.in)) {
+    out.in = v.in;
+    const d = oneOf(Object.keys(MOTION_DURATIONS))(v.duration) as BlockMotion["duration"];
+    if (d && d !== "normal") out.duration = d;
+    const n = typeof v.delay === "number" ? v.delay : typeof v.delay === "string" && /^\d{1,4}$/.test(v.delay) ? Number(v.delay) : NaN;
+    if (Number.isInteger(n) && n > 0 && n <= 3000) out.delay = n;
+    if (v.repeat === true) out.repeat = true;
+    if (v.stagger === true) out.stagger = true;
+  }
+  const h = oneOf(MOTION_HOVER)(v.hover) as BlockMotion["hover"];
+  if (h) out.hover = h;
+  return Object.keys(out).length ? out : undefined;
+}
+
 const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
 const size = (v: unknown) => (typeof v === "string" && (LENGTH.test(v) || PRESET.test(v)) ? v : undefined);
 const color = (v: unknown) => (typeof v === "string" && (COLOR.test(v.trim()) || PRESET.test(v)) ? v.trim() : undefined);
@@ -197,6 +237,7 @@ export function normalizeStyle(v: unknown): BlockStyle | undefined {
   set("aspectRatio", oneOf(RATIOS)(v.aspectRatio));
   if (isObj(v.position) && v.position.type === "sticky") { const top = size(v.position.top); set("position", top ? { type: "sticky", top } : { type: "sticky" }); }
   set("hover", hover(v.hover));
+  set("motion", motion(v.motion));
   return Object.keys(out).length ? out : undefined;
 }
 
@@ -295,6 +336,54 @@ export function colorCss(v: unknown): string | undefined {
   return x === undefined ? undefined : colorValue(x);
 }
 
+const EASE = "var(--ecx-motion-ease, cubic-bezier(.2, .7, .3, 1))";
+const HOVER_FX: Record<string, string> = {
+  lift: "transform:translateY(-4px);box-shadow:0 12px 24px rgb(0 0 0 / .12)",
+  grow: "transform:scale(1.04)",
+  brighten: "filter:brightness(1.08)",
+  glow: "box-shadow:0 0 28px color-mix(in srgb, var(--ecx-accent, var(--primary, #2563eb)) 45%, transparent)",
+};
+
+/**
+ * CSS chuyển động của một khối (chỉ cho class riêng của khối — Global Styles không dùng, vì trạng thái ẩn cần class `ecx-in` + `is-in`).
+ * Hiệu ứng cuộn: trạng thái ẩn chỉ áp khi `html.ecx-js` (script observer đã chạy) VÀ phần tử có class `ecx-in` → không có JS
+ * hoặc renderer cũ không gắn class thì nội dung vẫn hiện;
+ * `is-in` do script đặt khi khối vào màn hình. `animation-fill-mode: backwards` để sau khi chạy xong khối trả về trạng thái tự nhiên.
+ */
+export function motionCss(style: BlockStyle, cls: string): string {
+  const m = style.motion;
+  if (!m) return "";
+  const sel = `.${cls}.${cls}`;
+  let css = "";
+  if (m.in) {
+    const dur = MOTION_DURATIONS[m.duration ?? "normal"];
+    const delay = m.delay ?? 0;
+    const name = `ecx-in-${m.in}`;
+    if (m.stagger) {
+      css += `html.ecx-js ${sel}.ecx-in:not(.is-in)>*{opacity:0}`;
+      css += `${sel}.is-in>*{animation:${name} ${dur}ms ${EASE} calc(${delay}ms + var(--ecx-i, 0) * var(--ecx-stagger-step, 80ms)) backwards}`;
+    } else {
+      css += `html.ecx-js ${sel}.ecx-in:not(.is-in){opacity:0}`;
+      css += `${sel}.is-in{animation:${name} ${dur}ms ${EASE} ${delay}ms backwards}`;
+    }
+  }
+  if (m.hover) {
+    // Giữ cả các thuộc tính chuyển của hover cũ (style.hover) để hai loại hover dùng chung một khối không mất hiệu ứng
+    const props = ["transform", "box-shadow", "filter", ...(style.hover ? ["color", "background", "border-color"] : [])];
+    css += `${sel}{transition:${props.map((p) => `${p} .25s ${EASE}`).join(",")}}`;
+    css += `@media (hover:hover){${sel}:hover{${HOVER_FX[m.hover]}}}`;
+  }
+  const calm = [m.in ? `${sel}.is-in,${sel}.is-in>*{animation:none}` : "", m.hover ? `${sel}{transition:none}${sel}:hover{transform:none}` : ""].join("");
+  if (calm) css += `@media (prefers-reduced-motion:reduce){${calm}}`;
+  return css;
+}
+
+/** Class thêm vào phần tử của khối để script observer tìm thấy (`ecx-in`, `ecx-in-repeat`); không có hiệu ứng cuộn → "". */
+export function motionClasses(style: BlockStyle | null | undefined): string {
+  const m = style?.motion;
+  return m?.in ? (m.repeat ? "ecx-in ecx-in-repeat" : "ecx-in") : "";
+}
+
 /** Tên class ổn định theo nội dung style (cùng kiểu dáng → cùng class). */
 export function styleClass(style: BlockStyle): string {
   let h = 0x811c9dc5;
@@ -305,7 +394,7 @@ export function styleClass(style: BlockStyle): string {
 
 /** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ + :hover. Rỗng → "". */
 export function styleCss(style: BlockStyle, cls = styleClass(style)): string {
-  return ruleCss(`.${cls}.${cls}`, style);
+  return ruleCss(`.${cls}.${cls}`, style) + motionCss(style, cls);
 }
 
 /**

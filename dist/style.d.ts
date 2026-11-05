@@ -64,6 +64,22 @@ export interface BlockStyle {
         shadow?: string;
         lift?: boolean;
     };
+    /** Chuyển động (1.16): hiệu ứng khi cuộn tới (`in`) và khi rê chuột (`hover`). */
+    motion?: BlockMotion;
+}
+/**
+ * Chuyển động của khối (1.16). `in` là mã hiệu ứng: hiệu ứng lõi (`MOTION_IN`) hoặc của plugin (CSS `@keyframes ecx-in-<mã>`);
+ * mã lạ vẫn được giữ — khối hiện bình thường nếu website không có keyframes đó. `stagger`: hiệu ứng áp cho từng khối con, lần lượt.
+ */
+export interface BlockMotion {
+    in?: string;
+    duration?: "fast" | "normal" | "slow";
+    /** Độ trễ (ms), 0–3000. */
+    delay?: number;
+    /** Chạy lại mỗi lần cuộn tới (mặc định: một lần). */
+    repeat?: true;
+    stagger?: true;
+    hover?: "lift" | "grow" | "brighten" | "glow";
 }
 /** Bố cục của khối chứa. Không có `type` = luồng thường (khối con xếp dọc như văn bản). */
 export interface BlockLayout {
@@ -79,6 +95,10 @@ export interface BlockLayout {
     /** grid: không đặt số cột → tự chia cột, mỗi cột tối thiểu bằng này. */
     minColumnWidth?: string;
 }
+/** Hiệu ứng khi cuộn tới có sẵn ở lõi (keyframes `ecx-in-<mã>` trong style.css). Plugin thêm mã khác. */
+export declare const MOTION_IN: readonly ["fade", "slide-up", "slide-down", "slide-left", "slide-right", "zoom-in", "zoom-out", "blur-in"];
+/** Hiệu ứng khi rê chuột có sẵn ở lõi. */
+export declare const MOTION_HOVER: readonly ["lift", "grow", "brighten", "glow"];
 /** Gradient: preset hoặc linear/radial-gradient(hướng?, 2–6 điểm màu hex/rgb/hsl kèm %) — dạng chuẩn hoá khoảng trắng. */
 export declare function normalizeGradient(v: unknown): string | undefined;
 /** Chuẩn hoá `attrs.style`: giữ đúng thứ tự khoá, bỏ giá trị không hợp lệ. Rỗng → undefined. */
@@ -87,6 +107,15 @@ export declare function normalizeStyle(v: unknown): BlockStyle | undefined;
 export declare function spacingValue(v: unknown): string | undefined;
 /** Màu hợp lệ (hex/rgb/hsl hoặc preset) → giá trị CSS; không hợp lệ → undefined. */
 export declare function colorCss(v: unknown): string | undefined;
+/**
+ * CSS chuyển động của một khối (chỉ cho class riêng của khối — Global Styles không dùng, vì trạng thái ẩn cần class `ecx-in` + `is-in`).
+ * Hiệu ứng cuộn: trạng thái ẩn chỉ áp khi `html.ecx-js` (script observer đã chạy) VÀ phần tử có class `ecx-in` → không có JS
+ * hoặc renderer cũ không gắn class thì nội dung vẫn hiện;
+ * `is-in` do script đặt khi khối vào màn hình. `animation-fill-mode: backwards` để sau khi chạy xong khối trả về trạng thái tự nhiên.
+ */
+export declare function motionCss(style: BlockStyle, cls: string): string;
+/** Class thêm vào phần tử của khối để script observer tìm thấy (`ecx-in`, `ecx-in-repeat`); không có hiệu ứng cuộn → "". */
+export declare function motionClasses(style: BlockStyle | null | undefined): string;
 /** Tên class ổn định theo nội dung style (cùng kiểu dáng → cùng class). */
 export declare function styleClass(style: BlockStyle): string;
 /** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ + :hover. Rỗng → "". */

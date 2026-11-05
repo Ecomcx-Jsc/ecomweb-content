@@ -126,6 +126,42 @@
   :where(.ecx-is-pill .ecx-button, .ecx-button.ecx-is-pill) { border-radius: 999px !important; }
   :where(.ecx-group.ecx-is-card) { padding: 1.5rem; border: 1px solid var(--_border, color-mix(in srgb, currentColor 15%, transparent)); border-radius: 12px; box-shadow: 0 4px 20px rgb(0 0 0 / .06); }
 
+  /* Chuyển động mặc định cho phần tử tương tác (theme ghi đè được). Nút có màu inline nên hover dùng filter / bóng / transform. */
+  :where(:root) { --ecx-motion-duration: .18s; --ecx-motion-ease: cubic-bezier(.2, .7, .3, 1); }
+  :where(.ecx-button, .ecx-file-link, .ecx-social a, .ecx-toc a, .ecx-details > summary) {
+    transition: filter var(--ecx-motion-duration) var(--ecx-motion-ease), box-shadow var(--ecx-motion-duration) var(--ecx-motion-ease),
+      transform var(--ecx-motion-duration) var(--ecx-motion-ease), background-color var(--ecx-motion-duration) var(--ecx-motion-ease);
+  }
+  @media (hover: hover) {
+    :where(.ecx-button-primary:hover) { filter: brightness(.9); transform: translateY(-1px); box-shadow: 0 4px 12px rgb(0 0 0 / .15); }
+    :where(.ecx-button-secondary:hover, .ecx-button-outline:hover) { transform: translateY(-1px); box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 10%, transparent); }
+    :where(.ecx-file-link:hover) { background: var(--_surface, color-mix(in srgb, currentColor 6%, transparent)); }
+    :where(.ecx-social a:hover) { transform: translateY(-2px); filter: brightness(.92); }
+  }
+  :where(.ecx-button:active) { transform: translateY(0); filter: brightness(.85); box-shadow: none; }
+  :where(.ecx-button:focus-visible, .ecx-file-link:focus-visible, .ecx-social a:focus-visible, .ecx-details > summary:focus-visible) { outline: 2px solid var(--_accent, currentColor); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    :where(.ecx-button, .ecx-file-link, .ecx-social a, .ecx-toc a, .ecx-details > summary) { transition: none; }
+    :where(.ecx-button:is(:hover, :active), .ecx-social a:is(:hover, :active)) { transform: none; }
+  }
+
+  /* Hiệu ứng khi cuộn tới (kiểu dáng › Chuyển động). Khối có class `ecx-in`; script observer đặt `html.ecx-js` rồi `is-in` khi khối vào màn hình.
+     Keyframes chỉ có `from` (trạng thái cuối là tự nhiên) và dùng translate / scale riêng để không đè `transform` của hover.
+     Plugin thêm hiệu ứng bằng @keyframes `ecx-in-<mã>`; theme đổi quãng đường bằng --ecx-motion-distance. */
+  @keyframes ecx-in-fade { from { opacity: 0; } }
+  @keyframes ecx-in-slide-up { from { opacity: 0; translate: 0 var(--ecx-motion-distance, 28px); } }
+  @keyframes ecx-in-slide-down { from { opacity: 0; translate: 0 calc(var(--ecx-motion-distance, 28px) * -1); } }
+  @keyframes ecx-in-slide-left { from { opacity: 0; translate: var(--ecx-motion-distance, 28px) 0; } }
+  @keyframes ecx-in-slide-right { from { opacity: 0; translate: calc(var(--ecx-motion-distance, 28px) * -1) 0; } }
+  @keyframes ecx-in-zoom-in { from { opacity: 0; scale: .9; } }
+  @keyframes ecx-in-zoom-out { from { opacity: 0; scale: 1.1; } }
+  @keyframes ecx-in-blur-in { from { opacity: 0; filter: blur(12px); } }
+  /* Thứ tự khối con cho "hiện lần lượt" (tối đa 12, từ khối thứ 12 trở đi cùng nhịp) */
+  :where(.ecx-in > :nth-child(2)) { --ecx-i: 1; } :where(.ecx-in > :nth-child(3)) { --ecx-i: 2; } :where(.ecx-in > :nth-child(4)) { --ecx-i: 3; }
+  :where(.ecx-in > :nth-child(5)) { --ecx-i: 4; } :where(.ecx-in > :nth-child(6)) { --ecx-i: 5; } :where(.ecx-in > :nth-child(7)) { --ecx-i: 6; }
+  :where(.ecx-in > :nth-child(8)) { --ecx-i: 7; } :where(.ecx-in > :nth-child(9)) { --ecx-i: 8; } :where(.ecx-in > :nth-child(10)) { --ecx-i: 9; }
+  :where(.ecx-in > :nth-child(11)) { --ecx-i: 10; } :where(.ecx-in > :nth-child(n+12)) { --ecx-i: 11; }
+
   /* Khối động (template / Trình dựng) */
   :where(.ecx-site-title) { margin: 0; font-weight: 700; }
   :where(.ecx-site-title) :where(a) { color: inherit; text-decoration: none; }

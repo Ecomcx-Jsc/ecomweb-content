@@ -1,0 +1,38 @@
+{
+  "name": "style-motion",
+  "note": "Kiểu dáng 1.16: chuyển động — hiệu ứng khi cuộn tới (mã lõi hoặc plugin), thời lượng, độ trễ, chạy lại, hiện lần lượt, hover một chạm; mã lạ / chèn CSS bị bỏ; thuộc tính phụ bị bỏ khi không có hiệu ứng cuộn",
+  "input": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "group", "attrs": { "style": { "motion": { "in": "slide-up", "duration": "slow", "delay": "200", "repeat": true, "stagger": true, "hover": "lift", "x": 1 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "A" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "motion": { "in": "acme-bounce-in", "duration": "normal", "delay": 0 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "B" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "motion": { "in": "x;}body{display:none", "hover": "spin", "delay": 99999 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "C" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "motion": { "duration": "fast", "delay": 100, "repeat": true, "hover": "glow" } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "D" }] }
+      ] }
+    ] } }]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "group", "attrs": { "style": { "motion": { "in": "slide-up", "duration": "slow", "delay": 200, "repeat": true, "stagger": true, "hover": "lift" } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "A" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "motion": { "in": "acme-bounce-in" } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "B" }] }
+      ] },
+      { "type": "group", "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "C" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "motion": { "hover": "glow" } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "D" }] }
+      ] }
+    ] } }]
+  }
+}

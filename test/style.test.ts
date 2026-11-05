@@ -18,7 +18,7 @@ function outsideWhere(sel: string) {
 }
 
 test("style.css: mọi selector có độ ưu tiên 0 (theme luôn ghi đè được)", () => {
-  const selectors = [...css.matchAll(/([^{}]+)\{/g)].map((m) => m[1].trim()).filter((s) => s && !s.startsWith("@"));
+  const selectors = [...css.matchAll(/([^{}]+)\{/g)].map((m) => m[1].trim()).filter((s) => s && !s.startsWith("@") && !/^(from|to|\d+%)$/.test(s)); // bước của @keyframes không phải selector
   assert.ok(selectors.length > 20);
   for (const s of selectors) assert.match(outsideWhere(s), /^[\s>+~]*(::(before|after))?$/, `selector có độ ưu tiên: ${s}`);
 });

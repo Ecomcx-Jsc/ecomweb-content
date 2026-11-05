@@ -95,6 +95,20 @@ Thêm vào `attrs.style`:
 
 Preset có thêm `gradients`, `shadows` (tối đa 3 lớp bóng đã kiểm) và **Global Styles**: `blocks` (kiểu mặc định theo loại khối — `BLOCK_SELECTORS`) và `elements` (`link`, `button`, `heading`, `h1`–`h6`, `caption` — `ELEMENT_SELECTORS`). `presetCss` sinh luật trong `:where(.ecx-content)` (độ ưu tiên thấp: kiểu riêng của từng khối luôn thắng). Máy chủ chạy cùng quy tắc (`StyleFormat.cs`, fixture `style-layout-effects`).
 
+## Chuyển động (1.16)
+
+`attrs.style.motion` — hiệu ứng khi cuộn tới và khi rê chuột, chọn sẵn thay vì tự viết CSS:
+
+```json
+{ "motion": { "in": "slide-up", "duration": "slow", "delay": 200, "repeat": true, "stagger": true, "hover": "lift" } }
+```
+
+- `in`: hiệu ứng lõi `fade` `slide-up` `slide-down` `slide-left` `slide-right` `zoom-in` `zoom-out` `blur-in` (`MOTION_IN`) hoặc mã của plugin (`[a-z][a-z0-9-]{0,39}`): CSS dùng `@keyframes ecx-in-<mã>`. Mã chưa có keyframes thì khối chỉ hiện bình thường.
+- `duration`: `fast` 300ms · `normal` 600ms (mặc định, không lưu) · `slow` 1000ms. `delay`: 1–3000ms. `repeat`: chạy lại mỗi lần cuộn tới. `stagger`: áp cho từng khối con, lần lượt (nhịp `--ecx-stagger-step`, mặc định 80ms).
+- `hover`: `lift` `grow` `brighten` `glow` (`MOTION_HOVER`), chỉ chạy trên thiết bị có chuột. Các thuộc tính trên chỉ giữ khi có `in` (riêng `hover` độc lập).
+- Website: khối có hiệu ứng cuộn nhận class `ecx-in` (`motionClasses(style)`); script của website đặt `html.ecx-js` rồi `.is-in` khi khối vào màn hình. Trạng thái ẩn chỉ áp khi có cả `html.ecx-js` lẫn `.ecx-in` → không có JS thì khối vẫn hiện. Tôn trọng `prefers-reduced-motion`. `--ecx-motion-distance` đổi quãng trượt, `--ecx-motion-ease` đổi nhịp.
+- CSS do `styleCss` sinh (`motionCss`); `ruleCss` / Global Styles không sinh trạng thái ẩn nên bỏ qua `motion`.
+
 ## Nhúng theo đường dẫn — `embedInfo`
 
 Khối `embed` chỉ lưu `url` (+ `caption`). `embedInfo(url)` nhận ra nhà cung cấp trong danh sách (YouTube, Vimeo, Loom, Spotify, SoundCloud, TikTok, X, Instagram, Facebook video, CodePen, Figma, Google Maps dạng embed) và **tự dựng** địa chỉ khung từ mã trong đường dẫn — không dùng HTML nhúng do người dùng dán, nên bài viết không chèn được khung tới trang tuỳ ý. Không nhận ra → `null`, website hiện liên kết thường. Trình soạn (xem trước) và website dùng chung hàm này.
