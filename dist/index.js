@@ -9,3 +9,4 @@ export { EMBED_PROVIDERS, embedInfo } from "./embed.js";
 export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss } from "./style.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss } from "./style.js";
 export { normalizeBindings, normalizeLock, normalizeTemplateLock } from "./bindings.js";
+export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, linkRel } from "./markup.js";
