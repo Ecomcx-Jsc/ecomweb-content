@@ -1,6 +1,7 @@
 import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
+import { WIDE_BLOCKS } from "./schema.js";
 const cls = (...parts) => parts.filter(Boolean).join(" ") || undefined;
 /** `text-align` chỉ ghi khi khác mặc định (left) — website không in thừa. */
 export function alignStyle(attrs) {
@@ -29,7 +30,7 @@ export function blockShell(type, attrs = {}, parent) {
         case "group": {
             const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);
             const pad = PADDING[attrs.padding] ?? (bg ? PADDING.medium : undefined);
-            return { tag: "div", className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg ? 12 : undefined }) };
+            return { tag: "div", className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
         }
         case "callout": {
             const tone = calloutTone(attrs);
@@ -55,7 +56,7 @@ export function blockShell(type, attrs = {}, parent) {
         case "cover": {
             const src = attrs.src ? String(attrs.src) : "";
             return {
-                tag: "div", className: cls("ecx-cover", attrs.contentAlign && attrs.contentAlign !== "center" && `is-${attrs.contentAlign}`, attrs.fixed && src && "is-fixed"),
+                tag: "div", className: cls("ecx-cover", attrs.contentAlign && attrs.contentAlign !== "center" && `is-${attrs.contentAlign}`, attrs.fixed && src && "is-fixed", attrs.constrained === true && "ecx-is-constrained"),
                 style: compact({ minHeight: spacingValue(attrs.minHeight ?? "400px"), backgroundImage: attrs.fixed && src ? `url("${safeUrl(src, "").replace(/["\\()]/g, encodeURIComponent)}")` : undefined }),
             };
         }
@@ -87,6 +88,14 @@ const TONES = { info: "#2563eb", success: "#16a34a", warning: "#d97706", danger:
 const compact = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined));
 const calloutTone = (a) => (TONES[a.tone] ? a.tone : "info");
 const buttonVariant = (a) => (a.variant === "secondary" || a.variant === "outline" ? a.variant : "primary");
+/**
+ * 1.20: class độ rộng của khối (`ecx-align-wide|full` + `alignwide|alignfull` như WP để theme viết CSS quen tay).
+ * Ảnh đã gắn trong vỏ của nó. Giá trị lạ / khối không hỗ trợ → không có class (website và canvas cùng gọi).
+ */
+export function widthClass(type, attrs) {
+    const a = attrs?.align;
+    return (a === "wide" || a === "full") && type !== "image" && WIDE_BLOCKS.includes(type) ? `ecx-align-${a} align${a}` : undefined;
+}
 /** Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau. */
 export function coverParts(attrs = {}) {
     const src = attrs.src ? String(attrs.src) : "";

@@ -568,6 +568,16 @@ export function normalizePresets(v) {
     const elements = styleMap(v.elements, ELEMENT_SELECTORS);
     if (elements)
         out.elements = elements;
+    if (isObj(v.layout)) {
+        const layout = {};
+        for (const k of ["contentWidth", "wideWidth"]) {
+            const x = presetSize(v.layout[k]);
+            if (x && !x.startsWith("-"))
+                layout[k] = x;
+        }
+        if (Object.keys(layout).length)
+            out.layout = layout;
+    }
     return out;
 }
 /** Gộp preset theo thứ tự (sau đè trước): theme → bản sửa của quản trị viên. */
@@ -588,10 +598,13 @@ export function presetCss(presets, selector = ":root") {
         ...Object.entries(p.fonts ?? {}).map(([k, v]) => `--ecx-font-family-${k}:${v}`),
         ...Object.entries(p.gradients ?? {}).map(([k, v]) => `--ecx-gradient-${k}:${v}`),
         ...Object.entries(p.shadows ?? {}).map(([k, v]) => `--ecx-shadow-${k}:${v}`),
+        ...(p.layout?.contentWidth ? [`--ecx-content-width:${p.layout.contentWidth}`] : []),
+        ...(p.layout?.wideWidth ? [`--ecx-wide-width:${p.layout.wideWidth}`] : []),
     ];
     let css = decl.length ? `${selector}{${decl.join(";")}}` : "";
     // Global Styles: :where() giữ độ ưu tiên thấp → kiểu riêng của từng khối (.ecx-s-…) luôn thắng
-    const scoped = (sel) => sel.split(",").map((x) => `:where(.ecx-content) ${x.trim()}`).join(",");
+    // :not(.ecx-doc-title): ô tiêu đề bài của trình soạn nằm trong vùng nội dung nhưng trên website tiêu đề ở ngoài → không mang kiểu nội dung
+    const scoped = (sel) => sel.split(",").map((x) => `:where(.ecx-content) ${x.trim()}:where(:not(.ecx-doc-title))`).join(",");
     for (const [name, st] of Object.entries(p.elements ?? {}))
         css += ruleCss(scoped(ELEMENT_SELECTORS[name]), st);
     for (const [name, st] of Object.entries(p.blocks ?? {}))

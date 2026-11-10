@@ -29,3 +29,5 @@ export declare const CORE_MARKS: Record<string, NodeSpec>;
 export declare function coerceAttr(spec: AttrSpec, value: unknown): unknown;
 /** Chuẩn hoá bộ thuộc tính: ép kiểu thuộc tính có mô tả, giữ nguyên thuộc tính khác, bỏ null. Rỗng → undefined. */
 export declare function normalizeAttrs(attrs: unknown, spec?: Record<string, AttrSpec>): Record<string, unknown> | undefined;
+/** 1.20: khối có `align: "wide" | "full"` (ảnh có sẵn từ trước, cùng class). Trình soạn hiện nút "Độ rộng" cho các khối này. */
+export declare const WIDE_BLOCKS: readonly string[];

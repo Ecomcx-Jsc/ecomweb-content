@@ -1,6 +1,7 @@
 import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
+import { WIDE_BLOCKS } from "./schema.js";
 /**
  * Vỏ markup của khối — MỘT nguồn cho website (theme-sdk) và trình soạn (canvas): thẻ, class, style.
  * Hàm thuần, đồng bộ, không phụ thuộc React: bên dùng tự đổ nội dung (chữ đã vẽ / ProseMirror) vào trong vỏ.
@@ -48,7 +49,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
     case "group": {
       const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);
       const pad = PADDING[attrs.padding as string] ?? (bg ? PADDING.medium : undefined);
-      return { tag: "div", className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg ? 12 : undefined }) };
+      return { tag: "div", className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
     }
     case "callout": {
       const tone = calloutTone(attrs);
@@ -74,7 +75,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
     case "cover": {
       const src = attrs.src ? String(attrs.src) : "";
       return {
-        tag: "div", className: cls("ecx-cover", attrs.contentAlign && attrs.contentAlign !== "center" && `is-${attrs.contentAlign}`, attrs.fixed && src && "is-fixed"),
+        tag: "div", className: cls("ecx-cover", attrs.contentAlign && attrs.contentAlign !== "center" && `is-${attrs.contentAlign}`, attrs.fixed && src && "is-fixed", attrs.constrained === true && "ecx-is-constrained"),
         style: compact({ minHeight: spacingValue(attrs.minHeight ?? "400px"), backgroundImage: attrs.fixed && src ? `url("${safeUrl(src, "").replace(/["\\()]/g, encodeURIComponent)}")` : undefined }),
       };
     }
@@ -106,6 +107,15 @@ const TONES: Record<string, string> = { info: "#2563eb", success: "#16a34a", war
 const compact = (o: Record<string, string | number | undefined>): Record<string, string | number> => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as Record<string, string | number>;
 const calloutTone = (a: Attrs) => (TONES[a.tone as string] ? (a.tone as string) : "info");
 const buttonVariant = (a: Attrs) => (a.variant === "secondary" || a.variant === "outline" ? (a.variant as string) : "primary");
+
+/**
+ * 1.20: class độ rộng của khối (`ecx-align-wide|full` + `alignwide|alignfull` như WP để theme viết CSS quen tay).
+ * Ảnh đã gắn trong vỏ của nó. Giá trị lạ / khối không hỗ trợ → không có class (website và canvas cùng gọi).
+ */
+export function widthClass(type: string, attrs?: Attrs): string | undefined {
+  const a = attrs?.align;
+  return (a === "wide" || a === "full") && type !== "image" && WIDE_BLOCKS.includes(type) ? `ecx-align-${a} align${a}` : undefined;
+}
 
 /** Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau. */
 export function coverParts(attrs: Attrs = {}): { src: string; fixed: boolean; overlay?: string; opacity: number } {

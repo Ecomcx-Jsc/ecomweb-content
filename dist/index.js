@@ -1,5 +1,5 @@
 export { CONTENT_VERSION } from "./types.js";
-export { CORE_MARKS, CORE_NODES, DYNAMIC_NODES, coerceAttr, normalizeAttrs } from "./schema.js";
+export { CORE_MARKS, CORE_NODES, DYNAMIC_NODES, WIDE_BLOCKS, coerceAttr, normalizeAttrs } from "./schema.js";
 export { normalizeContent } from "./normalize.js";
 export { migrateContent } from "./migrate.js";
 export { contentText, nodeText, visitNodes, wordCount } from "./text.js";
@@ -9,4 +9,4 @@ export { EMBED_PROVIDERS, embedInfo } from "./embed.js";
 export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss } from "./style.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss } from "./style.js";
 export { normalizeBindings, normalizeLock, normalizeTemplateLock } from "./bindings.js";
-export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, linkRel } from "./markup.js";
+export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, linkRel, widthClass } from "./markup.js";

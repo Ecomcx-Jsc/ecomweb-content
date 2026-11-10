@@ -202,4 +202,23 @@
   :where(.ecx-form) :where(button[type="submit"]:disabled) { opacity: .6; cursor: progress; }
   :where(.ecx-form) :where(.ecx-form-error) { color: #dc2626; font-size: .875em; }
   :where(.ecx-form-success) { padding: .75em 1em; border-radius: 8px; background: color-mix(in srgb, #16a34a 10%, transparent); }
+
+  /* 1.20 Bố cục "giữ cột chữ" (template full-width / canvas có sẵn): khối con ở cột giữa, có lề hai bên trên màn hình nhỏ;
+     khối "Rộng" / "Toàn trang" tràn ra nhờ luật độ rộng bên dưới (đứng sau nên thắng). */
+  :where(.ecx-layout-constrained) { box-sizing: border-box; padding-left: var(--ecx-gutter, 1.25rem); padding-right: var(--ecx-gutter, 1.25rem); }
+  :where(.ecx-layout-constrained) > :where(*) { max-width: var(--ecx-content-width, 760px); margin-left: auto; margin-right: auto; }
+  :where(.ecx-page-title) { box-sizing: border-box; max-width: calc(var(--ecx-content-width, 760px) + 2 * var(--ecx-gutter, 1.25rem)); margin: 2rem auto 1rem; padding: 0 var(--ecx-gutter, 1.25rem); }
+
+  /* 1.20 Độ rộng khối — đặt CUỐI lớp: cùng độ ưu tiên 0 với margin của từng khối (.ecx-group, .ecx-cover, figure…) nên đứng sau mới thắng.
+     Độ rộng khối (như alignwide / alignfull của WP). Khối "rộng" vượt cột chữ tới --ecx-wide-width, "toàn trang" tràn
+     hết màn hình (--ecx-full-width), luôn căn giữa theo cột chữ. Theme có sidebar đặt cả hai biến = 100% để khối không đè sidebar. */
+  :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) { box-sizing: border-box; max-width: none; margin-left: calc((100% - var(--_w)) / 2); margin-right: calc((100% - var(--_w)) / 2); width: var(--_w); }
+  :where(.ecx-content) :where(.ecx-align-wide) { --_w: min(var(--ecx-wide-width, 1200px), 100vw - 2rem); }
+  :where(.ecx-content) :where(.ecx-align-full) { --_w: var(--ecx-full-width, 100vw); }
+  :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; }
+  /* Thanh cuộn dọc nằm trong 100vw → khối toàn trang dư vài px gây cuộn ngang: cắt (clip không tạo vùng cuộn, sticky vẫn chạy) */
+  :where(body:has(.ecx-content .ecx-align-full, .ecx-content .ecx-align-wide)) { overflow-x: clip; }
+  /* Nhóm / bìa tràn rộng nhưng chữ bên trong giữ bề rộng cột chữ */
+  :where(.ecx-group.ecx-is-constrained) > :where(*) { max-width: var(--ecx-content-width, 760px); margin-left: auto; margin-right: auto; }
+  :where(.ecx-cover.ecx-is-constrained) > :where(.ecx-cover-inner) { max-width: var(--ecx-content-width, 760px); }
 }

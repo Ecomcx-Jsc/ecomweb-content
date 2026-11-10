@@ -19,6 +19,11 @@ export declare function blockShell(type: string, attrs?: Attrs, parent?: {
     type: string;
     attrs?: Attrs;
 }): BlockShell | null;
+/**
+ * 1.20: class độ rộng của khối (`ecx-align-wide|full` + `alignwide|alignfull` như WP để theme viết CSS quen tay).
+ * Ảnh đã gắn trong vỏ của nó. Giá trị lạ / khối không hỗ trợ → không có class (website và canvas cùng gọi).
+ */
+export declare function widthClass(type: string, attrs?: Attrs): string | undefined;
 /** Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau. */
 export declare function coverParts(attrs?: Attrs): {
     src: string;

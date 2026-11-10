@@ -71,9 +71,9 @@ test("Global Styles: preset gradient / bóng; kiểu theo khối và phần tử
   const css = presetCss(p);
   assert.match(css, /--ecx-gradient-brand:linear-gradient\(90deg, #1a597b, #f26251\)/);
   assert.match(css, /--ecx-shadow-soft:0 2px 8px/);
-  assert.match(css, /:where\(\.ecx-content\) p\{font-size:var\(--ecx-font-size-lg\)\}/);
-  assert.match(css, /:where\(\.ecx-content\) a:hover\{color:var\(--ecx-color-accent, accent\)\}/);
-  assert.match(css, /:where\(\.ecx-content\) \.ecx-button:hover\{transform:translateY\(-2px\)\}/);
-  assert.match(css, /:where\(\.ecx-content\) h2\{font-weight:800\}/);
+  assert.match(css, /:where\(\.ecx-content\) p:where\(:not\(\.ecx-doc-title\)\)\{font-size:var\(--ecx-font-size-lg\)\}/);
+  assert.match(css, /:where\(\.ecx-content\) a:where\(:not\(\.ecx-doc-title\)\):hover\{color:var\(--ecx-color-accent, accent\)\}/);
+  assert.match(css, /:where\(\.ecx-content\) \.ecx-button:where\(:not\(\.ecx-doc-title\)\):hover\{transform:translateY\(-2px\)\}/);
+  assert.match(css, /:where\(\.ecx-content\) h2:where\(:not\(\.ecx-doc-title\)\)\{font-weight:800\}/);
   assert.match(ruleCss("a, b", { hover: { lift: true } }), /a:hover,b:hover\{/);
 });

@@ -4,6 +4,8 @@ const i = (extra = {}) => ({ type: "integer", ...extra });
 const b = (extra = {}) => ({ type: "boolean", ...extra });
 const url = () => ({ type: "url" });
 const align = s({ enum: ["left", "center", "right", "justify"] });
+/** 1.20: độ rộng khối so với cột chữ (như alignwide / alignfull của WP) — khối nào có thì xem WIDE_BLOCKS. */
+const wide = s({ enum: ["wide", "full"] });
 const media = { src: url(), name: s(), mime: s(), mediaId: { type: "json" }, caption: s() };
 /**
  * Khối lõi trong nội dung soạn thảo (khối `richtext`). Thuộc tính không có trong danh sách vẫn được giữ nguyên
@@ -33,20 +35,20 @@ export const CORE_NODES = {
             href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), lightbox: b({ default: false }),
         },
     },
-    gallery: { attrs: { images: { type: "json", default: [] }, columns: i({ min: 1, max: 6, default: 3 }), caption: s(), linkTo: s({ enum: ["none", "media"], default: "media" }), imageCrop: b({ default: true }), lightbox: b({ default: false }) } },
+    gallery: { attrs: { align: wide, images: { type: "json", default: [] }, columns: i({ min: 1, max: 6, default: 3 }), caption: s(), linkTo: s({ enum: ["none", "media"], default: "media" }), imageCrop: b({ default: true }), lightbox: b({ default: false }) } },
     // next: hành vi phát — autoplay chỉ chạy khi muted (trình duyệt chặn nếu có tiếng); controls / playsInline mặc định bật
-    video: { attrs: { ...media, poster: url(), autoplay: b(), loop: b(), muted: b(), controls: b({ default: true }), playsInline: b({ default: true }), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
+    video: { attrs: { align: wide, ...media, poster: url(), autoplay: b(), loop: b(), muted: b(), controls: b({ default: true }), playsInline: b({ default: true }), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
     audio: { attrs: { ...media, autoplay: b(), loop: b(), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
     file: { attrs: { ...media, size: n({ min: 0 }), embed: b({ default: true }), download: b() } },
-    table: { attrs: { footer: b({ default: false }), fixed: b({ default: false }) } },
+    table: { attrs: { align: wide, footer: b({ default: false }), fixed: b({ default: false }) } },
     tableRow: {},
     tableHeader: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
     tableCell: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
-    youtube: { attrs: { src: url(), start: i({ min: 0 }), width: n({ min: 1 }), height: n({ min: 1 }) } },
+    youtube: { attrs: { align: wide, src: url(), start: i({ min: 0 }), width: n({ min: 1 }), height: n({ min: 1 }) } },
     // Bố cục (1.2): cột, nhóm, hộp lưu ý chứa khối khác; nút; nhúng theo đường dẫn (embedInfo)
-    columns: { attrs: { verticalAlign: s({ enum: ["top", "center", "bottom"] }), stack: b({ default: true }) } },
+    columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom"] }), stack: b({ default: true }) } },
     column: { attrs: { width: n({ min: 5, max: 100 }) } },
-    group: { attrs: { background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
+    group: { attrs: { align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
     callout: { attrs: { tone: s({ enum: ["info", "success", "warning", "danger"], default: "info" }), title: s() } },
     button: {
         attrs: {
@@ -54,34 +56,34 @@ export const CORE_NODES = {
             variant: s({ enum: ["primary", "secondary", "outline"], default: "primary" }), align: s({ enum: ["left", "center", "right"] }),
         },
     },
-    embed: { attrs: { url: url(), caption: s() } },
+    embed: { attrs: { align: wide, url: url(), caption: s() } },
     // Bộ khối cơ bản (1.9)
     spacer: { attrs: { height: s({ default: "lg" }) } },
     buttons: { attrs: { align: s({ enum: ["left", "center", "right", "space-between"] }) } },
     cover: {
         attrs: {
-            src: url(), mediaId: { type: "json" }, alt: s(), overlay: s(), opacity: i({ min: 0, max: 100, default: 50 }), minHeight: s({ default: "400px" }),
+            align: wide, constrained: b({ default: false }), src: url(), mediaId: { type: "json" }, alt: s(), overlay: s(), opacity: i({ min: 0, max: 100, default: 50 }), minHeight: s({ default: "400px" }),
             contentAlign: s({ enum: ["top", "center", "bottom"], default: "center" }), fixed: b({ default: false }),
         },
     },
     mediaText: {
         attrs: {
-            src: url(), mediaId: { type: "json" }, alt: s(), position: s({ enum: ["left", "right"], default: "left" }), width: i({ min: 20, max: 80, default: 50 }),
+            align: wide, src: url(), mediaId: { type: "json" }, alt: s(), position: s({ enum: ["left", "right"], default: "left" }), width: i({ min: 20, max: 80, default: 50 }),
             verticalAlign: s({ enum: ["top", "center", "bottom"], default: "center" }), stack: b({ default: true }),
         },
     },
-    pullquote: { attrs: { citation: s() } },
+    pullquote: { attrs: { align: wide, citation: s() } },
     details: { attrs: { summary: s(), open: b({ default: false }) } },
     // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown / rating là khối nguyên tử.
     // tabs > tab(title) > nội dung; carousel: mỗi con trực tiếp là một slide; shortcode chèn shortcode của plugin/theme
-    tabs: {},
+    tabs: { attrs: { align: wide } },
     tab: { attrs: { title: s() } },
-    carousel: { attrs: { slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
+    carousel: { attrs: { align: wide, slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
     shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },
-    accordion: { attrs: { multiple: b({ default: false }) } },
+    accordion: { attrs: { align: wide, multiple: b({ default: false }) } },
     countdown: { attrs: { target: s(), label: s(), expiredText: s() } },
     rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
-    customHtml: { attrs: { html: s() } },
+    customHtml: { attrs: { align: wide, html: s() } },
     socialLinks: { attrs: { links: { type: "json", default: [] }, size: s({ enum: ["small", "medium", "large"], default: "medium" }), align: s({ enum: ["left", "center", "right"] }), showLabels: b({ default: false }) } },
     tableOfContents: { attrs: { title: s(), maxLevel: i({ min: 2, max: 4, default: 3 }) } },
     preformatted: {},
@@ -118,7 +120,7 @@ export const CORE_NODES = {
     postNavigation: { attrs: { showTitle: b({ default: true }) } },
     query: {
         attrs: {
-            inherit: b({ default: true }), postType: s({ default: "post" }), perPage: i({ min: 1, max: 50, default: 10 }),
+            align: wide, inherit: b({ default: true }), postType: s({ default: "post" }), perPage: i({ min: 1, max: 50, default: 10 }),
             category: s(), tag: s(), orderBy: s({ enum: ["date", "title", "modified", "menu_order", "comment_count", "rand"], default: "date" }), order: s({ enum: ["desc", "asc"], default: "desc" }),
             // next: lọc thêm theo tác giả, từ khoá, loại trừ bài, bài ghim, khoá meta (đã khai báo filterable)
             authorId: i({ min: 1 }), search: s(), exclude: s(), sticky: s({ enum: ["any", "only", "exclude"], default: "any" }), orderByMeta: s(), paginate: b({ default: false }),
@@ -197,3 +199,5 @@ export function normalizeAttrs(attrs, spec) {
     }
     return Object.keys(out).length ? out : undefined;
 }
+/** 1.20: khối có `align: "wide" | "full"` (ảnh có sẵn từ trước, cùng class). Trình soạn hiện nút "Độ rộng" cho các khối này. */
+export const WIDE_BLOCKS = Object.entries(CORE_NODES).filter(([, n]) => n.attrs?.align?.enum?.includes("full")).map(([k]) => k);

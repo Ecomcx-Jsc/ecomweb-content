@@ -472,6 +472,8 @@ export interface StylePresets {
   blocks?: Record<string, BlockStyle>;
   /** 1.15 Global Styles: kiểu mặc định theo phần tử (link, button, heading, h1–h6, caption). */
   elements?: Record<string, BlockStyle>;
+  /** 1.20: bề rộng cột chữ và khối "rộng" → --ecx-content-width / --ecx-wide-width (khối align wide/full dùng). */
+  layout?: { contentWidth?: string; wideWidth?: string };
 }
 
 /** Bộ chọn của khối lõi trên website (markup của renderer) — Global Styles theo loại khối. */
@@ -526,6 +528,11 @@ export function normalizePresets(v: unknown): StylePresets {
   pick("gradients", presetGradient); pick("shadows", presetShadow);
   const blocks = styleMap(v.blocks, BLOCK_SELECTORS); if (blocks) out.blocks = blocks;
   const elements = styleMap(v.elements, ELEMENT_SELECTORS); if (elements) out.elements = elements;
+  if (isObj(v.layout)) {
+    const layout: NonNullable<StylePresets["layout"]> = {};
+    for (const k of ["contentWidth", "wideWidth"] as const) { const x = presetSize(v.layout[k]); if (x && !x.startsWith("-")) layout[k] = x; }
+    if (Object.keys(layout).length) out.layout = layout;
+  }
   return out;
 }
 
@@ -547,10 +554,13 @@ export function presetCss(presets: unknown, selector = ":root"): string {
     ...Object.entries(p.fonts ?? {}).map(([k, v]) => `--ecx-font-family-${k}:${v}`),
     ...Object.entries(p.gradients ?? {}).map(([k, v]) => `--ecx-gradient-${k}:${v}`),
     ...Object.entries(p.shadows ?? {}).map(([k, v]) => `--ecx-shadow-${k}:${v}`),
+    ...(p.layout?.contentWidth ? [`--ecx-content-width:${p.layout.contentWidth}`] : []),
+    ...(p.layout?.wideWidth ? [`--ecx-wide-width:${p.layout.wideWidth}`] : []),
   ];
   let css = decl.length ? `${selector}{${decl.join(";")}}` : "";
   // Global Styles: :where() giữ độ ưu tiên thấp → kiểu riêng của từng khối (.ecx-s-…) luôn thắng
-  const scoped = (sel: string) => sel.split(",").map((x) => `:where(.ecx-content) ${x.trim()}`).join(",");
+  // :not(.ecx-doc-title): ô tiêu đề bài của trình soạn nằm trong vùng nội dung nhưng trên website tiêu đề ở ngoài → không mang kiểu nội dung
+  const scoped = (sel: string) => sel.split(",").map((x) => `:where(.ecx-content) ${x.trim()}:where(:not(.ecx-doc-title))`).join(",");
   for (const [name, st] of Object.entries(p.elements ?? {})) css += ruleCss(scoped(ELEMENT_SELECTORS[name]), st);
   for (const [name, st] of Object.entries(p.blocks ?? {})) css += ruleCss(scoped(BLOCK_SELECTORS[name]), st);
   return css;

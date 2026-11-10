@@ -148,6 +148,11 @@ export interface StylePresets {
     blocks?: Record<string, BlockStyle>;
     /** 1.15 Global Styles: kiểu mặc định theo phần tử (link, button, heading, h1–h6, caption). */
     elements?: Record<string, BlockStyle>;
+    /** 1.20: bề rộng cột chữ và khối "rộng" → --ecx-content-width / --ecx-wide-width (khối align wide/full dùng). */
+    layout?: {
+        contentWidth?: string;
+        wideWidth?: string;
+    };
 }
 /** Bộ chọn của khối lõi trên website (markup của renderer) — Global Styles theo loại khối. */
 export declare const BLOCK_SELECTORS: Record<string, string>;

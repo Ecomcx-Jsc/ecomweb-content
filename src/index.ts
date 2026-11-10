@@ -1,5 +1,5 @@
 export { CONTENT_VERSION, type Block, type ContentDoc, type RichMark, type RichNode } from "./types.js";
-export { CORE_MARKS, CORE_NODES, DYNAMIC_NODES, coerceAttr, normalizeAttrs, type AttrSpec, type AttrType, type NodeSpec } from "./schema.js";
+export { CORE_MARKS, CORE_NODES, DYNAMIC_NODES, WIDE_BLOCKS, coerceAttr, normalizeAttrs, type AttrSpec, type AttrType, type NodeSpec } from "./schema.js";
 export { normalizeContent, type NormalizeOptions, type NormalizeResult } from "./normalize.js";
 export { migrateContent } from "./migrate.js";
 export { contentText, nodeText, visitNodes, wordCount } from "./text.js";
@@ -9,4 +9,4 @@ export { EMBED_PROVIDERS, embedInfo, type EmbedInfo } from "./embed.js";
 export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss, type BlockLayout, type BlockMotion, type BlockStyle, type Box, type Device, type Responsive } from "./style.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss, type StylePresets } from "./style.js";
 export { normalizeBindings, normalizeLock, normalizeTemplateLock, type Binding } from "./bindings.js";
-export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, linkRel, type BlockShell } from "./markup.js";
+export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, linkRel, widthClass, type BlockShell } from "./markup.js";
