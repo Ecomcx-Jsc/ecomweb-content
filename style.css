@@ -221,4 +221,6 @@
   /* Nhóm / bìa tràn rộng nhưng chữ bên trong giữ bề rộng cột chữ */
   :where(.ecx-group.ecx-is-constrained) > :where(*) { max-width: var(--ecx-content-width, 760px); margin-left: auto; margin-right: auto; }
   :where(.ecx-cover.ecx-is-constrained) > :where(.ecx-cover-inner) { max-width: var(--ecx-content-width, 760px); }
+  /* Khối Rộng/Toàn trang nằm TRONG nhóm / cột / bìa: chỉ rộng bằng khung chứa nó (như WP) — không thể rộng bằng màn hình mà không tràn ngang hoặc lệch trái */
+  :where(.ecx-content) :where(.ecx-group, .ecx-columns, .ecx-cover, .ecx-media-text, .ecx-callout, li) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; max-width: none; margin-left: 0; margin-right: 0; }
 }
