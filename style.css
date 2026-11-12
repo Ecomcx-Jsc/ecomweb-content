@@ -179,7 +179,11 @@
   :where(.ecx-navigation-menu) :where(a) { color: inherit; text-decoration: none; }
   :where(.ecx-navigation-vertical .ecx-navigation-menu) :where(ul) { flex-direction: column; }
   :where(.ecx-navigation-toggle) { display: none; }
-  :where(.ecx-navigation-toggle) > :where(summary) { list-style: none; cursor: pointer; font-size: 1.4em; line-height: 1; }
+  /* Vùng chạm tối thiểu 24×24px (WCAG 2.5.8) cho link ĐỨNG RIÊNG — menu, đọc tiếp, đăng nhập, phân trang, tác giả, chuyên mục, tên site, link nhúng.
+     Link nằm trong câu được miễn nên không đụng tới. :where() = độ ưu tiên 0, theme ghi đè được. */
+  :where(.ecx-navigation-menu, .ecx-read-more, .ecx-loginout, .ecx-page-links, .ecx-pagination, .ecx-post-author, .ecx-term-list, .ecx-post-terms, .ecx-site-title, .ecx-embed, .ecx-post-navigation, .ecx-social-links) :where(a, button) { display: inline-flex; align-items: center; min-height: 24px; min-width: 24px; }
+  :where(.ecx-embed-link) :where(a) { display: inline-flex; align-items: center; min-height: 24px; }
+  :where(.ecx-navigation-toggle) > :where(summary) { list-style: none; cursor: pointer; font-size: 1.4em; line-height: 1; display: inline-flex; align-items: center; justify-content: center; min-width: 24px; min-height: 24px; }
   :where(.ecx-navigation-toggle[open] .ecx-navigation-menu) :where(ul) { flex-direction: column; padding-top: .5em; }
   @media (max-width: 640px) {
     :where(.ecx-navigation.has-mobile) > :where(.ecx-navigation-items) { display: none; }
