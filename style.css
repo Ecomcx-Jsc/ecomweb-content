@@ -89,6 +89,7 @@
   :where(.ecx-field) :where([aria-invalid=true]) { border-color: #b91c1c; }
   :where(.ecx-field.is-check) :where(label) { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; }
   :where(.ecx-field.is-check) :where(input) { width: 1.125rem; height: 1.125rem; margin-top: .2rem; accent-color: var(--ecx-color-primary); }
+  :where(.ecx-field.is-check) :where(a) { color: var(--ecx-color-primary); text-decoration: underline; text-underline-offset: 2px; }
   :where(.ecx-field) :where(fieldset) { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
   :where(.ecx-field-options) { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
   :where(.ecx-field-options) :where(label) { display: inline-flex; gap: .5rem; align-items: center; font-weight: 400; }
