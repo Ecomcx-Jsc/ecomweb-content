@@ -75,10 +75,10 @@
   :where(.ecx-buttons-group.is-right) { justify-content: flex-end; }
   :where(.ecx-buttons-group.is-space-between) { justify-content: space-between; }
   /* 1.21: form cơ bản (khối form / formField) — ô theo màu chữ của theme, hai ô "nửa hàng" đứng cạnh nhau từ 640px */
-  :where(.ecx-form) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; margin: 1.5em 0; }
-  :where(.ecx-form) > :where(*) { grid-column: 1 / -1; margin: 0; }
-  :where(.ecx-form) > :where(.ecx-field.is-half) { grid-column: auto; }
-  @media (max-width: 639px) { :where(.ecx-form) > :where(.ecx-field.is-half) { grid-column: 1 / -1; } }
+  :where(.ecx-form-blocks) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; margin: 1.5em 0; }
+  :where(.ecx-form-blocks) > :where(*) { grid-column: 1 / -1; margin: 0; }
+  :where(.ecx-form-blocks) > :where(.ecx-field.is-half) { grid-column: auto; }
+  @media (max-width: 639px) { :where(.ecx-form-blocks) > :where(.ecx-field.is-half) { grid-column: 1 / -1; } }
   :where(.ecx-field) { display: flex; flex-direction: column; gap: .4rem; }
   :where(.ecx-field) :where(label, legend) { font-weight: 600; font-size: .9375rem; }
   :where(.ecx-field-required) { color: #b91c1c; }
