@@ -144,6 +144,39 @@ function motion(v) {
         out.hover = h;
     return Object.keys(out).length ? out : undefined;
 }
+const BG_URL = /^(\/(?!\/)|https:\/\/)[^\s"'()\\<>]{1,1000}$/;
+const BG_SIZES = ["cover", "contain", "auto"];
+const bgUrl = (v) => (typeof v === "string" && BG_URL.test(v.trim()) ? v.trim() : undefined);
+const bgPosition = (v) => {
+    const m = typeof v === "string" ? /^(\d{1,3})% (\d{1,3})%$/.exec(v.trim()) : null;
+    return m && Number(m[1]) <= 100 && Number(m[2]) <= 100 ? `${Number(m[1])}% ${Number(m[2])}%` : undefined;
+};
+function background(v) {
+    if (!isObj(v))
+        return undefined;
+    const out = {};
+    const image = responsive(v.image, bgUrl);
+    if (image)
+        out.image = image;
+    const sz = responsive(v.size, oneOf(BG_SIZES));
+    if (sz)
+        out.size = sz;
+    const pos = responsive(v.position, bgPosition);
+    if (pos)
+        out.position = pos;
+    if (v.repeat === true)
+        out.repeat = true;
+    if (v.fixed === true)
+        out.fixed = true;
+    const ov = color(v.overlay);
+    if (ov) {
+        out.overlay = ov;
+        const n = typeof v.overlayOpacity === "number" ? v.overlayOpacity : typeof v.overlayOpacity === "string" && /^\d{1,3}$/.test(v.overlayOpacity) ? Number(v.overlayOpacity) : NaN;
+        if (Number.isInteger(n) && n >= 0 && n <= 100)
+            out.overlayOpacity = n;
+    }
+    return Object.keys(out).length ? out : undefined;
+}
 const isObj = (v) => !!v && typeof v === "object" && !Array.isArray(v);
 const size = (v) => (typeof v === "string" && (LENGTH.test(v) || PRESET.test(v)) ? v : undefined);
 const color = (v) => (typeof v === "string" && (COLOR.test(v.trim()) || PRESET.test(v)) ? v.trim() : undefined);
@@ -227,6 +260,7 @@ export function normalizeStyle(v) {
     }
     set("hover", hover(v.hover));
     set("motion", motion(v.motion));
+    set("background", background(v.background));
     return Object.keys(out).length ? out : undefined;
 }
 // ---------------------------------------------------------------------------
@@ -332,6 +366,38 @@ function declarations(style) {
         out.base.push(`aspect-ratio:${style.aspectRatio}`, "object-fit:cover");
     if (style.position)
         out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, "z-index:10");
+    // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
+    const bg = style.background;
+    if (bg) {
+        for (const d of DEVICES) {
+            const img = bg.image?.[d];
+            if (img)
+                out[d].push(`background-image:${style.gradient ? `${gradientValue(style.gradient)},` : ""}url("${img}")`);
+            const sz = bg.size?.[d];
+            if (sz)
+                out[d].push(`background-size:${sz}`);
+            const pos = bg.position?.[d];
+            if (pos)
+                out[d].push(`background-position:${pos}`);
+        }
+        if (bg.image) {
+            if (!bg.size?.base)
+                out.base.push("background-size:cover");
+            if (!bg.position?.base)
+                out.base.push("background-position:50% 50%");
+            out.base.push(`background-repeat:${bg.repeat ? "repeat" : "no-repeat"}`);
+            // Cố định khi cuộn: điện thoại (iOS) không hỗ trợ và giật → cuộn bình thường trên khổ nhỏ
+            if (bg.fixed) {
+                out.base.push("background-attachment:fixed");
+                out.tablet.push("background-attachment:scroll");
+            }
+        }
+        if (bg.overlay) {
+            out.base.push("isolation:isolate");
+            if (!style.position)
+                out.base.push("position:relative");
+        }
+    }
     if (style.hover)
         out.base.push("transition:color .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease");
     return out;
@@ -453,6 +519,10 @@ export function ruleCss(selector, style) {
         if (hv.length)
             css += `${each(":hover")}{${hv.join(";")}}`;
     }
+    // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)
+    const ov = style.background?.overlay;
+    if (ov)
+        css += `${each("::before")}{content:"";position:absolute;inset:0;background:${colorValue(ov)};opacity:${(style.background.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
     // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
     if (style.layout)
         css += `${each(" > *")}{margin-block:0}`;

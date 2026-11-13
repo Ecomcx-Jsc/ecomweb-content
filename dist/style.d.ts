@@ -66,6 +66,22 @@ export interface BlockStyle {
     };
     /** Chuyển động (1.16): hiệu ứng khi cuộn tới (`in`) và khi rê chuột (`hover`). */
     motion?: BlockMotion;
+    /** Ảnh nền (1.22): ảnh theo khổ màn hình, cách phủ, điểm lấy nét, lặp, cố định khi cuộn, lớp phủ màu. */
+    background?: BlockBackground;
+}
+/**
+ * Ảnh nền của khối (1.22). Ảnh: đường dẫn trong site (`/uploads/…`) hoặc https, theo khổ (điện thoại dùng ảnh khác được).
+ * Nền chuyển màu (`gradient`) nếu có được phủ lên trên ảnh. `overlay`: màu phủ giữa ảnh và nội dung (độ mờ 0–100, mặc định 50).
+ */
+export interface BlockBackground {
+    image?: Responsive<string>;
+    size?: Responsive<"cover" | "contain" | "auto">;
+    /** Điểm lấy nét "x% y%" (0–100). */
+    position?: Responsive<string>;
+    repeat?: true;
+    fixed?: true;
+    overlay?: string;
+    overlayOpacity?: number;
 }
 /**
  * Chuyển động của khối (1.16). `in` là mã hiệu ứng: hiệu ứng lõi (`MOTION_IN`) hoặc của plugin (CSS `@keyframes ecx-in-<mã>`);

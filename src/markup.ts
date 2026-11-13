@@ -55,20 +55,21 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
       const tone = calloutTone(attrs);
       return {
         tag: "div", className: cls("ecx-callout cms-callout", `ecx-callout-${tone} cms-callout-${tone}`), attrs: { role: "note" },
-        style: { borderLeft: `4px solid ${TONES[tone]}`, background: `color-mix(in srgb, ${TONES[tone]} 8%, transparent)`, padding: "0.75rem 1rem", borderRadius: 8 },
+        style: { borderLeft: `4px solid ${TONES[tone]}`, background: `color-mix(in srgb, ${TONES[tone]} 8%, transparent)`, padding: "0.75rem 1rem", borderRadius: "var(--ecx-radius-md, 8px)" },
       };
     }
     case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`) };
     case "button": {
       const variant = buttonVariant(attrs);
       const look: Record<string, string> = variant === "outline"
-        ? { border: "1px solid var(--ecx-button-bg, var(--cms-button-bg, var(--primary, currentColor)))", color: "var(--ecx-button-bg, var(--cms-button-bg, var(--primary, inherit)))" }
+        ? { border: "var(--ecx-border-width, 1px) solid var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, currentColor)))", color: "var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, inherit)))" }
         : variant === "secondary"
-          ? { background: "var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, rgba(127,127,127,.15)))", color: "inherit" }
-          : { background: "var(--ecx-button-bg, var(--cms-button-bg, var(--primary, #18181b)))", color: "var(--ecx-button-fg, var(--cms-button-fg, #fff))" };
+          ? { background: "var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, color-mix(in srgb, currentColor 12%, transparent)))", color: "inherit" }
+          : { background: "var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb)))", color: "var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff)))" };
       return {
         tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`),
-        style: { display: "inline-block", padding: "0.6em 1.2em", borderRadius: 8, textDecoration: "none", fontWeight: 600, lineHeight: 1.2, ...look },
+        // Token (style.css › :root) — theme đổi bằng biến; inline giữ màu nút thắng CSS link của theme
+        style: { display: "inline-block", padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
       };
     }
     case "spacer": return { tag: "div", className: "ecx-spacer", style: { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" }, attrs: { "aria-hidden": "true" } };
@@ -103,7 +104,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
 }
 
 const PADDING: Record<string, string> = { none: "0", small: "0.75rem", medium: "1.5rem", large: "3rem" };
-const TONES: Record<string, string> = { info: "#2563eb", success: "#16a34a", warning: "#d97706", danger: "#dc2626" };
+const TONES: Record<string, string> = { info: "var(--ecx-color-info, #2563eb)", success: "var(--ecx-color-success, #15803d)", warning: "var(--ecx-color-warning, #b45309)", danger: "var(--ecx-color-danger, #b91c1c)" };
 const compact = (o: Record<string, string | number | undefined>): Record<string, string | number> => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as Record<string, string | number>;
 const calloutTone = (a: Attrs) => (TONES[a.tone as string] ? (a.tone as string) : "info");
 const buttonVariant = (a: Attrs) => (a.variant === "secondary" || a.variant === "outline" ? (a.variant as string) : "primary");

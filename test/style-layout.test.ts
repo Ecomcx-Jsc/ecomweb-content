@@ -77,3 +77,19 @@ test("Global Styles: preset gradient / bóng; kiểu theo khối và phần tử
   assert.match(css, /:where\(\.ecx-content\) h2:where\(:not\(\.ecx-doc-title\)\)\{font-weight:800\}/);
   assert.match(ruleCss("a, b", { hover: { lift: true } }), /a:hover,b:hover\{/);
 });
+
+test("ảnh nền (1.22): ảnh theo khổ, chuyển màu phủ trên ảnh, mặc định cover / giữa / không lặp, lớp phủ ::before", () => {
+  const style = normalizeStyle({
+    gradient: "linear-gradient(180deg, #00000000, #000000cc)",
+    background: { image: { base: "/uploads/a.jpg", mobile: "/uploads/a-m.jpg" }, position: { mobile: "50% 0%" }, fixed: true, overlay: "#000", overlayOpacity: 40 },
+  })!;
+  const css = styleCss(style, "x");
+  assert.match(css, /\.x\.x\{[^}]*background-image:linear-gradient\(180deg, #00000000, #000000cc\),url\("\/uploads\/a\.jpg"\)/);
+  assert.match(css, /background-size:cover;background-position:50% 50%;background-repeat:no-repeat;background-attachment:fixed/);
+  assert.match(css, /isolation:isolate;position:relative/);
+  assert.match(css, /@media \(max-width:1024px\)\{\.x\.x\{background-attachment:scroll\}\}/);
+  assert.match(css, /@media \(max-width:640px\)\{\.x\.x\{background-image:[^}]*url\("\/uploads\/a-m\.jpg"\);background-position:50% 0%\}\}/);
+  assert.match(css, /\.x\.x::before\{content:"";position:absolute;inset:0;background:#000;opacity:0\.4;pointer-events:none;z-index:-1;border-radius:inherit\}/);
+  // Ghim khi cuộn đã là phần tử định vị → không đổi sang relative
+  assert.doesNotMatch(styleCss(normalizeStyle({ position: { type: "sticky" }, background: { overlay: "#000" } })!, "y"), /position:relative/);
+});

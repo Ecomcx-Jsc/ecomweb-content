@@ -1,0 +1,38 @@
+{
+  "name": "style-background",
+  "note": "Kiểu dáng 1.22: ảnh nền theo khổ (đường dẫn trong site hoặc https), cách phủ, điểm lấy nét x% y%, lặp, cố định, lớp phủ màu + độ mờ; javascript:, //, url có ngoặc / dấu nháy, điểm lấy nét quá 100%, độ mờ sai bị bỏ; độ mờ không có màu phủ bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "group", "attrs": { "style": { "background": { "image": { "base": "/uploads/hero.jpg", "mobile": "https://cdn.example.com/hero-m.jpg" }, "size": "contain", "position": { "base": "30% 70%", "mobile": "50% 0%" }, "repeat": true, "fixed": true, "overlay": "#000000", "overlayOpacity": "60", "x": 1 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "A" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "background": { "image": "javascript:alert(1)", "size": "fill", "position": "120% 50%", "repeat": "yes", "overlay": "red;}", "overlayOpacity": 50 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "B" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "background": { "image": "/a.jpg\") ;x(\"", "overlay": "primary", "overlayOpacity": 150 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "C" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "background": { "image": "//evil.example/x.jpg", "overlayOpacity": 40 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "D" }] }
+      ] }
+    ] } }]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [{ "id": "main", "type": "richtext", "data": { "type": "doc", "content": [
+      { "type": "group", "attrs": { "style": { "background": { "image": { "base": "/uploads/hero.jpg", "mobile": "https://cdn.example.com/hero-m.jpg" }, "size": { "base": "contain" }, "position": { "base": "30% 70%", "mobile": "50% 0%" }, "repeat": true, "fixed": true, "overlay": "#000000", "overlayOpacity": 60 } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "A" }] }
+      ] },
+      { "type": "group", "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "B" }] }
+      ] },
+      { "type": "group", "attrs": { "style": { "background": { "overlay": "primary" } } }, "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "C" }] }
+      ] },
+      { "type": "group", "content": [
+        { "type": "paragraph", "content": [{ "type": "text", "text": "D" }] }
+      ] }
+    ] } }]
+  }
+}
