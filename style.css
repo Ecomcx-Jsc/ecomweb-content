@@ -74,6 +74,31 @@
   :where(.ecx-buttons-group.is-center) { justify-content: center; }
   :where(.ecx-buttons-group.is-right) { justify-content: flex-end; }
   :where(.ecx-buttons-group.is-space-between) { justify-content: space-between; }
+  /* 1.21: form cơ bản (khối form / formField) — ô theo màu chữ của theme, hai ô "nửa hàng" đứng cạnh nhau từ 640px */
+  :where(.ecx-form) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; margin: 1.5em 0; }
+  :where(.ecx-form) > :where(*) { grid-column: 1 / -1; margin: 0; }
+  :where(.ecx-form) > :where(.ecx-field.is-half) { grid-column: auto; }
+  @media (max-width: 639px) { :where(.ecx-form) > :where(.ecx-field.is-half) { grid-column: 1 / -1; } }
+  :where(.ecx-field) { display: flex; flex-direction: column; gap: .4rem; }
+  :where(.ecx-field) :where(label, legend) { font-weight: 600; font-size: .9375rem; }
+  :where(.ecx-field-required) { color: #b91c1c; }
+  :where(.ecx-field) :where(input:not([type=checkbox], [type=radio]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .625rem .875rem; border: 1px solid var(--_border, #d4d4d8);
+    border-radius: 10px; background: var(--ecx-input-bg, #fff); color: inherit; font: inherit; box-sizing: border-box; }
+  :where(.ecx-field) :where(textarea) { min-height: 8rem; resize: vertical; }
+  :where(.ecx-field) :where(input, textarea, select):focus-visible { outline: 2px solid var(--ecx-color-primary); outline-offset: 1px; }
+  :where(.ecx-field) :where([aria-invalid=true]) { border-color: #b91c1c; }
+  :where(.ecx-field.is-check) :where(label) { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; }
+  :where(.ecx-field.is-check) :where(input) { width: 1.125rem; height: 1.125rem; margin-top: .2rem; accent-color: var(--ecx-color-primary); }
+  :where(.ecx-field) :where(fieldset) { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
+  :where(.ecx-field-options) { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+  :where(.ecx-field-options) :where(label) { display: inline-flex; gap: .5rem; align-items: center; font-weight: 400; }
+  :where(.ecx-field-help) { font-size: .875rem; color: var(--_muted, #6b7280); }
+  :where(.ecx-field-error) { font-size: .875rem; color: #b91c1c; }
+  :where(.ecx-form-actions) { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+  :where(.ecx-form-status) { margin: 0; padding: .75rem 1rem; border-radius: 10px; }
+  :where(.ecx-form-status.is-error) { background: #fef2f2; color: #991b1b; }
+  :where(.ecx-form-status.is-success) { background: #f0fdf4; color: #166534; }
+  :where(.ecx-form-hp) { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   :where(.ecx-cover) { position: relative; display: flex; align-items: center; overflow: hidden; margin: 1.5em 0; padding: 2rem 1.5rem; color: #fff; background-size: cover; background-position: center; }
   :where(.ecx-cover.is-top) { align-items: flex-start; }
   :where(.ecx-cover.is-bottom) { align-items: flex-end; }

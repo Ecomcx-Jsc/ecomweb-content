@@ -1,0 +1,178 @@
+{
+  "name": "form-blocks",
+  "note": "1.21: form cơ bản — kind ngoài danh sách / width sai về mặc định, required chuỗi \"true\" ép thành boolean, options giữ mảng",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "form",
+              "attrs": {
+                "formId": "f_lienhe1",
+                "submitText": "Gửi",
+                "successMessage": "Cảm ơn bạn",
+                "notifyEmail": "sales@example.com",
+                "align": "wide"
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 3
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Liên hệ"
+                    }
+                  ]
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "text",
+                    "name": "ho_ten",
+                    "label": "Họ tên",
+                    "required": true,
+                    "width": "half"
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "tel",
+                    "name": "dien_thoai",
+                    "label": "Điện thoại",
+                    "required": "true",
+                    "width": "half"
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "select",
+                    "name": "chu_de",
+                    "label": "Chủ đề",
+                    "options": [
+                      "Báo giá",
+                      "Khác"
+                    ]
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "magic",
+                    "name": "x",
+                    "label": "Sai loại",
+                    "width": "third"
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "consent",
+                    "name": "dong_y",
+                    "label": "Tôi đồng ý",
+                    "required": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "form",
+              "attrs": {
+                "formId": "f_lienhe1",
+                "submitText": "Gửi",
+                "successMessage": "Cảm ơn bạn",
+                "notifyEmail": "sales@example.com",
+                "align": "wide"
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 3
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Liên hệ"
+                    }
+                  ]
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "text",
+                    "name": "ho_ten",
+                    "label": "Họ tên",
+                    "required": true,
+                    "width": "half"
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "tel",
+                    "name": "dien_thoai",
+                    "label": "Điện thoại",
+                    "required": true,
+                    "width": "half"
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "select",
+                    "name": "chu_de",
+                    "label": "Chủ đề",
+                    "options": [
+                      "Báo giá",
+                      "Khác"
+                    ]
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "name": "x",
+                    "label": "Sai loại"
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "consent",
+                    "name": "dong_y",
+                    "label": "Tôi đồng ý",
+                    "required": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

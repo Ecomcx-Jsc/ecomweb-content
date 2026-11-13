@@ -28,6 +28,8 @@ const url = (): AttrSpec => ({ type: "url" });
 const align = s({ enum: ["left", "center", "right", "justify"] });
 /** 1.20: độ rộng khối so với cột chữ (như alignwide / alignfull của WP) — khối nào có thì xem WIDE_BLOCKS. */
 const wide = s({ enum: ["wide", "full"] });
+/** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
+export const FORM_FIELD_KINDS = ["text", "email", "tel", "textarea", "select", "radio", "checkbox", "consent", "number", "date"] as const;
 const media = { src: url(), name: s(), mime: s(), mediaId: { type: "json" } as AttrSpec, caption: s() };
 
 /**
@@ -155,7 +157,19 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   templatePart: { attrs: { slug: s(), tagName: s({ enum: ["div", "header", "footer", "aside", "section"], default: "div" }) } },
   /** Mẫu đồng bộ: tham chiếu tới mẫu (id) — sửa mẫu gốc thì mọi chỗ dùng đổi theo. */
   syncedPattern: { attrs: { ref: i({ min: 1 }) } },
+  // 1.21: form cơ bản của lõi (liên hệ, đăng ký nhận tin, đặt lịch đơn giản): `form` chứa các ô `formField` và khối chữ; máy chủ đọc lại
+  // định nghĩa form từ chính trang / template chứa nó để kiểm bài gửi. formId cố định theo form (không đổi khi sửa ô). Form nâng cao: plugin.
+  form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s() } },
+  formField: {
+    attrs: {
+      kind: s({ enum: FORM_FIELD_KINDS, default: "text" }), name: s(), label: s(), placeholder: s(), help: s(),
+      required: b({ default: false }), options: { type: "json", default: [] }, width: s({ enum: ["full", "half"], default: "full" }),
+    },
+  },
 };
+
+/** Tên ô của form: chữ thường, số, gạch dưới — khoá trong bài gửi. */
+export const FORM_FIELD_NAME = /^[a-z][a-z0-9_]{0,39}$/;
 
 /** Khối động: nội dung lấy theo ngữ cảnh lúc hiển thị (website, trang, bài trong vòng lặp). */
 export const DYNAMIC_NODES = [
