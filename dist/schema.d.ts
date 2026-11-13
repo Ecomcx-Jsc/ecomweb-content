@@ -17,11 +17,15 @@ export interface AttrSpec {
 export interface NodeSpec {
     attrs?: Record<string, AttrSpec>;
 }
+/** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
+export declare const FORM_FIELD_KINDS: readonly ["text", "email", "tel", "textarea", "select", "radio", "checkbox", "consent", "number", "date"];
 /**
  * Khối lõi trong nội dung soạn thảo (khối `richtext`). Thuộc tính không có trong danh sách vẫn được giữ nguyên
  * (plugin có thể thêm thuộc tính vào khối lõi) — chỉ thuộc tính có mô tả mới được kiểm kiểu.
  */
 export declare const CORE_NODES: Record<string, NodeSpec>;
+/** Tên ô của form: chữ thường, số, gạch dưới — khoá trong bài gửi. */
+export declare const FORM_FIELD_NAME: RegExp;
 /** Khối động: nội dung lấy theo ngữ cảnh lúc hiển thị (website, trang, bài trong vòng lặp). */
 export declare const DYNAMIC_NODES: readonly ["siteTitle", "siteLogo", "siteTagline", "navigation", "search", "languageSwitcher", "copyright", "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments", "readMore", "commentsCount", "avatar", "queryTotal", "termList", "pageList", "archives", "loginout", "queryTitle", "termDescription", "breadcrumbs", "postNavigation", "query", "postTemplate", "pagination", "queryEmpty", "templatePart", "syncedPattern"];
 export declare const CORE_MARKS: Record<string, NodeSpec>;

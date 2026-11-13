@@ -85,7 +85,7 @@
   :where(.ecx-field) :where(input:not([type=checkbox], [type=radio]), textarea, select) { width: 100%; min-height: 2.75rem; padding: .625rem .875rem; border: 1px solid var(--_border, #d4d4d8);
     border-radius: 10px; background: var(--ecx-input-bg, #fff); color: inherit; font: inherit; box-sizing: border-box; }
   :where(.ecx-field) :where(textarea) { min-height: 8rem; resize: vertical; }
-  :where(.ecx-field) :where(input, textarea, select):focus-visible { outline: 2px solid var(--ecx-color-primary); outline-offset: 1px; }
+  :where(.ecx-field input:focus-visible, .ecx-field textarea:focus-visible, .ecx-field select:focus-visible) { outline: 2px solid var(--ecx-color-primary); outline-offset: 1px; }
   :where(.ecx-field) :where([aria-invalid=true]) { border-color: #b91c1c; }
   :where(.ecx-field.is-check) :where(label) { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; }
   :where(.ecx-field.is-check) :where(input) { width: 1.125rem; height: 1.125rem; margin-top: .2rem; accent-color: var(--ecx-color-primary); }
