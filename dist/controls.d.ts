@@ -11,8 +11,18 @@ export interface ControlSpec {
     /** number: khoảng cho phép. */
     min?: number;
     max?: number;
-    /** "{{WRAPPER}}" hoặc "{{WRAPPER}} <bộ chọn con>" → "thuộc-tính: … {{VALUE}} …" (nhiều khai báo cách nhau dấu phẩy không được — một khai báo / bộ chọn). */
+    /**
+     * "{{WRAPPER}}", "{{WRAPPER}} <bộ chọn con>" hoặc "{{WRAPPER}}:<pseudo>…" (vd `{{WRAPPER}}:hover`, `{{WRAPPER}}:is(img)`, 1.24)
+     * → "thuộc-tính: … {{VALUE}} …" (một khai báo / bộ chọn).
+     */
     css?: Record<string, string>;
+    /** 1.24: giá trị theo khổ màn hình `{ base, tablet, mobile }` (một giá trị trần = base) → media query như `style`. */
+    responsive?: boolean;
+    /** 1.24 (chỉ giao diện): mục chứa ô trong tab Kiểu dáng; `state` = ô của trạng thái rê chuột / đang mở (thẻ Thường / Rê chuột như Elementor). */
+    section?: string;
+    state?: "hover" | "active";
+    /** 1.24 (chỉ giao diện): bước của ô số. */
+    step?: number;
 }
 export interface BlockControls {
     /** Mã duy nhất "slug-plugin/tên". */

@@ -63,6 +63,31 @@
     --ecx-motion-duration: .18s;
     --ecx-motion-ease: cubic-bezier(.2, .7, .3, 1);
     --ecx-motion-distance: 28px;
+    /* 1.24: giá trị của ô Kiểu dáng riêng của khối (src/core-controls.ts) — theme đặt lại được */
+    --ecx-text-shadow-sm: 0 1px 2px rgb(0 0 0 / .2);
+    --ecx-text-shadow-md: 0 2px 6px rgb(0 0 0 / .3);
+    --ecx-text-shadow-lg: 0 4px 16px rgb(0 0 0 / .4);
+    --ecx-list-check: "✓  ";
+    --ecx-list-arrow: "→  ";
+    --ecx-list-dash: "–  ";
+    --ecx-button-padding-xs: .3em .7em;
+    --ecx-button-padding-sm: .45em .95em;
+    --ecx-button-padding-md: .6em 1.2em;
+    --ecx-button-padding-lg: .8em 1.6em;
+    --ecx-button-padding-xl: 1em 2.1em;
+    --ecx-filter-none: none;
+    --ecx-filter-grayscale: grayscale(1);
+    --ecx-filter-sepia: sepia(.8);
+    --ecx-filter-blur: blur(3px);
+    --ecx-filter-bright: brightness(1.15);
+    --ecx-filter-dim: brightness(.7);
+    --ecx-filter-saturate: saturate(1.6);
+    --ecx-hover-zoom: scale(1.05);
+    --ecx-hover-lift: translateY(-6px);
+    --ecx-hover-tilt: rotate(-2deg) scale(1.04);
+    --ecx-margin-inline-start: 0 auto;
+    --ecx-margin-inline-center: auto;
+    --ecx-margin-inline-end: auto 0;
   }
 
   :where(.ecx-content) { overflow-wrap: break-word; }
@@ -172,6 +197,18 @@
   :where(.ecx-pullquote) { margin: 2em 0; padding: 1.5em 0; border-block: 3px solid currentColor; text-align: center; }
   :where(.ecx-pullquote) :where(blockquote) { margin: 0; padding: 0; border: 0; color: inherit; font-size: 1.5em; line-height: 1.4; }
   :where(.ecx-pullquote) :where(figcaption) { margin-top: 1em; font-size: .875em; text-transform: uppercase; letter-spacing: .05em; }
+  /* 1.24 Tabs: thanh tiêu đề + gạch chân thẻ đang mở (website TabsClient và khung soạn cùng markup / vai trò ARIA) */
+  :where(.ecx-tabs) { margin: var(--ecx-flow) 0; }
+  :where(.ecx-tabs-list) { display: flex; flex-wrap: wrap; gap: var(--ecx-spacing-xs); border-bottom: var(--ecx-border-width) solid var(--ecx-color-border); }
+  :where(.ecx-tab-button) { margin: 0 0 -1px; padding: .6em 1em; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--ecx-color-muted); font: inherit; font-weight: 600; cursor: pointer; }
+  :where(.ecx-tab-button[aria-selected="true"]) { color: inherit; border-bottom-color: var(--ecx-color-primary); }
+  :where(.ecx-tab-button:focus-visible) { outline: var(--ecx-focus-ring); outline-offset: var(--ecx-focus-offset); }
+  :where(.ecx-tab-panel) { padding: var(--ecx-spacing-md) 0; }
+  :where(.ecx-tab-panel) > :where(:first-child) { margin-top: 0; }
+  :where(.ecx-tab-panel) > :where(:last-child) { margin-bottom: 0; }
+  /* 1.24 hiệu ứng rê chuột / bộ lọc của ảnh (ô Kiểu dáng của khối ảnh) chuyển mượt */
+  :where(.ecx-image img, img[class*="ecx-c-"]) { transition: transform .3s var(--ecx-motion-ease), filter .3s var(--ecx-motion-ease), opacity .3s var(--ecx-motion-ease); }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-image img, img[class*="ecx-c-"]) { transition: none; } }
   :where(.ecx-details) { margin: 1em 0; padding: .75em 1em; border: var(--ecx-border-width) solid var(--ecx-color-border); border-radius: var(--ecx-radius-md); }
   :where(.ecx-details) > :where(summary) { cursor: pointer; font-weight: 600; }
   :where(.ecx-details[open]) > :where(summary) { margin-bottom: .5em; }

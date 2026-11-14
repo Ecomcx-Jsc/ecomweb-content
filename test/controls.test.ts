@@ -63,3 +63,18 @@ test("enum có nhãn + biến CSS tuỳ biến (1.23)", () => {
   for (const decl of ["--: {{VALUE}}", "--x: {{VALUE}}; color: red", "--X: {{VALUE}}", "---x: {{VALUE}}"])
     assert.throws(() => defineBlockControls({ id: "x/y", blocks: "*", attributes: { a: { type: "number", css: { "{{WRAPPER}}": decl } } } }), decl);
 });
+
+test("1.24: giá trị theo khổ → media query; pseudo gắn liền; class của giá trị base không đổi", () => {
+  const c = defineBlockControls({ id: "acme/r", blocks: "*", attributes: {
+    acmeGap: { type: "length", responsive: true, css: { "{{WRAPPER}}": "gap: {{VALUE}}" } },
+    acmeHover: { type: "color", css: { "{{WRAPPER}}:hover img": "color: {{VALUE}}" } },
+  } });
+  const r = controlsCss([c], "group", { acmeGap: { base: "24px", mobile: "8px", tablet: "bad;" }, acmeHover: "#fff" })!;
+  assert.equal(r.css, `.${r.cls}.${r.cls}{gap: 24px}.${r.cls}.${r.cls}:hover img{color: #fff}@media (max-width:640px){.${r.cls}.${r.cls}{gap: 8px}}`);
+  // Giá trị trần = base, cùng class với dạng { base }
+  assert.equal(controlsCss([c], "group", { acmeGap: "24px" })!.cls, controlsCss([c], "group", { acmeGap: { base: "24px" } })!.cls);
+  // Ô không responsive nhận object → bỏ
+  assert.equal(controlsCss([c], "group", { acmeHover: { base: "#fff" } }), null);
+  for (const sel of ["{{WRAPPER}}:hover{x", "{{WRAPPER}}x", "{{WRAPPER}}:url(x)"])
+    assert.throws(() => defineBlockControls({ id: "x/y", blocks: "*", attributes: { a: { type: "color", css: { [sel]: "color: {{VALUE}}" } } } }), sel);
+});

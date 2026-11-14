@@ -32,6 +32,12 @@ Mọi khối lõi (`style.css`, kiểu inline của nút / callout trong `src/ma
 | Ô nhập | `--ecx-input-height` / `-padding` / `-radius` / `-border` | 2.75rem / .625rem .875rem / 10px / color-border |
 | Focus | `--ecx-focus-ring` / `--ecx-focus-offset` | `2px solid var(--ecx-color-link)` / 2px |
 | Chuyển động | `--ecx-motion-duration` / `-ease` / `-distance` | .18s / cubic-bezier(.2,.7,.3,1) / 28px |
+| Ô Kiểu dáng khối (1.24) | `--ecx-text-shadow-sm` / `-md` / `-lg` | bóng chữ của tiêu đề / đoạn văn (`textShadow`) |
+| | `--ecx-list-check` / `-arrow` / `-dash` | `"✓  "` / `"→  "` / `"–  "` — dấu đầu dòng (`listMarker`) |
+| | `--ecx-button-padding-xs` … `-xl` | cỡ nút (`buttonSize`) |
+| | `--ecx-filter-none` / `-grayscale` / `-sepia` / `-blur` / `-bright` / `-dim` / `-saturate` | bộ lọc ảnh (`imageFilter`, `imageHoverFilter`) |
+| | `--ecx-hover-zoom` / `-lift` / `-tilt` | hiệu ứng rê chuột của ảnh (`imageHoverEffect`) |
+| | `--ecx-margin-inline-start` / `-center` / `-end` | căn đường kẻ (`hrAlign`) |
 
 Tên cũ vẫn được đọc (theme cũ không vỡ): `--primary`, `--ecx-accent`, `--ecx-muted`, `--ecx-surface`, `--ecx-border`, `--ecx-code-bg`, `--ecx-code-fg`, `--ecx-button-bg`, `--ecx-button-fg`, `--ecx-button-secondary-bg`, `--ecx-input-bg`, `--cms-button-*`.
 

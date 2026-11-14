@@ -11,7 +11,7 @@
  * mẫu CSS do plugin viết bị từ chối nếu có `{ } ; < @ \` hoặc url( / expression( / import. Không hợp lệ → bỏ, không chèn.
  * Kiểu chỉ có ô (không sinh CSS, 1.23): boolean, string, url, textarea, datetime — plugin đọc giá trị qua controlValue.
  */
-import { colorCss, spacingValue } from "./style.js";
+import { BREAKPOINTS, DEVICES, colorCss, spacingValue, type Device } from "./style.js";
 import { isSafeUrl } from "./url.js";
 
 /** Kiểu được khai `css` (giá trị đã chuẩn hoá thành token CSS an toàn). */
@@ -27,8 +27,18 @@ export interface ControlSpec {
   /** number: khoảng cho phép. */
   min?: number;
   max?: number;
-  /** "{{WRAPPER}}" hoặc "{{WRAPPER}} <bộ chọn con>" → "thuộc-tính: … {{VALUE}} …" (nhiều khai báo cách nhau dấu phẩy không được — một khai báo / bộ chọn). */
+  /**
+   * "{{WRAPPER}}", "{{WRAPPER}} <bộ chọn con>" hoặc "{{WRAPPER}}:<pseudo>…" (vd `{{WRAPPER}}:hover`, `{{WRAPPER}}:is(img)`, 1.24)
+   * → "thuộc-tính: … {{VALUE}} …" (một khai báo / bộ chọn).
+   */
   css?: Record<string, string>;
+  /** 1.24: giá trị theo khổ màn hình `{ base, tablet, mobile }` (một giá trị trần = base) → media query như `style`. */
+  responsive?: boolean;
+  /** 1.24 (chỉ giao diện): mục chứa ô trong tab Kiểu dáng; `state` = ô của trạng thái rê chuột / đang mở (thẻ Thường / Rê chuột như Elementor). */
+  section?: string;
+  state?: "hover" | "active";
+  /** 1.24 (chỉ giao diện): bước của ô số. */
+  step?: number;
 }
 
 export interface BlockControls {
@@ -40,7 +50,8 @@ export interface BlockControls {
 }
 
 const ATTR = /^[a-zA-Z][a-zA-Z0-9_]{0,40}$/;
-const SUFFIX = /^(\s+[\w\s.#>:+~*()\-\[\]="',]{1,120})?$/;
+// Hậu tố bộ chọn: con cháu (bắt đầu bằng khoảng trắng) hoặc pseudo-class gắn liền (`:hover`, `:is(img)`, 1.24)
+const SUFFIX = /^((\s+|:)[\w\s.#>:+~*()\-\[\]="',]{1,120})?$/;
 // Thuộc tính CSS thường hoặc biến tuỳ biến (`--x: {{VALUE}}`, 1.23) — giá trị vẫn qua kiểm kiểu như mọi khai báo
 const DECL = /^([a-z][a-z-]{1,40}|--[a-z0-9][a-z0-9-]{0,40})\s*:\s*(.{1,200})$/;
 const BAD = /[{};<@\\]|url\(|expression\(|import/i;
@@ -94,17 +105,26 @@ export const optionValue = (o: string | { value: string }) => (typeof o === "str
 
 const applies = (c: BlockControls, type: string) => c.blocks === "*" || c.blocks.includes(type);
 
-/** Các khai báo CSS (bộ chọn hậu tố → khai báo) của một khối; rỗng = khối không có giá trị nào hợp lệ. */
-function declarations(list: readonly BlockControls[], type: string, attrs: Record<string, unknown>): Array<[string, string]> {
-  const out: Array<[string, string]> = [];
+/** Giá trị theo khổ: ô `responsive` nhận `{ base, tablet, mobile }` hoặc một giá trị trần (= base). */
+function perDevice(s: ControlSpec, v: unknown): Array<[Device, unknown]> {
+  if (s.responsive && v && typeof v === "object" && !Array.isArray(v)) return DEVICES.filter((d) => d in v).map((d) => [d, (v as Record<string, unknown>)[d]]);
+  return [["base", v]];
+}
+
+/** Các khai báo CSS (khổ, bộ chọn hậu tố, khai báo) của một khối; rỗng = khối không có giá trị nào hợp lệ. */
+function declarations(list: readonly BlockControls[], type: string, attrs: Record<string, unknown>): Array<[Device, string, string]> {
+  const out: Array<[Device, string, string]> = [];
   for (const c of list) {
     if (!applies(c, type)) continue;
     for (const [name, s] of Object.entries(c.attributes)) {
-      const v = controlValue(s, attrs[name]);
-      if (v === undefined || !CSS_TYPES.has(s.type)) continue;
-      for (const [sel, decl] of Object.entries(s.css ?? {})) {
-        if (!okSel(sel) || !okDecl(decl)) continue;
-        out.push([sel.slice(11), decl.replaceAll("{{VALUE}}", v)]);
+      if (!CSS_TYPES.has(s.type) || attrs[name] === undefined) continue;
+      for (const [d, raw] of perDevice(s, attrs[name])) {
+        const v = controlValue(s, raw);
+        if (v === undefined) continue;
+        for (const [sel, decl] of Object.entries(s.css ?? {})) {
+          if (!okSel(sel) || !okDecl(decl)) continue;
+          out.push([d, sel.slice(11), decl.replaceAll("{{VALUE}}", v)]);
+        }
       }
     }
   }
@@ -115,12 +135,18 @@ function declarations(list: readonly BlockControls[], type: string, attrs: Recor
 export function controlsCss(list: readonly BlockControls[], type: string, attrs: Record<string, unknown>): { cls: string; css: string } | null {
   const decls = declarations(list, type, attrs);
   if (!decls.length) return null;
-  const key = JSON.stringify(decls);
+  // Khổ base băm như trước 1.24 → class của nội dung cũ không đổi
+  const key = JSON.stringify(decls.map(([d, sel, decl]) => (d === "base" ? [sel, decl] : [d, sel, decl])));
   let h = 0x811c9dc5;
   for (let i = 0; i < key.length; i++) { h ^= key.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
   const cls = `ecx-c-${h.toString(36)}`;
-  const bySel = new Map<string, string[]>();
-  for (const [sel, d] of decls) bySel.set(sel, [...(bySel.get(sel) ?? []), d]);
-  const css = [...bySel].map(([sel, ds]) => `.${cls}.${cls}${sel}{${ds.join(";")}}`).join("");
+  const media: Record<Device, string> = { base: "", tablet: `@media (max-width:${BREAKPOINTS.tablet}px)`, mobile: `@media (max-width:${BREAKPOINTS.mobile}px)` };
+  let css = "";
+  for (const d of DEVICES) {
+    const bySel = new Map<string, string[]>();
+    for (const [dd, sel, decl] of decls) if (dd === d) bySel.set(sel, [...(bySel.get(sel) ?? []), decl]);
+    const rules = [...bySel].map(([sel, ds]) => `.${cls}.${cls}${sel}{${ds.join(";")}}`).join("");
+    if (rules) css += d === "base" ? rules : `${media[d]}{${rules}}`;
+  }
   return { cls, css };
 }

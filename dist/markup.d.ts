@@ -24,12 +24,19 @@ export declare function blockShell(type: string, attrs?: Attrs, parent?: {
  * Ảnh đã gắn trong vỏ của nó. Giá trị lạ / khối không hỗ trợ → không có class (website và canvas cùng gọi).
  */
 export declare function widthClass(type: string, attrs?: Attrs): string | undefined;
-/** Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau. */
+/** Điểm lấy nét "x% y%" (0–100) của ảnh bìa (1.24, attrs.focal); sai → undefined (giữa). */
+export declare function focalPoint(v: unknown): string | undefined;
+/**
+ * Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau.
+ * 1.24: ảnh và lớp phủ mang kiểu inline phủ kín khối (CSS `img { height: auto }` của theme không làm ảnh co lại), điểm lấy nét `focal`.
+ */
 export declare function coverParts(attrs?: Attrs): {
     src: string;
     fixed: boolean;
     overlay?: string;
     opacity: number;
+    imgStyle: Record<string, string | number>;
+    overlayStyle: Record<string, string | number>;
 };
 /** Vỏ ngoài của nút đứng riêng (không nằm trong khối "buttons"): đoạn `<p>` căn lề. */
 export declare function buttonWrapShell(attrs?: Attrs): BlockShell;

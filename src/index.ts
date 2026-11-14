@@ -8,7 +8,8 @@ export { BLOCK_VERSION_ATTR, blockDefaults, blockNodeSpec, defineBlock, migrateB
 export { EMBED_PROVIDERS, embedInfo, type EmbedInfo } from "./embed.js";
 export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss, type BlockBackground, type BlockLayout, type BlockMotion, type BlockStyle, type Box, type Device, type Responsive } from "./style.js";
 export { controlValue, controlsCss, defineBlockControls, optionValue, type BlockControls, type ControlSpec } from "./controls.js";
+export { CORE_CONTROLS, coreControlsFor } from "./core-controls.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss, type StylePresets } from "./style.js";
 export { normalizeBindings, normalizeLock, normalizeTemplateLock, type Binding } from "./bindings.js";
-export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, linkRel, widthClass, type BlockShell } from "./markup.js";
+export { alignStyle, blockCitation, blockShell, buttonWrapShell, coverParts, focalPoint, linkRel, widthClass, type BlockShell } from "./markup.js";
 export { ICON_NAMES, ICON_PATHS, WIDGET_BLOCKS, counterDecimals, formatCounter, iconEl, widgetMarkup, type WidgetEl } from "./widgets.js";

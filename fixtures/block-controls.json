@@ -1,0 +1,260 @@
+{
+ "name": "block-controls",
+ "note": "1.24: ô Kiểu dáng riêng của khối lõi (core-controls.ts) lưu trong attrs — website sinh class ecx-c-… + CSS như khung soạn; ảnh bìa có điểm lấy nét; giá trị sai / ô của loại khối khác bị bỏ (attrs vẫn giữ như mọi thuộc tính không khai báo); nút đứng riêng + ảnh có chú thích để so parity từng phần tử (nút trong nhóm / ảnh trần: website bọc thêm thẻ, bộ chọn vẫn khớp cả hai dạng)",
+ "input": {
+  "version": 1,
+  "blocks": [
+   {
+    "id": "main",
+    "type": "richtext",
+    "data": {
+     "type": "doc",
+     "content": [
+      {
+       "type": "bulletList",
+       "attrs": {
+        "listMarker": "check",
+        "listMarkerColor": "primary",
+        "listGap": {
+         "base": "md",
+         "mobile": "8px"
+        },
+        "listDivider": "#e5e7eb"
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "Một"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "Hai"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "button",
+       "attrs": {
+        "text": "Mua",
+        "href": "/mua",
+        "variant": "primary",
+        "buttonBg": "#111111",
+        "buttonHoverBg": "accent",
+        "buttonRadius": "999px"
+       }
+      },
+      {
+       "type": "image",
+       "attrs": {
+        "src": "/uploads/a.jpg",
+        "alt": "A",
+        "imageRadius": "12px",
+        "imageFilter": "grayscale",
+        "imageHoverFilter": "none",
+        "imageHoverEffect": "zoom",
+        "caption": "Ảnh có chú thích → <figure> (cả hai bên)"
+       }
+      },
+      {
+       "type": "horizontalRule",
+       "attrs": {
+        "hrStyle": "dashed",
+        "hrColor": "#cccccc",
+        "hrWidth": {
+         "base": "50%",
+         "mobile": "100%"
+        },
+        "hrAlign": "center"
+       }
+      },
+      {
+       "type": "cover",
+       "attrs": {
+        "src": "/uploads/hero.jpg",
+        "focal": "30% 70%",
+        "overlay": "#000000",
+        "opacity": 40
+       },
+       "content": [
+        {
+         "type": "heading",
+         "attrs": {
+          "level": 2,
+          "textShadow": "md"
+         },
+         "content": [
+          {
+           "type": "text",
+           "text": "Tiêu đề"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "attrs": {
+        "listMarkerColor": "#ff0000",
+        "textShadow": "bad;}"
+       },
+       "content": [
+        {
+         "type": "text",
+         "text": "Ô của khối khác / giá trị sai: không sinh CSS"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "expected": {
+  "version": 1,
+  "blocks": [
+   {
+    "id": "main",
+    "type": "richtext",
+    "data": {
+     "type": "doc",
+     "content": [
+      {
+       "type": "bulletList",
+       "attrs": {
+        "listMarker": "check",
+        "listMarkerColor": "primary",
+        "listGap": {
+         "base": "md",
+         "mobile": "8px"
+        },
+        "listDivider": "#e5e7eb"
+       },
+       "content": [
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "Một"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "type": "listItem",
+         "content": [
+          {
+           "type": "paragraph",
+           "content": [
+            {
+             "type": "text",
+             "text": "Hai"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "button",
+       "attrs": {
+        "text": "Mua",
+        "href": "/mua",
+        "variant": "primary",
+        "buttonBg": "#111111",
+        "buttonHoverBg": "accent",
+        "buttonRadius": "999px"
+       }
+      },
+      {
+       "type": "image",
+       "attrs": {
+        "src": "/uploads/a.jpg",
+        "alt": "A",
+        "imageRadius": "12px",
+        "imageFilter": "grayscale",
+        "imageHoverFilter": "none",
+        "imageHoverEffect": "zoom",
+        "caption": "Ảnh có chú thích → <figure> (cả hai bên)"
+       }
+      },
+      {
+       "type": "horizontalRule",
+       "attrs": {
+        "hrStyle": "dashed",
+        "hrColor": "#cccccc",
+        "hrWidth": {
+         "base": "50%",
+         "mobile": "100%"
+        },
+        "hrAlign": "center"
+       }
+      },
+      {
+       "type": "cover",
+       "attrs": {
+        "src": "/uploads/hero.jpg",
+        "focal": "30% 70%",
+        "overlay": "#000000",
+        "opacity": 40
+       },
+       "content": [
+        {
+         "type": "heading",
+         "attrs": {
+          "level": 2,
+          "textShadow": "md"
+         },
+         "content": [
+          {
+           "type": "text",
+           "text": "Tiêu đề"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "paragraph",
+       "attrs": {
+        "listMarkerColor": "#ff0000",
+        "textShadow": "bad;}"
+       },
+       "content": [
+        {
+         "type": "text",
+         "text": "Ô của khối khác / giá trị sai: không sinh CSS"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

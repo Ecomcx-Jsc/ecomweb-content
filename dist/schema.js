@@ -66,7 +66,7 @@ export const CORE_NODES = {
     cover: {
         attrs: {
             align: wide, constrained: b({ default: false }), src: url(), mediaId: { type: "json" }, alt: s(), overlay: s(), opacity: i({ min: 0, max: 100, default: 50 }), minHeight: s({ default: "400px" }),
-            contentAlign: s({ enum: ["top", "center", "bottom"], default: "center" }), fixed: b({ default: false }),
+            contentAlign: s({ enum: ["top", "center", "bottom"], default: "center" }), fixed: b({ default: false }), focal: s(),
         },
     },
     mediaText: {

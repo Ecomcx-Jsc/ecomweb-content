@@ -39,7 +39,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
       return {
         tag: "div",
         className: cls("ecx-columns cms-columns", attrs.verticalAlign && `ecx-columns-${attrs.verticalAlign} cms-columns-${attrs.verticalAlign}`),
-        style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "1.5rem", alignItems: align },
+        style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-gap, 1.5rem)", alignItems: align },
       };
     }
     case "column": {
@@ -61,11 +61,12 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
     case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`) };
     case "button": {
       const variant = buttonVariant(attrs);
+      // 1.24: --ecx-btn-color / --ecx-btn-bg = ô Kiểu dáng của từng nút (core-controls.ts), trống thì như cũ theo token
       const look: Record<string, string> = variant === "outline"
-        ? { border: "var(--ecx-border-width, 1px) solid var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, currentColor)))", color: "var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, inherit)))" }
+        ? { border: "var(--ecx-border-width, 1px) solid var(--ecx-btn-color, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, currentColor))))", color: "var(--ecx-btn-color, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, inherit))))", background: "var(--ecx-btn-bg, transparent)" }
         : variant === "secondary"
-          ? { background: "var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, color-mix(in srgb, currentColor 12%, transparent)))", color: "inherit" }
-          : { background: "var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb)))", color: "var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff)))" };
+          ? { background: "var(--ecx-btn-bg, var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, color-mix(in srgb, currentColor 12%, transparent))))", color: "var(--ecx-btn-color, inherit)" }
+          : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
       return {
         tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`),
         // Token (style.css › :root) — theme đổi bằng biến; inline giữ màu nút thắng CSS link của theme
@@ -77,7 +78,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
       const src = attrs.src ? String(attrs.src) : "";
       return {
         tag: "div", className: cls("ecx-cover", attrs.contentAlign && attrs.contentAlign !== "center" && `is-${attrs.contentAlign}`, attrs.fixed && src && "is-fixed", attrs.constrained === true && "ecx-is-constrained"),
-        style: compact({ minHeight: spacingValue(attrs.minHeight ?? "400px"), backgroundImage: attrs.fixed && src ? `url("${safeUrl(src, "").replace(/["\\()]/g, encodeURIComponent)}")` : undefined }),
+        style: compact({ minHeight: spacingValue(attrs.minHeight ?? "400px"), backgroundImage: attrs.fixed && src ? `url("${safeUrl(src, "").replace(/["\\()]/g, encodeURIComponent)}")` : undefined, backgroundPosition: attrs.fixed && src ? focalPoint(attrs.focal) : undefined }),
       };
     }
     case "mediaText": {
@@ -118,10 +119,25 @@ export function widthClass(type: string, attrs?: Attrs): string | undefined {
   return (a === "wide" || a === "full") && type !== "image" && WIDE_BLOCKS.includes(type) ? `ecx-align-${a} align${a}` : undefined;
 }
 
-/** Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau. */
-export function coverParts(attrs: Attrs = {}): { src: string; fixed: boolean; overlay?: string; opacity: number } {
+/** Điểm lấy nét "x% y%" (0–100) của ảnh bìa (1.24, attrs.focal); sai → undefined (giữa). */
+export function focalPoint(v: unknown): string | undefined {
+  const m = typeof v === "string" ? /^(\d{1,3})% (\d{1,3})%$/.exec(v.trim()) : null;
+  return m && Number(m[1]) <= 100 && Number(m[2]) <= 100 ? `${Number(m[1])}% ${Number(m[2])}%` : undefined;
+}
+
+/**
+ * Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau.
+ * 1.24: ảnh và lớp phủ mang kiểu inline phủ kín khối (CSS `img { height: auto }` của theme không làm ảnh co lại), điểm lấy nét `focal`.
+ */
+export function coverParts(attrs: Attrs = {}): { src: string; fixed: boolean; overlay?: string; opacity: number; imgStyle: Record<string, string | number>; overlayStyle: Record<string, string | number> } {
   const src = attrs.src ? String(attrs.src) : "";
-  return { src, fixed: !!attrs.fixed && !!src, overlay: colorCss(attrs.overlay) ?? (src ? "#000" : undefined), opacity: Math.min(100, Math.max(0, Number(attrs.opacity ?? 50))) / 100 };
+  const overlay = colorCss(attrs.overlay) ?? (src ? "#000" : undefined);
+  const opacity = Math.min(100, Math.max(0, Number(attrs.opacity ?? 50))) / 100;
+  return {
+    src, fixed: !!attrs.fixed && !!src, overlay, opacity,
+    imgStyle: { position: "absolute", inset: 0, width: "100%", height: "100%", maxWidth: "none", margin: 0, objectFit: "cover", objectPosition: focalPoint(attrs.focal) ?? "50% 50%" },
+    overlayStyle: { position: "absolute", inset: 0, background: overlay ?? "transparent", opacity },
+  };
 }
 
 /** Vỏ ngoài của nút đứng riêng (không nằm trong khối "buttons"): đoạn `<p>` căn lề. */
