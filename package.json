@@ -1,6 +1,6 @@
 {
   "name": "@ecomcx/ecomweb-content",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "description": "Định dạng nội dung của Ecomweb CMS: kiểu dữ liệu, schema khối lõi, chuẩn hoá, nâng phiên bản và bộ fixture hợp đồng — dùng chung cho trình soạn, website và máy chủ, không phụ thuộc trình soạn nào.",
   "license": "MIT",
   "type": "module",
@@ -37,7 +37,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "check-dist": "node scripts/check-dist.mjs",
-    "test": "tsc -p tsconfig.test.json && node --test \".test-build/test/*.test.js\" && node scripts/check-dist.mjs"
+    "test": "tsc -p tsconfig.test.json && node --test .test-build/test/*.test.js && node scripts/check-dist.mjs"
   },
   "devDependencies": {
     "@types/node": "22.19.1",

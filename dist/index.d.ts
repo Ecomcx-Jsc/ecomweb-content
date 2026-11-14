@@ -4,7 +4,7 @@ export { normalizeContent, type NormalizeOptions, type NormalizeResult } from ".
 export { migrateContent } from "./migrate.js";
 export { contentText, nodeText, visitNodes, wordCount } from "./text.js";
 export { isSafeUrl, safeUrl } from "./url.js";
-export { BLOCK_VERSION_ATTR, blockDefaults, blockNodeSpec, defineBlock, migrateBlockAttrs, type AttrControl, type BlockAttrSpec, type BlockContent, type BlockDefinition, type BlockDefinitionInput } from "./block.js";
+export { BLOCK_VERSION_ATTR, blockDefaults, blockNodeSpec, defineBlock, migrateBlockAttrs, type AttrControl, type BlockAttrSpec, type BlockContent, type BlockDefinition, type BlockDefinitionInput, type BlockPlaceholder } from "./block.js";
 export { EMBED_PROVIDERS, embedInfo, type EmbedInfo } from "./embed.js";
 export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss, type BlockBackground, type BlockLayout, type BlockMotion, type BlockStyle, type Box, type Device, type Responsive } from "./style.js";
 export { controlValue, controlsCss, defineBlockControls, optionValue, type BlockControls, type ControlSpec } from "./controls.js";

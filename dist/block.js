@@ -28,6 +28,7 @@ export function defineBlock(input) {
         attributes: { ...input.attributes },
         version,
         migrate: { ...input.migrate },
+        ...(input.placeholder ? { placeholder: { fields: input.placeholder.fields?.slice(), required: input.placeholder.required?.slice() } } : {}),
     });
 }
 /** Giá trị mặc định của các thuộc tính (khi chèn khối mới). */

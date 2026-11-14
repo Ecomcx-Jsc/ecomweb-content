@@ -63,3 +63,11 @@ test("không có định nghĩa (plugin tắt): khối giữ nguyên, không nâ
   const raw = { type: "doc", content: [{ type: "demo/badge", attrs: { color: "red" } }] };
   assert.deepEqual(normalizeContent(raw).doc.blocks[0].data.content[0].attrs, { color: "red" });
 });
+
+test("defineBlock: placeholder tuỳ chọn được giữ (bản sao), không có thì không thêm khoá", () => {
+  const fields = ["image", "title"];
+  const def = defineBlock({ name: "demo/card", title: "Card", attributes: { title: { type: "string", control: "text" } }, placeholder: { fields, required: ["title"] } });
+  fields.push("x");
+  assert.deepEqual(def.placeholder, { fields: ["image", "title"], required: ["title"] });
+  assert.equal("placeholder" in defineBlock({ name: "demo/plain", title: "Plain" }), false);
+});

@@ -33,6 +33,15 @@ export interface BlockDefinitionInput {
      */
     version?: number;
     migrate?: Record<number, (attrs: Record<string, unknown>) => Record<string, unknown>>;
+    /**
+     * Ô giữ chỗ trình soạn tự vẽ trong khối (tuỳ chọn). `fields`: thuộc tính hiện thành ô ngay trong khối (mặc định: mọi thuộc tính
+     * `media` / `text` / `textarea` / `url` / `number`); `required`: thuộc tính bắt buộc — còn trống thì khối có viền cam "Còn thiếu: …".
+     */
+    placeholder?: BlockPlaceholder;
+}
+export interface BlockPlaceholder {
+    fields?: string[];
+    required?: string[];
 }
 export interface BlockDefinition extends Required<Pick<BlockDefinitionInput, "name" | "title" | "content" | "version">> {
     description?: string;
@@ -41,6 +50,7 @@ export interface BlockDefinition extends Required<Pick<BlockDefinitionInput, "na
     category?: string;
     attributes: Record<string, BlockAttrSpec>;
     migrate: Record<number, (attrs: Record<string, unknown>) => Record<string, unknown>>;
+    placeholder?: BlockPlaceholder;
 }
 /** Thuộc tính lưu phiên bản của khối trong dữ liệu (chỉ khi version > 1). */
 export declare const BLOCK_VERSION_ATTR = "_v";
