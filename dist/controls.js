@@ -9,11 +9,16 @@
  *
  * Giá trị do người dùng nhập luôn qua kiểm kiểu (số trong khoảng, màu / độ dài / preset như `style`, enum trong danh sách);
  * mẫu CSS do plugin viết bị từ chối nếu có `{ } ; < @ \` hoặc url( / expression( / import. Không hợp lệ → bỏ, không chèn.
+ * Kiểu chỉ có ô (không sinh CSS, 1.23): boolean, string, url, textarea, datetime — plugin đọc giá trị qua controlValue.
  */
 import { colorCss, spacingValue } from "./style.js";
+import { isSafeUrl } from "./url.js";
+/** Kiểu được khai `css` (giá trị đã chuẩn hoá thành token CSS an toàn). */
+const CSS_TYPES = new Set(["number", "color", "length", "enum"]);
 const ATTR = /^[a-zA-Z][a-zA-Z0-9_]{0,40}$/;
 const SUFFIX = /^(\s+[\w\s.#>:+~*()\-\[\]="',]{1,120})?$/;
-const DECL = /^([a-z][a-z-]{1,40})\s*:\s*(.{1,200})$/;
+// Thuộc tính CSS thường hoặc biến tuỳ biến (`--x: {{VALUE}}`, 1.23) — giá trị vẫn qua kiểm kiểu như mọi khai báo
+const DECL = /^([a-z][a-z-]{1,40}|--[a-z0-9][a-z0-9-]{0,40})\s*:\s*(.{1,200})$/;
 const BAD = /[{};<@\\]|url\(|expression\(|import/i;
 const okSel = (sel) => sel.startsWith("{{WRAPPER}}") && SUFFIX.test(sel.slice(11)) && !BAD.test(sel.slice(11));
 const okDecl = (d) => DECL.test(d) && !BAD.test(d.replaceAll("{{VALUE}}", "")) && d.includes("{{VALUE}}");
@@ -22,6 +27,8 @@ export function defineBlockControls(c) {
     for (const [name, s] of Object.entries(c.attributes)) {
         if (!ATTR.test(name))
             throw new Error(`[controls] ${c.id}: tên thuộc tính không hợp lệ "${name}"`);
+        if (s.css && Object.keys(s.css).length && !CSS_TYPES.has(s.type))
+            throw new Error(`[controls] ${c.id}.${name}: kiểu "${s.type}" không sinh CSS`);
         for (const [sel, decl] of Object.entries(s.css ?? {})) {
             if (!okSel(sel))
                 throw new Error(`[controls] ${c.id}.${name}: bộ chọn không hợp lệ "${sel}"`);
@@ -31,7 +38,7 @@ export function defineBlockControls(c) {
     }
     return c;
 }
-/** Giá trị người dùng → chuỗi CSS an toàn, hoặc undefined (bỏ). */
+/** Giá trị người dùng → chuỗi CSS an toàn (number/color/length/enum) hoặc giá trị đã kiểm của kiểu chỉ có ô (không an toàn cho CSS/HTML thô), undefined = bỏ. */
 export function controlValue(s, v) {
     if (v === undefined || v === null || v === "")
         return undefined;
@@ -44,9 +51,27 @@ export function controlValue(s, v) {
         }
         case "color": return colorCss(v);
         case "length": return spacingValue(v);
-        case "enum": return typeof v === "string" && /^[a-z0-9-]{1,40}$/.test(v) && s.options?.includes(v) ? v : undefined;
+        case "enum": return typeof v === "string" && /^[a-z0-9-]{1,40}$/.test(v) && s.options?.some((o) => optionValue(o) === v) ? v : undefined;
+        case "boolean": return v === true || v === "true" ? "true" : undefined;
+        case "string":
+        case "textarea": {
+            // Có ký tự điều khiển → bỏ (textarea vẫn nhận xuống dòng / tab)
+            if (typeof v !== "string" || v.length > (s.maxLength ?? (s.type === "string" ? 200 : 5000)))
+                return undefined;
+            const bad = s.type === "string" ? /[\u0000-\u001f\u007f]/ : /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;
+            return bad.test(v) ? undefined : v;
+        }
+        case "url": return typeof v === "string" && v.length <= 2048 && !/[\s"'<>`\\]/.test(v) && isSafeUrl(v) ? v : undefined;
+        case "datetime": {
+            // ISO 8601 có ngày + giờ (vd 2026-11-20T09:00, …Z, …+07:00) → chuỗi gốc
+            if (typeof v !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})?$/.test(v))
+                return undefined;
+            return Number.isNaN(Date.parse(v)) ? undefined : v;
+        }
     }
 }
+/** Giá trị của một mục enum (chuỗi hoặc { value, label }). */
+export const optionValue = (o) => (typeof o === "string" ? o : o.value);
 const applies = (c, type) => c.blocks === "*" || c.blocks.includes(type);
 /** Các khai báo CSS (bộ chọn hậu tố → khai báo) của một khối; rỗng = khối không có giá trị nào hợp lệ. */
 function declarations(list, type, attrs) {
@@ -56,7 +81,7 @@ function declarations(list, type, attrs) {
             continue;
         for (const [name, s] of Object.entries(c.attributes)) {
             const v = controlValue(s, attrs[name]);
-            if (v === undefined)
+            if (v === undefined || !CSS_TYPES.has(s.type))
                 continue;
             for (const [sel, decl] of Object.entries(s.css ?? {})) {
                 if (!okSel(sel) || !okDecl(decl))

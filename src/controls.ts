@@ -9,14 +9,21 @@
  *
  * Giá trị do người dùng nhập luôn qua kiểm kiểu (số trong khoảng, màu / độ dài / preset như `style`, enum trong danh sách);
  * mẫu CSS do plugin viết bị từ chối nếu có `{ } ; < @ \` hoặc url( / expression( / import. Không hợp lệ → bỏ, không chèn.
+ * Kiểu chỉ có ô (không sinh CSS, 1.23): boolean, string, url, textarea, datetime — plugin đọc giá trị qua controlValue.
  */
 import { colorCss, spacingValue } from "./style.js";
+import { isSafeUrl } from "./url.js";
+
+/** Kiểu được khai `css` (giá trị đã chuẩn hoá thành token CSS an toàn). */
+const CSS_TYPES = new Set(["number", "color", "length", "enum"]);
 
 export interface ControlSpec {
-  type: "number" | "color" | "length" | "enum";
+  type: "number" | "color" | "length" | "enum" | "boolean" | "string" | "url" | "textarea" | "datetime";
   default?: unknown;
-  /** enum: giá trị cho phép ([a-z0-9-]). */
-  options?: readonly string[];
+  /** enum: giá trị cho phép ([a-z0-9-]); `{ value, label }` để có nhãn (nhận "%khoá%", 1.23). */
+  options?: readonly (string | { value: string; label?: string })[];
+  /** string / textarea: độ dài tối đa (mặc định 200 / 5000). */
+  maxLength?: number;
   /** number: khoảng cho phép. */
   min?: number;
   max?: number;
@@ -34,7 +41,8 @@ export interface BlockControls {
 
 const ATTR = /^[a-zA-Z][a-zA-Z0-9_]{0,40}$/;
 const SUFFIX = /^(\s+[\w\s.#>:+~*()\-\[\]="',]{1,120})?$/;
-const DECL = /^([a-z][a-z-]{1,40})\s*:\s*(.{1,200})$/;
+// Thuộc tính CSS thường hoặc biến tuỳ biến (`--x: {{VALUE}}`, 1.23) — giá trị vẫn qua kiểm kiểu như mọi khai báo
+const DECL = /^([a-z][a-z-]{1,40}|--[a-z0-9][a-z0-9-]{0,40})\s*:\s*(.{1,200})$/;
 const BAD = /[{};<@\\]|url\(|expression\(|import/i;
 const okSel = (sel: string) => sel.startsWith("{{WRAPPER}}") && SUFFIX.test(sel.slice(11)) && !BAD.test(sel.slice(11));
 const okDecl = (d: string) => DECL.test(d) && !BAD.test(d.replaceAll("{{VALUE}}", "")) && d.includes("{{VALUE}}");
@@ -43,6 +51,7 @@ const okDecl = (d: string) => DECL.test(d) && !BAD.test(d.replaceAll("{{VALUE}}"
 export function defineBlockControls<T extends BlockControls>(c: T): T {
   for (const [name, s] of Object.entries(c.attributes)) {
     if (!ATTR.test(name)) throw new Error(`[controls] ${c.id}: tên thuộc tính không hợp lệ "${name}"`);
+    if (s.css && Object.keys(s.css).length && !CSS_TYPES.has(s.type)) throw new Error(`[controls] ${c.id}.${name}: kiểu "${s.type}" không sinh CSS`);
     for (const [sel, decl] of Object.entries(s.css ?? {})) {
       if (!okSel(sel)) throw new Error(`[controls] ${c.id}.${name}: bộ chọn không hợp lệ "${sel}"`);
       if (!okDecl(decl)) throw new Error(`[controls] ${c.id}.${name}: khai báo CSS không hợp lệ "${decl}"`);
@@ -51,7 +60,7 @@ export function defineBlockControls<T extends BlockControls>(c: T): T {
   return c;
 }
 
-/** Giá trị người dùng → chuỗi CSS an toàn, hoặc undefined (bỏ). */
+/** Giá trị người dùng → chuỗi CSS an toàn (number/color/length/enum) hoặc giá trị đã kiểm của kiểu chỉ có ô (không an toàn cho CSS/HTML thô), undefined = bỏ. */
 export function controlValue(s: ControlSpec, v: unknown): string | undefined {
   if (v === undefined || v === null || v === "") return undefined;
   switch (s.type) {
@@ -62,9 +71,26 @@ export function controlValue(s: ControlSpec, v: unknown): string | undefined {
     }
     case "color": return colorCss(v);
     case "length": return spacingValue(v);
-    case "enum": return typeof v === "string" && /^[a-z0-9-]{1,40}$/.test(v) && s.options?.includes(v) ? v : undefined;
+    case "enum": return typeof v === "string" && /^[a-z0-9-]{1,40}$/.test(v) && s.options?.some((o) => optionValue(o) === v) ? v : undefined;
+    case "boolean": return v === true || v === "true" ? "true" : undefined;
+    case "string":
+    case "textarea": {
+      // Có ký tự điều khiển → bỏ (textarea vẫn nhận xuống dòng / tab)
+      if (typeof v !== "string" || v.length > (s.maxLength ?? (s.type === "string" ? 200 : 5000))) return undefined;
+      const bad = s.type === "string" ? /[\u0000-\u001f\u007f]/ : /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;
+      return bad.test(v) ? undefined : v;
+    }
+    case "url": return typeof v === "string" && v.length <= 2048 && !/[\s"'<>`\\]/.test(v) && isSafeUrl(v) ? v : undefined;
+    case "datetime": {
+      // ISO 8601 có ngày + giờ (vd 2026-11-20T09:00, …Z, …+07:00) → chuỗi gốc
+      if (typeof v !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})?$/.test(v)) return undefined;
+      return Number.isNaN(Date.parse(v)) ? undefined : v;
+    }
   }
 }
+
+/** Giá trị của một mục enum (chuỗi hoặc { value, label }). */
+export const optionValue = (o: string | { value: string }) => (typeof o === "string" ? o : o.value);
 
 const applies = (c: BlockControls, type: string) => c.blocks === "*" || c.blocks.includes(type);
 
@@ -75,7 +101,7 @@ function declarations(list: readonly BlockControls[], type: string, attrs: Recor
     if (!applies(c, type)) continue;
     for (const [name, s] of Object.entries(c.attributes)) {
       const v = controlValue(s, attrs[name]);
-      if (v === undefined) continue;
+      if (v === undefined || !CSS_TYPES.has(s.type)) continue;
       for (const [sel, decl] of Object.entries(s.css ?? {})) {
         if (!okSel(sel) || !okDecl(decl)) continue;
         out.push([sel.slice(11), decl.replaceAll("{{VALUE}}", v)]);

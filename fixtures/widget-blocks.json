@@ -1,0 +1,261 @@
+{
+  "name": "widget-blocks",
+  "note": "1.23: widget lõi (iconBox, imageBox, iconList, counter, testimonial, progressBar) — icon / vị trí / separator lạ về mặc định, số ép kiểu và kẹp (level 2–6, duration ≤ 10000, value ≤ 100), URL javascript: giữ trong dữ liệu (renderer bỏ qua safeUrl), items giữ nguyên mảng (renderer lọc mục rỗng)",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "phone",
+                "title": "Gọi ngay",
+                "text": "Tư vấn miễn phí 24/7",
+                "href": "tel:+84900000000",
+                "position": "left",
+                "level": "4",
+                "textAlign": "center"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "<svg onload=x>",
+                "title": "Icon lạ về mặc định",
+                "position": "diagonal",
+                "level": 9,
+                "href": "javascript:alert(1)"
+              }
+            },
+            {
+              "type": "imageBox",
+              "attrs": {
+                "src": "https://example.com/a.jpg",
+                "mediaId": 12,
+                "alt": "Văn phòng",
+                "srcset": "https://example.com/a-300.jpg 300w, https://example.com/a.jpg 800w",
+                "webpSrcset": "https://example.com/a-300.webp 300w, https://example.com/a.webp 800w",
+                "width": "800",
+                "height": 600,
+                "title": "Văn phòng Hà Nội",
+                "text": "Mở cửa 8h–18h",
+                "href": "/lien-he"
+              }
+            },
+            {
+              "type": "iconList",
+              "attrs": {
+                "icon": "check",
+                "layout": "inline",
+                "items": [
+                  {
+                    "text": "Giao hàng nhanh"
+                  },
+                  {
+                    "text": "Đổi trả 30 ngày",
+                    "href": "/doi-tra",
+                    "icon": "heart"
+                  },
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "Mục có icon lạ",
+                    "icon": "nope"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "counter",
+              "attrs": {
+                "start": "0",
+                "end": "12500",
+                "suffix": "+",
+                "title": "Khách hàng",
+                "separator": ".",
+                "duration": 99999,
+                "textAlign": "center"
+              }
+            },
+            {
+              "type": "counter",
+              "attrs": {
+                "end": 98.6,
+                "prefix": "~",
+                "suffix": "%",
+                "separator": "bad",
+                "title": "Hài lòng"
+              }
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Dịch vụ rất tốt, giao hàng đúng hẹn.",
+                "name": "Nguyễn An",
+                "role": "Chủ shop",
+                "src": "https://example.com/an.jpg",
+                "mediaId": 7,
+                "textAlign": "center"
+              }
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Không có ảnh",
+                "name": "Bình"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "label": "Thiết kế",
+                "value": "85"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "label": "Quá 100",
+                "value": 140,
+                "showValue": "false"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "phone",
+                "title": "Gọi ngay",
+                "text": "Tư vấn miễn phí 24/7",
+                "href": "tel:+84900000000",
+                "position": "left",
+                "level": 4,
+                "textAlign": "center"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "Icon lạ về mặc định",
+                "level": 6,
+                "href": "javascript:alert(1)"
+              }
+            },
+            {
+              "type": "imageBox",
+              "attrs": {
+                "src": "https://example.com/a.jpg",
+                "mediaId": 12,
+                "alt": "Văn phòng",
+                "srcset": "https://example.com/a-300.jpg 300w, https://example.com/a.jpg 800w",
+                "webpSrcset": "https://example.com/a-300.webp 300w, https://example.com/a.webp 800w",
+                "width": 800,
+                "height": 600,
+                "title": "Văn phòng Hà Nội",
+                "text": "Mở cửa 8h–18h",
+                "href": "/lien-he"
+              }
+            },
+            {
+              "type": "iconList",
+              "attrs": {
+                "icon": "check",
+                "layout": "inline",
+                "items": [
+                  {
+                    "text": "Giao hàng nhanh"
+                  },
+                  {
+                    "text": "Đổi trả 30 ngày",
+                    "href": "/doi-tra",
+                    "icon": "heart"
+                  },
+                  {
+                    "text": ""
+                  },
+                  {
+                    "text": "Mục có icon lạ",
+                    "icon": "nope"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "counter",
+              "attrs": {
+                "start": 0,
+                "end": 12500,
+                "suffix": "+",
+                "title": "Khách hàng",
+                "separator": ".",
+                "duration": 10000,
+                "textAlign": "center"
+              }
+            },
+            {
+              "type": "counter",
+              "attrs": {
+                "end": 98.6,
+                "prefix": "~",
+                "suffix": "%",
+                "title": "Hài lòng"
+              }
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Dịch vụ rất tốt, giao hàng đúng hẹn.",
+                "name": "Nguyễn An",
+                "role": "Chủ shop",
+                "src": "https://example.com/an.jpg",
+                "mediaId": 7,
+                "textAlign": "center"
+              }
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Không có ảnh",
+                "name": "Bình"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "label": "Thiết kế",
+                "value": 85
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "label": "Quá 100",
+                "value": 100,
+                "showValue": false
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

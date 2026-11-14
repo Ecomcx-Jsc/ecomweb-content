@@ -20,6 +20,8 @@ export interface NodeSpec {
   attrs?: Record<string, AttrSpec>;
 }
 
+import { ICON_NAMES } from "./widgets.js";
+
 const s = (extra: Partial<AttrSpec> = {}): AttrSpec => ({ type: "string", ...extra });
 const n = (extra: Partial<AttrSpec> = {}): AttrSpec => ({ type: "number", ...extra });
 const i = (extra: Partial<AttrSpec> = {}): AttrSpec => ({ type: "integer", ...extra });
@@ -133,7 +135,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   avatar: { attrs: { size: i({ min: 16, max: 256, default: 48 }), link: b({ default: true }) } },
   queryTotal: { attrs: { textAlign: align } },
   // 1.18: danh sách chuyên mục/thẻ (list|cloud), cây trang con, lưu trữ theo tháng
-  icon: { attrs: { name: s({ enum: ["check", "x", "star", "heart", "arrowRight", "phone", "mail", "mapPin", "clock", "info", "alert", "externalLink"], default: "star" }), size: i({ min: 12, max: 128, default: 24 }), label: s(), textAlign: align } },
+  icon: { attrs: { name: s({ enum: ICON_NAMES, default: "star" }), size: i({ min: 12, max: 128, default: 24 }), label: s(), textAlign: align } },
   loginout: { attrs: { loginText: s(), logoutText: s(), textAlign: align } },
   termList: { attrs: { taxonomy: s({ default: "category" }), display: s({ enum: ["list", "cloud"], default: "list" }), showCount: b({ default: false }), hierarchical: b({ default: false }), hideEmpty: b({ default: true }) } },
   pageList: { attrs: { parentId: i({ min: 1 }), depth: i({ min: 1, max: 3, default: 2 }) } },
@@ -166,6 +168,19 @@ export const CORE_NODES: Record<string, NodeSpec> = {
       required: b({ default: false }), options: { type: "json", default: [] }, width: s({ enum: ["full", "half"], default: "full" }),
     },
   },
+  // 1.23: widget lõi (markup chung ở widgets.ts). Chữ là chữ thường (không HTML); ảnh như mediaText (src + mediaId + alt).
+  iconBox: { attrs: { icon: s({ enum: ICON_NAMES, default: "star" }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), position: s({ enum: ["top", "left"], default: "top" }), textAlign: align } },
+  imageBox: { attrs: { src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), textAlign: align } },
+  /** items: [{ text, href?, icon? }] — icon riêng của mục thắng icon chung. */
+  iconList: { attrs: { items: { type: "json", default: [] }, icon: s({ enum: ICON_NAMES, default: "check" }), layout: s({ enum: ["list", "inline"], default: "list" }) } },
+  counter: {
+    attrs: {
+      start: n({ default: 0 }), end: n({ default: 100 }), prefix: s(), suffix: s(), title: s(), duration: i({ min: 0, max: 10000, default: 2000 }),
+      separator: s({ enum: ["none", ",", ".", "space"], default: "none" }), textAlign: align,
+    },
+  },
+  testimonial: { attrs: { quote: s(), name: s(), role: s(), src: url(), mediaId: { type: "json" }, alt: s(), textAlign: align } },
+  progressBar: { attrs: { label: s(), value: i({ min: 0, max: 100, default: 50 }), showValue: b({ default: true }) } },
 };
 
 /** Tên ô của form: chữ thường, số, gạch dưới — khoá trong bài gửi. */
