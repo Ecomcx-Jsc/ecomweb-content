@@ -278,6 +278,14 @@
     background: var(--ecx-button-bg, var(--ecx-color-primary)); color: var(--ecx-button-fg, var(--ecx-color-primary-fg)); }
   :where(.ecx-form) :where(button[type="submit"]:focus-visible) { outline: var(--ecx-focus-ring); outline-offset: var(--ecx-focus-offset); }
   :where(.ecx-form) :where(button[type="submit"]:disabled) { opacity: .6; cursor: progress; }
+  /* Khối Tìm kiếm (SearchForm của SDK: form.search-form > input[type=search] + button): kiểu như ô nhập / nút của form */
+  :where(.ecx-search) :where(.search-form) { display: flex; flex-wrap: wrap; gap: .5em; max-width: 36rem; }
+  :where(.ecx-search) :where(input[type="search"]) { flex: 1 1 12rem; min-height: var(--ecx-input-height); box-sizing: border-box; padding: var(--ecx-input-padding); border: var(--ecx-border-width) solid var(--ecx-input-border);
+    border-radius: var(--ecx-input-radius); background: var(--ecx-input-bg, var(--ecx-color-background)); color: inherit; font: inherit; }
+  :where(.ecx-search) :where(input[type="search"]:focus-visible) { outline: 2px solid var(--ecx-color-primary); outline-offset: 1px; }
+  :where(.ecx-search) :where(button[type="submit"]) { min-height: var(--ecx-input-height); padding: var(--ecx-button-padding); border: 0; border-radius: var(--ecx-button-radius); cursor: pointer; font: inherit; font-weight: var(--ecx-button-font-weight);
+    background: var(--ecx-button-bg, var(--ecx-color-primary)); color: var(--ecx-button-fg, var(--ecx-color-primary-fg)); }
+  :where(.ecx-search) :where(button[type="submit"]:focus-visible) { outline: var(--ecx-focus-ring); outline-offset: var(--ecx-focus-offset); }
   :where(.ecx-form) :where(.ecx-form-error) { color: var(--ecx-color-danger); font-size: .875em; }
   :where(.ecx-form-success) { padding: .75em 1em; border-radius: var(--ecx-radius-md); background: color-mix(in srgb, var(--ecx-color-success) 10%, transparent); }
 
@@ -285,6 +293,12 @@
      khối "Rộng" / "Toàn trang" tràn ra nhờ luật độ rộng bên dưới (đứng sau nên thắng). */
   :where(.ecx-layout-constrained) { box-sizing: border-box; padding-left: var(--ecx-gutter, 1.25rem); padding-right: var(--ecx-gutter, 1.25rem); }
   :where(.ecx-layout-constrained) > :where(*) { max-width: var(--ecx-content-width, 760px); margin-left: auto; margin-right: auto; }
+  /* Theme hay đặt `p { margin: 0 0 1em }` ngoài layer → thắng margin auto ở trên, đoạn văn dính lề trái (khung soạn vẫn giữa).
+     Như is-layout-constrained của WP: căn giữa bằng !important (trong layer vẫn thắng CSS thường của theme); trừ khối có độ rộng / thả nổi. */
+  :where(.ecx-layout-constrained) > :where(:not(.ecx-align-wide, .ecx-align-full, .ecx-align-left, .ecx-align-right)) { margin-left: auto !important; margin-right: auto !important; }
+  /* Landing: section "Toàn trang" đầu / cuối sát header / footer (không chừa khoảng trắng do margin của khối) */
+  :where(.ecx-landing) > :where(.ecx-layout-constrained) > :where(.ecx-align-full:first-child) { margin-top: 0 !important; }
+  :where(.ecx-landing) > :where(.ecx-layout-constrained) > :where(.ecx-align-full:last-child) { margin-bottom: 0 !important; }
   :where(.ecx-page-title) { box-sizing: border-box; max-width: calc(var(--ecx-content-width, 760px) + 2 * var(--ecx-gutter, 1.25rem)); margin: 2rem auto 1rem; padding: 0 var(--ecx-gutter, 1.25rem); }
 
   /* 1.23: widget lõi (markup: src/widgets.ts). Chỉ token; icon theo màu chính, chữ phụ theo màu muted. */
