@@ -413,6 +413,11 @@
 
   /* 1.23: widget lõi (markup: src/widgets.ts). Chỉ token; icon theo màu chính, chữ phụ theo màu muted. */
   :where(.ecx-widget-icon) { width: 1em; height: 1em; flex: none; }
+  /* Khối Icon: khung nền nhạt theo màu icon (tròn / vuông); có liên kết thì giữ màu của khối */
+  :where(.ecx-icon-shape) { display: inline-grid; place-items: center; color: inherit; line-height: 0; }
+  :where(.ecx-icon-shape.is-circle, .ecx-icon-shape.is-square) { background: color-mix(in srgb, currentColor 12%, transparent); }
+  :where(.ecx-icon-shape.is-circle) { border-radius: 50%; }
+  :where(.ecx-icon-shape.is-square) { border-radius: var(--ecx-radius-md); }
   :where(.ecx-icon-box, .ecx-image-box, .ecx-counter, .ecx-testimonial, .ecx-progress, .ecx-icon-list) { margin: var(--ecx-flow) 0; }
   :where(.ecx-icon-box) { display: flex; flex-direction: column; gap: var(--ecx-spacing-sm); }
   :where(.ecx-icon-box.is-left) { flex-direction: row; align-items: flex-start; gap: var(--ecx-spacing-md); }

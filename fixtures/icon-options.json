@@ -1,0 +1,72 @@
+{
+  "name": "icon-options",
+  "note": "Khối Icon (1.27): độ dày nét, khung tròn / vuông, liên kết; giá trị sai bị bỏ hoặc kẹp về khoảng cho phép",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "icon",
+              "attrs": {
+                "name": "heart",
+                "size": 40,
+                "stroke": 1.5,
+                "iconStyle": "circle",
+                "href": "/lien-he",
+                "linkTarget": "_blank"
+              }
+            },
+            {
+              "type": "icon",
+              "attrs": {
+                "name": "star",
+                "stroke": 9,
+                "iconStyle": "blob",
+                "href": "javascript:alert(1)",
+                "linkTarget": "_top"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "icon",
+              "attrs": {
+                "name": "heart",
+                "size": 40,
+                "stroke": 1.5,
+                "iconStyle": "circle",
+                "href": "/lien-he",
+                "linkTarget": "_blank"
+              }
+            },
+            {
+              "type": "icon",
+              "attrs": {
+                "name": "star",
+                "stroke": 4,
+                "href": "javascript:alert(1)"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

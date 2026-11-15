@@ -149,7 +149,8 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   avatar: { attrs: { size: i({ min: 16, max: 256, default: 48 }), link: b({ default: true }) } },
   queryTotal: { attrs: { textAlign: align } },
   // 1.18: danh sách chuyên mục/thẻ (list|cloud), cây trang con, lưu trữ theo tháng
-  icon: { attrs: { name: s({ enum: ICON_NAMES, default: "star" }), size: i({ min: 12, max: 128, default: 24 }), label: s(), textAlign: align } },
+  // 1.27: độ dày nét, khung nền (tròn / vuông — nền nhạt theo màu icon), liên kết
+  icon: { attrs: { name: s({ enum: ICON_NAMES, default: "star" }), size: i({ min: 12, max: 128, default: 24 }), label: s(), textAlign: align, stroke: n({ min: 0.5, max: 4, default: 2 }), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }) } },
   loginout: { attrs: { loginText: s(), logoutText: s(), textAlign: align } },
   termList: { attrs: { taxonomy: s({ default: "category" }), display: s({ enum: ["list", "cloud"], default: "list" }), showCount: b({ default: false }), hierarchical: b({ default: false }), hideEmpty: b({ default: true }) } },
   pageList: { attrs: { parentId: i({ min: 1 }), depth: i({ min: 1, max: 3, default: 2 }) } },
