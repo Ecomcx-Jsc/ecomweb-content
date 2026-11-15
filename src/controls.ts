@@ -55,8 +55,10 @@ export interface PartSpec {
   selector: string;
   /** Nhóm thuộc tính hiện ở bảng. */
   props: readonly PartProp[];
-  /** Có thẻ "Rê chuột": kiểu khi rê chuột lên CẢ khối (vd icon đổi màu khi rê thẻ). */
-  hover?: boolean;
+  /** Có thẻ "Rê chuột": true = rê lên CẢ khối (vd icon đổi màu khi rê thẻ); "self" = rê lên chính phần (vd tiêu đề mục, nút). */
+  hover?: boolean | "self";
+  /** Có thẻ "Đang mở / đang chọn": bộ chọn của phần ở trạng thái đó (vd "{{WRAPPER}} .ecx-details[open] > summary"). */
+  active?: string;
   /** Có công tắc "Hiện": tắt → phần bị ẩn (display: none) trên website và khung soạn. */
   toggle?: boolean;
 }
@@ -72,7 +74,7 @@ export interface BlockControls {
 }
 
 /** Giá trị đã lưu của một phần. */
-export interface PartValue { style?: BlockStyle; hover?: BlockStyle; hidden?: true }
+export interface PartValue { style?: BlockStyle; hover?: BlockStyle; active?: BlockStyle; hidden?: true }
 
 const PART_NAME = /^[a-z][a-zA-Z0-9]{0,30}$/;
 // Kiểu của một phần: bỏ nhóm chỉ hợp với cả khối (bố cục, chuyển động, ẩn theo khổ, ảnh nền, ghim, hover lồng)
@@ -94,10 +96,17 @@ export function normalizeParts(v: unknown): Record<string, PartValue> | undefine
     const pv: PartValue = {};
     const st = partStyle(r.style); if (st) pv.style = st;
     const hv = partStyle(r.hover); if (hv) pv.hover = hv;
+    const ac = partStyle(r.active); if (ac) pv.active = ac;
     if (r.hidden === true) pv.hidden = true;
     if (Object.keys(pv).length) out[k] = pv;
   }
   return Object.keys(out).length ? out : undefined;
+}
+
+/** Bộ chọn của phần: một hoặc nhiều "{{WRAPPER}}…" cách nhau dấu phẩy → các hậu tố; sai một nhánh → null. */
+function selectorList(sel: string): string[] | null {
+  const parts = sel.split(",").map((x) => x.trim()).filter(Boolean);
+  return parts.length && parts.every(okSel) ? parts.map((x) => x.slice(11)) : null;
 }
 
 /** Các phần của loại khối (lõi + plugin), theo thứ tự khai. */
@@ -110,13 +119,16 @@ function partsCss(list: readonly BlockControls[], type: string, vals: Record<str
   let css = "";
   for (const [name, spec] of partsFor(list, type)) {
     const v = vals[name];
-    if (!v || !okSel(spec.selector)) continue;
-    const suffix = spec.selector.slice(11);
-    const sel = `.${cls}.${cls}${suffix}`;
+    const suffixes = selectorList(spec.selector);
+    if (!v || !suffixes) continue;
+    const base = `.${cls}.${cls}`;
+    const sel = suffixes.map((x) => base + x).join(",");
     if (v.hidden && spec.toggle) { css += `${sel}{display:none!important}`; continue; }
     if (v.style) css += ruleCss(sel, v.style);
-    // Rê chuột lên cả khối: `.cls:hover <phần>`
-    if (v.hover && spec.hover) css += ruleCss(`.${cls}.${cls}:hover${suffix}`, v.hover);
+    // Rê chuột: lên cả khối (`.cls:hover <phần>`) hoặc lên chính phần (`.cls <phần>:hover`)
+    if (v.hover && spec.hover) css += ruleCss(suffixes.map((x) => (spec.hover === "self" ? `${base}${x}:hover` : `${base}:hover${x}`)).join(","), v.hover);
+    const act = spec.active ? selectorList(spec.active) : null;
+    if (v.active && act) css += ruleCss(act.map((x) => base + x).join(","), v.active);
   }
   return css;
 }
@@ -142,7 +154,8 @@ export function defineBlockControls<T extends BlockControls>(c: T): T {
   }
   for (const [name, part] of Object.entries(c.parts ?? {})) {
     if (!PART_NAME.test(name)) throw new Error(`[controls] ${c.id}: tên phần không hợp lệ "${name}"`);
-    if (!okSel(part.selector)) throw new Error(`[controls] ${c.id}.parts.${name}: bộ chọn không hợp lệ "${part.selector}"`);
+    if (!selectorList(part.selector)) throw new Error(`[controls] ${c.id}.parts.${name}: bộ chọn không hợp lệ "${part.selector}"`);
+    if (part.active && !selectorList(part.active)) throw new Error(`[controls] ${c.id}.parts.${name}: bộ chọn trạng thái không hợp lệ "${part.active}"`);
   }
   return c;
 }

@@ -164,6 +164,34 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     track: { label: "%part.track%", selector: `${W} .ecx-progress-track`, props: ["background", "radius", "size", "border"] },
     bar: { label: "%part.bar%", selector: `${W} .ecx-progress-bar`, props: ["background"] },
   } }),
+  // Accordion / Chi tiết: mục (khung từng mục), tiêu đề mục (thường / rê chuột / đang mở), nội dung mục
+  defineBlockControls({ id: "core/accordion-parts", blocks: ["accordion", "details"], attributes: {}, parts: {
+    item: { label: "%part.item%", selector: `${W} details, ${W}:is(details)`, props: ["background", "border", "radius", "shadow", "padding", "margin"] },
+    title: { label: "%part.paneTitle%", selector: `${W} details > summary, ${W}:is(details) > summary`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
+      active: `${W} details[open] > summary, ${W}:is([open]) > summary` },
+    content: { label: "%part.paneContent%", selector: `${W} details > :not(summary), ${W}:is(details) > :not(summary)`, props: ["typography", "color", "background", "padding"] },
+  } }),
+  // Tab: thanh tab, nút tab (thường / rê chuột / đang chọn), vùng nội dung
+  defineBlockControls({ id: "core/tabs-parts", blocks: ["tabs"], attributes: {}, parts: {
+    list: { label: "%part.tabList%", selector: `${W} [role=tablist]`, props: ["background", "border", "padding", "margin"] },
+    tab: { label: "%part.tab%", selector: `${W} [role=tab]`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
+      active: `${W} [role=tab][aria-selected=true]` },
+    panel: { label: "%part.panel%", selector: `${W} [role=tabpanel]`, props: ["typography", "color", "background", "border", "radius", "padding"] },
+  } }),
+  // Nút: chính nút (thường / rê chuột lên nút) — khối nút đứng riêng có vỏ <p>, trong nhóm nút class ở chính <a>
+  defineBlockControls({ id: "core/button-parts", blocks: ["button"], attributes: {}, parts: {
+    button: { label: "%part.button%", selector: `${W}:is(a), ${W} a`, props: ["typography", "color", "background", "border", "radius", "shadow", "padding"], hover: "self" },
+  } }),
+  // Ảnh: chính ảnh (thường / rê chuột lên khối) và chú thích
+  defineBlockControls({ id: "core/image-parts", blocks: ["image"], attributes: {}, parts: {
+    image: { label: "%part.image%", selector: `${W} img, ${W}:is(img)`, props: ["border", "radius", "shadow", "padding", "background"], hover: true },
+    caption: { label: "%part.caption%", selector: `${W} figcaption`, props: ["typography", "color", "background", "padding", "margin"], toggle: true },
+  } }),
+  // Tiêu đề / Đoạn văn: chữ tô sáng (<mark>) và liên kết trong chữ
+  defineBlockControls({ id: "core/text-parts", blocks: ["heading", "paragraph"], attributes: {}, parts: {
+    highlight: { label: "%part.highlight%", selector: `${W} mark`, props: ["typography", "color", "background", "border", "radius", "padding"] },
+    link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
+  } }),
   defineBlockControls({ id: "core/icon-list-parts", blocks: ["iconList"], attributes: {}, parts: {
     item: { label: "%part.item%", selector: `${W} > li`, props: ["typography", "color", "padding"] },
     icon: { label: "%part.icon%", selector: `${W} .ecx-widget-icon`, props: ["color", "iconSize", "margin"], toggle: true },

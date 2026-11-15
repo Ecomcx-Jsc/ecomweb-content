@@ -59,3 +59,12 @@ test("phần: giá trị sai bị bỏ; nhóm chỉ hợp cả khối (chuyển 
   assert.equal(controlsCss(CORE_CONTROLS, "iconBox", { parts: { text: { hidden: true } } }) !== null, true);
   assert.deepEqual(partsFor(CORE_CONTROLS, "iconBox").map(([n]) => n), ["box", "icon", "title", "text"]);
 });
+
+test("phần (1.26): rê chuột lên chính phần, trạng thái đang mở, bộ chọn nhiều nhánh", () => {
+  const r = controlsCss(CORE_CONTROLS, "accordion", { parts: { title: { hover: { color: { text: "#111111" } }, active: { color: { background: "#eeeeee" } } } } })!;
+  const c = r.cls;
+  assert.ok(r.css.includes(`.${c}.${c} details > summary:hover,.${c}.${c}:is(details) > summary:hover{color:#111111`), r.css);
+  assert.ok(r.css.includes(`.${c}.${c} details[open] > summary,.${c}.${c}:is([open]) > summary{background:#eeeeee`), r.css);
+  const img = controlsCss(CORE_CONTROLS, "image", { parts: { image: { style: { radius: "12px" } } } })!;
+  assert.ok(img.css.includes(`.${img.cls}.${img.cls} img,.${img.cls}.${img.cls}:is(img){border-radius:12px`), img.css);
+});
