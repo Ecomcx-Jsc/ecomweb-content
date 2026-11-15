@@ -120,7 +120,8 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
   customHtml: { attrs: { align: wide, html: s() } },
   socialLinks: { attrs: { links: { type: "json", default: [] }, size: s({ enum: ["small", "medium", "large"], default: "medium" }), align: s({ enum: ["left", "center", "right"] }), showLabels: b({ default: false }) } },
-  tableOfContents: { attrs: { title: s(), maxLevel: i({ min: 2, max: 4, default: 3 }) } },
+  // 1.26: khoảng cấp tiêu đề H2–H6, thu gọn được (+ bắt đầu thu gọn), kiểu danh sách, số cột, cuộn mượt, tô đậm mục đang đọc
+  tableOfContents: { attrs: { title: s(), minLevel: i({ min: 2, max: 6, default: 2 }), maxLevel: i({ min: 2, max: 6, default: 3 }), collapsible: b({ default: false }), startCollapsed: b({ default: false }), listStyle: s({ enum: ["numbers", "bullets", "none"], default: "numbers" }), columns: i({ min: 1, max: 3, default: 1 }), smoothScroll: b({ default: false }), highlight: b({ default: false }) } },
   preformatted: {},
   // Khối động (1.6): lấy dữ liệu lúc hiển thị theo ngữ cảnh (website, trang đang xem, bài trong vòng lặp) — dùng trong template
   siteTitle: { attrs: { level: i({ min: 0, max: 6, default: 0 }), link: b({ default: true }), textAlign: align } },

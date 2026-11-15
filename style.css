@@ -283,7 +283,17 @@
   :where(.ecx-social.is-large) :where(a) { font-size: 1.5em; }
   :where(.ecx-toc) { margin: var(--ecx-flow) 0; padding: 1em 1.25em; border: var(--ecx-border-width) solid var(--ecx-color-border); border-radius: var(--ecx-radius-md); }
   :where(.ecx-toc-title) { margin: 0 0 .5em; font-weight: 700; }
-  :where(.ecx-toc) :where(ol) { margin: 0; padding-left: 1.25em; }
+  :where(.ecx-toc) :where(ol, ul) { margin: 0; padding-left: 1.25em; }
+  /* 1.26 Mục lục: thu gọn (details), danh sách không dấu, chia cột, mục đang đọc, cuộn mượt */
+  :where(.ecx-toc-details) > :where(summary.ecx-toc-title) { cursor: pointer; }
+  :where(.ecx-toc-details:not([open])) > :where(summary.ecx-toc-title) { margin-bottom: 0; }
+  :where(.ecx-toc-list.is-plain) { list-style: none; padding-left: 0; }
+  :where(.ecx-toc-list.has-cols-2) { columns: 2; column-gap: var(--ecx-spacing-lg); }
+  :where(.ecx-toc-list.has-cols-3) { columns: 3; column-gap: var(--ecx-spacing-lg); }
+  :where(.ecx-toc-list) > :where(li) { break-inside: avoid; }
+  @media (max-width: 640px) { :where(.ecx-toc-list.has-cols-2, .ecx-toc-list.has-cols-3) { columns: 1; } }
+  :where(.ecx-toc) :where(a[aria-current="location"]) { font-weight: 700; color: var(--ecx-color-link); }
+  @media (prefers-reduced-motion: no-preference) { :where(html:has(.ecx-toc.is-smooth)) { scroll-behavior: smooth; } }
   :where(.ecx-pre) { white-space: pre-wrap; font-family: var(--ecx-font-family-mono); font-size: .9em; }
 
   /* Biến thể kiểu có sẵn (attrs.blockStyle → .ecx-is-<tên>) */

@@ -1,0 +1,73 @@
+{
+  "name": "toc-options",
+  "note": "Mục lục 1.26: khoảng cấp H2–H6, thu gọn, kiểu danh sách, số cột, cuộn mượt, tô mục đang đọc; số kẹp vào khoảng, giá trị lạ bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "minLevel": 3,
+                "maxLevel": 5,
+                "collapsible": true,
+                "startCollapsed": true,
+                "listStyle": "none",
+                "columns": 2,
+                "smoothScroll": true,
+                "highlight": true
+              }
+            },
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "minLevel": 1,
+                "listStyle": "roman",
+                "columns": 9
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "minLevel": 3,
+                "maxLevel": 5,
+                "collapsible": true,
+                "startCollapsed": true,
+                "listStyle": "none",
+                "columns": 2,
+                "smoothScroll": true,
+                "highlight": true
+              }
+            },
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "minLevel": 2,
+                "columns": 3
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
