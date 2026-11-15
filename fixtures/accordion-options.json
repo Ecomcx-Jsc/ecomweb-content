@@ -1,0 +1,120 @@
+{
+  "name": "accordion-options",
+  "note": "Accordion 1.26: 2 cột, icon mở / đóng + bên, thẻ tiêu đề mục, FAQ Schema; giá trị sai bị bỏ (số cột ngoài khoảng bị kẹp)",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "accordion",
+              "attrs": {
+                "columns": 2,
+                "icon": "plus",
+                "iconSide": "left",
+                "titleTag": "h3",
+                "faq": true
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Hỏi?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "attrs": {
+                "columns": 5,
+                "icon": "star",
+                "iconSide": "top",
+                "titleTag": "p",
+                "faq": "yes"
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Hỏi?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "accordion",
+              "attrs": {
+                "columns": 2,
+                "icon": "plus",
+                "iconSide": "left",
+                "titleTag": "h3",
+                "faq": true
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Hỏi?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "attrs": {
+                "columns": 2
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Hỏi?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

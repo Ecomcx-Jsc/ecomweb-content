@@ -234,6 +234,19 @@
   :where(.ecx-details) { margin: 1em 0; padding: .75em 1em; border: var(--ecx-border-width) solid var(--ecx-color-border); border-radius: var(--ecx-radius-md); }
   :where(.ecx-details) > :where(summary) { cursor: pointer; font-weight: 600; }
   :where(.ecx-details[open]) > :where(summary) { margin-bottom: .5em; }
+  /* 1.26 Accordion: icon mở / đóng tự vẽ (mũi tên xoay | dấu cộng → trừ | không), bên phải hoặc trái; tiêu đề mục có thể là h2–h6; chia 2 cột */
+  :where(.ecx-accordion[class*="has-icon-"]) > :where(.ecx-details) > :where(summary) { display: flex; align-items: center; gap: .75em; list-style: none; }
+  :where(.ecx-accordion[class*="has-icon-"]) > :where(.ecx-details) > :where(summary)::-webkit-details-marker { display: none; }
+  :where(.ecx-accordion.has-icon-arrow) > :where(.ecx-details) > :where(summary)::after { content: ""; flex: none; width: .5em; height: .5em; margin-inline-start: auto; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-25%) rotate(45deg); transition: transform .2s var(--ecx-motion-ease); }
+  :where(.ecx-accordion.has-icon-arrow) > :where(.ecx-details[open]) > :where(summary)::after { transform: translateY(25%) rotate(-135deg); }
+  :where(.ecx-accordion.has-icon-plus) > :where(.ecx-details) > :where(summary)::after { content: "+"; flex: none; margin-inline-start: auto; font-size: 1.25em; line-height: 1; font-weight: 400; }
+  :where(.ecx-accordion.has-icon-plus) > :where(.ecx-details[open]) > :where(summary)::after { content: "−"; }
+  :where(.ecx-accordion.is-icon-left) > :where(.ecx-details) > :where(summary) { flex-direction: row-reverse; justify-content: flex-end; }
+  :where(.ecx-accordion.is-icon-left) > :where(.ecx-details) > :where(summary)::after { margin-inline-start: 0; }
+  :where(.ecx-details-title) { margin: 0; font: inherit; }
+  :where(.ecx-accordion.is-cols-2) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--ecx-spacing-md); align-items: start; }
+  @media (max-width: 640px) { :where(.ecx-accordion.is-cols-2) { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-accordion.has-icon-arrow) > :where(.ecx-details) > :where(summary)::after { transition: none; } }
   :where(.ecx-social) { display: flex; flex-wrap: wrap; gap: .5em; margin: 1em 0; padding: 0; list-style: none; }
   :where(.ecx-social.is-center) { justify-content: center; }
   :where(.ecx-social.is-right) { justify-content: flex-end; }

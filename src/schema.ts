@@ -111,7 +111,8 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   tab: { attrs: { title: s(), icon: s({ enum: ICON_NAMES }), subtitle: s() } },
   carousel: { attrs: { align: wide, slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
   shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },
-  accordion: { attrs: { align: wide, multiple: b({ default: false }) } },
+  // 1.26: chia 2 cột, icon mở / đóng (mũi tên | dấu cộng | không) bên trái / phải, thẻ của tiêu đề mục, FAQ Schema (Google)
+  accordion: { attrs: { align: wide, multiple: b({ default: false }), columns: i({ min: 1, max: 2, default: 1 }), icon: s({ enum: ["arrow", "plus", "none"], default: "arrow" }), iconSide: s({ enum: ["left", "right"], default: "right" }), titleTag: s({ enum: ["div", "h2", "h3", "h4", "h5", "h6"], default: "div" }), faq: b({ default: false }) } },
   countdown: { attrs: { target: s(), label: s(), expiredText: s() } },
   rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
   customHtml: { attrs: { align: wide, html: s() } },
