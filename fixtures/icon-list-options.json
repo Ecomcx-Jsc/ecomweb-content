@@ -1,0 +1,95 @@
+{
+  "name": "icon-list-options",
+  "note": "Danh sách icon (1.27): số cột, căn icon, khung icon, độ dày nét; mục có icon \"none\" giữ nguyên trong mảng; giá trị sai bị bỏ / kẹp",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconList",
+              "attrs": {
+                "items": [
+                  {
+                    "text": "A",
+                    "icon": "none"
+                  },
+                  {
+                    "text": "B",
+                    "href": "/b"
+                  }
+                ],
+                "columns": 3,
+                "iconAlign": "center",
+                "iconStyle": "circle",
+                "stroke": 1.5
+              }
+            },
+            {
+              "type": "iconList",
+              "attrs": {
+                "items": [
+                  {
+                    "text": "C"
+                  }
+                ],
+                "columns": 9,
+                "iconAlign": "middle",
+                "iconStyle": "x",
+                "stroke": "abc"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconList",
+              "attrs": {
+                "items": [
+                  {
+                    "text": "A",
+                    "icon": "none"
+                  },
+                  {
+                    "text": "B",
+                    "href": "/b"
+                  }
+                ],
+                "columns": 3,
+                "iconAlign": "center",
+                "iconStyle": "circle",
+                "stroke": 1.5
+              }
+            },
+            {
+              "type": "iconList",
+              "attrs": {
+                "items": [
+                  {
+                    "text": "C"
+                  }
+                ],
+                "columns": 4
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

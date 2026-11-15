@@ -21,7 +21,9 @@ export interface WidgetEl {
 export declare const WIDGET_BLOCKS: readonly ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar"];
 type Attrs = Record<string, any>;
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */
-export declare function iconEl(name: unknown, fallback?: string): WidgetEl;
+/** Class của danh sách icon (dùng chung website và khung soạn). */
+export declare function iconListClass(a: Record<string, any>): string;
+export declare function iconEl(name: unknown, fallback?: string, stroke?: unknown): WidgetEl;
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
 export declare const counterDecimals: (a: Attrs) => number;
 /** Viết số của Counter: dấu nhóm nghìn theo `separator` (none | , | . | space); dấu thập phân "," khi nhóm bằng ".", còn lại ".". */

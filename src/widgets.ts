@@ -41,11 +41,17 @@ type Attrs = Record<string, any>;
 const str = (v: unknown) => (typeof v === "string" ? v : "");
 
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */
-export function iconEl(name: unknown, fallback = "star"): WidgetEl {
+/** Class của danh sách icon (dùng chung website và khung soạn). */
+export function iconListClass(a: Record<string, any>): string {
+  const cols = a.layout === "inline" ? 1 : Math.min(4, Math.max(1, Math.round(Number(a.columns)) || 1));
+  return cls("ecx-icon-list", a.layout === "inline" && "is-inline", cols > 1 && `is-cols-${cols}`, (a.iconAlign === "center" || a.iconAlign === "bottom") && `is-icon-${a.iconAlign}`,
+    (a.iconStyle === "circle" || a.iconStyle === "square") && `has-icon-${a.iconStyle}`);
+}
+export function iconEl(name: unknown, fallback = "star", stroke?: unknown): WidgetEl {
   const d = ICON_PATHS[str(name)] ?? ICON_PATHS[fallback];
   return {
     tag: "svg", className: "ecx-widget-icon",
-    props: { viewBox: "0 0 24 24", width: 24, height: 24, fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false" },
+    props: { viewBox: "0 0 24 24", width: 24, height: 24, fill: "none", stroke: "currentColor", strokeWidth: Math.min(4, Math.max(0.5, Number(stroke) || 2)), strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false" },
     children: [{ tag: "path", props: { d } }],
   };
 }
@@ -118,9 +124,10 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
       const items = (Array.isArray(a.items) ? a.items : []).filter((it: any) => it && typeof it.text === "string" && it.text);
       if (!items.length && !editing) return null;
       return {
-        tag: "ul", className: `ecx-icon-list${a.layout === "inline" ? " is-inline" : ""}`,
+        tag: "ul", className: iconListClass(a),
         children: items.map((it: any): WidgetEl => {
-          const body = [iconEl(ICON_PATHS[str(it.icon)] ? it.icon : a.icon, "check"), { tag: "span", children: [it.text] } as WidgetEl];
+          const label: WidgetEl = { tag: "span", children: [it.text] };
+          const body = it.icon === "none" ? [label] : [iconEl(ICON_PATHS[str(it.icon)] ? it.icon : a.icon, "check", a.stroke), label];
           const link = it.href ? safeUrl(it.href, "") : "";
           return { tag: "li", children: link ? [{ tag: "a", props: { href: link }, children: body }] : body };
         }),

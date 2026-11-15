@@ -36,6 +36,11 @@ export const CORE_CONTROLS = [
             buttonHoverColor: color("button", btnHover("--ecx-btn-color: {{VALUE}}"), "hover"),
             buttonHoverBg: color("button", btnHover("--ecx-btn-bg: {{VALUE}}"), "hover"),
             buttonSize: choice("button", ["xs", "sm", "md", "lg", "xl"], { [W]: "--ecx-button-padding: var(--ecx-button-padding-{{VALUE}})" }),
+            // 1.27: rộng cố định (theo khổ); icon của nút: màu, màu khi rê, cỡ
+            buttonWidth: length("button", { [W]: "--ecx-button-width: {{VALUE}}" }, true),
+            buttonIconColor: color("icon", { [`${W} .ecx-widget-icon`]: "color: {{VALUE}}" }),
+            buttonIconHoverColor: color("icon", { [`${W}:is(a):hover .ecx-widget-icon`]: "color: {{VALUE}}", [`${W} a:hover .ecx-widget-icon`]: "color: {{VALUE}}" }, "hover"),
+            buttonIconSize: length("icon", { [`${W} .ecx-widget-icon`]: "font-size: {{VALUE}}" }),
             buttonRadius: length("button", { [W]: "--ecx-button-radius: {{VALUE}}" }),
             buttonWeight: choice("button", ["400", "500", "600", "700", "800"], { [W]: "--ecx-button-font-weight: {{VALUE}}" }),
             buttonShadow: choice("button", SHADOWS, { [`${W}:is(a)`]: "box-shadow: var(--ecx-shadow-{{VALUE}})", [`${W} a`]: "box-shadow: var(--ecx-shadow-{{VALUE}})" }),
@@ -108,6 +113,8 @@ export const CORE_CONTROLS = [
         } }),
     defineBlockControls({ id: "core/icon-list", blocks: ["iconList"], attributes: {
             iconListGap: length("list", { [W]: "gap: {{VALUE}}" }, true),
+            iconListColumnGap: length("list", { [W]: "column-gap: {{VALUE}}" }, true),
+            iconListIconGap: length("icon", { [`${W} > li`]: "gap: {{VALUE}}", [`${W} > li > a`]: "gap: {{VALUE}}" }),
             iconListDivider: color("list", { [`${W}:not(.is-inline) > li + li`]: "border-top: 1px solid {{VALUE}}" }),
             iconListIconColor: color("icon", { [`${W} .ecx-widget-icon`]: "color: {{VALUE}}" }),
             iconListIconSize: length("icon", { [`${W} .ecx-widget-icon`]: "font-size: {{VALUE}}" }),

@@ -151,6 +151,8 @@
   :where(.ecx-buttons-group.is-vertical.is-right) { align-items: flex-end; }
   :where(.ecx-buttons-group.is-vertical.is-space-between) { align-items: stretch; }
   :where(.ecx-button.is-icon-only) { aspect-ratio: 1; }
+  /* Rộng cố định của nút (ô Kiểu dáng): chưa đặt thì auto */
+  :where(.ecx-button) { width: var(--ecx-button-width, auto); max-width: 100%; box-sizing: border-box; text-align: center; }
   :where(.ecx-button.is-icon-reveal) > :where(.ecx-widget-icon) { width: 0; margin-inline: 0; opacity: 0; transition: width .2s var(--ecx-motion-ease), margin .2s var(--ecx-motion-ease), opacity .2s var(--ecx-motion-ease); }
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon) { width: 1em; margin-inline: .5em; opacity: 1; }
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon:first-child) { margin-inline-start: 0; }
@@ -450,6 +452,16 @@
   :where(.ecx-content) :where(ul.ecx-icon-list) { padding-left: 0; list-style: none; }
   :where(.ecx-icon-list.is-inline) { flex-direction: row; flex-wrap: wrap; gap: var(--ecx-spacing-xs) var(--ecx-spacing-lg); }
   :where(.ecx-icon-list > li, .ecx-icon-list > li > a) { display: flex; align-items: baseline; gap: .5em; }
+  :where(.ecx-icon-list.is-cols-2, .ecx-icon-list.is-cols-3, .ecx-icon-list.is-cols-4) { display: grid; column-gap: var(--ecx-spacing-lg); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :where(.ecx-icon-list.is-cols-3) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :where(.ecx-icon-list.is-cols-4) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 640px) { :where(.ecx-icon-list.is-cols-2, .ecx-icon-list.is-cols-3, .ecx-icon-list.is-cols-4) { grid-template-columns: minmax(0, 1fr); } }
+  :where(.ecx-icon-list.is-icon-center > li, .ecx-icon-list.is-icon-center > li > a) { align-items: center; }
+  :where(.ecx-icon-list.is-icon-bottom > li, .ecx-icon-list.is-icon-bottom > li > a) { align-items: flex-end; }
+  :where(.ecx-icon-list.is-icon-center, .ecx-icon-list.is-icon-bottom) :where(.ecx-widget-icon) { translate: none; }
+  :where(.ecx-icon-list.has-icon-circle, .ecx-icon-list.has-icon-square) :where(.ecx-widget-icon) { box-sizing: content-box; padding: .3em; background: color-mix(in srgb, currentColor 12%, transparent); }
+  :where(.ecx-icon-list.has-icon-circle) :where(.ecx-widget-icon) { border-radius: 50%; }
+  :where(.ecx-icon-list.has-icon-square) :where(.ecx-widget-icon) { border-radius: var(--ecx-radius-sm); }
   :where(.ecx-icon-list) :where(a) { color: inherit; text-decoration: none; min-height: 24px; }
   :where(.ecx-icon-list) :where(a:hover) { color: var(--ecx-color-link); }
   :where(.ecx-icon-list) :where(.ecx-widget-icon) { color: var(--ecx-color-primary); translate: 0 .15em; }
