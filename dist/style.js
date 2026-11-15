@@ -479,7 +479,7 @@ const HOVER_FX = {
     lift: "transform:translateY(-4px);box-shadow:0 12px 24px rgb(0 0 0 / .12)",
     grow: "transform:scale(1.04)",
     brighten: "filter:brightness(1.08)",
-    glow: "box-shadow:0 0 28px color-mix(in srgb, var(--ecx-accent, var(--primary, #2563eb)) 45%, transparent)",
+    glow: "box-shadow:0 0 28px color-mix(in srgb, var(--ecx-accent, var(--primary, #1a597b)) 45%, transparent)",
 };
 /**
  * CSS chuyển động của một khối (chỉ cho class riêng của khối — Global Styles không dùng, vì trạng thái ẩn cần class `ecx-in` + `is-in`).

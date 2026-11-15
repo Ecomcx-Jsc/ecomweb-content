@@ -71,7 +71,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
         ? { border: "var(--ecx-border-width, 1px) solid var(--ecx-btn-color, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, currentColor))))", color: "var(--ecx-btn-color, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, inherit))))", background: "var(--ecx-btn-bg, transparent)" }
         : variant === "secondary"
           ? { background: "var(--ecx-btn-bg, var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, color-mix(in srgb, currentColor 12%, transparent))))", color: "var(--ecx-btn-color, inherit)" }
-          : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
+          : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #1a597b))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
       // 1.26: có icon → flex (icon + chữ thẳng hàng, cách nhau); rộng hết khung → block / flex, chữ giữa
       const icon = !!buttonIcon(attrs), full = attrs.width === "full";
       // icon hiện khi rê: khoảng cách icon–chữ nằm ở lề của icon (CSS) để lúc ẩn không còn khe
@@ -117,7 +117,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
 }
 
 const PADDING: Record<string, string> = { none: "0", small: "0.75rem", medium: "1.5rem", large: "3rem" };
-const TONES: Record<string, string> = { info: "var(--ecx-color-info, #2563eb)", success: "var(--ecx-color-success, #15803d)", warning: "var(--ecx-color-warning, #b45309)", danger: "var(--ecx-color-danger, #b91c1c)" };
+const TONES: Record<string, string> = { info: "var(--ecx-color-info, #1a597b)", success: "var(--ecx-color-success, #15803d)", warning: "var(--ecx-color-warning, #b45309)", danger: "var(--ecx-color-danger, #b91c1c)" };
 const compact = (o: Record<string, string | number | undefined>): Record<string, string | number> => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as Record<string, string | number>;
 const calloutTone = (a: Attrs) => (TONES[a.tone as string] ? (a.tone as string) : "info");
 const buttonVariant = (a: Attrs) => (a.variant === "secondary" || a.variant === "outline" ? (a.variant as string) : "primary");

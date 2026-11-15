@@ -10,11 +10,11 @@
   :where(:root) {
     /* Màu theo vai trò (tên trùng preset màu của theme.json → theme ghi đè trực tiếp). Tên cũ (--primary, --ecx-accent, --ecx-muted,
        --ecx-surface, --ecx-border, --ecx-code-bg/fg, --ecx-button-bg/fg, --cms-button-*) vẫn được đọc để theme cũ không vỡ. */
-    --ecx-color-primary: var(--primary, #2563eb);
+    --ecx-color-primary: var(--primary, #1a597b);
     --ecx-color-primary-fg: #fff;
-    --ecx-color-accent: #f59e0b;
-    --ecx-color-accent-fg: #18181b;
-    --ecx-color-text: #18181b;
+    --ecx-color-accent: #f26251;
+    --ecx-color-accent-fg: #0f1e29;
+    --ecx-color-text: #0f1e29;
     --ecx-color-background: #fff;
     --ecx-color-muted: var(--ecx-muted, color-mix(in srgb, currentColor 65%, transparent));
     --ecx-color-surface: var(--ecx-surface, color-mix(in srgb, currentColor 5%, transparent));
@@ -26,7 +26,7 @@
     --ecx-color-danger: #b91c1c;
     --ecx-color-white: #fff;
     --ecx-color-black: #111;
-    --ecx-color-code-bg: var(--ecx-code-bg, #18181b);
+    --ecx-color-code-bg: var(--ecx-code-bg, #0f1e29);
     --ecx-color-code-fg: var(--ecx-code-fg, #f4f4f5);
     /* Chữ */
     --ecx-font-family-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
