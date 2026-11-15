@@ -1,6 +1,6 @@
 {
   "name": "widget-blocks",
-  "note": "1.23: widget lõi (iconBox, imageBox, iconList, counter, testimonial, progressBar) — icon / vị trí / separator lạ về mặc định, số ép kiểu và kẹp (level 2–6, duration ≤ 10000, value ≤ 100), URL javascript: giữ trong dữ liệu (renderer bỏ qua safeUrl), items giữ nguyên mảng (renderer lọc mục rỗng)",
+  "note": "1.23: widget lõi (iconBox, imageBox, iconList, counter, testimonial, progressBar) — icon / vị trí / separator lạ về mặc định, số ép kiểu và kẹp (level 2–6, duration ≤ 10000, value ≤ 1000000 (1.26: có max riêng)), URL javascript: giữ trong dữ liệu (renderer bỏ qua safeUrl), items giữ nguyên mảng (renderer lọc mục rỗng)",
   "input": {
     "version": 1,
     "blocks": [
@@ -249,7 +249,7 @@
               "type": "progressBar",
               "attrs": {
                 "label": "Quá 100",
-                "value": 100,
+                "value": 140,
                 "showValue": false
               }
             }

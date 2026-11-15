@@ -151,23 +151,46 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
       };
     }
     case "progressBar": {
-      const v = Math.min(100, Math.max(0, Math.round(Number(a.value ?? 50) || 0)));
+      const max = Math.max(1, Math.round(Number(a.max ?? 100) || 100));
+      const value = Math.min(max, Math.max(0, Math.round(Number(a.value ?? 50) || 0)));
+      const pct = Math.round((value / max) * 1000) / 10;
       const label = str(a.label);
+      const shown = `${str(a.prefix)}${value}${a.suffix === undefined ? "%" : str(a.suffix)}`;
+      const pos = a.textPosition === "inside" || a.textPosition === "below" ? a.textPosition : "above";
+      const valueEl = a.showValue !== false ? { tag: "span", className: "ecx-progress-value", props: { "aria-hidden": "true" }, children: [shown] } : null;
+      const head = label || editing || valueEl ? { tag: "div", className: "ecx-progress-head", children: kids(text("span", "ecx-progress-label", a, "label", editing), valueEl) } : null;
+      const dur = Number(a.duration);
       // `ecx-in`: script chuyển động của website (IntersectionObserver, bỏ qua khi giảm chuyển động) đặt `is-in` → thanh chạy từ 0 (CSS)
       return {
-        tag: "div", className: "ecx-progress ecx-in",
+        tag: "div", className: pos === "above" ? "ecx-progress ecx-in" : `ecx-progress ecx-in is-text-${pos}`,
+        style: Number.isFinite(dur) && a.duration !== undefined ? { "--ecx-progress-duration": `${Math.min(10000, Math.max(0, Math.round(dur)))}ms` } : undefined,
         children: kids(
-          label || editing || a.showValue !== false ? {
-            tag: "div", className: "ecx-progress-head",
-            children: kids(text("span", "ecx-progress-label", a, "label", editing), a.showValue !== false ? { tag: "span", className: "ecx-progress-value", props: { "aria-hidden": "true" }, children: [`${v}%`] } : null),
-          } : null,
+          pos === "above" ? head : null,
           {
-            tag: "div", className: "ecx-progress-track", props: { role: "progressbar", "aria-valuenow": v, "aria-valuemin": 0, "aria-valuemax": 100, "aria-label": label || `${v}%` },
-            children: [{ tag: "div", className: "ecx-progress-bar", style: { width: `${v}%` } }],
+            tag: "div", className: "ecx-progress-track", props: { role: "progressbar", "aria-valuenow": value, "aria-valuemin": 0, "aria-valuemax": max, "aria-label": label || shown },
+            children: [{ tag: "div", className: "ecx-progress-bar", style: { width: `${pct}%` }, children: pos === "inside" ? kids(head) : undefined }],
           },
+          pos === "below" ? head : null,
         ),
       };
     }
     default: return null;
   }
+}
+
+export type CountdownUnit = "d" | "h" | "m" | "s";
+/**
+ * 1.26 Ô của khối đếm ngược (website và khung soạn dùng chung): còn `leftMs` → các ô số + nhãn.
+ * Ẩn ngày thì giờ cộng dồn cả ngày; ẩn giây thì bỏ ô giây. Nhãn: nhãn riêng của khối > nhãn theo ngôn ngữ (`units`).
+ */
+export function countdownParts(a: Record<string, unknown>, leftMs: number, units: Partial<Record<CountdownUnit, string>> = {}): Array<{ u: CountdownUnit; value: string; label: string }> {
+  const s = Math.max(0, Math.floor(leftMs / 1000));
+  const days = a.showDays !== false;
+  const all: Array<[CountdownUnit, number, unknown]> = [
+    ["d", Math.floor(s / 86400), a.daysLabel], ["h", days ? Math.floor(s / 3600) % 24 : Math.floor(s / 3600), a.hoursLabel],
+    ["m", Math.floor(s / 60) % 60, a.minutesLabel], ["s", s % 60, a.secondsLabel],
+  ];
+  return all
+    .filter(([u]) => (u !== "d" || days) && (u !== "s" || a.showSeconds !== false))
+    .map(([u, n, own]) => ({ u, value: a.pad === false ? String(n) : String(n).padStart(2, "0"), label: (typeof own === "string" && own) || units[u] || u }));
 }

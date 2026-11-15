@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { normalizeContent } from "../src/index.js";
+import { countdownParts, normalizeContent } from "../src/index.js";
 
 // next: thuộc tính hành vi của video / audio / query được ép kiểu; giá trị sai bị bỏ
 const run = (node: unknown) => {
@@ -100,4 +100,11 @@ test("search: postType chuỗi, showLabel bool, buttonPosition chỉ right|left|
   const a = run({ type: "search", attrs: { postType: "page", showLabel: "true", buttonPosition: "below" } });
   assert.equal(a.postType, "page"); assert.equal(a.showLabel, true); assert.equal(a.buttonPosition, "below");
   assert.equal(run({ type: "search", attrs: { buttonPosition: "top" } }).buttonPosition, undefined);
+});
+
+test("countdownParts 1.26: ẩn ngày thì giờ cộng dồn, ẩn giây, không đệm 00, nhãn riêng > nhãn theo ngôn ngữ", () => {
+  const left = ((2 * 24 + 3) * 3600 + 4 * 60 + 5) * 1000; // 2 ngày 3 giờ 4 phút 5 giây
+  assert.deepEqual(countdownParts({}, left, { d: "ngày" }).map((p) => [p.u, p.value, p.label]), [["d", "02", "ngày"], ["h", "03", "h"], ["m", "04", "m"], ["s", "05", "s"]]);
+  assert.deepEqual(countdownParts({ showDays: false, showSeconds: false, pad: false, hoursLabel: "giờ" }, left).map((p) => [p.u, p.value, p.label]), [["h", "51", "giờ"], ["m", "4", "m"]]);
+  assert.equal(countdownParts({}, -5000)[0].value, "00");
 });

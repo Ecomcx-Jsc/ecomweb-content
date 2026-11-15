@@ -245,6 +245,21 @@
   :where(.ecx-details) { margin: 1em 0; padding: .75em 1em; border: var(--ecx-border-width) solid var(--ecx-color-border); border-radius: var(--ecx-radius-md); }
   :where(.ecx-details) > :where(summary) { cursor: pointer; font-weight: 600; }
   :where(.ecx-details[open]) > :where(summary) { margin-bottom: .5em; }
+  /* 1.26 Đếm ngược: ô số + nhãn; một dòng; dấu ":" giữa các ô */
+  :where(.ecx-countdown) { margin: var(--ecx-flow) 0; text-align: center; }
+  :where(.ecx-countdown-label, .ecx-countdown-post) { margin: 0 0 var(--ecx-spacing-xs); }
+  :where(.ecx-countdown-post) { margin: var(--ecx-spacing-xs) 0 0; }
+  :where(.ecx-countdown-parts) { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: var(--ecx-spacing-sm); }
+  :where(.ecx-countdown-parts) > :where(span) { display: flex; flex-direction: column; align-items: center; min-width: 4.25rem; padding: var(--ecx-spacing-sm); border-radius: var(--ecx-radius-md); background: color-mix(in srgb, var(--ecx-color-primary) 8%, transparent); }
+  :where(.ecx-countdown-parts strong) { font-size: 2em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  :where(.ecx-countdown-parts small) { font-size: .75em; color: var(--ecx-color-muted); text-transform: uppercase; letter-spacing: .04em; }
+  :where(.ecx-countdown.has-divider) :where(.ecx-countdown-parts) > :where(span:not(:last-child))::after { content: ":"; position: absolute; }
+  :where(.ecx-countdown.has-divider) :where(.ecx-countdown-parts) > :where(span) { position: relative; }
+  :where(.ecx-countdown.has-divider) :where(.ecx-countdown-parts) > :where(span:not(:last-child))::after { inset-inline-end: calc(var(--ecx-spacing-sm) / -2 - .15em); top: var(--ecx-spacing-sm); font-size: 2em; line-height: 1.1; font-weight: 700; }
+  :where(.ecx-countdown.is-inline) { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--ecx-spacing-sm); }
+  :where(.ecx-countdown.is-inline) :where(.ecx-countdown-label, .ecx-countdown-post) { margin: 0; }
+  :where(.ecx-countdown.is-inline) :where(.ecx-countdown-parts) > :where(span) { flex-direction: row; align-items: baseline; gap: .25em; min-width: 0; padding: 0; background: none; }
+  :where(.ecx-countdown.is-inline) :where(.ecx-countdown-parts strong) { font-size: 1.25em; }
   /* 1.26 Accordion: icon mở / đóng tự vẽ (mũi tên xoay | dấu cộng → trừ | không), bên phải hoặc trái; tiêu đề mục có thể là h2–h6; chia 2 cột */
   :where(.ecx-accordion[class*="has-icon-"]) > :where(.ecx-details) > :where(summary) { display: flex; align-items: center; gap: .75em; list-style: none; }
   :where(.ecx-accordion[class*="has-icon-"]) > :where(.ecx-details) > :where(summary)::-webkit-details-marker { display: none; }
@@ -415,7 +430,11 @@
   :where(.ecx-testimonial-role) { color: var(--ecx-color-muted); font-size: var(--ecx-font-size-sm); }
   :where(.ecx-progress-head) { display: flex; justify-content: space-between; gap: var(--ecx-spacing-sm); margin-bottom: var(--ecx-spacing-xs); font-weight: 600; }
   :where(.ecx-progress-track) { height: .625rem; overflow: hidden; border-radius: var(--ecx-radius-pill); background: var(--ecx-color-border); }
-  :where(.ecx-progress-bar) { height: 100%; border-radius: inherit; background: var(--ecx-color-primary); transform-origin: left; transition: transform 1.2s var(--ecx-motion-ease); }
+  :where(.ecx-progress-bar) { height: 100%; border-radius: inherit; background: var(--ecx-color-primary); transform-origin: left; transition: transform var(--ecx-progress-duration, 1.2s) var(--ecx-motion-ease); }
+  /* 1.26 chữ dưới thanh / trong thanh (thanh dày lên, chữ màu nền) */
+  :where(.ecx-progress.is-text-below) :where(.ecx-progress-head) { margin: var(--ecx-spacing-xs) 0 0; }
+  :where(.ecx-progress.is-text-inside) :where(.ecx-progress-track) { height: 1.75rem; }
+  :where(.ecx-progress.is-text-inside) :where(.ecx-progress-head) { height: 100%; margin: 0; padding: 0 .75em; align-items: center; color: var(--ecx-color-primary-fg); font-size: .8125em; white-space: nowrap; }
   :where([dir="rtl"]) :where(.ecx-progress-bar) { transform-origin: right; }
   /* Thanh chạy từ 0 khi cuộn tới: chỉ khi script chuyển động chạy (html.ecx-js — không đặt khi giảm chuyển động) */
   :where(html.ecx-js) :where(.ecx-progress.ecx-in:not(.is-in)) :where(.ecx-progress-bar) { transform: scaleX(0); }
