@@ -50,7 +50,8 @@ export const CORE_NODES = {
     youtube: { attrs: { align: wide, src: url(), start: i({ min: 0 }), width: n({ min: 1 }), height: n({ min: 1 }) } },
     // Bố cục (1.2): cột, nhóm, hộp lưu ý chứa khối khác; nút; nhúng theo đường dẫn (embedInfo)
     columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }) } },
-    column: { attrs: { width: n({ min: 5, max: 100 }) } },
+    // 1.26: href = liên kết phủ cả cột (bấm đâu trong cột cũng mở); linkLabel = tên liên kết cho trình đọc màn hình
+    column: { attrs: { width: n({ min: 5, max: 100 }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s() } },
     group: { attrs: { align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
     callout: { attrs: { tone: s({ enum: ["info", "success", "warning", "danger"], default: "info" }), title: s() } },
     button: {

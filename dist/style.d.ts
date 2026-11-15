@@ -101,8 +101,8 @@ export interface BlockMotion {
 export interface BlockLayout {
     type: "flex" | "grid";
     /** flex: hàng ngang (row) hoặc xếp dọc (column). */
-    direction?: Responsive<"row" | "column">;
-    justify?: Responsive<"start" | "center" | "end" | "between">;
+    direction?: Responsive<"row" | "column" | "row-reverse" | "column-reverse">;
+    justify?: Responsive<"start" | "center" | "end" | "between" | "around" | "evenly">;
     align?: Responsive<"start" | "center" | "end" | "stretch">;
     /** flex: cho xuống dòng khi hết chỗ (mặc định có). */
     wrap?: boolean;

@@ -28,7 +28,7 @@ export function blockShell(type, attrs = {}, parent) {
         }
         case "column": {
             const stack = parent?.attrs?.stack !== false;
-            return { tag: "div", className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0 } };
+            return { tag: "div", className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
         }
         case "group": {
             const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);

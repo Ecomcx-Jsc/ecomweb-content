@@ -18,8 +18,9 @@ const FONT_STYLES = ["normal", "italic"];
 const DECORATIONS = ["none", "underline", "line-through"];
 const TRANSFORMS = ["none", "uppercase", "lowercase", "capitalize"];
 const preset = (v) => (typeof v === "string" && PRESET.test(v) ? v : undefined);
-const DIRECTIONS = ["row", "column"];
-const JUSTIFY = ["start", "center", "end", "between"];
+// 1.26: thêm hướng đảo và dàn đều quanh / đều nhau
+const DIRECTIONS = ["row", "column", "row-reverse", "column-reverse"];
+const JUSTIFY = ["start", "center", "end", "between", "around", "evenly"];
 const ALIGN_ITEMS = ["start", "center", "end", "stretch"];
 const RATIOS = ["1/1", "4/3", "3/2", "16/9", "21/9", "3/4", "2/3", "9/16"];
 /** Hiệu ứng khi cuộn tới có sẵn ở lõi (keyframes `ecx-in-<mã>` trong style.css). Plugin thêm mã khác. */
@@ -402,7 +403,7 @@ function declarations(style) {
         out.base.push("transition:color .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease");
     return out;
 }
-const JUSTIFY_CSS = { start: "flex-start", center: "center", end: "flex-end", between: "space-between" };
+const JUSTIFY_CSS = { start: "flex-start", center: "center", end: "flex-end", between: "space-between", around: "space-around", evenly: "space-evenly" };
 const ALIGN_CSS = { start: "flex-start", center: "center", end: "flex-end", stretch: "stretch" };
 /** Bóng có sẵn (theme ghi đè bằng preset cùng tên). */
 const SHADOWS = {
