@@ -1,3 +1,4 @@
+import { type WidgetEl } from "./widgets.js";
 /**
  * Vỏ markup của khối — MỘT nguồn cho website (theme-sdk) và trình soạn (canvas): thẻ, class, style.
  * Hàm thuần, đồng bộ, không phụ thuộc React: bên dùng tự đổ nội dung (chữ đã vẽ / ProseMirror) vào trong vỏ.
@@ -44,4 +45,6 @@ export declare function buttonWrapShell(attrs?: Attrs): BlockShell;
 export declare const blockCitation: (attrs?: Attrs) => string | undefined;
 /** `rel` của liên kết: giá trị người viết đặt (nofollow, sponsored, ugc…) + luôn noopener noreferrer khi mở tab mới. Website và trình soạn dùng chung. */
 export declare function linkRel(rel: unknown, target: unknown): string | undefined;
+/** 1.26: icon của nút (svg trang trí) hoặc null; vị trí trái / phải theo attrs.iconPosition (mặc định trái). */
+export declare function buttonIcon(attrs: Record<string, unknown>): WidgetEl | null;
 export {};

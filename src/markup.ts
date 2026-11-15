@@ -2,6 +2,7 @@ import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
 import { WIDE_BLOCKS } from "./schema.js";
+import { ICON_PATHS, iconEl, type WidgetEl } from "./widgets.js";
 /**
  * Vỏ markup của khối — MỘT nguồn cho website (theme-sdk) và trình soạn (canvas): thẻ, class, style.
  * Hàm thuần, đồng bộ, không phụ thuộc React: bên dùng tự đổ nội dung (chữ đã vẽ / ProseMirror) vào trong vỏ.
@@ -69,10 +70,14 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
         : variant === "secondary"
           ? { background: "var(--ecx-btn-bg, var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, color-mix(in srgb, currentColor 12%, transparent))))", color: "var(--ecx-btn-color, inherit)" }
           : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
+      // 1.26: có icon → flex (icon + chữ thẳng hàng, cách nhau); rộng hết khung → block / flex, chữ giữa
+      const icon = !!buttonIcon(attrs), full = attrs.width === "full";
+      const layout: Record<string, string> = icon ? { display: full ? "flex" : "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5em" } : { display: full ? "block" : "inline-block" };
       return {
-        tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`),
+        tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`, full && "is-full"),
         // Token (style.css › :root) — theme đổi bằng biến; inline giữ màu nút thắng CSS link của theme
-        style: { display: "inline-block", padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
+        style: { ...layout, ...(full ? { textAlign: "center" } : {}), padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
+        ...(typeof attrs.ariaLabel === "string" && attrs.ariaLabel.trim() ? { attrs: { "aria-label": attrs.ariaLabel.trim().slice(0, 200) } } : {}),
       };
     }
     case "spacer": return { tag: "div", className: "ecx-spacer", style: { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" }, attrs: { "aria-hidden": "true" } };
@@ -155,4 +160,9 @@ export function linkRel(rel: unknown, target: unknown): string | undefined {
   const set = new Set(String(rel ?? "").toLowerCase().split(/\s+/).filter((x) => /^[a-z-]+$/.test(x)));
   if (target === "_blank") { set.add("noopener"); set.add("noreferrer"); }
   return set.size ? [...set].join(" ") : undefined;
+}
+
+/** 1.26: icon của nút (svg trang trí) hoặc null; vị trí trái / phải theo attrs.iconPosition (mặc định trái). */
+export function buttonIcon(attrs: Record<string, unknown>): WidgetEl | null {
+  return typeof attrs.icon === "string" && ICON_PATHS[attrs.icon] ? iconEl(attrs.icon) : null;
 }

@@ -81,6 +81,8 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     attrs: {
       text: s(), href: url(), target: s(), rel: s(),
       variant: s({ enum: ["primary", "secondary", "outline"], default: "primary" }), align: s({ enum: ["left", "center", "right"] }),
+      // 1.26: icon (tên trong ICON_PATHS) + vị trí, độ rộng (auto | full), nhãn cho trình đọc màn hình
+      icon: s(), iconPosition: s({ enum: ["left", "right"] }), width: s({ enum: ["auto", "full"] }), ariaLabel: s(),
     },
   },
   embed: { attrs: { align: wide, url: url(), caption: s() } },

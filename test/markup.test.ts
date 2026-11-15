@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { blockCitation, blockShell, buttonWrapShell, coverParts, linkRel } from "../src/index.js";
+import { blockCitation, blockShell, buttonIcon, buttonWrapShell, coverParts, linkRel } from "../src/index.js";
 
 test("paragraph: căn trái không in style, căn khác thì có", () => {
   assert.equal(blockShell("paragraph", { textAlign: "left" })!.style, undefined);
@@ -54,4 +54,13 @@ test("linkRel + gallery", () => {
   assert.equal(linkRel("nofollow", "_blank"), "nofollow noopener noreferrer");
   assert.equal(linkRel(null, null), undefined);
   assert.equal(blockShell("gallery", { columns: 2 })!.className, "ecx-gallery cms-gallery ecx-gallery-columns-2 columns-2");
+});
+
+test("nút (1.26): icon → inline-flex + icon hợp lệ, rộng hết khung, nhãn trình đọc màn hình; icon lạ bỏ", () => {
+  const s = blockShell("button", { text: "Mua", icon: "arrowRight", width: "full", ariaLabel: "Mua ngay áo thun" })!;
+  assert.equal(s.style?.display, "flex");
+  assert.equal((s.attrs as Record<string, string>)["aria-label"], "Mua ngay áo thun");
+  assert.ok(s.className?.includes("is-full"));
+  assert.equal(buttonIcon({ icon: "khong-co" }), null);
+  assert.equal(blockShell("button", { text: "x" })!.style?.display, "inline-block");
 });

@@ -14,6 +14,10 @@ const img = (decl, hover = false) => hover ? { [`${W}:hover img`]: decl, [`${W}:
 /** Nút: khối nút đứng riêng có vỏ `<p>` (class ở p), trong nhóm nút thì class ở chính thẻ `<a>`. */
 const btnHover = (decl) => ({ [`${W}:is(a):hover`]: decl, [`${W} a:hover`]: decl });
 const SHADOWS = ["sm", "md", "lg", "xl"];
+// Nhóm thuộc tính thường gặp của phần (1.26)
+const BOX = ["background", "border", "radius", "shadow", "padding"];
+const TEXT = ["typography", "color", "margin"];
+const ICON = ["color", "background", "iconSize", "padding", "radius", "border", "margin"];
 const FILTERS = ["none", "grayscale", "sepia", "blur", "bright", "dim", "saturate"];
 export const CORE_CONTROLS = [
     defineBlockControls({ id: "core/text", blocks: ["heading", "paragraph"], attributes: {
@@ -80,6 +84,7 @@ export const CORE_CONTROLS = [
         } }),
     defineBlockControls({ id: "core/columns", blocks: ["columns"], attributes: {
             columnsGap: length("columns", { [W]: "--ecx-columns-gap: {{VALUE}}" }, true),
+            columnsRowGap: length("columns", { [W]: "--ecx-columns-row-gap: {{VALUE}}" }, true),
             columnsDirection: choice("columns", ["row", "row-reverse", "column", "column-reverse"], { [W]: "flex-direction: {{VALUE}}" }, { responsive: true }),
         } }),
     defineBlockControls({ id: "core/separator", blocks: ["horizontalRule"], attributes: {
@@ -124,6 +129,106 @@ export const CORE_CONTROLS = [
             progressTrackColor: color("bar", { [`${W} .ecx-progress-track`]: "background: {{VALUE}}" }),
             progressHeight: length("bar", { [`${W} .ecx-progress-track`]: "height: {{VALUE}}" }),
             progressTitleColor: color("content", { [`${W} .ecx-progress-head`]: "color: {{VALUE}}" }),
+        } }),
+    // 1.26: PHẦN của khối widget — mỗi phần một bộ kiểu dáng đầy đủ (attrs.parts). Ô màu rời ở trên giữ cho nội dung cũ.
+    defineBlockControls({ id: "core/icon-box-parts", partsOnly: true, blocks: ["iconBox"], attributes: {}, parts: {
+            box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+            icon: { label: "%part.icon%", selector: `${W} .ecx-icon-box-icon`, props: ICON, hover: true, toggle: true },
+            title: { label: "%part.title%", selector: `${W} .ecx-icon-box-title`, props: TEXT, hover: true, toggle: true },
+            text: { label: "%part.text%", selector: `${W} .ecx-icon-box-text`, props: TEXT, toggle: true },
+        } }),
+    defineBlockControls({ id: "core/image-box-parts", partsOnly: true, blocks: ["imageBox"], attributes: {}, parts: {
+            box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+            media: { label: "%part.image%", selector: `${W} .ecx-image-box-media img`, props: ["radius", "border", "shadow"], hover: true, toggle: true },
+            title: { label: "%part.title%", selector: `${W} .ecx-image-box-title`, props: TEXT, hover: true, toggle: true },
+            text: { label: "%part.text%", selector: `${W} .ecx-image-box-text`, props: TEXT, toggle: true },
+        } }),
+    defineBlockControls({ id: "core/testimonial-parts", partsOnly: true, blocks: ["testimonial"], attributes: {}, parts: {
+            box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+            quote: { label: "%part.quote%", selector: `${W} .ecx-testimonial-quote`, props: TEXT },
+            avatar: { label: "%part.avatar%", selector: `${W} .ecx-testimonial-avatar`, props: ["size", "radius", "border"], toggle: true },
+            name: { label: "%part.name%", selector: `${W} .ecx-testimonial-name`, props: ["typography", "color"], toggle: true },
+            role: { label: "%part.role%", selector: `${W} .ecx-testimonial-role`, props: ["typography", "color"], toggle: true },
+        } }),
+    defineBlockControls({ id: "core/counter-parts", partsOnly: true, blocks: ["counter"], attributes: {}, parts: {
+            box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+            number: { label: "%part.number%", selector: `${W} .ecx-counter-number`, props: ["typography", "color", "margin"] },
+            title: { label: "%part.title%", selector: `${W} .ecx-counter-title`, props: TEXT, toggle: true },
+        } }),
+    defineBlockControls({ id: "core/progress-parts", partsOnly: true, blocks: ["progressBar"], attributes: {}, parts: {
+            label: { label: "%part.label%", selector: `${W} .ecx-progress-head`, props: TEXT, toggle: true },
+            track: { label: "%part.track%", selector: `${W} .ecx-progress-track`, props: ["background", "radius", "size", "border"] },
+            bar: { label: "%part.bar%", selector: `${W} .ecx-progress-bar`, props: ["background"] },
+        } }),
+    // Accordion / Chi tiết: mục (khung từng mục), tiêu đề mục (thường / rê chuột / đang mở), nội dung mục
+    defineBlockControls({ id: "core/accordion-parts", partsOnly: true, blocks: ["accordion", "details"], attributes: {}, parts: {
+            item: { label: "%part.item%", selector: `${W} details, ${W}:is(details)`, props: ["background", "border", "radius", "shadow", "padding", "margin"] },
+            title: { label: "%part.paneTitle%", selector: `${W} details > summary, ${W}:is(details) > summary`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
+                active: `${W} details[open] > summary, ${W}:is([open]) > summary` },
+            content: { label: "%part.paneContent%", selector: `${W} details > :not(summary), ${W}:is(details) > :not(summary)`, props: ["typography", "color", "background", "padding"] },
+        } }),
+    // Tab: thanh tab, nút tab (thường / rê chuột / đang chọn), vùng nội dung
+    defineBlockControls({ id: "core/tabs-parts", partsOnly: true, blocks: ["tabs"], attributes: {}, parts: {
+            list: { label: "%part.tabList%", selector: `${W} [role=tablist]`, props: ["background", "border", "padding", "margin"] },
+            tab: { label: "%part.tab%", selector: `${W} [role=tab]`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
+                active: `${W} [role=tab][aria-selected=true]` },
+            panel: { label: "%part.panel%", selector: `${W} [role=tabpanel]`, props: ["typography", "color", "background", "border", "radius", "padding"] },
+        } }),
+    // Nút: chính nút (thường / rê chuột lên nút) — khối nút đứng riêng có vỏ <p>, trong nhóm nút class ở chính <a>
+    defineBlockControls({ id: "core/button-parts", partsOnly: true, blocks: ["button"], attributes: {}, parts: {
+            button: { label: "%part.button%", selector: `${W}:is(a), ${W} a`, props: ["typography", "color", "background", "border", "radius", "shadow", "padding"], hover: "self" },
+        } }),
+    // Ảnh: chính ảnh (thường / rê chuột lên khối) và chú thích
+    defineBlockControls({ id: "core/image-parts", partsOnly: true, blocks: ["image"], attributes: {}, parts: {
+            image: { label: "%part.image%", selector: `${W} img, ${W}:is(img)`, props: ["border", "radius", "shadow", "padding", "background"], hover: true },
+            caption: { label: "%part.caption%", selector: `${W} figcaption`, props: ["typography", "color", "background", "padding", "margin"], toggle: true },
+        } }),
+    // Tiêu đề / Đoạn văn: chữ tô sáng (<mark>) và liên kết trong chữ
+    defineBlockControls({ id: "core/text-parts", blocks: ["heading", "paragraph"], attributes: {}, parts: {
+            highlight: { label: "%part.highlight%", selector: `${W} mark`, props: ["typography", "color", "background", "border", "radius", "padding"] },
+            link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
+        } }),
+    // Gallery: từng ảnh (thường / rê chuột lên ảnh) và chú thích chung
+    defineBlockControls({ id: "core/gallery-parts", partsOnly: true, blocks: ["gallery"], attributes: {}, parts: {
+            image: { label: "%part.image%", selector: `${W} .ecx-gallery-item img`, props: ["border", "radius", "shadow"], hover: "self" },
+            caption: { label: "%part.caption%", selector: `${W} .ecx-gallery-caption`, props: ["typography", "color", "margin"] },
+        } }),
+    // Bảng: ô tiêu đề, ô thường
+    defineBlockControls({ id: "core/table-parts", blocks: ["table"], attributes: {}, parts: {
+            head: { label: "%part.tableHead%", selector: `${W} th`, props: ["typography", "color", "background", "padding"] },
+            cell: { label: "%part.tableCell%", selector: `${W} td`, props: ["typography", "color", "background", "padding"] },
+        } }),
+    // Đếm ngược: nhãn, từng ô (ngày / giờ / phút / giây), con số, chữ đơn vị
+    defineBlockControls({ id: "core/countdown-parts", partsOnly: true, blocks: ["countdown"], attributes: {}, parts: {
+            label: { label: "%part.label%", selector: `${W} .ecx-countdown-label`, props: TEXT },
+            unit: { label: "%part.unitBox%", selector: `${W} .ecx-countdown-parts > span`, props: BOX },
+            number: { label: "%part.number%", selector: `${W} .ecx-countdown-parts strong`, props: ["typography", "color"] },
+            unitLabel: { label: "%part.unitLabel%", selector: `${W} .ecx-countdown-parts small`, props: ["typography", "color"] },
+        } }),
+    // Mục lục: khung, tiêu đề, liên kết (thường / rê chuột)
+    defineBlockControls({ id: "core/toc-parts", partsOnly: true, blocks: ["tableOfContents"], attributes: {}, parts: {
+            box: { label: "%part.box%", selector: W, props: BOX },
+            title: { label: "%part.title%", selector: `${W} .ecx-toc-title`, props: TEXT },
+            link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
+        } }),
+    // Mạng xã hội: từng nút (thường / rê chuột)
+    defineBlockControls({ id: "core/social-parts", partsOnly: true, blocks: ["socialLinks"], attributes: {}, parts: {
+            item: { label: "%part.item%", selector: `${W} a`, props: ["color", "background", "border", "radius", "padding", "iconSize"], hover: "self" },
+        } }),
+    // Ghi chú: tiêu đề; Ảnh bìa: vùng nội dung; Ảnh & chữ: ảnh, vùng chữ
+    defineBlockControls({ id: "core/callout-parts", blocks: ["callout"], attributes: {}, parts: {
+            title: { label: "%part.title%", selector: `${W} .ecx-callout-title`, props: TEXT },
+        } }),
+    defineBlockControls({ id: "core/cover-parts", blocks: ["cover"], attributes: {}, parts: {
+            inner: { label: "%part.content%", selector: `${W} .ecx-cover-inner`, props: ["typography", "color", "background", "radius", "padding"] },
+        } }),
+    defineBlockControls({ id: "core/media-text-parts", blocks: ["mediaText"], attributes: {}, parts: {
+            media: { label: "%part.image%", selector: `${W} .ecx-media-text-media img`, props: ["border", "radius", "shadow"], hover: true },
+            content: { label: "%part.content%", selector: `${W} .ecx-media-text-content`, props: ["typography", "color", "background", "radius", "padding"] },
+        } }),
+    defineBlockControls({ id: "core/icon-list-parts", partsOnly: true, blocks: ["iconList"], attributes: {}, parts: {
+            item: { label: "%part.item%", selector: `${W} > li`, props: ["typography", "color", "padding"] },
+            icon: { label: "%part.icon%", selector: `${W} .ecx-widget-icon`, props: ["color", "iconSize", "margin"], toggle: true },
         } }),
 ];
 /** Ô Kiểu dáng lõi của một loại khối (tên thuộc tính → mô tả), theo thứ tự khai báo. */

@@ -2,6 +2,7 @@ import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
 import { WIDE_BLOCKS } from "./schema.js";
+import { ICON_PATHS, iconEl } from "./widgets.js";
 const cls = (...parts) => parts.filter(Boolean).join(" ") || undefined;
 /** `text-align` chỉ ghi khi khác mặc định (left) — website không in thừa. */
 export function alignStyle(attrs) {
@@ -16,11 +17,13 @@ export function blockShell(type, attrs = {}, parent) {
         case "blockquote": return { tag: "blockquote" };
         case "columns": {
             const stack = attrs.stack !== false;
-            const align = attrs.verticalAlign === "center" ? "center" : attrs.verticalAlign === "bottom" ? "flex-end" : "flex-start";
+            // 1.26: "stretch" = các cột cao bằng nhau (nền / viền của cột kéo hết chiều cao hàng)
+            const align = attrs.verticalAlign === "center" ? "center" : attrs.verticalAlign === "bottom" ? "flex-end" : attrs.verticalAlign === "stretch" ? "stretch" : "flex-start";
             return {
                 tag: "div",
                 className: cls("ecx-columns cms-columns", attrs.verticalAlign && `ecx-columns-${attrs.verticalAlign} cms-columns-${attrs.verticalAlign}`),
-                style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-gap, 1.5rem)", alignItems: align },
+                // 1.26: khe hàng (khi cột xuống dòng) riêng: --ecx-columns-row-gap, trống thì bằng khe cột như trước
+                style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-row-gap, var(--ecx-columns-gap, 1.5rem)) var(--ecx-columns-gap, 1.5rem)", alignItems: align },
             };
         }
         case "column": {
@@ -48,10 +51,14 @@ export function blockShell(type, attrs = {}, parent) {
                 : variant === "secondary"
                     ? { background: "var(--ecx-btn-bg, var(--ecx-button-secondary-bg, var(--cms-button-secondary-bg, color-mix(in srgb, currentColor 12%, transparent))))", color: "var(--ecx-btn-color, inherit)" }
                     : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
+            // 1.26: có icon → flex (icon + chữ thẳng hàng, cách nhau); rộng hết khung → block / flex, chữ giữa
+            const icon = !!buttonIcon(attrs), full = attrs.width === "full";
+            const layout = icon ? { display: full ? "flex" : "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5em" } : { display: full ? "block" : "inline-block" };
             return {
-                tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`),
+                tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`, full && "is-full"),
                 // Token (style.css › :root) — theme đổi bằng biến; inline giữ màu nút thắng CSS link của theme
-                style: { display: "inline-block", padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
+                style: { ...layout, ...(full ? { textAlign: "center" } : {}), padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
+                ...(typeof attrs.ariaLabel === "string" && attrs.ariaLabel.trim() ? { attrs: { "aria-label": attrs.ariaLabel.trim().slice(0, 200) } } : {}),
             };
         }
         case "spacer": return { tag: "div", className: "ecx-spacer", style: { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" }, attrs: { "aria-hidden": "true" } };
@@ -131,4 +138,8 @@ export function linkRel(rel, target) {
         set.add("noreferrer");
     }
     return set.size ? [...set].join(" ") : undefined;
+}
+/** 1.26: icon của nút (svg trang trí) hoặc null; vị trí trái / phải theo attrs.iconPosition (mặc định trái). */
+export function buttonIcon(attrs) {
+    return typeof attrs.icon === "string" && ICON_PATHS[attrs.icon] ? iconEl(attrs.icon) : null;
 }

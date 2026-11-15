@@ -192,6 +192,44 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     highlight: { label: "%part.highlight%", selector: `${W} mark`, props: ["typography", "color", "background", "border", "radius", "padding"] },
     link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
   } }),
+  // Gallery: từng ảnh (thường / rê chuột lên ảnh) và chú thích chung
+  defineBlockControls({ id: "core/gallery-parts", partsOnly: true, blocks: ["gallery"], attributes: {}, parts: {
+    image: { label: "%part.image%", selector: `${W} .ecx-gallery-item img`, props: ["border", "radius", "shadow"], hover: "self" },
+    caption: { label: "%part.caption%", selector: `${W} .ecx-gallery-caption`, props: ["typography", "color", "margin"] },
+  } }),
+  // Bảng: ô tiêu đề, ô thường
+  defineBlockControls({ id: "core/table-parts", blocks: ["table"], attributes: {}, parts: {
+    head: { label: "%part.tableHead%", selector: `${W} th`, props: ["typography", "color", "background", "padding"] },
+    cell: { label: "%part.tableCell%", selector: `${W} td`, props: ["typography", "color", "background", "padding"] },
+  } }),
+  // Đếm ngược: nhãn, từng ô (ngày / giờ / phút / giây), con số, chữ đơn vị
+  defineBlockControls({ id: "core/countdown-parts", partsOnly: true, blocks: ["countdown"], attributes: {}, parts: {
+    label: { label: "%part.label%", selector: `${W} .ecx-countdown-label`, props: TEXT },
+    unit: { label: "%part.unitBox%", selector: `${W} .ecx-countdown-parts > span`, props: BOX },
+    number: { label: "%part.number%", selector: `${W} .ecx-countdown-parts strong`, props: ["typography", "color"] },
+    unitLabel: { label: "%part.unitLabel%", selector: `${W} .ecx-countdown-parts small`, props: ["typography", "color"] },
+  } }),
+  // Mục lục: khung, tiêu đề, liên kết (thường / rê chuột)
+  defineBlockControls({ id: "core/toc-parts", partsOnly: true, blocks: ["tableOfContents"], attributes: {}, parts: {
+    box: { label: "%part.box%", selector: W, props: BOX },
+    title: { label: "%part.title%", selector: `${W} .ecx-toc-title`, props: TEXT },
+    link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
+  } }),
+  // Mạng xã hội: từng nút (thường / rê chuột)
+  defineBlockControls({ id: "core/social-parts", partsOnly: true, blocks: ["socialLinks"], attributes: {}, parts: {
+    item: { label: "%part.item%", selector: `${W} a`, props: ["color", "background", "border", "radius", "padding", "iconSize"], hover: "self" },
+  } }),
+  // Ghi chú: tiêu đề; Ảnh bìa: vùng nội dung; Ảnh & chữ: ảnh, vùng chữ
+  defineBlockControls({ id: "core/callout-parts", blocks: ["callout"], attributes: {}, parts: {
+    title: { label: "%part.title%", selector: `${W} .ecx-callout-title`, props: TEXT },
+  } }),
+  defineBlockControls({ id: "core/cover-parts", blocks: ["cover"], attributes: {}, parts: {
+    inner: { label: "%part.content%", selector: `${W} .ecx-cover-inner`, props: ["typography", "color", "background", "radius", "padding"] },
+  } }),
+  defineBlockControls({ id: "core/media-text-parts", blocks: ["mediaText"], attributes: {}, parts: {
+    media: { label: "%part.image%", selector: `${W} .ecx-media-text-media img`, props: ["border", "radius", "shadow"], hover: true },
+    content: { label: "%part.content%", selector: `${W} .ecx-media-text-content`, props: ["typography", "color", "background", "radius", "padding"] },
+  } }),
   defineBlockControls({ id: "core/icon-list-parts", partsOnly: true, blocks: ["iconList"], attributes: {}, parts: {
     item: { label: "%part.item%", selector: `${W} > li`, props: ["typography", "color", "padding"] },
     icon: { label: "%part.icon%", selector: `${W} .ecx-widget-icon`, props: ["color", "iconSize", "margin"], toggle: true },

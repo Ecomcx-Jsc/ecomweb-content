@@ -11,10 +11,81 @@
  * mẫu CSS do plugin viết bị từ chối nếu có `{ } ; < @ \` hoặc url( / expression( / import. Không hợp lệ → bỏ, không chèn.
  * Kiểu chỉ có ô (không sinh CSS, 1.23): boolean, string, url, textarea, datetime — plugin đọc giá trị qua controlValue.
  */
-import { BREAKPOINTS, DEVICES, colorCss, spacingValue } from "./style.js";
+import { BREAKPOINTS, DEVICES, colorCss, normalizeStyle, ruleCss, spacingValue } from "./style.js";
 import { isSafeUrl } from "./url.js";
 /** Kiểu được khai `css` (giá trị đã chuẩn hoá thành token CSS an toàn). */
 const CSS_TYPES = new Set(["number", "color", "length", "enum"]);
+const PART_NAME = /^[a-z][a-zA-Z0-9]{0,30}$/;
+// Kiểu của một phần: bỏ nhóm chỉ hợp với cả khối (bố cục, chuyển động, ẩn theo khổ, ảnh nền, ghim, hover lồng)
+const partStyle = (v) => {
+    const st = normalizeStyle(v);
+    if (!st)
+        return undefined;
+    const rest = { ...st };
+    for (const k of ["motion", "layout", "hide", "background", "position", "hover"])
+        delete rest[k];
+    return Object.keys(rest).length ? rest : undefined;
+};
+/** Kiểm giá trị `attrs.parts` (dữ liệu người dùng): chỉ phần có tên hợp lệ, kiểu qua normalizeStyle. */
+export function normalizeParts(v) {
+    if (!v || typeof v !== "object" || Array.isArray(v))
+        return undefined;
+    const out = {};
+    for (const [k, raw] of Object.entries(v)) {
+        if (!PART_NAME.test(k) || !raw || typeof raw !== "object")
+            continue;
+        const r = raw;
+        const pv = {};
+        const st = partStyle(r.style);
+        if (st)
+            pv.style = st;
+        const hv = partStyle(r.hover);
+        if (hv)
+            pv.hover = hv;
+        const ac = partStyle(r.active);
+        if (ac)
+            pv.active = ac;
+        if (r.hidden === true)
+            pv.hidden = true;
+        if (Object.keys(pv).length)
+            out[k] = pv;
+    }
+    return Object.keys(out).length ? out : undefined;
+}
+/** Bộ chọn của phần: một hoặc nhiều "{{WRAPPER}}…" cách nhau dấu phẩy → các hậu tố; sai một nhánh → null. */
+function selectorList(sel) {
+    const parts = sel.split(",").map((x) => x.trim()).filter(Boolean);
+    return parts.length && parts.every(okSel) ? parts.map((x) => x.slice(11)) : null;
+}
+/** Các phần của loại khối (lõi + plugin), theo thứ tự khai. */
+export function partsFor(list, type) {
+    return list.filter((c) => c.parts && (c.blocks === "*" || c.blocks.includes(type))).flatMap((c) => Object.entries(c.parts));
+}
+/** CSS của các phần cho class `cls` (rỗng nếu không có giá trị). */
+function partsCss(list, type, vals, cls) {
+    let css = "";
+    for (const [name, spec] of partsFor(list, type)) {
+        const v = vals[name];
+        const suffixes = selectorList(spec.selector);
+        if (!v || !suffixes)
+            continue;
+        const base = `.${cls}.${cls}`;
+        const sel = suffixes.map((x) => base + x).join(",");
+        if (v.hidden && spec.toggle) {
+            css += `${sel}{display:none!important}`;
+            continue;
+        }
+        if (v.style)
+            css += ruleCss(sel, v.style);
+        // Rê chuột: lên cả khối (`.cls:hover <phần>`) hoặc lên chính phần (`.cls <phần>:hover`)
+        if (v.hover && spec.hover)
+            css += ruleCss(suffixes.map((x) => (spec.hover === "self" ? `${base}${x}:hover` : `${base}:hover${x}`)).join(","), v.hover);
+        const act = spec.active ? selectorList(spec.active) : null;
+        if (v.active && act)
+            css += ruleCss(act.map((x) => base + x).join(","), v.active);
+    }
+    return css;
+}
 const ATTR = /^[a-zA-Z][a-zA-Z0-9_]{0,40}$/;
 // Hậu tố bộ chọn: con cháu (bắt đầu bằng khoảng trắng) hoặc pseudo-class gắn liền (`:hover`, `:is(img)`, 1.24)
 const SUFFIX = /^((\s+|:)[\w\s.#>:+~*()\-\[\]="',]{1,120})?$/;
@@ -36,6 +107,14 @@ export function defineBlockControls(c) {
             if (!okDecl(decl))
                 throw new Error(`[controls] ${c.id}.${name}: khai báo CSS không hợp lệ "${decl}"`);
         }
+    }
+    for (const [name, part] of Object.entries(c.parts ?? {})) {
+        if (!PART_NAME.test(name))
+            throw new Error(`[controls] ${c.id}: tên phần không hợp lệ "${name}"`);
+        if (!selectorList(part.selector))
+            throw new Error(`[controls] ${c.id}.parts.${name}: bộ chọn không hợp lệ "${part.selector}"`);
+        if (part.active && !selectorList(part.active))
+            throw new Error(`[controls] ${c.id}.parts.${name}: bộ chọn trạng thái không hợp lệ "${part.active}"`);
     }
     return c;
 }
@@ -106,10 +185,13 @@ function declarations(list, type, attrs) {
 /** Class (`ecx-c-…`, băm theo CSS → cùng giá trị = cùng class) + CSS của khối; null khi không có gì để vẽ. */
 export function controlsCss(list, type, attrs) {
     const decls = declarations(list, type, attrs);
-    if (!decls.length)
+    const parts = normalizeParts(attrs.parts);
+    const hasParts = !!parts && partsFor(list, type).some(([n]) => parts[n]);
+    if (!decls.length && !hasParts)
         return null;
-    // Khổ base băm như trước 1.24 → class của nội dung cũ không đổi
-    const key = JSON.stringify(decls.map(([d, sel, decl]) => (d === "base" ? [sel, decl] : [d, sel, decl])));
+    // Khổ base băm như trước 1.24 → class của nội dung cũ không đổi; phần (1.26) chỉ vào khoá khi có
+    const base = decls.map(([d, sel, decl]) => (d === "base" ? [sel, decl] : [d, sel, decl]));
+    const key = JSON.stringify(hasParts ? [base, parts] : base);
     let h = 0x811c9dc5;
     for (let i = 0; i < key.length; i++) {
         h ^= key.charCodeAt(i);
@@ -127,5 +209,7 @@ export function controlsCss(list, type, attrs) {
         if (rules)
             css += d === "base" ? rules : `${media[d]}{${rules}}`;
     }
+    if (hasParts)
+        css += partsCss(list, type, parts, cls);
     return { cls, css };
 }
