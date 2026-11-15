@@ -88,6 +88,7 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
   } }),
   defineBlockControls({ id: "core/columns", blocks: ["columns"], attributes: {
     columnsGap: length("columns", { [W]: "--ecx-columns-gap: {{VALUE}}" }, true),
+    columnsRowGap: length("columns", { [W]: "--ecx-columns-row-gap: {{VALUE}}" }, true),
     columnsDirection: choice("columns", ["row", "row-reverse", "column", "column-reverse"], { [W]: "flex-direction: {{VALUE}}" }, { responsive: true }),
   } }),
   defineBlockControls({ id: "core/separator", blocks: ["horizontalRule"], attributes: {

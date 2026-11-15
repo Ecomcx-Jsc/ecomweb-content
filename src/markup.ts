@@ -35,11 +35,13 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
     case "blockquote": return { tag: "blockquote" };
     case "columns": {
       const stack = attrs.stack !== false;
-      const align = attrs.verticalAlign === "center" ? "center" : attrs.verticalAlign === "bottom" ? "flex-end" : "flex-start";
+      // 1.26: "stretch" = các cột cao bằng nhau (nền / viền của cột kéo hết chiều cao hàng)
+      const align = attrs.verticalAlign === "center" ? "center" : attrs.verticalAlign === "bottom" ? "flex-end" : attrs.verticalAlign === "stretch" ? "stretch" : "flex-start";
       return {
         tag: "div",
         className: cls("ecx-columns cms-columns", attrs.verticalAlign && `ecx-columns-${attrs.verticalAlign} cms-columns-${attrs.verticalAlign}`),
-        style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-gap, 1.5rem)", alignItems: align },
+        // 1.26: khe hàng (khi cột xuống dòng) riêng: --ecx-columns-row-gap, trống thì bằng khe cột như trước
+        style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-row-gap, var(--ecx-columns-gap, 1.5rem)) var(--ecx-columns-gap, 1.5rem)", alignItems: align },
       };
     }
     case "column": {
