@@ -71,6 +71,8 @@ export interface BlockControls {
   attributes: Record<string, ControlSpec>;
   /** 1.26: các phần của khối (xem PartSpec). */
   parts?: Record<string, PartSpec>;
+  /** 1.26: các phần thay hẳn Kiểu chữ / Màu chung của cả khối (khối ghép nhiều phần: hộp icon, accordion…); không đặt = phần chỉ là phần phụ (vd chữ tô sáng của tiêu đề). */
+  partsOnly?: boolean;
 }
 
 /** Giá trị đã lưu của một phần. */

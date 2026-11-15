@@ -135,55 +135,55 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     progressTitleColor: color("content", { [`${W} .ecx-progress-head`]: "color: {{VALUE}}" }),
   } }),
   // 1.26: PHẦN của khối widget — mỗi phần một bộ kiểu dáng đầy đủ (attrs.parts). Ô màu rời ở trên giữ cho nội dung cũ.
-  defineBlockControls({ id: "core/icon-box-parts", blocks: ["iconBox"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/icon-box-parts", partsOnly: true, blocks: ["iconBox"], attributes: {}, parts: {
     box: { label: "%part.box%", selector: W, props: BOX, hover: true },
     icon: { label: "%part.icon%", selector: `${W} .ecx-icon-box-icon`, props: ICON, hover: true, toggle: true },
     title: { label: "%part.title%", selector: `${W} .ecx-icon-box-title`, props: TEXT, hover: true, toggle: true },
     text: { label: "%part.text%", selector: `${W} .ecx-icon-box-text`, props: TEXT, toggle: true },
   } }),
-  defineBlockControls({ id: "core/image-box-parts", blocks: ["imageBox"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/image-box-parts", partsOnly: true, blocks: ["imageBox"], attributes: {}, parts: {
     box: { label: "%part.box%", selector: W, props: BOX, hover: true },
     media: { label: "%part.image%", selector: `${W} .ecx-image-box-media img`, props: ["radius", "border", "shadow"], hover: true, toggle: true },
     title: { label: "%part.title%", selector: `${W} .ecx-image-box-title`, props: TEXT, hover: true, toggle: true },
     text: { label: "%part.text%", selector: `${W} .ecx-image-box-text`, props: TEXT, toggle: true },
   } }),
-  defineBlockControls({ id: "core/testimonial-parts", blocks: ["testimonial"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/testimonial-parts", partsOnly: true, blocks: ["testimonial"], attributes: {}, parts: {
     box: { label: "%part.box%", selector: W, props: BOX, hover: true },
     quote: { label: "%part.quote%", selector: `${W} .ecx-testimonial-quote`, props: TEXT },
     avatar: { label: "%part.avatar%", selector: `${W} .ecx-testimonial-avatar`, props: ["size", "radius", "border"], toggle: true },
     name: { label: "%part.name%", selector: `${W} .ecx-testimonial-name`, props: ["typography", "color"], toggle: true },
     role: { label: "%part.role%", selector: `${W} .ecx-testimonial-role`, props: ["typography", "color"], toggle: true },
   } }),
-  defineBlockControls({ id: "core/counter-parts", blocks: ["counter"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/counter-parts", partsOnly: true, blocks: ["counter"], attributes: {}, parts: {
     box: { label: "%part.box%", selector: W, props: BOX, hover: true },
     number: { label: "%part.number%", selector: `${W} .ecx-counter-number`, props: ["typography", "color", "margin"] },
     title: { label: "%part.title%", selector: `${W} .ecx-counter-title`, props: TEXT, toggle: true },
   } }),
-  defineBlockControls({ id: "core/progress-parts", blocks: ["progressBar"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/progress-parts", partsOnly: true, blocks: ["progressBar"], attributes: {}, parts: {
     label: { label: "%part.label%", selector: `${W} .ecx-progress-head`, props: TEXT, toggle: true },
     track: { label: "%part.track%", selector: `${W} .ecx-progress-track`, props: ["background", "radius", "size", "border"] },
     bar: { label: "%part.bar%", selector: `${W} .ecx-progress-bar`, props: ["background"] },
   } }),
   // Accordion / Chi tiết: mục (khung từng mục), tiêu đề mục (thường / rê chuột / đang mở), nội dung mục
-  defineBlockControls({ id: "core/accordion-parts", blocks: ["accordion", "details"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/accordion-parts", partsOnly: true, blocks: ["accordion", "details"], attributes: {}, parts: {
     item: { label: "%part.item%", selector: `${W} details, ${W}:is(details)`, props: ["background", "border", "radius", "shadow", "padding", "margin"] },
     title: { label: "%part.paneTitle%", selector: `${W} details > summary, ${W}:is(details) > summary`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
       active: `${W} details[open] > summary, ${W}:is([open]) > summary` },
     content: { label: "%part.paneContent%", selector: `${W} details > :not(summary), ${W}:is(details) > :not(summary)`, props: ["typography", "color", "background", "padding"] },
   } }),
   // Tab: thanh tab, nút tab (thường / rê chuột / đang chọn), vùng nội dung
-  defineBlockControls({ id: "core/tabs-parts", blocks: ["tabs"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/tabs-parts", partsOnly: true, blocks: ["tabs"], attributes: {}, parts: {
     list: { label: "%part.tabList%", selector: `${W} [role=tablist]`, props: ["background", "border", "padding", "margin"] },
     tab: { label: "%part.tab%", selector: `${W} [role=tab]`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
       active: `${W} [role=tab][aria-selected=true]` },
     panel: { label: "%part.panel%", selector: `${W} [role=tabpanel]`, props: ["typography", "color", "background", "border", "radius", "padding"] },
   } }),
   // Nút: chính nút (thường / rê chuột lên nút) — khối nút đứng riêng có vỏ <p>, trong nhóm nút class ở chính <a>
-  defineBlockControls({ id: "core/button-parts", blocks: ["button"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/button-parts", partsOnly: true, blocks: ["button"], attributes: {}, parts: {
     button: { label: "%part.button%", selector: `${W}:is(a), ${W} a`, props: ["typography", "color", "background", "border", "radius", "shadow", "padding"], hover: "self" },
   } }),
   // Ảnh: chính ảnh (thường / rê chuột lên khối) và chú thích
-  defineBlockControls({ id: "core/image-parts", blocks: ["image"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/image-parts", partsOnly: true, blocks: ["image"], attributes: {}, parts: {
     image: { label: "%part.image%", selector: `${W} img, ${W}:is(img)`, props: ["border", "radius", "shadow", "padding", "background"], hover: true },
     caption: { label: "%part.caption%", selector: `${W} figcaption`, props: ["typography", "color", "background", "padding", "margin"], toggle: true },
   } }),
@@ -192,7 +192,7 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     highlight: { label: "%part.highlight%", selector: `${W} mark`, props: ["typography", "color", "background", "border", "radius", "padding"] },
     link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
   } }),
-  defineBlockControls({ id: "core/icon-list-parts", blocks: ["iconList"], attributes: {}, parts: {
+  defineBlockControls({ id: "core/icon-list-parts", partsOnly: true, blocks: ["iconList"], attributes: {}, parts: {
     item: { label: "%part.item%", selector: `${W} > li`, props: ["typography", "color", "padding"] },
     icon: { label: "%part.icon%", selector: `${W} .ecx-widget-icon`, props: ["color", "iconSize", "margin"], toggle: true },
   } }),
