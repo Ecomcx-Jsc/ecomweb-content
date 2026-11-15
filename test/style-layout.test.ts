@@ -93,3 +93,10 @@ test("ảnh nền (1.22): ảnh theo khổ, chuyển màu phủ trên ảnh, m�
   // Ghim khi cuộn đã là phần tử định vị → không đổi sang relative
   assert.doesNotMatch(styleCss(normalizeStyle({ position: { type: "sticky" }, background: { overlay: "#000" } })!, "y"), /position:relative/);
 });
+
+test("cấu trúc (1.27): z-index, hệ số giãn, thứ tự theo khổ; ghim khi cuộn dùng z-index đã đặt", () => {
+  const s = normalizeStyle({ zIndex: 5, grow: 1, order: { base: 2, mobile: -1 } })!;
+  assert.equal(styleCss(s, "x"), ".x.x{order:2;position:relative;z-index:5;flex-grow:1}@media (max-width:640px){.x.x{order:-1}}");
+  assert.match(styleCss(normalizeStyle({ zIndex: 50, position: { type: "sticky" } })!, "x"), /position:sticky;top:0;z-index:50/);
+  assert.equal(normalizeStyle({ zIndex: 100000, grow: -1, order: 99 }), undefined);
+});

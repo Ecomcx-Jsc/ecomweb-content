@@ -28,4 +28,14 @@ export declare const counterDecimals: (a: Attrs) => number;
 export declare function formatCounter(value: number, decimals: number, separator: unknown): string;
 /** Cây markup của khối widget; null = không phải khối widget / không có gì để vẽ. `editing` = khung soạn (giữ ô chữ rỗng, chỗ chọn ảnh). */
 export declare function widgetMarkup(type: string, a?: Attrs, editing?: boolean): WidgetEl | null;
+export type CountdownUnit = "d" | "h" | "m" | "s";
+/**
+ * 1.26 Ô của khối đếm ngược (website và khung soạn dùng chung): còn `leftMs` → các ô số + nhãn.
+ * Ẩn ngày thì giờ cộng dồn cả ngày; ẩn giây thì bỏ ô giây. Nhãn: nhãn riêng của khối > nhãn theo ngôn ngữ (`units`).
+ */
+export declare function countdownParts(a: Record<string, unknown>, leftMs: number, units?: Partial<Record<CountdownUnit, string>>): Array<{
+    u: CountdownUnit;
+    value: string;
+    label: string;
+}>;
 export {};

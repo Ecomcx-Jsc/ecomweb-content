@@ -1,13 +1,15 @@
 import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
-import { WIDE_BLOCKS } from "./schema.js";
+import { CONTAINER_TAGS, WIDE_BLOCKS } from "./schema.js";
 import { ICON_PATHS, iconEl } from "./widgets.js";
 const cls = (...parts) => parts.filter(Boolean).join(" ") || undefined;
 /** `text-align` chỉ ghi khi khác mặc định (left) — website không in thừa. */
 export function alignStyle(attrs) {
     return attrs?.textAlign && attrs.textAlign !== "left" ? { textAlign: String(attrs.textAlign) } : undefined;
 }
+/** Thẻ HTML của khối chứa (attrs.tagName); giá trị lạ → div. */
+const containerTag = (attrs) => (CONTAINER_TAGS.includes(attrs.tagName) ? attrs.tagName : "div");
 const num = (v, fallback) => (Number(v) > 0 ? Number(v) : fallback);
 /** Vỏ của khối lõi; `null` = khối này chưa có vỏ dùng chung (mỗi bên tự vẽ như cũ). `parent` cần cho `column` (đọc `stack` của `columns`). */
 export function blockShell(type, attrs = {}, parent) {
@@ -20,7 +22,7 @@ export function blockShell(type, attrs = {}, parent) {
             // 1.26: "stretch" = các cột cao bằng nhau (nền / viền của cột kéo hết chiều cao hàng)
             const align = attrs.verticalAlign === "center" ? "center" : attrs.verticalAlign === "bottom" ? "flex-end" : attrs.verticalAlign === "stretch" ? "stretch" : "flex-start";
             return {
-                tag: "div",
+                tag: containerTag(attrs),
                 className: cls("ecx-columns cms-columns", attrs.verticalAlign && `ecx-columns-${attrs.verticalAlign} cms-columns-${attrs.verticalAlign}`),
                 // 1.26: khe hàng (khi cột xuống dòng) riêng: --ecx-columns-row-gap, trống thì bằng khe cột như trước
                 style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-row-gap, var(--ecx-columns-gap, 1.5rem)) var(--ecx-columns-gap, 1.5rem)", alignItems: align },
@@ -28,12 +30,12 @@ export function blockShell(type, attrs = {}, parent) {
         }
         case "column": {
             const stack = parent?.attrs?.stack !== false;
-            return { tag: "div", className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
+            return { tag: containerTag(attrs), className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
         }
         case "group": {
             const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);
             const pad = PADDING[attrs.padding] ?? (bg ? PADDING.medium : undefined);
-            return { tag: "div", className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
+            return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
         }
         case "callout": {
             const tone = calloutTone(attrs);
@@ -42,7 +44,7 @@ export function blockShell(type, attrs = {}, parent) {
                 style: { borderLeft: `4px solid ${TONES[tone]}`, background: `color-mix(in srgb, ${TONES[tone]} 8%, transparent)`, padding: "0.75rem 1rem", borderRadius: "var(--ecx-radius-md, 8px)" },
             };
         }
-        case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`) };
+        case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`, attrs.orientation === "vertical" && "is-vertical") };
         case "button": {
             const variant = buttonVariant(attrs);
             // 1.24: --ecx-btn-color / --ecx-btn-bg = ô Kiểu dáng của từng nút (core-controls.ts), trống thì như cũ theo token
@@ -53,12 +55,15 @@ export function blockShell(type, attrs = {}, parent) {
                     : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
             // 1.26: có icon → flex (icon + chữ thẳng hàng, cách nhau); rộng hết khung → block / flex, chữ giữa
             const icon = !!buttonIcon(attrs), full = attrs.width === "full";
-            const layout = icon ? { display: full ? "flex" : "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5em" } : { display: full ? "block" : "inline-block" };
+            // icon hiện khi rê: khoảng cách icon–chữ nằm ở lề của icon (CSS) để lúc ẩn không còn khe
+            const layout = icon ? { display: full ? "flex" : "inline-flex", alignItems: "center", justifyContent: "center", gap: attrs.iconReveal === true && attrs.iconOnly !== true ? "0" : "0.5em" } : { display: full ? "block" : "inline-block" };
             return {
-                tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`, full && "is-full"),
+                tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`, full && "is-full", icon && attrs.iconOnly === true && "is-icon-only", icon && attrs.iconReveal === true && attrs.iconOnly !== true && "is-icon-reveal"),
                 // Token (style.css › :root) — theme đổi bằng biến; inline giữ màu nút thắng CSS link của theme
-                style: { ...layout, ...(full ? { textAlign: "center" } : {}), padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
-                ...(typeof attrs.ariaLabel === "string" && attrs.ariaLabel.trim() ? { attrs: { "aria-label": attrs.ariaLabel.trim().slice(0, 200) } } : {}),
+                style: { ...layout, ...(full ? { textAlign: "center" } : {}), padding: icon && attrs.iconOnly === true ? "var(--ecx-button-padding-icon, 0.6em)" : "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
+                // Chỉ icon: chữ của nút thành nhãn cho trình đọc màn hình (khi không đặt nhãn riêng)
+                ...(typeof attrs.ariaLabel === "string" && attrs.ariaLabel.trim() ? { attrs: { "aria-label": attrs.ariaLabel.trim().slice(0, 200) } }
+                    : icon && attrs.iconOnly === true && typeof attrs.text === "string" && attrs.text.trim() ? { attrs: { "aria-label": attrs.text.trim().slice(0, 200) } } : {}),
             };
         }
         case "spacer": return { tag: "div", className: "ecx-spacer", style: { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" }, attrs: { "aria-hidden": "true" } };

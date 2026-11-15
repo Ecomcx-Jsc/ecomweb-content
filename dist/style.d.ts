@@ -78,6 +78,10 @@ export interface BlockStyle {
     motion?: BlockMotion;
     /** Ảnh nền (1.22): ảnh theo khổ màn hình, cách phủ, điểm lấy nét, lặp, cố định khi cuộn, lớp phủ màu. */
     background?: BlockBackground;
+    /** Cấu trúc (1.27): lớp xếp chồng (`z-index`, -1…9999), hệ số giãn trong hàng flex (0…10), thứ tự trong khối cha theo khổ (-10…10 — vd đảo cột trên điện thoại). */
+    zIndex?: number;
+    grow?: number;
+    order?: Responsive<number>;
 }
 /**
  * Ảnh nền của khối (1.22). Ảnh: đường dẫn trong site (`/uploads/…`) hoặc https, theo khổ (điện thoại dùng ảnh khác được).

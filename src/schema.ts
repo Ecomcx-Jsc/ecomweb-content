@@ -30,6 +30,8 @@ const url = (): AttrSpec => ({ type: "url" });
 const align = s({ enum: ["left", "center", "right", "justify"] });
 /** 1.20: độ rộng khối so với cột chữ (như alignwide / alignfull của WP) — khối nào có thì xem WIDE_BLOCKS. */
 const wide = s({ enum: ["wide", "full"] });
+/** Thẻ HTML cho khối chứa (Nhóm, Bộ cột, Cột) — 1.27. */
+export const CONTAINER_TAGS = ["div", "section", "header", "footer", "article", "main", "aside"];
 /** 1.26: giá trị autocomplete cho ô của form lõi (khớp ContentFormat.cs). */
 export const FORM_AUTOCOMPLETE = ["off", "name", "given-name", "family-name", "email", "tel", "organization", "street-address", "address-level1", "address-level2", "postal-code", "country-name", "bday"];
 /** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
@@ -75,10 +77,11 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   tableCell: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
   youtube: { attrs: { align: wide, src: url(), start: i({ min: 0 }), width: n({ min: 1 }), height: n({ min: 1 }) } },
   // Bố cục (1.2): cột, nhóm, hộp lưu ý chứa khối khác; nút; nhúng theo đường dẫn (embedInfo)
-  columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }) } },
+  // 1.27: tagName = thẻ HTML của khối chứa (ngữ nghĩa: section, header, article…)
+  columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }), tagName: s({ enum: CONTAINER_TAGS }) } },
   // 1.26: href = liên kết phủ cả cột (bấm đâu trong cột cũng mở); linkLabel = tên liên kết cho trình đọc màn hình
-  column: { attrs: { width: n({ min: 5, max: 100 }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s() } },
-  group: { attrs: { align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
+  column: { attrs: { width: n({ min: 5, max: 100 }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s(), tagName: s({ enum: CONTAINER_TAGS }) } },
+  group: { attrs: { tagName: s({ enum: CONTAINER_TAGS }), align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
   callout: { attrs: { tone: s({ enum: ["info", "success", "warning", "danger"], default: "info" }), title: s() } },
   button: {
     attrs: {

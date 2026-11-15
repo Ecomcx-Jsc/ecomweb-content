@@ -1,7 +1,7 @@
 import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
-import { WIDE_BLOCKS } from "./schema.js";
+import { CONTAINER_TAGS, WIDE_BLOCKS } from "./schema.js";
 import { ICON_PATHS, iconEl, type WidgetEl } from "./widgets.js";
 /**
  * Vỏ markup của khối — MỘT nguồn cho website (theme-sdk) và trình soạn (canvas): thẻ, class, style.
@@ -26,6 +26,8 @@ export function alignStyle(attrs?: Attrs): Record<string, string> | undefined {
   return attrs?.textAlign && attrs.textAlign !== "left" ? { textAlign: String(attrs.textAlign) } : undefined;
 }
 
+/** Thẻ HTML của khối chứa (attrs.tagName); giá trị lạ → div. */
+const containerTag = (attrs: Attrs) => (CONTAINER_TAGS.includes(attrs.tagName as string) ? (attrs.tagName as string) : "div");
 const num = (v: unknown, fallback: number) => (Number(v) > 0 ? Number(v) : fallback);
 
 /** Vỏ của khối lõi; `null` = khối này chưa có vỏ dùng chung (mỗi bên tự vẽ như cũ). `parent` cần cho `column` (đọc `stack` của `columns`). */
@@ -39,7 +41,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
       // 1.26: "stretch" = các cột cao bằng nhau (nền / viền của cột kéo hết chiều cao hàng)
       const align = attrs.verticalAlign === "center" ? "center" : attrs.verticalAlign === "bottom" ? "flex-end" : attrs.verticalAlign === "stretch" ? "stretch" : "flex-start";
       return {
-        tag: "div",
+        tag: containerTag(attrs),
         className: cls("ecx-columns cms-columns", attrs.verticalAlign && `ecx-columns-${attrs.verticalAlign} cms-columns-${attrs.verticalAlign}`),
         // 1.26: khe hàng (khi cột xuống dòng) riêng: --ecx-columns-row-gap, trống thì bằng khe cột như trước
         style: { display: "flex", flexWrap: stack ? "wrap" : "nowrap", gap: "var(--ecx-columns-row-gap, var(--ecx-columns-gap, 1.5rem)) var(--ecx-columns-gap, 1.5rem)", alignItems: align },
@@ -47,12 +49,12 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
     }
     case "column": {
       const stack = parent?.attrs?.stack !== false;
-      return { tag: "div", className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
+      return { tag: containerTag(attrs), className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
     }
     case "group": {
       const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);
       const pad = PADDING[attrs.padding as string] ?? (bg ? PADDING.medium : undefined);
-      return { tag: "div", className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
+      return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
     }
     case "callout": {
       const tone = calloutTone(attrs);

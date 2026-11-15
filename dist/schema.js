@@ -7,6 +7,10 @@ const url = () => ({ type: "url" });
 const align = s({ enum: ["left", "center", "right", "justify"] });
 /** 1.20: độ rộng khối so với cột chữ (như alignwide / alignfull của WP) — khối nào có thì xem WIDE_BLOCKS. */
 const wide = s({ enum: ["wide", "full"] });
+/** Thẻ HTML cho khối chứa (Nhóm, Bộ cột, Cột) — 1.27. */
+export const CONTAINER_TAGS = ["div", "section", "header", "footer", "article", "main", "aside"];
+/** 1.26: giá trị autocomplete cho ô của form lõi (khớp ContentFormat.cs). */
+export const FORM_AUTOCOMPLETE = ["off", "name", "given-name", "family-name", "email", "tel", "organization", "street-address", "address-level1", "address-level2", "postal-code", "country-name", "bday"];
 /** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
 export const FORM_FIELD_KINDS = ["text", "email", "tel", "textarea", "select", "radio", "checkbox", "consent", "number", "date"];
 const media = { src: url(), name: s(), mime: s(), mediaId: { type: "json" }, caption: s() };
@@ -49,10 +53,11 @@ export const CORE_NODES = {
     tableCell: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
     youtube: { attrs: { align: wide, src: url(), start: i({ min: 0 }), width: n({ min: 1 }), height: n({ min: 1 }) } },
     // Bố cục (1.2): cột, nhóm, hộp lưu ý chứa khối khác; nút; nhúng theo đường dẫn (embedInfo)
-    columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }) } },
+    // 1.27: tagName = thẻ HTML của khối chứa (ngữ nghĩa: section, header, article…)
+    columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }), tagName: s({ enum: CONTAINER_TAGS }) } },
     // 1.26: href = liên kết phủ cả cột (bấm đâu trong cột cũng mở); linkLabel = tên liên kết cho trình đọc màn hình
-    column: { attrs: { width: n({ min: 5, max: 100 }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s() } },
-    group: { attrs: { align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
+    column: { attrs: { width: n({ min: 5, max: 100 }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s(), tagName: s({ enum: CONTAINER_TAGS }) } },
+    group: { attrs: { tagName: s({ enum: CONTAINER_TAGS }), align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
     callout: { attrs: { tone: s({ enum: ["info", "success", "warning", "danger"], default: "info" }), title: s() } },
     button: {
         attrs: {
@@ -60,12 +65,14 @@ export const CORE_NODES = {
             variant: s({ enum: ["primary", "secondary", "outline"], default: "primary" }), align: s({ enum: ["left", "center", "right"] }),
             // 1.26: icon (tên trong ICON_PATHS) + vị trí, độ rộng (auto | full), nhãn cho trình đọc màn hình
             icon: s(), iconPosition: s({ enum: ["left", "right"] }), width: s({ enum: ["auto", "full"] }), ariaLabel: s(),
+            // chỉ hiện icon (chữ thành nhãn cho trình đọc màn hình), icon hiện khi rê chuột
+            iconOnly: b({ default: false }), iconReveal: b({ default: false }),
         },
     },
     embed: { attrs: { align: wide, url: url(), caption: s() } },
     // Bộ khối cơ bản (1.9)
     spacer: { attrs: { height: s({ default: "lg" }) } },
-    buttons: { attrs: { align: s({ enum: ["left", "center", "right", "space-between"] }) } },
+    buttons: { attrs: { align: s({ enum: ["left", "center", "right", "space-between"] }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }) } },
     cover: {
         attrs: {
             align: wide, constrained: b({ default: false }), src: url(), mediaId: { type: "json" }, alt: s(), overlay: s(), opacity: i({ min: 0, max: 100, default: 50 }), minHeight: s({ default: "400px" }),
@@ -82,16 +89,20 @@ export const CORE_NODES = {
     details: { attrs: { summary: s(), open: b({ default: false }) } },
     // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown / rating là khối nguyên tử.
     // tabs > tab(title) > nội dung; carousel: mỗi con trực tiếp là một slide; shortcode chèn shortcode của plugin/theme
-    tabs: { attrs: { align: wide, initial: i({ min: 1 }) } },
-    tab: { attrs: { title: s() } },
+    // 1.26: tab dọc, thành accordion trên điện thoại; mỗi tab có icon (tên trong ICON_PATHS) + phụ đề; neo của tab = `anchor` chung (mở thẳng bằng #neo)
+    tabs: { attrs: { align: wide, initial: i({ min: 1 }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobileAccordion: b({ default: false }) } },
+    tab: { attrs: { title: s(), icon: s({ enum: ICON_NAMES }), subtitle: s() } },
     carousel: { attrs: { align: wide, slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
     shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },
-    accordion: { attrs: { align: wide, multiple: b({ default: false }) } },
-    countdown: { attrs: { target: s(), label: s(), expiredText: s() } },
+    // 1.26: chia 2 cột, icon mở / đóng (mũi tên | dấu cộng | không) bên trái / phải, thẻ của tiêu đề mục, FAQ Schema (Google)
+    accordion: { attrs: { align: wide, multiple: b({ default: false }), columns: i({ min: 1, max: 2, default: 1 }), icon: s({ enum: ["arrow", "plus", "none"], default: "arrow" }), iconSide: s({ enum: ["left", "right"], default: "right" }), titleTag: s({ enum: ["div", "h2", "h3", "h4", "h5", "h6"], default: "div" }), faq: b({ default: false }) } },
+    // 1.26: bố cục khối | một dòng, dấu ":" giữa các ô, số dạng 00, chữ sau, ẩn ngày / giây, nhãn riêng từng đơn vị
+    countdown: { attrs: { target: s(), label: s(), expiredText: s(), layout: s({ enum: ["block", "inline"], default: "block" }), divider: b({ default: false }), pad: b({ default: true }), postText: s(), showDays: b({ default: true }), showSeconds: b({ default: true }), daysLabel: s(), hoursLabel: s(), minutesLabel: s(), secondsLabel: s() } },
     rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
     customHtml: { attrs: { align: wide, html: s() } },
     socialLinks: { attrs: { links: { type: "json", default: [] }, size: s({ enum: ["small", "medium", "large"], default: "medium" }), align: s({ enum: ["left", "center", "right"] }), showLabels: b({ default: false }) } },
-    tableOfContents: { attrs: { title: s(), maxLevel: i({ min: 2, max: 4, default: 3 }) } },
+    // 1.26: khoảng cấp tiêu đề H2–H6, thu gọn được (+ bắt đầu thu gọn), kiểu danh sách, số cột, cuộn mượt, tô đậm mục đang đọc
+    tableOfContents: { attrs: { title: s(), minLevel: i({ min: 2, max: 6, default: 2 }), maxLevel: i({ min: 2, max: 6, default: 3 }), collapsible: b({ default: false }), startCollapsed: b({ default: false }), listStyle: s({ enum: ["numbers", "bullets", "none"], default: "numbers" }), columns: i({ min: 1, max: 3, default: 1 }), smoothScroll: b({ default: false }), highlight: b({ default: false }) } },
     preformatted: {},
     // Khối động (1.6): lấy dữ liệu lúc hiển thị theo ngữ cảnh (website, trang đang xem, bài trong vòng lặp) — dùng trong template
     siteTitle: { attrs: { level: i({ min: 0, max: 6, default: 0 }), link: b({ default: true }), textAlign: align } },
@@ -140,15 +151,23 @@ export const CORE_NODES = {
     syncedPattern: { attrs: { ref: i({ min: 1 }) } },
     // 1.21: form cơ bản của lõi (liên hệ, đăng ký nhận tin, đặt lịch đơn giản): `form` chứa các ô `formField` và khối chữ; máy chủ đọc lại
     // định nghĩa form từ chính trang / template chứa nó để kiểm bài gửi. formId cố định theo form (không đổi khi sửa ô). Form nâng cao: plugin.
-    form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s() } },
+    // 1.26: email nhận có thể nhiều địa chỉ (dấu phẩy), đồng gửi (Cc), tiêu đề email riêng, chuyển trang sau khi gửi
+    form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s(), notifyCc: s(), emailSubject: s(), redirect: url() } },
     formField: {
         attrs: {
             kind: s({ enum: FORM_FIELD_KINDS, default: "text" }), name: s(), label: s(), placeholder: s(), help: s(),
-            required: b({ default: false }), options: { type: "json", default: [] }, width: s({ enum: ["full", "half"], default: "full" }),
+            required: b({ default: false }), options: { type: "json", default: [] }, width: s({ enum: ["full", "half", "third"], default: "full" }),
+            // 1.26: trình duyệt tự điền (autocomplete)
+            autocomplete: s({ enum: FORM_AUTOCOMPLETE }),
         },
     },
     // 1.23: widget lõi (markup chung ở widgets.ts). Chữ là chữ thường (không HTML); ảnh như mediaText (src + mediaId + alt).
-    iconBox: { attrs: { icon: s({ enum: ICON_NAMES, default: "star" }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), position: s({ enum: ["top", "left"], default: "top" }), textAlign: align } },
+    // 1.26: icon bên phải; media là icon | số | không; khung icon tròn / vuông; hiệu ứng icon khi rê; link ở tiêu đề | cả hộp | nút "Xem thêm"
+    iconBox: { attrs: {
+            icon: s({ enum: ICON_NAMES, default: "star" }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), position: s({ enum: ["top", "left", "right"], default: "top" }), textAlign: align,
+            media: s({ enum: ["icon", "number", "none"], default: "icon" }), number: s(), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), hover: s({ enum: ["none", "grow", "flip"], default: "none" }),
+            linkMode: s({ enum: ["title", "box", "button"], default: "title" }), buttonText: s(),
+        } },
     imageBox: { attrs: { src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), textAlign: align } },
     /** items: [{ text, href?, icon? }] — icon riêng của mục thắng icon chung. */
     iconList: { attrs: { items: { type: "json", default: [] }, icon: s({ enum: ICON_NAMES, default: "check" }), layout: s({ enum: ["list", "inline"], default: "list" }) } },
@@ -159,7 +178,8 @@ export const CORE_NODES = {
         },
     },
     testimonial: { attrs: { quote: s(), name: s(), role: s(), src: url(), mediaId: { type: "json" }, alt: s(), textAlign: align } },
-    progressBar: { attrs: { label: s(), value: i({ min: 0, max: 100, default: 50 }), showValue: b({ default: true }) } },
+    // 1.26: giá trị / tối đa (không chỉ %), tiền tố / hậu tố của số (mặc định "%"), vị trí chữ (trên | trong thanh | dưới), thời gian chạy (ms)
+    progressBar: { attrs: { label: s(), value: i({ min: 0, max: 1000000, default: 50 }), max: i({ min: 1, max: 1000000, default: 100 }), showValue: b({ default: true }), prefix: s(), suffix: s(), textPosition: s({ enum: ["above", "inside", "below"], default: "above" }), duration: i({ min: 0, max: 10000, default: 1200 }) } },
 };
 /** Tên ô của form: chữ thường, số, gạch dưới — khoá trong bài gửi. */
 export const FORM_FIELD_NAME = /^[a-z][a-z0-9_]{0,39}$/;

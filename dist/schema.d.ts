@@ -17,6 +17,10 @@ export interface AttrSpec {
 export interface NodeSpec {
     attrs?: Record<string, AttrSpec>;
 }
+/** Thẻ HTML cho khối chứa (Nhóm, Bộ cột, Cột) — 1.27. */
+export declare const CONTAINER_TAGS: string[];
+/** 1.26: giá trị autocomplete cho ô của form lõi (khớp ContentFormat.cs). */
+export declare const FORM_AUTOCOMPLETE: string[];
 /** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
 export declare const FORM_FIELD_KINDS: readonly ["text", "email", "tel", "textarea", "select", "radio", "checkbox", "consent", "number", "date"];
 /**

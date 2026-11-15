@@ -1,0 +1,143 @@
+{
+  "name": "style-structure",
+  "note": "Cấu trúc (1.27): style.zIndex / grow / order theo khổ và attrs.tagName của khối chứa; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "tagName": "section",
+                "style": {
+                  "zIndex": 5,
+                  "grow": 1,
+                  "order": {
+                    "mobile": -1
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "tagName": "script",
+                "verticalAlign": "stretch"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "tagName": "article",
+                    "style": {
+                      "zIndex": "12",
+                      "grow": 99,
+                      "order": {
+                        "base": 2,
+                        "mobile": "x"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "style": {
+                      "zIndex": 1.5,
+                      "order": 50
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "tagName": "section",
+                "style": {
+                  "zIndex": 5,
+                  "grow": 1,
+                  "order": {
+                    "mobile": -1
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "stretch"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "tagName": "article",
+                    "style": {
+                      "zIndex": 12,
+                      "order": {
+                        "base": 2
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

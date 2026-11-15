@@ -107,6 +107,10 @@ function layout(v) {
     }
     return out;
 }
+const int = (min, max) => (v) => {
+    const n = typeof v === "number" ? v : typeof v === "string" && /^-?\d{1,5}$/.test(v.trim()) ? Number(v) : NaN;
+    return Number.isInteger(n) && n >= min && n <= max ? n : undefined;
+};
 function hover(v) {
     if (!isObj(v))
         return undefined;
@@ -279,6 +283,9 @@ export function normalizeStyle(v) {
     set("hover", hover(v.hover));
     set("motion", motion(v.motion));
     set("background", background(v.background));
+    set("zIndex", int(-1, 9999)(v.zIndex));
+    set("grow", int(0, 10)(v.grow));
+    set("order", responsive(v.order, int(-10, 10)));
     return Object.keys(out).length ? out : undefined;
 }
 // ---------------------------------------------------------------------------
@@ -327,6 +334,9 @@ function declarations(style) {
         const ta = style.textAlign?.[d];
         if (ta !== undefined)
             out[d].push(`text-align:${ta}`);
+        const od = style.order?.[d];
+        if (od !== undefined)
+            out[d].push(`order:${od}`);
     }
     if (style.fontFamily)
         out.base.push(`font-family:var(--ecx-font-family-${style.fontFamily}, inherit)`);
@@ -390,7 +400,11 @@ function declarations(style) {
     if (style.aspectRatio)
         out.base.push(`aspect-ratio:${style.aspectRatio}`, "object-fit:cover");
     if (style.position)
-        out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, "z-index:10");
+        out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, `z-index:${style.zIndex ?? 10}`);
+    else if (style.zIndex !== undefined)
+        out.base.push(...(style.background?.overlay ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
+    if (style.grow !== undefined)
+        out.base.push(`flex-grow:${style.grow}`);
     // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
     const bg = style.background;
     if (bg) {
