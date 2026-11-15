@@ -76,6 +76,7 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     tabsAccent: color("tabs", { [`${W} [role=tab][aria-selected=true]`]: "border-bottom-color: {{VALUE}}" }, "active"),
     tabsBorderColor: color("tabs", { [`${W} [role=tablist]`]: "border-bottom-color: {{VALUE}}" }),
     tabsGap: length("tabs", { [`${W} [role=tablist]`]: "gap: {{VALUE}}" }),
+    tabsAlign: choice("tabs", ["flex-start", "center", "flex-end", "space-between"], { [`${W} [role=tablist]`]: "justify-content: {{VALUE}}" }),
     tabsContentPadding: length("tabs", { [`${W} [role=tabpanel]`]: "padding: {{VALUE}}" }, true),
   } }),
   defineBlockControls({ id: "core/accordion", blocks: ["accordion", "details"], attributes: {
@@ -161,7 +162,7 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
   } }),
   defineBlockControls({ id: "core/progress-parts", partsOnly: true, blocks: ["progressBar"], attributes: {}, parts: {
     label: { label: "%part.label%", selector: `${W} .ecx-progress-head`, props: TEXT, toggle: true },
-    track: { label: "%part.track%", selector: `${W} .ecx-progress-track`, props: ["background", "radius", "size", "border"] },
+    track: { label: "%part.track%", selector: `${W} .ecx-progress-track`, props: ["background", "radius", "border"] },
     bar: { label: "%part.bar%", selector: `${W} .ecx-progress-bar`, props: ["background"] },
   } }),
   // Accordion / Chi tiết: mục (khung từng mục), tiêu đề mục (thường / rê chuột / đang mở), nội dung mục

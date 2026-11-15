@@ -82,7 +82,7 @@ export const CORE_NODES = {
     details: { attrs: { summary: s(), open: b({ default: false }) } },
     // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown / rating là khối nguyên tử.
     // tabs > tab(title) > nội dung; carousel: mỗi con trực tiếp là một slide; shortcode chèn shortcode của plugin/theme
-    tabs: { attrs: { align: wide } },
+    tabs: { attrs: { align: wide, initial: i({ min: 1 }) } },
     tab: { attrs: { title: s() } },
     carousel: { attrs: { align: wide, slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
     shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },
