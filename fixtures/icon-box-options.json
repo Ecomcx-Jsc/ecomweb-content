@@ -1,0 +1,77 @@
+{
+  "name": "icon-box-options",
+  "note": "Hộp icon 1.26: icon bên phải, media số / không, khung tròn / vuông, hiệu ứng khi rê, link ở tiêu đề / cả hộp / nút; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "A",
+                "position": "right",
+                "media": "number",
+                "number": "01",
+                "iconStyle": "circle",
+                "hover": "flip",
+                "linkMode": "button",
+                "buttonText": "Xem",
+                "href": "/a"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "B",
+                "position": "bottom",
+                "media": "video",
+                "iconStyle": "hex",
+                "hover": "spin",
+                "linkMode": "card"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "A",
+                "position": "right",
+                "media": "number",
+                "number": "01",
+                "iconStyle": "circle",
+                "hover": "flip",
+                "linkMode": "button",
+                "buttonText": "Xem",
+                "href": "/a"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "B"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -409,6 +409,24 @@
   :where(.ecx-icon-box-title, .ecx-image-box-title) :where(a) { color: inherit; text-decoration: none; }
   :where(.ecx-icon-box-title, .ecx-image-box-title) :where(a:hover) { color: var(--ecx-color-link); }
   :where(.ecx-icon-box-text, .ecx-image-box-text) { margin: 0; color: var(--ecx-color-muted); }
+  /* 1.26 Hộp icon: icon bên phải, khung icon tròn / vuông, media là số, hiệu ứng khi rê, cả hộp là link, nút "Xem thêm" */
+  :where(.ecx-icon-box.is-right) { flex-direction: row-reverse; align-items: flex-start; gap: var(--ecx-spacing-md); }
+  :where(.ecx-icon-box-icon.is-circle, .ecx-icon-box-icon.is-square) { display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; font-size: var(--ecx-font-size-2xl); background: color-mix(in srgb, var(--ecx-color-primary) 12%, transparent); }
+  :where(.ecx-icon-box-icon.is-circle) { border-radius: 50%; }
+  :where(.ecx-icon-box-icon.is-square) { border-radius: var(--ecx-radius-md); }
+  :where(.ecx-icon-box-icon.is-number) { font-weight: 700; font-variant-numeric: tabular-nums; }
+  :where(.ecx-icon-box.is-top[style*="center"]) > :where(.ecx-icon-box-icon) { align-self: center; }
+  :where(.ecx-icon-box.is-top[style*="right"]) > :where(.ecx-icon-box-icon) { align-self: flex-end; }
+  :where(.ecx-icon-box) :where(.ecx-icon-box-icon) { transition: transform .3s var(--ecx-motion-ease); }
+  :where(.ecx-icon-box.has-hover-grow:hover) :where(.ecx-icon-box-icon) { transform: scale(1.12); }
+  :where(.ecx-icon-box.has-hover-flip:hover) :where(.ecx-icon-box-icon) { transform: rotateY(180deg); }
+  :where(a.ecx-icon-box.is-link) { color: inherit; text-decoration: none; }
+  :where(a.ecx-icon-box.is-link:hover) :where(.ecx-icon-box-title) { color: var(--ecx-color-link); }
+  :where(a.ecx-icon-box.is-link:focus-visible) { outline: var(--ecx-focus-ring); outline-offset: var(--ecx-focus-offset); }
+  :where(.ecx-icon-box-more) { display: inline-block; margin-top: var(--ecx-spacing-sm); font-weight: 600; }
+  :where(.ecx-icon-box-more) :where(a) { color: var(--ecx-color-link); text-decoration: none; }
+  :where(.ecx-icon-box-more) :where(a:hover) { text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-icon-box) :where(.ecx-icon-box-icon) { transition: none; } }
   :where(.ecx-image-box-media) { margin: 0 0 var(--ecx-spacing-md); }
   :where(.ecx-image-box-media) :where(img) { display: block; width: 100%; height: auto; border-radius: var(--ecx-radius-md); }
   :where(.ecx-icon-list) { display: flex; flex-direction: column; gap: var(--ecx-spacing-xs); padding: 0; list-style: none; }

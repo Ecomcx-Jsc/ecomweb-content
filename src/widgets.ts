@@ -60,6 +60,7 @@ function text(tag: string, className: string | undefined, a: Attrs, field: strin
 const level = (a: Attrs) => `h${Math.min(6, Math.max(2, Number(a.level) || 3))}`;
 const href = (a: Attrs) => (a.href ? safeUrl(a.href, "") || undefined : undefined);
 const alignCss = (a: Attrs) => (a.textAlign && a.textAlign !== "left" ? { textAlign: String(a.textAlign) } : undefined);
+const cls = (...c: unknown[]) => c.filter((x) => typeof x === "string" && x).join(" ");
 const kids = (...c: Array<WidgetEl | null | false | undefined>) => c.filter(Boolean) as WidgetEl[];
 
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
@@ -78,12 +79,25 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
   switch (type) {
     case "iconBox": {
       const link = href(a);
+      const mode = a.linkMode === "box" || a.linkMode === "button" ? a.linkMode : "title";
+      const pos = a.position === "left" || a.position === "right" ? a.position : "top";
+      const media = a.media === "number" || a.media === "none" ? a.media : "icon";
+      const style = a.iconStyle === "circle" || a.iconStyle === "square" ? a.iconStyle : null;
+      const hover = a.hover === "grow" || a.hover === "flip" ? a.hover : null;
+      const mediaEl: WidgetEl | null = media === "none" ? null
+        : media === "number" ? (str(a.number) || editing ? { tag: "span", className: cls("ecx-icon-box-icon is-number", style && `is-${style}`), children: [{ tag: "span", field: "number", children: [str(a.number)] }] } : null)
+        : { tag: "span", className: cls("ecx-icon-box-icon", style && `is-${style}`), children: [iconEl(a.icon)] };
+      // Nút "Xem thêm": chữ riêng, trống = chữ mặc định do renderer điền (ngôn ngữ của trang) — ở đây để trống là "→"
+      const more: WidgetEl | null = mode === "button" && (link || editing) ? { tag: "span", className: "ecx-icon-box-more", children: [link && !editing ? { tag: "a", props: { href: link }, children: [{ tag: "span", field: "buttonText", children: [str(a.buttonText) || "→"] }] } : { tag: "span", field: "buttonText", children: [str(a.buttonText)] }] } : null;
+      // Cả hộp là liên kết: thẻ <a> bọc ngoài (tiêu đề không còn link riêng — không lồng <a>); khi đang soạn vẫn là <div>
+      const boxLink = mode === "box" && link && !editing;
       return {
-        tag: "div", className: `ecx-icon-box is-${a.position === "left" ? "left" : "top"}`, style: alignCss(a),
-        children: [
-          { tag: "span", className: "ecx-icon-box-icon", children: [iconEl(a.icon)] },
-          { tag: "div", className: "ecx-icon-box-body", children: kids(text(level(a), "ecx-icon-box-title", a, "title", editing, link), text("p", "ecx-icon-box-text", a, "text", editing)) },
-        ],
+        tag: boxLink ? "a" : "div", className: cls("ecx-icon-box", `is-${pos}`, hover && `has-hover-${hover}`, boxLink && "is-link"), style: alignCss(a),
+        props: boxLink ? { href: link } : undefined,
+        children: kids(
+          mediaEl,
+          { tag: "div", className: "ecx-icon-box-body", children: kids(text(level(a), "ecx-icon-box-title", a, "title", editing, mode === "title" ? link : undefined), text("p", "ecx-icon-box-text", a, "text", editing), more) },
+        ),
       };
     }
     case "imageBox": {

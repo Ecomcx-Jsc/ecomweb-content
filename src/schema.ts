@@ -177,7 +177,12 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     },
   },
   // 1.23: widget lõi (markup chung ở widgets.ts). Chữ là chữ thường (không HTML); ảnh như mediaText (src + mediaId + alt).
-  iconBox: { attrs: { icon: s({ enum: ICON_NAMES, default: "star" }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), position: s({ enum: ["top", "left"], default: "top" }), textAlign: align } },
+  // 1.26: icon bên phải; media là icon | số | không; khung icon tròn / vuông; hiệu ứng icon khi rê; link ở tiêu đề | cả hộp | nút "Xem thêm"
+  iconBox: { attrs: {
+    icon: s({ enum: ICON_NAMES, default: "star" }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), position: s({ enum: ["top", "left", "right"], default: "top" }), textAlign: align,
+    media: s({ enum: ["icon", "number", "none"], default: "icon" }), number: s(), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), hover: s({ enum: ["none", "grow", "flip"], default: "none" }),
+    linkMode: s({ enum: ["title", "box", "button"], default: "title" }), buttonText: s(),
+  } },
   imageBox: { attrs: { src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), textAlign: align } },
   /** items: [{ text, href?, icon? }] — icon riêng của mục thắng icon chung. */
   iconList: { attrs: { items: { type: "json", default: [] }, icon: s({ enum: ICON_NAMES, default: "check" }), layout: s({ enum: ["list", "inline"], default: "list" }) } },
