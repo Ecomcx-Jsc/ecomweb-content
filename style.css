@@ -145,6 +145,17 @@
   :where(.ecx-buttons-group.is-center) { justify-content: center; }
   :where(.ecx-buttons-group.is-right) { justify-content: flex-end; }
   :where(.ecx-buttons-group.is-space-between) { justify-content: space-between; }
+  /* 1.26 nhóm nút xếp dọc; nút chỉ icon (vuông, chữ ẩn — đã thành aria-label); icon hiện khi rê chuột */
+  :where(.ecx-buttons-group.is-vertical) { flex-direction: column; align-items: flex-start; }
+  :where(.ecx-buttons-group.is-vertical.is-center) { align-items: center; }
+  :where(.ecx-buttons-group.is-vertical.is-right) { align-items: flex-end; }
+  :where(.ecx-buttons-group.is-vertical.is-space-between) { align-items: stretch; }
+  :where(.ecx-button.is-icon-only) { aspect-ratio: 1; }
+  :where(.ecx-button.is-icon-reveal) > :where(.ecx-widget-icon) { width: 0; margin-inline: 0; opacity: 0; transition: width .2s var(--ecx-motion-ease), margin .2s var(--ecx-motion-ease), opacity .2s var(--ecx-motion-ease); }
+  :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon) { width: 1em; margin-inline: .5em; opacity: 1; }
+  :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon:first-child) { margin-inline-start: 0; }
+  :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon:last-child) { margin-inline-end: 0; }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-button.is-icon-reveal) > :where(.ecx-widget-icon) { transition: none; } }
   /* 1.21: form cơ bản (khối form / formField) — ô theo màu chữ của theme, hai ô "nửa hàng" đứng cạnh nhau từ 640px */
   :where(.ecx-form-blocks) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; margin: var(--ecx-flow) 0; }
   :where(.ecx-form-blocks) > :where(*) { grid-column: 1 / -1; margin: 0; }

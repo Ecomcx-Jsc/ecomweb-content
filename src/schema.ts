@@ -84,12 +84,14 @@ export const CORE_NODES: Record<string, NodeSpec> = {
       variant: s({ enum: ["primary", "secondary", "outline"], default: "primary" }), align: s({ enum: ["left", "center", "right"] }),
       // 1.26: icon (tên trong ICON_PATHS) + vị trí, độ rộng (auto | full), nhãn cho trình đọc màn hình
       icon: s(), iconPosition: s({ enum: ["left", "right"] }), width: s({ enum: ["auto", "full"] }), ariaLabel: s(),
+      // chỉ hiện icon (chữ thành nhãn cho trình đọc màn hình), icon hiện khi rê chuột
+      iconOnly: b({ default: false }), iconReveal: b({ default: false }),
     },
   },
   embed: { attrs: { align: wide, url: url(), caption: s() } },
   // Bộ khối cơ bản (1.9)
   spacer: { attrs: { height: s({ default: "lg" }) } },
-  buttons: { attrs: { align: s({ enum: ["left", "center", "right", "space-between"] }) } },
+  buttons: { attrs: { align: s({ enum: ["left", "center", "right", "space-between"] }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }) } },
   cover: {
     attrs: {
       align: wide, constrained: b({ default: false }), src: url(), mediaId: { type: "json" }, alt: s(), overlay: s(), opacity: i({ min: 0, max: 100, default: 50 }), minHeight: s({ default: "400px" }),

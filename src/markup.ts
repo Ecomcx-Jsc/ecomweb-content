@@ -61,7 +61,7 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
         style: { borderLeft: `4px solid ${TONES[tone]}`, background: `color-mix(in srgb, ${TONES[tone]} 8%, transparent)`, padding: "0.75rem 1rem", borderRadius: "var(--ecx-radius-md, 8px)" },
       };
     }
-    case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`) };
+    case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`, attrs.orientation === "vertical" && "is-vertical") };
     case "button": {
       const variant = buttonVariant(attrs);
       // 1.24: --ecx-btn-color / --ecx-btn-bg = ô Kiểu dáng của từng nút (core-controls.ts), trống thì như cũ theo token
@@ -72,12 +72,15 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
           : { background: "var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary, #2563eb))))", color: "var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg, #fff))))" };
       // 1.26: có icon → flex (icon + chữ thẳng hàng, cách nhau); rộng hết khung → block / flex, chữ giữa
       const icon = !!buttonIcon(attrs), full = attrs.width === "full";
-      const layout: Record<string, string> = icon ? { display: full ? "flex" : "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5em" } : { display: full ? "block" : "inline-block" };
+      // icon hiện khi rê: khoảng cách icon–chữ nằm ở lề của icon (CSS) để lúc ẩn không còn khe
+      const layout: Record<string, string> = icon ? { display: full ? "flex" : "inline-flex", alignItems: "center", justifyContent: "center", gap: attrs.iconReveal === true && attrs.iconOnly !== true ? "0" : "0.5em" } : { display: full ? "block" : "inline-block" };
       return {
-        tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`, full && "is-full"),
+        tag: "a", className: cls("ecx-button cms-button", `ecx-button-${variant} cms-button-${variant}`, full && "is-full", icon && attrs.iconOnly === true && "is-icon-only", icon && attrs.iconReveal === true && attrs.iconOnly !== true && "is-icon-reveal"),
         // Token (style.css › :root) — theme đổi bằng biến; inline giữ màu nút thắng CSS link của theme
-        style: { ...layout, ...(full ? { textAlign: "center" } : {}), padding: "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
-        ...(typeof attrs.ariaLabel === "string" && attrs.ariaLabel.trim() ? { attrs: { "aria-label": attrs.ariaLabel.trim().slice(0, 200) } } : {}),
+        style: { ...layout, ...(full ? { textAlign: "center" } : {}), padding: icon && attrs.iconOnly === true ? "var(--ecx-button-padding-icon, 0.6em)" : "var(--ecx-button-padding, 0.6em 1.2em)", borderRadius: "var(--ecx-button-radius, 8px)", textDecoration: "none", fontWeight: "var(--ecx-button-font-weight, 600)", lineHeight: 1.2, ...look },
+        // Chỉ icon: chữ của nút thành nhãn cho trình đọc màn hình (khi không đặt nhãn riêng)
+        ...(typeof attrs.ariaLabel === "string" && attrs.ariaLabel.trim() ? { attrs: { "aria-label": attrs.ariaLabel.trim().slice(0, 200) } }
+          : icon && attrs.iconOnly === true && typeof attrs.text === "string" && attrs.text.trim() ? { attrs: { "aria-label": attrs.text.trim().slice(0, 200) } } : {}),
       };
     }
     case "spacer": return { tag: "div", className: "ecx-spacer", style: { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" }, attrs: { "aria-hidden": "true" } };

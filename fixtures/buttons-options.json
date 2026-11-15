@@ -1,0 +1,95 @@
+{
+  "name": "buttons-options",
+  "note": "Nút 1.26: nhóm nút xếp dọc; nút chỉ icon, icon hiện khi rê chuột; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "buttons",
+              "attrs": {
+                "orientation": "vertical"
+              },
+              "content": [
+                {
+                  "type": "button",
+                  "attrs": {
+                    "text": "A",
+                    "icon": "star",
+                    "iconOnly": true,
+                    "iconReveal": true,
+                    "width": "auto"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "buttons",
+              "attrs": {
+                "orientation": "diagonal"
+              },
+              "content": [
+                {
+                  "type": "button",
+                  "attrs": {
+                    "text": "B",
+                    "iconOnly": "yes",
+                    "width": "half"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "buttons",
+              "attrs": {
+                "orientation": "vertical"
+              },
+              "content": [
+                {
+                  "type": "button",
+                  "attrs": {
+                    "text": "A",
+                    "icon": "star",
+                    "iconOnly": true,
+                    "iconReveal": true,
+                    "width": "auto"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "buttons",
+              "content": [
+                {
+                  "type": "button",
+                  "attrs": {
+                    "text": "B"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
