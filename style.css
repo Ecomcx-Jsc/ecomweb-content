@@ -157,10 +157,12 @@
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon:last-child) { margin-inline-end: 0; }
   @media (prefers-reduced-motion: reduce) { :where(.ecx-button.is-icon-reveal) > :where(.ecx-widget-icon) { transition: none; } }
   /* 1.21: form cơ bản (khối form / formField) — ô theo màu chữ của theme, hai ô "nửa hàng" đứng cạnh nhau từ 640px */
-  :where(.ecx-form-blocks) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; margin: var(--ecx-flow) 0; }
+  /* 1.26: lưới 6 phần → ô nửa hàng (3) và một phần ba hàng (2) */
+  :where(.ecx-form-blocks) { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem 1.25rem; margin: var(--ecx-flow) 0; }
   :where(.ecx-form-blocks) > :where(*) { grid-column: 1 / -1; margin: 0; }
-  :where(.ecx-form-blocks) > :where(.ecx-field.is-half) { grid-column: auto; }
-  @media (max-width: 639px) { :where(.ecx-form-blocks) > :where(.ecx-field.is-half) { grid-column: 1 / -1; } }
+  :where(.ecx-form-blocks) > :where(.ecx-field.is-half) { grid-column: span 3; }
+  :where(.ecx-form-blocks) > :where(.ecx-field.is-third) { grid-column: span 2; }
+  @media (max-width: 639px) { :where(.ecx-form-blocks) > :where(.ecx-field.is-half, .ecx-field.is-third) { grid-column: 1 / -1; } }
   :where(.ecx-field) { display: flex; flex-direction: column; gap: .4rem; }
   :where(.ecx-field) :where(label, legend) { font-weight: 600; font-size: .9375rem; }
   :where(.ecx-field-required) { color: var(--ecx-color-danger); }

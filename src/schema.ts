@@ -30,6 +30,8 @@ const url = (): AttrSpec => ({ type: "url" });
 const align = s({ enum: ["left", "center", "right", "justify"] });
 /** 1.20: độ rộng khối so với cột chữ (như alignwide / alignfull của WP) — khối nào có thì xem WIDE_BLOCKS. */
 const wide = s({ enum: ["wide", "full"] });
+/** 1.26: giá trị autocomplete cho ô của form lõi (khớp ContentFormat.cs). */
+export const FORM_AUTOCOMPLETE = ["off", "name", "given-name", "family-name", "email", "tel", "organization", "street-address", "address-level1", "address-level2", "postal-code", "country-name", "bday"];
 /** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
 export const FORM_FIELD_KINDS = ["text", "email", "tel", "textarea", "select", "radio", "checkbox", "consent", "number", "date"] as const;
 const media = { src: url(), name: s(), mime: s(), mediaId: { type: "json" } as AttrSpec, caption: s() };
@@ -170,11 +172,14 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   syncedPattern: { attrs: { ref: i({ min: 1 }) } },
   // 1.21: form cơ bản của lõi (liên hệ, đăng ký nhận tin, đặt lịch đơn giản): `form` chứa các ô `formField` và khối chữ; máy chủ đọc lại
   // định nghĩa form từ chính trang / template chứa nó để kiểm bài gửi. formId cố định theo form (không đổi khi sửa ô). Form nâng cao: plugin.
-  form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s() } },
+  // 1.26: email nhận có thể nhiều địa chỉ (dấu phẩy), đồng gửi (Cc), tiêu đề email riêng, chuyển trang sau khi gửi
+  form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s(), notifyCc: s(), emailSubject: s(), redirect: url() } },
   formField: {
     attrs: {
       kind: s({ enum: FORM_FIELD_KINDS, default: "text" }), name: s(), label: s(), placeholder: s(), help: s(),
-      required: b({ default: false }), options: { type: "json", default: [] }, width: s({ enum: ["full", "half"], default: "full" }),
+      required: b({ default: false }), options: { type: "json", default: [] }, width: s({ enum: ["full", "half", "third"], default: "full" }),
+      // 1.26: trình duyệt tự điền (autocomplete)
+      autocomplete: s({ enum: FORM_AUTOCOMPLETE }),
     },
   },
   // 1.23: widget lõi (markup chung ở widgets.ts). Chữ là chữ thường (không HTML); ảnh như mediaText (src + mediaId + alt).
