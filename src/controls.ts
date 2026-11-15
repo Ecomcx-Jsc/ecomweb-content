@@ -11,7 +11,7 @@
  * mẫu CSS do plugin viết bị từ chối nếu có `{ } ; < @ \` hoặc url( / expression( / import. Không hợp lệ → bỏ, không chèn.
  * Kiểu chỉ có ô (không sinh CSS, 1.23): boolean, string, url, textarea, datetime — plugin đọc giá trị qua controlValue.
  */
-import { BREAKPOINTS, DEVICES, colorCss, spacingValue, type Device } from "./style.js";
+import { BREAKPOINTS, DEVICES, colorCss, normalizeStyle, ruleCss, spacingValue, type BlockStyle, type Device } from "./style.js";
 import { isSafeUrl } from "./url.js";
 
 /** Kiểu được khai `css` (giá trị đã chuẩn hoá thành token CSS an toàn). */
@@ -41,12 +41,84 @@ export interface ControlSpec {
   step?: number;
 }
 
+/** Nhóm thuộc tính kiểu dáng một phần cho chỉnh (giao diện hiện đúng các nhóm này, theo thứ tự). */
+export type PartProp = "typography" | "color" | "background" | "border" | "radius" | "shadow" | "padding" | "margin" | "size" | "iconSize";
+
+/**
+ * 1.26: một PHẦN của khối (Khung, Icon, Tiêu đề, Mô tả, Nút…) — mỗi phần có bộ kiểu dáng riêng (BlockStyle), như bộ khối lớn
+ * chia tab Kiểu thành mục theo phần. Lưu ở `attrs.parts[tên] = { style, hover, hidden }`; CSS sinh chung class với ô điều khiển (controlsCss).
+ */
+export interface PartSpec {
+  /** Nhãn (chữ hoặc "%khoá%" — admin dịch theo plugin). */
+  label: string;
+  /** Bộ chọn của phần: "{{WRAPPER}}" (cả khối) hoặc "{{WRAPPER}} <con>". */
+  selector: string;
+  /** Nhóm thuộc tính hiện ở bảng. */
+  props: readonly PartProp[];
+  /** Có thẻ "Rê chuột": kiểu khi rê chuột lên CẢ khối (vd icon đổi màu khi rê thẻ). */
+  hover?: boolean;
+  /** Có công tắc "Hiện": tắt → phần bị ẩn (display: none) trên website và khung soạn. */
+  toggle?: boolean;
+}
+
 export interface BlockControls {
   /** Mã duy nhất "slug-plugin/tên". */
   id: string;
   /** Loại khối áp dụng; "*" = mọi khối. */
   blocks: readonly string[] | "*";
   attributes: Record<string, ControlSpec>;
+  /** 1.26: các phần của khối (xem PartSpec). */
+  parts?: Record<string, PartSpec>;
+}
+
+/** Giá trị đã lưu của một phần. */
+export interface PartValue { style?: BlockStyle; hover?: BlockStyle; hidden?: true }
+
+const PART_NAME = /^[a-z][a-zA-Z0-9]{0,30}$/;
+// Kiểu của một phần: bỏ nhóm chỉ hợp với cả khối (bố cục, chuyển động, ẩn theo khổ, ảnh nền, ghim, hover lồng)
+const partStyle = (v: unknown): BlockStyle | undefined => {
+  const st = normalizeStyle(v);
+  if (!st) return undefined;
+  const rest: Record<string, unknown> = { ...st };
+  for (const k of ["motion", "layout", "hide", "background", "position", "hover"]) delete rest[k];
+  return Object.keys(rest).length ? (rest as BlockStyle) : undefined;
+};
+
+/** Kiểm giá trị `attrs.parts` (dữ liệu người dùng): chỉ phần có tên hợp lệ, kiểu qua normalizeStyle. */
+export function normalizeParts(v: unknown): Record<string, PartValue> | undefined {
+  if (!v || typeof v !== "object" || Array.isArray(v)) return undefined;
+  const out: Record<string, PartValue> = {};
+  for (const [k, raw] of Object.entries(v as Record<string, unknown>)) {
+    if (!PART_NAME.test(k) || !raw || typeof raw !== "object") continue;
+    const r = raw as Record<string, unknown>;
+    const pv: PartValue = {};
+    const st = partStyle(r.style); if (st) pv.style = st;
+    const hv = partStyle(r.hover); if (hv) pv.hover = hv;
+    if (r.hidden === true) pv.hidden = true;
+    if (Object.keys(pv).length) out[k] = pv;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+
+/** Các phần của loại khối (lõi + plugin), theo thứ tự khai. */
+export function partsFor(list: readonly BlockControls[], type: string): Array<[string, PartSpec]> {
+  return list.filter((c) => c.parts && (c.blocks === "*" || c.blocks.includes(type))).flatMap((c) => Object.entries(c.parts!));
+}
+
+/** CSS của các phần cho class `cls` (rỗng nếu không có giá trị). */
+function partsCss(list: readonly BlockControls[], type: string, vals: Record<string, PartValue>, cls: string): string {
+  let css = "";
+  for (const [name, spec] of partsFor(list, type)) {
+    const v = vals[name];
+    if (!v || !okSel(spec.selector)) continue;
+    const suffix = spec.selector.slice(11);
+    const sel = `.${cls}.${cls}${suffix}`;
+    if (v.hidden && spec.toggle) { css += `${sel}{display:none!important}`; continue; }
+    if (v.style) css += ruleCss(sel, v.style);
+    // Rê chuột lên cả khối: `.cls:hover <phần>`
+    if (v.hover && spec.hover) css += ruleCss(`.${cls}.${cls}:hover${suffix}`, v.hover);
+  }
+  return css;
 }
 
 const ATTR = /^[a-zA-Z][a-zA-Z0-9_]{0,40}$/;
@@ -67,6 +139,10 @@ export function defineBlockControls<T extends BlockControls>(c: T): T {
       if (!okSel(sel)) throw new Error(`[controls] ${c.id}.${name}: bộ chọn không hợp lệ "${sel}"`);
       if (!okDecl(decl)) throw new Error(`[controls] ${c.id}.${name}: khai báo CSS không hợp lệ "${decl}"`);
     }
+  }
+  for (const [name, part] of Object.entries(c.parts ?? {})) {
+    if (!PART_NAME.test(name)) throw new Error(`[controls] ${c.id}: tên phần không hợp lệ "${name}"`);
+    if (!okSel(part.selector)) throw new Error(`[controls] ${c.id}.parts.${name}: bộ chọn không hợp lệ "${part.selector}"`);
   }
   return c;
 }
@@ -134,9 +210,12 @@ function declarations(list: readonly BlockControls[], type: string, attrs: Recor
 /** Class (`ecx-c-…`, băm theo CSS → cùng giá trị = cùng class) + CSS của khối; null khi không có gì để vẽ. */
 export function controlsCss(list: readonly BlockControls[], type: string, attrs: Record<string, unknown>): { cls: string; css: string } | null {
   const decls = declarations(list, type, attrs);
-  if (!decls.length) return null;
-  // Khổ base băm như trước 1.24 → class của nội dung cũ không đổi
-  const key = JSON.stringify(decls.map(([d, sel, decl]) => (d === "base" ? [sel, decl] : [d, sel, decl])));
+  const parts = normalizeParts(attrs.parts);
+  const hasParts = !!parts && partsFor(list, type).some(([n]) => parts[n]);
+  if (!decls.length && !hasParts) return null;
+  // Khổ base băm như trước 1.24 → class của nội dung cũ không đổi; phần (1.26) chỉ vào khoá khi có
+  const base = decls.map(([d, sel, decl]) => (d === "base" ? [sel, decl] : [d, sel, decl]));
+  const key = JSON.stringify(hasParts ? [base, parts] : base);
   let h = 0x811c9dc5;
   for (let i = 0; i < key.length; i++) { h ^= key.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
   const cls = `ecx-c-${h.toString(36)}`;
@@ -148,5 +227,6 @@ export function controlsCss(list: readonly BlockControls[], type: string, attrs:
     const rules = [...bySel].map(([sel, ds]) => `.${cls}.${cls}${sel}{${ds.join(";")}}`).join("");
     if (rules) css += d === "base" ? rules : `${media[d]}{${rules}}`;
   }
+  if (hasParts) css += partsCss(list, type, parts!, cls);
   return { cls, css };
 }

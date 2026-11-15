@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { CORE_CONTROLS, controlsCss, coreControlsFor } from "../src/index.js";
+import { CORE_CONTROLS, controlsCss, coreControlsFor, normalizeParts, partsFor } from "../src/index.js";
 
 const css = (type: string, attrs: Record<string, unknown>) => {
   const r = controlsCss(CORE_CONTROLS, type, attrs);
@@ -35,4 +35,27 @@ test("giá trị sai bị bỏ; ô chỉ áp cho đúng loại khối; nội dun
   assert.equal(controlsCss(CORE_CONTROLS, "group", { background: "#fff", padding: "large" }), null);
   assert.deepEqual(Object.keys(coreControlsFor("heading")), ["textShadow"]);
   assert.ok(Object.keys(coreControlsFor("iconList")).includes("iconListIconColor"));
+});
+
+test("phần của khối (1.26): kiểu riêng theo bộ chọn của phần, rê chuột theo cả khối, công tắc ẩn", () => {
+  const r = controlsCss(CORE_CONTROLS, "iconBox", { parts: {
+    title: { style: { fontSize: { base: "28px" }, color: { text: "primary" } } },
+    icon: { hover: { color: { text: "#ff0000" } } },
+    text: { hidden: true },
+    bogus: { style: { color: { text: "red" } } },
+  } })!;
+  assert.ok(r.cls.startsWith("ecx-c-"));
+  assert.match(r.css, new RegExp(`\\.${r.cls}\\.${r.cls} \\.ecx-icon-box-title\\{[^}]*font-size:28px`));
+  assert.match(r.css, new RegExp(`\\.${r.cls}\\.${r.cls}:hover \\.ecx-icon-box-icon\\{color:#ff0000`));
+  assert.match(r.css, new RegExp(`\\.${r.cls}\\.${r.cls} \\.ecx-icon-box-text\\{display:none!important\\}`));
+  assert.ok(!r.css.includes("bogus"));
+});
+
+test("phần: giá trị sai bị bỏ; nhóm chỉ hợp cả khối (chuyển động, bố cục) không vào phần; không có phần → class cũ giữ nguyên", () => {
+  assert.equal(normalizeParts({ title: { style: { fontSize: "x;}body{" , motion: { in: "fade" } } }, "Bad-Name": { hidden: true } }), undefined);
+  const old = controlsCss(CORE_CONTROLS, "iconBox", { iconBoxTitleColor: "primary" })!;
+  const same = controlsCss(CORE_CONTROLS, "iconBox", { iconBoxTitleColor: "primary", parts: { nothing: { hidden: true } } })!;
+  assert.equal(old.cls, same.cls);
+  assert.equal(controlsCss(CORE_CONTROLS, "iconBox", { parts: { text: { hidden: true } } }) !== null, true);
+  assert.deepEqual(partsFor(CORE_CONTROLS, "iconBox").map(([n]) => n), ["box", "icon", "title", "text"]);
 });

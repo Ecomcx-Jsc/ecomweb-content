@@ -4,7 +4,7 @@
  * Giá trị lưu thẳng trong attrs của khối (vd `listMarkerColor`); mặc định = token `--ecx-*` của style.css (ô trống = theo theme).
  * Thứ tự thuộc tính trong một mục = thứ tự ô trên giao diện; `section` = mục, `state` = thẻ Rê chuột / Đang mở (như Normal / Hover).
  */
-import { defineBlockControls, type BlockControls, type ControlSpec } from "./controls.js";
+import { defineBlockControls, type BlockControls, type ControlSpec, type PartProp } from "./controls.js";
 
 const W = "{{WRAPPER}}";
 type Css = Record<string, string>;
@@ -16,6 +16,10 @@ const img = (decl: string, hover = false): Css => hover ? { [`${W}:hover img`]: 
 /** Nút: khối nút đứng riêng có vỏ `<p>` (class ở p), trong nhóm nút thì class ở chính thẻ `<a>`. */
 const btnHover = (decl: string): Css => ({ [`${W}:is(a):hover`]: decl, [`${W} a:hover`]: decl });
 const SHADOWS = ["sm", "md", "lg", "xl"];
+// Nhóm thuộc tính thường gặp của phần (1.26)
+const BOX: PartProp[] = ["background", "border", "radius", "shadow", "padding"];
+const TEXT: PartProp[] = ["typography", "color", "margin"];
+const ICON: PartProp[] = ["color", "background", "iconSize", "padding", "radius", "border", "margin"];
 const FILTERS = ["none", "grayscale", "sepia", "blur", "bright", "dim", "saturate"];
 
 export const CORE_CONTROLS: readonly BlockControls[] = [
@@ -128,6 +132,40 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     progressTrackColor: color("bar", { [`${W} .ecx-progress-track`]: "background: {{VALUE}}" }),
     progressHeight: length("bar", { [`${W} .ecx-progress-track`]: "height: {{VALUE}}" }),
     progressTitleColor: color("content", { [`${W} .ecx-progress-head`]: "color: {{VALUE}}" }),
+  } }),
+  // 1.26: PHẦN của khối widget — mỗi phần một bộ kiểu dáng đầy đủ (attrs.parts). Ô màu rời ở trên giữ cho nội dung cũ.
+  defineBlockControls({ id: "core/icon-box-parts", blocks: ["iconBox"], attributes: {}, parts: {
+    box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+    icon: { label: "%part.icon%", selector: `${W} .ecx-icon-box-icon`, props: ICON, hover: true, toggle: true },
+    title: { label: "%part.title%", selector: `${W} .ecx-icon-box-title`, props: TEXT, hover: true, toggle: true },
+    text: { label: "%part.text%", selector: `${W} .ecx-icon-box-text`, props: TEXT, toggle: true },
+  } }),
+  defineBlockControls({ id: "core/image-box-parts", blocks: ["imageBox"], attributes: {}, parts: {
+    box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+    media: { label: "%part.image%", selector: `${W} .ecx-image-box-media img`, props: ["radius", "border", "shadow"], hover: true, toggle: true },
+    title: { label: "%part.title%", selector: `${W} .ecx-image-box-title`, props: TEXT, hover: true, toggle: true },
+    text: { label: "%part.text%", selector: `${W} .ecx-image-box-text`, props: TEXT, toggle: true },
+  } }),
+  defineBlockControls({ id: "core/testimonial-parts", blocks: ["testimonial"], attributes: {}, parts: {
+    box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+    quote: { label: "%part.quote%", selector: `${W} .ecx-testimonial-quote`, props: TEXT },
+    avatar: { label: "%part.avatar%", selector: `${W} .ecx-testimonial-avatar`, props: ["size", "radius", "border"], toggle: true },
+    name: { label: "%part.name%", selector: `${W} .ecx-testimonial-name`, props: ["typography", "color"], toggle: true },
+    role: { label: "%part.role%", selector: `${W} .ecx-testimonial-role`, props: ["typography", "color"], toggle: true },
+  } }),
+  defineBlockControls({ id: "core/counter-parts", blocks: ["counter"], attributes: {}, parts: {
+    box: { label: "%part.box%", selector: W, props: BOX, hover: true },
+    number: { label: "%part.number%", selector: `${W} .ecx-counter-number`, props: ["typography", "color", "margin"] },
+    title: { label: "%part.title%", selector: `${W} .ecx-counter-title`, props: TEXT, toggle: true },
+  } }),
+  defineBlockControls({ id: "core/progress-parts", blocks: ["progressBar"], attributes: {}, parts: {
+    label: { label: "%part.label%", selector: `${W} .ecx-progress-head`, props: TEXT, toggle: true },
+    track: { label: "%part.track%", selector: `${W} .ecx-progress-track`, props: ["background", "radius", "size", "border"] },
+    bar: { label: "%part.bar%", selector: `${W} .ecx-progress-bar`, props: ["background"] },
+  } }),
+  defineBlockControls({ id: "core/icon-list-parts", blocks: ["iconList"], attributes: {}, parts: {
+    item: { label: "%part.item%", selector: `${W} > li`, props: ["typography", "color", "padding"] },
+    icon: { label: "%part.icon%", selector: `${W} .ecx-widget-icon`, props: ["color", "iconSize", "margin"], toggle: true },
   } }),
 ];
 
