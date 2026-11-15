@@ -88,8 +88,12 @@ export declare function controlValue(s: ControlSpec, v: unknown): string | undef
 export declare const optionValue: (o: string | {
     value: string;
 }) => string;
-/** Class (`ecx-c-…`, băm theo CSS → cùng giá trị = cùng class) + CSS của khối; null khi không có gì để vẽ. */
+/**
+ * Class (`ecx-c-…`, băm theo CSS → cùng giá trị = cùng class) + CSS của khối; null khi không có gì để vẽ.
+ * `self`: kiểu của các phần nhắm chính phần tử khối (`{{WRAPPER}}` / `{{WRAPPER}}:is(a)`) — renderer gỡ inline trùng như với attrs.style.
+ */
 export declare function controlsCss(list: readonly BlockControls[], type: string, attrs: Record<string, unknown>): {
     cls: string;
     css: string;
+    self?: BlockStyle;
 } | null;

@@ -12,6 +12,8 @@ export declare const DEVICES: readonly ["base", "tablet", "mobile"];
 export type Device = (typeof DEVICES)[number];
 export type Responsive<T> = Partial<Record<Device, T>>;
 export type Box = string | Partial<Record<"top" | "right" | "bottom" | "left", string>>;
+/** Bo góc: một giá trị cho cả 4 góc, hoặc từng góc (1.26). */
+export type Corners = string | Partial<Record<"topLeft" | "topRight" | "bottomRight" | "bottomLeft", string>>;
 export interface BlockStyle {
     padding?: Responsive<Box>;
     margin?: Responsive<Box>;
@@ -32,12 +34,13 @@ export interface BlockStyle {
         text?: string;
         background?: string;
     };
+    /** `width`: một giá trị hoặc từng cạnh (1.26). */
     border?: {
-        width?: string;
+        width?: Box;
         style?: string;
         color?: string;
     };
-    radius?: string;
+    radius?: Corners;
     hide?: Array<"desktop" | "tablet" | "mobile">;
     /** Bố cục khối chứa (1.15): xếp ngang/dọc (flex) hoặc lưới — khối con xếp theo đây. */
     layout?: BlockLayout;

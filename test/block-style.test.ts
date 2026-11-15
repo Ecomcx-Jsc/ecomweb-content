@@ -57,3 +57,14 @@ test("style 1.8: kiểu chữ đầy đủ (phông preset, nghiêng, giãn chữ
   assert.equal(styleCss(s, "x"), ".x.x{min-height:60vh;letter-spacing:0.05em;font-family:var(--ecx-font-family-heading, inherit);font-style:italic;text-decoration:underline;text-transform:uppercase}@media (max-width:640px){.x.x{letter-spacing:1px}}");
   assert.equal(normalizeStyle({ fontFamily: "Arial;}", textTransform: "shout", fontStyle: "oblique" }), undefined);
 });
+
+test("style: viền từng cạnh, bo từng góc (1.26)", () => {
+  const style = normalizeStyle({
+    border: { width: { top: "2px", left: "1e9px", bottom: "1px 2px" }, style: "dashed" },
+    radius: { topLeft: "8px", bottomRight: "lg", topRight: "x;}" },
+  })!;
+  assert.deepEqual(style, { border: { width: { top: "2px" }, style: "dashed" }, radius: { topLeft: "8px", bottomRight: "lg" } });
+  assert.equal(styleCss(style, "x"),
+    ".x.x{border:1px dashed currentColor;border-width:2px 0 0 0;border-radius:8px 0 var(--ecx-spacing-lg) 0}");
+  assert.equal(normalizeStyle({ border: { width: { top: "red;}" } }, radius: {} }), undefined);
+});

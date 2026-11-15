@@ -7,6 +7,7 @@
 export const BREAKPOINTS = { tablet: 1024, mobile: 640 };
 export const DEVICES = ["base", "tablet", "mobile"];
 const SIDES = ["top", "right", "bottom", "left"];
+const CORNERS = ["topLeft", "topRight", "bottomRight", "bottomLeft"];
 const LENGTH = /^(0|-?\d{1,4}(\.\d{1,3})?(px|rem|em|%|vw|vh))$/;
 const PRESET = /^([a-z][a-z0-9-]{0,30}|[1-9]x[sl])$/;
 const COLOR = /^(#[0-9a-f]{3,8}|(rgb|hsl)a?\([\d\s.,%/]{1,40}\))$/i;
@@ -199,6 +200,19 @@ function box(v) {
     }
     return Object.keys(out).length ? out : undefined;
 }
+function corners(v) {
+    if (typeof v === "string")
+        return size(v);
+    if (!isObj(v))
+        return undefined;
+    const out = {};
+    for (const c of CORNERS) {
+        const x = size(v[c]);
+        if (x !== undefined)
+            out[c] = x;
+    }
+    return Object.keys(out).length ? out : undefined;
+}
 /** Giá trị theo khổ: nhận cả dạng gọn (một giá trị = base). */
 function responsive(v, fn) {
     const src = isObj(v) && DEVICES.some((d) => d in v) ? v : { base: v };
@@ -244,8 +258,9 @@ export function normalizeStyle(v) {
     set("textTransform", oneOf(TRANSFORMS)(v.textTransform));
     set("textAlign", responsive(v.textAlign, oneOf(ALIGNS)));
     set("color", group(v.color, { text: color, background: color }));
-    set("border", group(v.border, { width: size, style: oneOf(BORDER_STYLES), color }));
-    set("radius", size(v.radius));
+    const bw = isObj(v.border) ? box(v.border.width) : undefined, bo = group(v.border, { style: oneOf(BORDER_STYLES), color });
+    set("border", bw !== undefined || bo ? { ...(bw !== undefined && { width: bw }), ...bo } : undefined);
+    set("radius", corners(v.radius));
     if (Array.isArray(v.hide)) {
         const h = HIDE.filter((d) => v.hide.includes(d));
         if (h.length)
@@ -325,10 +340,15 @@ function declarations(style) {
         out.base.push(`color:${colorValue(style.color.text)}`);
     if (style.color?.background)
         out.base.push(`background:${colorValue(style.color.background)}`);
-    if (style.border?.width || style.border?.style || style.border?.color)
-        out.base.push(`border:${style.border.width ? spacing(style.border.width) : "1px"} ${style.border.style ?? "solid"} ${style.border.color ? colorValue(style.border.color) : "currentColor"}`);
-    if (style.radius)
-        out.base.push(`border-radius:${spacing(style.radius)}`);
+    if (style.border?.width || style.border?.style || style.border?.color) {
+        const w = style.border.width;
+        out.base.push(`border:${typeof w === "string" ? spacing(w) : "1px"} ${style.border.style ?? "solid"} ${style.border.color ? colorValue(style.border.color) : "currentColor"}`);
+        if (w && typeof w === "object")
+            out.base.push(`border-width:${SIDES.map((x) => (w[x] ? spacing(w[x]) : "0")).join(" ")}`);
+    }
+    const r = style.radius;
+    if (r)
+        out.base.push(`border-radius:${typeof r === "string" ? spacing(r) : CORNERS.map((x) => (r[x] ? spacing(r[x]) : "0")).join(" ")}`);
     // 1.15: bố cục, nền chuyển màu, bóng, tỉ lệ, ghim
     const l = style.layout;
     if (l?.type === "flex") {

@@ -1,0 +1,142 @@
+{
+  "name": "style-border-sides",
+  "note": "Viền từng cạnh (border.width = {top,right,bottom,left}) và bo từng góc (radius = {topLeft,topRight,bottomRight,bottomLeft}) — 1.26; cạnh / góc sai bị bỏ, rỗng thì bỏ cả nhóm, dạng một giá trị vẫn như cũ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "border": {
+                    "width": {
+                      "top": "2px",
+                      "left": "1e9px",
+                      "bottom": "1px 2px",
+                      "right": "0"
+                    },
+                    "style": "dashed",
+                    "color": "primary"
+                  },
+                  "radius": {
+                    "topLeft": "8px",
+                    "bottomRight": "lg",
+                    "topRight": "x;}",
+                    "bottomLeft": 4
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "border": {
+                    "width": {
+                      "top": "red;}"
+                    }
+                  },
+                  "radius": {}
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "border": {
+                    "width": "3px"
+                  },
+                  "radius": "50%"
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "border": {
+                    "width": {
+                      "top": "2px",
+                      "right": "0"
+                    },
+                    "style": "dashed",
+                    "color": "primary"
+                  },
+                  "radius": {
+                    "topLeft": "8px",
+                    "bottomRight": "lg"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "border": {
+                    "width": "3px"
+                  },
+                  "radius": "50%"
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

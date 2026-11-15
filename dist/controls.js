@@ -182,7 +182,10 @@ function declarations(list, type, attrs) {
     }
     return out;
 }
-/** Class (`ecx-c-…`, băm theo CSS → cùng giá trị = cùng class) + CSS của khối; null khi không có gì để vẽ. */
+/**
+ * Class (`ecx-c-…`, băm theo CSS → cùng giá trị = cùng class) + CSS của khối; null khi không có gì để vẽ.
+ * `self`: kiểu của các phần nhắm chính phần tử khối (`{{WRAPPER}}` / `{{WRAPPER}}:is(a)`) — renderer gỡ inline trùng như với attrs.style.
+ */
 export function controlsCss(list, type, attrs) {
     const decls = declarations(list, type, attrs);
     const parts = normalizeParts(attrs.parts);
@@ -209,7 +212,9 @@ export function controlsCss(list, type, attrs) {
         if (rules)
             css += d === "base" ? rules : `${media[d]}{${rules}}`;
     }
-    if (hasParts)
-        css += partsCss(list, type, parts, cls);
-    return { cls, css };
+    if (!hasParts)
+        return { cls, css };
+    css += partsCss(list, type, parts, cls);
+    const self = Object.assign({}, ...partsFor(list, type).filter(([n, spec]) => parts[n]?.style && selectorList(spec.selector)?.some((x) => x === "" || x.startsWith(":"))).map(([n]) => parts[n].style));
+    return Object.keys(self).length ? { cls, css, self } : { cls, css };
 }

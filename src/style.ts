@@ -9,6 +9,8 @@ export const DEVICES = ["base", "tablet", "mobile"] as const;
 export type Device = (typeof DEVICES)[number];
 export type Responsive<T> = Partial<Record<Device, T>>;
 export type Box = string | Partial<Record<"top" | "right" | "bottom" | "left", string>>;
+/** Bo góc: một giá trị cho cả 4 góc, hoặc từng góc (1.26). */
+export type Corners = string | Partial<Record<"topLeft" | "topRight" | "bottomRight" | "bottomLeft", string>>;
 
 export interface BlockStyle {
   padding?: Responsive<Box>;
@@ -27,8 +29,9 @@ export interface BlockStyle {
   textTransform?: string;
   textAlign?: Responsive<string>;
   color?: { text?: string; background?: string };
-  border?: { width?: string; style?: string; color?: string };
-  radius?: string;
+  /** `width`: một giá trị hoặc từng cạnh (1.26). */
+  border?: { width?: Box; style?: string; color?: string };
+  radius?: Corners;
   hide?: Array<"desktop" | "tablet" | "mobile">;
   /** Bố cục khối chứa (1.15): xếp ngang/dọc (flex) hoặc lưới — khối con xếp theo đây. */
   layout?: BlockLayout;
@@ -94,6 +97,7 @@ export interface BlockLayout {
 }
 
 const SIDES = ["top", "right", "bottom", "left"] as const;
+const CORNERS = ["topLeft", "topRight", "bottomRight", "bottomLeft"] as const;
 const LENGTH = /^(0|-?\d{1,4}(\.\d{1,3})?(px|rem|em|%|vw|vh))$/;
 const PRESET = /^([a-z][a-z0-9-]{0,30}|[1-9]x[sl])$/;
 const COLOR = /^(#[0-9a-f]{3,8}|(rgb|hsl)a?\([\d\s.,%/]{1,40}\))$/i;
@@ -235,6 +239,13 @@ function box(v: unknown): Box | undefined {
   for (const s of SIDES) { const x = size(v[s]); if (x !== undefined) out[s] = x; }
   return Object.keys(out).length ? out : undefined;
 }
+function corners(v: unknown): Corners | undefined {
+  if (typeof v === "string") return size(v);
+  if (!isObj(v)) return undefined;
+  const out: Record<string, string> = {};
+  for (const c of CORNERS) { const x = size(v[c]); if (x !== undefined) out[c] = x; }
+  return Object.keys(out).length ? out : undefined;
+}
 /** Giá trị theo khổ: nhận cả dạng gọn (một giá trị = base). */
 function responsive<T>(v: unknown, fn: (x: unknown) => T | undefined): Responsive<T> | undefined {
   const src = isObj(v) && DEVICES.some((d) => d in v) ? v : { base: v };
@@ -270,8 +281,9 @@ export function normalizeStyle(v: unknown): BlockStyle | undefined {
   set("textTransform", oneOf(TRANSFORMS)(v.textTransform));
   set("textAlign", responsive(v.textAlign, oneOf(ALIGNS)));
   set("color", group(v.color, { text: color, background: color }));
-  set("border", group(v.border, { width: size, style: oneOf(BORDER_STYLES), color }));
-  set("radius", size(v.radius));
+  const bw = isObj(v.border) ? box(v.border.width) : undefined, bo = group(v.border, { style: oneOf(BORDER_STYLES), color });
+  set("border", bw !== undefined || bo ? { ...(bw !== undefined && { width: bw }), ...bo } : undefined);
+  set("radius", corners(v.radius));
   if (Array.isArray(v.hide)) { const h = HIDE.filter((d) => (v.hide as unknown[]).includes(d)); if (h.length) out.hide = [...h]; }
   set("layout", layout(v.layout));
   set("gradient", normalizeGradient(v.gradient));
@@ -319,9 +331,13 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
   if (style.textTransform) out.base.push(`text-transform:${style.textTransform}`);
   if (style.color?.text) out.base.push(`color:${colorValue(style.color.text)}`);
   if (style.color?.background) out.base.push(`background:${colorValue(style.color.background)}`);
-  if (style.border?.width || style.border?.style || style.border?.color)
-    out.base.push(`border:${style.border.width ? spacing(style.border.width) : "1px"} ${style.border.style ?? "solid"} ${style.border.color ? colorValue(style.border.color) : "currentColor"}`);
-  if (style.radius) out.base.push(`border-radius:${spacing(style.radius)}`);
+  if (style.border?.width || style.border?.style || style.border?.color) {
+    const w = style.border.width;
+    out.base.push(`border:${typeof w === "string" ? spacing(w) : "1px"} ${style.border.style ?? "solid"} ${style.border.color ? colorValue(style.border.color) : "currentColor"}`);
+    if (w && typeof w === "object") out.base.push(`border-width:${SIDES.map((x) => (w[x] ? spacing(w[x]!) : "0")).join(" ")}`);
+  }
+  const r = style.radius;
+  if (r) out.base.push(`border-radius:${typeof r === "string" ? spacing(r) : CORNERS.map((x) => (r[x] ? spacing(r[x]!) : "0")).join(" ")}`);
   // 1.15: bố cục, nền chuyển màu, bóng, tỉ lệ, ghim
   const l = style.layout;
   if (l?.type === "flex") {

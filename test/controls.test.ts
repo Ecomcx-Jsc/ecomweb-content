@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { controlValue, controlsCss, defineBlockControls, type ControlSpec } from "../src/index.js";
+import { CORE_CONTROLS, controlValue, controlsCss, defineBlockControls, type ControlSpec } from "../src/index.js";
 
 const tilt = defineBlockControls({ id: "acme/tilt", blocks: "*", attributes: {
   acmeRotate: { type: "number", min: -45, max: 45, css: { "{{WRAPPER}}": "rotate: {{VALUE}}deg" } },
@@ -77,4 +77,10 @@ test("1.24: giá trị theo khổ → media query; pseudo gắn liền; class c�
   assert.equal(controlsCss([c], "group", { acmeHover: { base: "#fff" } }), null);
   for (const sel of ["{{WRAPPER}}:hover{x", "{{WRAPPER}}x", "{{WRAPPER}}:url(x)"])
     assert.throws(() => defineBlockControls({ id: "x/y", blocks: "*", attributes: { a: { type: "color", css: { [sel]: "color: {{VALUE}}" } } } }), sel);
+});
+
+test("controlsCss: self = kiểu của phần nhắm chính thẻ khối (renderer gỡ inline trùng)", () => {
+  const r = controlsCss(CORE_CONTROLS, "button", { parts: { button: { style: { radius: { topLeft: "12px" } } } } })!;
+  assert.deepEqual(r.self, { radius: { topLeft: "12px" } });
+  assert.equal(controlsCss(CORE_CONTROLS, "button", { buttonSize: "lg" })!.self, undefined);
 });
