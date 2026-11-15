@@ -1,0 +1,141 @@
+{
+  "name": "tabs-layout-icons",
+  "note": "Tabs 1.26: hướng ngang / dọc, accordion trên điện thoại; tab có icon (tên trong ICON_PATHS), phụ đề, neo; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tabs",
+              "attrs": {
+                "orientation": "vertical",
+                "mobileAccordion": true,
+                "initial": 2
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Một",
+                    "icon": "star",
+                    "subtitle": "Phụ đề",
+                    "anchor": "mot"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Hai",
+                    "icon": "khong-co",
+                    "subtitle": ""
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "attrs": {
+                "orientation": "diagonal",
+                "mobileAccordion": "yes"
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Ba"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tabs",
+              "attrs": {
+                "orientation": "vertical",
+                "mobileAccordion": true,
+                "initial": 2
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Một",
+                    "icon": "star",
+                    "subtitle": "Phụ đề",
+                    "anchor": "mot"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Hai",
+                    "subtitle": ""
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Ba"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
