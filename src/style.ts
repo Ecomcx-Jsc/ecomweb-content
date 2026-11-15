@@ -37,6 +37,10 @@ export interface BlockStyle {
   layout?: BlockLayout;
   /** Nền chuyển màu (1.15): preset của theme (`brand` → --ecx-gradient-brand) hoặc linear/radial-gradient đã kiểm. */
   gradient?: string;
+  /** Chữ chuyển màu (1.26): như `gradient`, tô lên nét chữ. */
+  textGradient?: string;
+  /** Màu liên kết bên trong khối và khi rê (1.26). */
+  link?: { color?: string; hover?: string };
   /** Đổ bóng (1.15): preset (`sm` `md` `lg` `xl` có sẵn, theme thêm) hoặc `none`. */
   shadow?: string;
   /** Tỉ lệ khung (1.15). */
@@ -287,6 +291,8 @@ export function normalizeStyle(v: unknown): BlockStyle | undefined {
   if (Array.isArray(v.hide)) { const h = HIDE.filter((d) => (v.hide as unknown[]).includes(d)); if (h.length) out.hide = [...h]; }
   set("layout", layout(v.layout));
   set("gradient", normalizeGradient(v.gradient));
+  set("textGradient", normalizeGradient(v.textGradient));
+  set("link", group(v.link, { color, hover: color }));
   set("shadow", shadow(v.shadow));
   set("aspectRatio", oneOf(RATIOS)(v.aspectRatio));
   if (isObj(v.position) && v.position.type === "sticky") { const top = size(v.position.top); set("position", top ? { type: "sticky", top } : { type: "sticky" }); }
@@ -356,6 +362,7 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
     const c = l?.columns?.[d]; if (c) out[d].push(`grid-template-columns:repeat(${c},minmax(0,1fr))`);
   }
   if (style.gradient) out.base.push(`background:${gradientValue(style.gradient)}`);
+  if (style.textGradient) out.base.push(`background:${gradientValue(style.textGradient)}`, "-webkit-background-clip:text", "background-clip:text", "-webkit-text-fill-color:transparent");
   if (style.shadow) out.base.push(`box-shadow:${shadowValue(style.shadow)}`);
   if (style.aspectRatio) out.base.push(`aspect-ratio:${style.aspectRatio}`, "object-fit:cover");
   if (style.position) out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, "z-index:10");
@@ -490,6 +497,8 @@ export function ruleCss(selector: string, style: BlockStyle): string {
     css += `@media ${q}{${sel}{display:none!important}}`;
   }
   if (style.hover) { const hv = hoverDeclarations(style.hover); if (hv.length) css += `${each(":hover")}{${hv.join(";")}}`; }
+  if (style.link?.color) css += `${each(" a")}{color:${colorValue(style.link.color)}}`;
+  if (style.link?.hover) css += `${each(" a:hover")}{color:${colorValue(style.link.hover)}}`;
   // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)
   const ov = style.background?.overlay;
   if (ov) css += `${each("::before")}{content:"";position:absolute;inset:0;background:${colorValue(ov)};opacity:${(style.background!.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;

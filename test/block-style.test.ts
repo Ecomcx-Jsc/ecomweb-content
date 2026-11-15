@@ -68,3 +68,12 @@ test("style: viền từng cạnh, bo từng góc (1.26)", () => {
     ".x.x{border:1px dashed currentColor;border-width:2px 0 0 0;border-radius:8px 0 var(--ecx-spacing-lg) 0}");
   assert.equal(normalizeStyle({ border: { width: { top: "red;}" } }, radius: {} }), undefined);
 });
+
+test("style: chữ chuyển màu, màu liên kết + khi rê (1.26)", () => {
+  const style = normalizeStyle({ textGradient: "linear-gradient(90deg, #ff0000 0%, #0000ff 100%)", link: { color: "primary", hover: "#ff0000", x: "1" } })!;
+  assert.deepEqual(style, { textGradient: "linear-gradient(90deg, #ff0000 0%, #0000ff 100%)", link: { color: "primary", hover: "#ff0000" } });
+  assert.equal(styleCss(style, "x"),
+    ".x.x{background:linear-gradient(90deg, #ff0000 0%, #0000ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}" +
+    ".x.x a{color:var(--ecx-color-primary, primary)}.x.x a:hover{color:#ff0000}");
+  assert.equal(normalizeStyle({ textGradient: "url(x)", link: { color: "red;}" } }), undefined);
+});

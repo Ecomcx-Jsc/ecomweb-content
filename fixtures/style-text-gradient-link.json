@@ -1,0 +1,91 @@
+{
+  "name": "style-text-gradient-link",
+  "note": "Chữ chuyển màu (textGradient, cùng quy tắc với gradient) và màu liên kết + khi rê (link.color / link.hover) — 1.26; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "textGradient": "linear-gradient(90deg,#ff0000 0%,#0000ff 100%)",
+                  "link": {
+                    "color": "primary",
+                    "hover": "#ff0000",
+                    "x": "1"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "textGradient": "url(x)",
+                  "link": {
+                    "color": "red;}"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "textGradient": "linear-gradient(90deg, #ff0000 0%, #0000ff 100%)",
+                  "link": {
+                    "color": "primary",
+                    "hover": "#ff0000"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "content": [
+                {
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

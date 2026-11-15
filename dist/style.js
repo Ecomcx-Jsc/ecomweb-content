@@ -268,6 +268,8 @@ export function normalizeStyle(v) {
     }
     set("layout", layout(v.layout));
     set("gradient", normalizeGradient(v.gradient));
+    set("textGradient", normalizeGradient(v.textGradient));
+    set("link", group(v.link, { color, hover: color }));
     set("shadow", shadow(v.shadow));
     set("aspectRatio", oneOf(RATIOS)(v.aspectRatio));
     if (isObj(v.position) && v.position.type === "sticky") {
@@ -381,6 +383,8 @@ function declarations(style) {
     }
     if (style.gradient)
         out.base.push(`background:${gradientValue(style.gradient)}`);
+    if (style.textGradient)
+        out.base.push(`background:${gradientValue(style.textGradient)}`, "-webkit-background-clip:text", "background-clip:text", "-webkit-text-fill-color:transparent");
     if (style.shadow)
         out.base.push(`box-shadow:${shadowValue(style.shadow)}`);
     if (style.aspectRatio)
@@ -540,6 +544,10 @@ export function ruleCss(selector, style) {
         if (hv.length)
             css += `${each(":hover")}{${hv.join(";")}}`;
     }
+    if (style.link?.color)
+        css += `${each(" a")}{color:${colorValue(style.link.color)}}`;
+    if (style.link?.hover)
+        css += `${each(" a:hover")}{color:${colorValue(style.link.hover)}}`;
     // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)
     const ov = style.background?.overlay;
     if (ov)

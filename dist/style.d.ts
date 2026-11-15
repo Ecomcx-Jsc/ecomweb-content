@@ -46,6 +46,13 @@ export interface BlockStyle {
     layout?: BlockLayout;
     /** Nền chuyển màu (1.15): preset của theme (`brand` → --ecx-gradient-brand) hoặc linear/radial-gradient đã kiểm. */
     gradient?: string;
+    /** Chữ chuyển màu (1.26): như `gradient`, tô lên nét chữ. */
+    textGradient?: string;
+    /** Màu liên kết bên trong khối và khi rê (1.26). */
+    link?: {
+        color?: string;
+        hover?: string;
+    };
     /** Đổ bóng (1.15): preset (`sm` `md` `lg` `xl` có sẵn, theme thêm) hoặc `none`. */
     shadow?: string;
     /** Tỉ lệ khung (1.15). */
