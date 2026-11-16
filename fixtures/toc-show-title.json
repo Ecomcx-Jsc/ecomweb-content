@@ -1,0 +1,55 @@
+{
+  "name": "toc-show-title",
+  "note": "Mục lục 1.28: ẩn tiêu đề; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "showTitle": false,
+                "title": "Nội dung"
+              }
+            },
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "showTitle": "no"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tableOfContents",
+              "attrs": {
+                "showTitle": false,
+                "title": "Nội dung"
+              }
+            },
+            {
+              "type": "tableOfContents"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -225,6 +225,16 @@ export const CORE_CONTROLS = [
             title: { label: "%part.title%", selector: `${W} .ecx-toc-title`, props: TEXT },
             link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
         } }),
+    // Tìm kiếm: ô nhập, nhãn, nút (thường / rê chuột), màu chữ gợi ý, rộng tối đa
+    defineBlockControls({ id: "core/search", blocks: ["search"], attributes: {
+            searchPlaceholderColor: color("input", { [`${W} input::placeholder`]: "color: {{VALUE}}" }),
+            searchMaxWidth: length("input", { [`${W} .search-form`]: "max-width: {{VALUE}}" }, true),
+        } }),
+    defineBlockControls({ id: "core/search-parts", partsOnly: true, blocks: ["search"], attributes: {}, parts: {
+            input: { label: "%part.input%", selector: `${W} input[type="search"]`, props: ["typography", "color", "background", "border", "radius", "shadow", "padding"], hover: "self" },
+            button: { label: "%part.button%", selector: `${W} button[type="submit"], ${W} button`, props: ["typography", "color", "background", "border", "radius", "shadow", "padding", "iconSize"], hover: "self" },
+            label: { label: "%part.label%", selector: `${W} .search-label`, props: TEXT, toggle: true },
+        } }),
     // Mạng xã hội: từng nút (thường / rê chuột)
     defineBlockControls({ id: "core/social-parts", partsOnly: true, blocks: ["socialLinks"], attributes: {}, parts: {
             item: { label: "%part.item%", selector: `${W} a`, props: ["color", "background", "border", "radius", "padding", "iconSize"], hover: "self" },

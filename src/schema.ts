@@ -130,14 +130,18 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   customHtml: { attrs: { align: wide, html: s() } },
   socialLinks: { attrs: { links: { type: "json", default: [] }, size: s({ enum: ["small", "medium", "large"], default: "medium" }), align: s({ enum: ["left", "center", "right"] }), showLabels: b({ default: false }) } },
   // 1.26: khoảng cấp tiêu đề H2–H6, thu gọn được (+ bắt đầu thu gọn), kiểu danh sách, số cột, cuộn mượt, tô đậm mục đang đọc
-  tableOfContents: { attrs: { title: s(), minLevel: i({ min: 2, max: 6, default: 2 }), maxLevel: i({ min: 2, max: 6, default: 3 }), collapsible: b({ default: false }), startCollapsed: b({ default: false }), listStyle: s({ enum: ["numbers", "bullets", "none"], default: "numbers" }), columns: i({ min: 1, max: 3, default: 1 }), smoothScroll: b({ default: false }), highlight: b({ default: false }) } },
+  tableOfContents: { attrs: { title: s(), minLevel: i({ min: 2, max: 6, default: 2 }), maxLevel: i({ min: 2, max: 6, default: 3 }), collapsible: b({ default: false }), startCollapsed: b({ default: false }), listStyle: s({ enum: ["numbers", "bullets", "none"], default: "numbers" }), columns: i({ min: 1, max: 3, default: 1 }), smoothScroll: b({ default: false }), highlight: b({ default: false }),
+    // 1.28: ẩn tiêu đề (bỏ qua khi thu gọn được — tiêu đề là nút mở / đóng)
+    showTitle: b({ default: true }) } },
   preformatted: {},
   // Khối động (1.6): lấy dữ liệu lúc hiển thị theo ngữ cảnh (website, trang đang xem, bài trong vòng lặp) — dùng trong template
   siteTitle: { attrs: { level: i({ min: 0, max: 6, default: 0 }), link: b({ default: true }), textAlign: align } },
   siteLogo: { attrs: { width: n({ min: 16, max: 600, default: 120 }), link: b({ default: true }) } },
   siteTagline: { attrs: { textAlign: align } },
   navigation: { attrs: { location: s({ default: "primary" }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobile: b({ default: true }), overlayMenu: s({ enum: ["never", "mobile", "always"], default: "mobile" }) } },
-  search: { attrs: { placeholder: s(), buttonText: s(), postType: s(), showLabel: b({ default: false }), buttonPosition: s({ enum: ["right", "left", "below"], default: "right" }) } },
+  search: { attrs: { placeholder: s(), buttonText: s(), postType: s(), showLabel: b({ default: false }), buttonPosition: s({ enum: ["right", "left", "below"], default: "right" }),
+    // 1.28: nút là chữ hoặc chỉ icon kính lúp (chữ nút thành aria-label)
+    buttonStyle: s({ enum: ["text", "icon"], default: "text" }) } },
   languageSwitcher: { attrs: { display: s({ enum: ["inline", "dropdown"], default: "inline" }) } },
   copyright: { attrs: { text: s(), textAlign: align } },
   postTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), link: b({ default: false }), textAlign: align } },

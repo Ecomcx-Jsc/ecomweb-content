@@ -21,6 +21,8 @@ export const ICON_PATHS: Record<string, string> = {
   externalLink: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3",
 };
 export const ICON_NAMES: readonly string[] = Object.keys(ICON_PATHS);
+/** Kính lúp của khối Tìm kiếm (không nằm trong bảng icon chọn được). */
+export const SEARCH_ICON_PATH = "M21 21l-4.3-4.3M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z";
 
 /** Phần tử của cây markup. `field` = chữ lấy từ thuộc tính đó (khung soạn gõ trực tiếp); `slot: "media"` = chỗ chọn ảnh khi soạn. */
 export interface WidgetEl {

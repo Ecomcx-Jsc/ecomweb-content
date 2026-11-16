@@ -20,6 +20,8 @@ export const ICON_PATHS = {
     externalLink: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3",
 };
 export const ICON_NAMES = Object.keys(ICON_PATHS);
+/** Kính lúp của khối Tìm kiếm (không nằm trong bảng icon chọn được). */
+export const SEARCH_ICON_PATH = "M21 21l-4.3-4.3M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z";
 export const WIDGET_BLOCKS = ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar"];
 const str = (v) => (typeof v === "string" ? v : "");
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */

@@ -1,0 +1,55 @@
+{
+  "name": "search-button-style",
+  "note": "Tìm kiếm 1.28: nút chữ / icon; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "search",
+              "attrs": {
+                "buttonStyle": "icon",
+                "buttonText": "Tìm"
+              }
+            },
+            {
+              "type": "search",
+              "attrs": {
+                "buttonStyle": "emoji"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "search",
+              "attrs": {
+                "buttonStyle": "icon",
+                "buttonText": "Tìm"
+              }
+            },
+            {
+              "type": "search"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
