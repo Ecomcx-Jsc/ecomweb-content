@@ -1,0 +1,59 @@
+{
+  "name": "countdown-timezone",
+  "note": "Đếm ngược 1.29: múi giờ trong danh sách có sẵn; múi giờ lạ bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "countdown",
+              "attrs": {
+                "target": "2026-12-01T09:00",
+                "timezone": "Asia/Ho_Chi_Minh"
+              }
+            },
+            {
+              "type": "countdown",
+              "attrs": {
+                "target": "2026-12-01T09:00",
+                "timezone": "Mars/Olympus"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "countdown",
+              "attrs": {
+                "target": "2026-12-01T09:00",
+                "timezone": "Asia/Ho_Chi_Minh"
+              }
+            },
+            {
+              "type": "countdown",
+              "attrs": {
+                "target": "2026-12-01T09:00"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

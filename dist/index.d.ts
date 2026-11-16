@@ -12,4 +12,4 @@ export { CORE_CONTROLS, coreControlsFor } from "./core-controls.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss, type StylePresets } from "./style.js";
 export { normalizeBindings, normalizeLock, normalizeTemplateLock, type Binding } from "./bindings.js";
 export { alignStyle, blockCitation, blockShell, buttonIcon, buttonWrapShell, coverParts, focalPoint, linkRel, widthClass, type BlockShell } from "./markup.js";
-export { ICON_NAMES, ICON_PATHS, SEARCH_ICON_PATH, WIDGET_BLOCKS, counterDecimals, countdownParts, formatCounter, iconEl, formClass, formSizeClass, iconListClass, mapEmbedUrl, tabsClass, widgetMarkup, type CountdownUnit, type WidgetEl } from "./widgets.js";
+export { ICON_NAMES, ICON_PATHS, SEARCH_ICON_PATH, WIDGET_BLOCKS, COUNTDOWN_ZONES, counterDecimals, countdownParts, countdownTarget, wallInZone, formatCounter, iconEl, formClass, formSizeClass, iconListClass, mapEmbedUrl, tabsClass, widgetMarkup, type CountdownUnit, type WidgetEl } from "./widgets.js";

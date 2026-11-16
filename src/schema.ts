@@ -128,7 +128,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     // 1.28: mục mở sẵn khi tải trang — không | mục đầu | tất cả (nhóm "mở một mục" chỉ mở được mục đầu); mục tự đặt `open` thì giữ nguyên
     startOpen: s({ enum: ["none", "first", "all"], default: "none" }) } },
   // 1.26: bố cục khối | một dòng, dấu ":" giữa các ô, số dạng 00, chữ sau, ẩn ngày / giây, nhãn riêng từng đơn vị
-  countdown: { attrs: { target: s(), label: s(), expiredText: s(), layout: s({ enum: ["block", "inline"], default: "block" }), divider: b({ default: false }), pad: b({ default: true }), postText: s(), showDays: b({ default: true }), showSeconds: b({ default: true }), daysLabel: s(), hoursLabel: s(), minutesLabel: s(), secondsLabel: s() } },
+  countdown: { attrs: { target: s(), timezone: s({ enum: ["Asia/Ho_Chi_Minh", "Asia/Bangkok", "Asia/Singapore", "Asia/Shanghai", "Asia/Tokyo", "Asia/Seoul", "Asia/Kolkata", "Asia/Dubai", "Europe/London", "Europe/Paris", "Europe/Moscow", "America/New_York", "America/Chicago", "America/Los_Angeles", "Australia/Sydney", "UTC"] }), label: s(), expiredText: s(), layout: s({ enum: ["block", "inline"], default: "block" }), divider: b({ default: false }), pad: b({ default: true }), postText: s(), showDays: b({ default: true }), showSeconds: b({ default: true }), daysLabel: s(), hoursLabel: s(), minutesLabel: s(), secondsLabel: s() } },
   rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
   customHtml: { attrs: { align: wide, html: s() } },
   socialLinks: { attrs: { links: { type: "json", default: [] }, size: s({ enum: ["small", "medium", "large"], default: "medium" }), align: s({ enum: ["left", "center", "right"] }), showLabels: b({ default: false }) } },

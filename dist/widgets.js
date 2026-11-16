@@ -205,6 +205,31 @@ export function widgetMarkup(type, a = {}, editing = false) {
  * 1.26 Ô của khối đếm ngược (website và khung soạn dùng chung): còn `leftMs` → các ô số + nhãn.
  * Ẩn ngày thì giờ cộng dồn cả ngày; ẩn giây thì bỏ ô giây. Nhãn: nhãn riêng của khối > nhãn theo ngôn ngữ (`units`).
  */
+/** Múi giờ chọn được cho đếm ngược (mốc nhập theo giờ tường của múi giờ đó, không theo máy người xem). */
+export const COUNTDOWN_ZONES = ["Asia/Ho_Chi_Minh", "Asia/Bangkok", "Asia/Singapore", "Asia/Shanghai", "Asia/Tokyo", "Asia/Seoul", "Asia/Kolkata", "Asia/Dubai", "Europe/London", "Europe/Paris", "Europe/Moscow", "America/New_York", "America/Chicago", "America/Los_Angeles", "Australia/Sydney", "UTC"];
+const zoneOffsetMs = (tz, ms) => {
+    const p = new Intl.DateTimeFormat("en-US", { timeZone: tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" }).formatToParts(ms);
+    const g = (t) => Number(p.find((x) => x.type === t)?.value);
+    return Date.UTC(g("year"), g("month") - 1, g("day"), g("hour"), g("minute"), g("second")) - Math.floor(ms / 1000) * 1000;
+};
+/** Mốc đếm ngược (ms). Có `timezone` và mốc không kèm độ lệch (`2026-12-01T09:00`) → giờ tường của múi giờ đó; còn lại như Date.parse. Sai → NaN. */
+export function countdownTarget(a) {
+    const t = String(a.target ?? "");
+    const tz = typeof a.timezone === "string" && COUNTDOWN_ZONES.includes(a.timezone) ? a.timezone : undefined;
+    const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(t);
+    if (!tz || !m)
+        return Date.parse(t);
+    const wall = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +(m[6] ?? 0));
+    let ms = wall;
+    for (let i = 0; i < 2; i++)
+        ms = wall - zoneOffsetMs(tz, ms);
+    return ms;
+}
+/** Giờ tường `YYYY-MM-DDTHH:mm` của một thời điểm ở múi giờ `tz` (đổi qua lại khi người dùng đổi múi giờ). */
+export function wallInZone(ms, tz) {
+    const w = new Date(ms + zoneOffsetMs(tz, ms)).toISOString();
+    return w.slice(0, 16);
+}
 export function countdownParts(a, leftMs, units = {}) {
     const s = Math.max(0, Math.floor(leftMs / 1000));
     const days = a.showDays !== false;

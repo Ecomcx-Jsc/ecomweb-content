@@ -70,3 +70,14 @@ test("map: URL Google Maps cố định, địa chỉ mã hoá trong q; zoom / c
   assert.equal(widgetMarkup("map", { address: "   " }), null);
   assert.equal((widgetMarkup("map", {}, true)!.children![0] as any).field, "address");
 });
+
+test("đếm ngược 1.29: mốc theo giờ tường của múi giờ; mốc có độ lệch / múi giờ lạ không đổi; đổi qua lại", async () => {
+  const { countdownTarget, wallInZone } = await import("../src/index.js");
+  assert.equal(countdownTarget({ target: "2026-12-01T09:00", timezone: "Asia/Ho_Chi_Minh" }), Date.UTC(2026, 11, 1, 2, 0));
+  assert.equal(countdownTarget({ target: "2026-12-01T09:00", timezone: "America/New_York" }), Date.UTC(2026, 11, 1, 14, 0));
+  assert.equal(countdownTarget({ target: "2026-07-01T09:00", timezone: "America/New_York" }), Date.UTC(2026, 6, 1, 13, 0)); // giờ mùa hè
+  assert.equal(countdownTarget({ target: "2026-12-01T09:00:00Z", timezone: "Asia/Tokyo" }), Date.UTC(2026, 11, 1, 9, 0));
+  assert.equal(countdownTarget({ target: "2026-12-01T09:00", timezone: "Mars/Olympus" }), Date.parse("2026-12-01T09:00"));
+  assert.equal(wallInZone(Date.UTC(2026, 11, 1, 2, 0), "Asia/Ho_Chi_Minh"), "2026-12-01T09:00");
+  assert.ok(Number.isNaN(countdownTarget({ target: "không phải ngày" })));
+});

@@ -44,6 +44,12 @@ export type CountdownUnit = "d" | "h" | "m" | "s";
  * 1.26 Ô của khối đếm ngược (website và khung soạn dùng chung): còn `leftMs` → các ô số + nhãn.
  * Ẩn ngày thì giờ cộng dồn cả ngày; ẩn giây thì bỏ ô giây. Nhãn: nhãn riêng của khối > nhãn theo ngôn ngữ (`units`).
  */
+/** Múi giờ chọn được cho đếm ngược (mốc nhập theo giờ tường của múi giờ đó, không theo máy người xem). */
+export declare const COUNTDOWN_ZONES: readonly ["Asia/Ho_Chi_Minh", "Asia/Bangkok", "Asia/Singapore", "Asia/Shanghai", "Asia/Tokyo", "Asia/Seoul", "Asia/Kolkata", "Asia/Dubai", "Europe/London", "Europe/Paris", "Europe/Moscow", "America/New_York", "America/Chicago", "America/Los_Angeles", "Australia/Sydney", "UTC"];
+/** Mốc đếm ngược (ms). Có `timezone` và mốc không kèm độ lệch (`2026-12-01T09:00`) → giờ tường của múi giờ đó; còn lại như Date.parse. Sai → NaN. */
+export declare function countdownTarget(a: Record<string, unknown>): number;
+/** Giờ tường `YYYY-MM-DDTHH:mm` của một thời điểm ở múi giờ `tz` (đổi qua lại khi người dùng đổi múi giờ). */
+export declare function wallInZone(ms: number, tz: string): string;
 export declare function countdownParts(a: Record<string, unknown>, leftMs: number, units?: Partial<Record<CountdownUnit, string>>): Array<{
     u: CountdownUnit;
     value: string;
