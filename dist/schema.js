@@ -163,7 +163,8 @@ export const CORE_NODES = {
     // 1.21: form cơ bản của lõi (liên hệ, đăng ký nhận tin, đặt lịch đơn giản): `form` chứa các ô `formField` và khối chữ; máy chủ đọc lại
     // định nghĩa form từ chính trang / template chứa nó để kiểm bài gửi. formId cố định theo form (không đổi khi sửa ô). Form nâng cao: plugin.
     // 1.26: email nhận có thể nhiều địa chỉ (dấu phẩy), đồng gửi (Cc), tiêu đề email riêng, chuyển trang sau khi gửi
-    form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s(), notifyCc: s(), emailSubject: s(), redirect: url() } },
+    // 1.28: cỡ ô nhập S / M / L
+    form: { attrs: { align: wide, formId: s(), submitText: s(), successMessage: s(), notifyEmail: s(), notifyCc: s(), emailSubject: s(), redirect: url(), inputSize: s({ enum: ["sm", "md", "lg"], default: "md" }) } },
     formField: {
         attrs: {
             kind: s({ enum: FORM_FIELD_KINDS, default: "text" }), name: s(), label: s(), placeholder: s(), help: s(),

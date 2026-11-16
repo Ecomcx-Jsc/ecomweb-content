@@ -34,6 +34,9 @@ export function iconListClass(a) {
 export function tabsClass(a) {
     return cls("ecx-tabs", a.orientation === "vertical" && "is-vertical", a.mobileAccordion === true && "has-mobile-accordion", (a.iconPosition === "right" || a.iconPosition === "top") && `has-icon-${a.iconPosition}`, a.iconOnly === true && "is-icon-only");
 }
+/** Class của khối Form (dùng chung website và khung soạn): cỡ ô nhập sm | md | lg (md = mặc định, không thêm class). */
+export const formSizeClass = (a) => (a.inputSize === "sm" || a.inputSize === "lg" ? `is-size-${a.inputSize}` : "");
+export const formClass = (a) => cls("ecx-form-blocks", formSizeClass(a));
 export function iconEl(name, fallback = "star", stroke) {
     const d = ICON_PATHS[str(name)] ?? ICON_PATHS[fallback];
     return {

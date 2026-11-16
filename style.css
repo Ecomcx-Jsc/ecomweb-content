@@ -176,6 +176,13 @@
   :where(.ecx-field) :where(textarea) { min-height: 8rem; resize: vertical; }
   :where(.ecx-field input:focus-visible, .ecx-field textarea:focus-visible, .ecx-field select:focus-visible) { outline: 2px solid var(--ecx-color-primary); outline-offset: 1px; }
   :where(.ecx-field) :where([aria-invalid=true]) { border-color: var(--ecx-color-danger); }
+  /* Nút gửi: nền / màu mặc định ở CSS (không inline) để phần "Nút" của Form ghi đè được */
+  :where(.ecx-form-actions .ecx-button-primary) { background: var(--ecx-btn-bg, var(--ecx-button-bg, var(--cms-button-bg, var(--ecx-color-primary)))); color: var(--ecx-btn-color, var(--ecx-button-fg, var(--cms-button-fg, var(--ecx-color-primary-fg)))); }
+  /* 1.28 Cỡ ô nhập: nhỏ / lớn (vừa = mặc định) */
+  :where(.ecx-form-blocks.is-size-sm) :where(.ecx-field) :where(input:not([type=checkbox], [type=radio]), select) { min-height: calc(var(--ecx-input-height) * .8); font-size: .875em; }
+  :where(.ecx-form-blocks.is-size-lg) :where(.ecx-field) :where(input:not([type=checkbox], [type=radio]), select) { min-height: calc(var(--ecx-input-height) * 1.25); font-size: 1.125em; }
+  :where(.ecx-form-blocks.is-size-sm) :where(.ecx-field textarea) { font-size: .875em; }
+  :where(.ecx-form-blocks.is-size-lg) :where(.ecx-field textarea) { font-size: 1.125em; min-height: 10rem; }
   :where(.ecx-field.is-check) :where(label) { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; }
   :where(.ecx-field.is-check) :where(input) { width: 1.125rem; height: 1.125rem; margin-top: .2rem; accent-color: var(--ecx-color-primary); }
   :where(.ecx-field.is-check) :where(a) { color: var(--ecx-color-primary); text-decoration: underline; text-underline-offset: 2px; }

@@ -1,0 +1,61 @@
+{
+  "name": "form-input-size",
+  "note": "Form 1.28: cỡ ô nhập sm / md / lg; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "form",
+              "attrs": {
+                "formId": "lien-he",
+                "inputSize": "lg"
+              },
+              "content": []
+            },
+            {
+              "type": "form",
+              "attrs": {
+                "formId": "dang-ky",
+                "inputSize": "huge"
+              },
+              "content": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "form",
+              "attrs": {
+                "formId": "lien-he",
+                "inputSize": "lg"
+              }
+            },
+            {
+              "type": "form",
+              "attrs": {
+                "formId": "dang-ky"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

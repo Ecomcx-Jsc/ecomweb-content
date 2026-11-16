@@ -27,6 +27,9 @@ type Attrs = Record<string, any>;
 export declare function iconListClass(a: Record<string, any>): string;
 /** Class của khối Tab (dùng chung website và khung soạn). */
 export declare function tabsClass(a: Record<string, any>): string;
+/** Class của khối Form (dùng chung website và khung soạn): cỡ ô nhập sm | md | lg (md = mặc định, không thêm class). */
+export declare const formSizeClass: (a: Record<string, any>) => string;
+export declare const formClass: (a: Record<string, any>) => string;
 export declare function iconEl(name: unknown, fallback?: string, stroke?: unknown): WidgetEl;
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
 export declare const counterDecimals: (a: Attrs) => number;

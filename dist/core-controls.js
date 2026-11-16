@@ -222,6 +222,17 @@ export const CORE_CONTROLS = [
             number: { label: "%part.number%", selector: `${W} .ecx-countdown-parts strong`, props: ["typography", "color"] },
             unitLabel: { label: "%part.unitLabel%", selector: `${W} .ecx-countdown-parts small`, props: ["typography", "color"] },
         } }),
+    // Form: nhãn, ô nhập (thường / rê chuột), dấu *, gợi ý, báo lỗi, báo thành công, nút gửi
+    defineBlockControls({ id: "core/form-parts", partsOnly: true, blocks: ["form"], attributes: {}, parts: {
+            label: { label: "%part.label%", selector: `${W} .ecx-field label, ${W} .ecx-field legend`, props: TEXT },
+            input: { label: "%part.input%", selector: `${W} .ecx-field input:not([type=checkbox]):not([type=radio]), ${W} .ecx-field textarea, ${W} .ecx-field select`,
+                props: ["typography", "color", "background", "border", "radius", "shadow", "padding"], hover: "self" },
+            required: { label: "%part.required%", selector: `${W} .ecx-field-required`, props: ["color"] },
+            help: { label: "%part.help%", selector: `${W} .ecx-field-help`, props: TEXT, toggle: true },
+            error: { label: "%part.error%", selector: `${W} .ecx-field-error, ${W} .ecx-form-status.is-error`, props: ["typography", "color", "background"] },
+            success: { label: "%part.success%", selector: `${W} .ecx-form-status.is-success`, props: ["typography", "color", "background"] },
+            button: { label: "%part.button%", selector: `${W} .ecx-form-actions .ecx-button`, props: ["typography", "color", "background", "border", "radius", "shadow", "padding"], hover: "self" },
+        } }),
     // Mục lục: khung, tiêu đề, liên kết (thường / rê chuột)
     defineBlockControls({ id: "core/toc-parts", partsOnly: true, blocks: ["tableOfContents"], attributes: {}, parts: {
             box: { label: "%part.box%", selector: W, props: BOX },
