@@ -162,6 +162,12 @@ const bgPosition = (v) => {
     const m = typeof v === "string" ? /^(\d{1,3})% (\d{1,3})%$/.exec(v.trim()) : null;
     return m && Number(m[1]) <= 100 && Number(m[2]) <= 100 ? `${Number(m[1])}% ${Number(m[2])}%` : undefined;
 };
+function textShadow(v) {
+    if (!isObj(v))
+        return undefined;
+    const x = int(-50, 50)(v.x), y = int(-50, 50)(v.y), blur = int(0, 50)(v.blur), c = color(v.color);
+    return x !== undefined && y !== undefined && blur !== undefined && c ? { x, y, blur, color: c } : undefined;
+}
 function dividerOne(v) {
     if (!isObj(v))
         return undefined;
@@ -316,6 +322,8 @@ export function normalizeStyle(v) {
     set("textDecoration", oneOf(DECORATIONS)(v.textDecoration));
     set("textTransform", oneOf(TRANSFORMS)(v.textTransform));
     set("textAlign", responsive(v.textAlign, oneOf(ALIGNS)));
+    set("textShadow", textShadow(v.textShadow));
+    set("writingMode", oneOf(["vertical"])(v.writingMode));
     set("color", group(v.color, { text: color, background: color }));
     const bw = isObj(v.border) ? box(v.border.width) : undefined, bo = group(v.border, { style: oneOf(BORDER_STYLES), color });
     set("border", bw !== undefined || bo ? { ...(bw !== undefined && { width: bw }), ...bo } : undefined);
@@ -409,6 +417,10 @@ function declarations(style) {
         out.base.push(`text-decoration:${style.textDecoration}`);
     if (style.textTransform)
         out.base.push(`text-transform:${style.textTransform}`);
+    if (style.textShadow)
+        out.base.push(`text-shadow:${style.textShadow.x}px ${style.textShadow.y}px ${style.textShadow.blur}px ${colorValue(style.textShadow.color)}`);
+    if (style.writingMode)
+        out.base.push("writing-mode:vertical-rl", "text-orientation:mixed");
     if (style.color?.text)
         out.base.push(`color:${colorValue(style.color.text)}`);
     if (style.color?.background)

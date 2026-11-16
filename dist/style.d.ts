@@ -30,6 +30,14 @@ export interface BlockStyle {
     textDecoration?: string;
     textTransform?: string;
     textAlign?: Responsive<string>;
+    /** 1.29: bóng chữ tự chỉnh (px, màu) và chữ xếp dọc. */
+    textShadow?: {
+        x: number;
+        y: number;
+        blur: number;
+        color: string;
+    };
+    writingMode?: "vertical";
     color?: {
         text?: string;
         background?: string;

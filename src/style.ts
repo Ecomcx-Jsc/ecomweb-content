@@ -28,6 +28,9 @@ export interface BlockStyle {
   textDecoration?: string;
   textTransform?: string;
   textAlign?: Responsive<string>;
+  /** 1.29: bóng chữ tự chỉnh (px, màu) và chữ xếp dọc. */
+  textShadow?: { x: number; y: number; blur: number; color: string };
+  writingMode?: "vertical";
   color?: { text?: string; background?: string };
   /** `width`: một giá trị hoặc từng cạnh (1.26). */
   border?: { width?: Box; style?: string; color?: string };
@@ -235,6 +238,11 @@ const bgPosition = (v: unknown) => {
   const m = typeof v === "string" ? /^(\d{1,3})% (\d{1,3})%$/.exec(v.trim()) : null;
   return m && Number(m[1]) <= 100 && Number(m[2]) <= 100 ? `${Number(m[1])}% ${Number(m[2])}%` : undefined;
 };
+function textShadow(v: unknown): BlockStyle["textShadow"] {
+  if (!isObj(v)) return undefined;
+  const x = int(-50, 50)(v.x), y = int(-50, 50)(v.y), blur = int(0, 50)(v.blur), c = color(v.color);
+  return x !== undefined && y !== undefined && blur !== undefined && c ? { x, y, blur, color: c } : undefined;
+}
 function dividerOne(v: unknown): BlockDivider | undefined {
   if (!isObj(v)) return undefined;
   const shape = oneOf(DIVIDER_SHAPES)(v.shape) as BlockDivider["shape"] | undefined, c = color(v.color);
@@ -348,6 +356,8 @@ export function normalizeStyle(v: unknown): BlockStyle | undefined {
   set("textDecoration", oneOf(DECORATIONS)(v.textDecoration));
   set("textTransform", oneOf(TRANSFORMS)(v.textTransform));
   set("textAlign", responsive(v.textAlign, oneOf(ALIGNS)));
+  set("textShadow", textShadow(v.textShadow));
+  set("writingMode", oneOf(["vertical"])(v.writingMode) as "vertical" | undefined);
   set("color", group(v.color, { text: color, background: color }));
   const bw = isObj(v.border) ? box(v.border.width) : undefined, bo = group(v.border, { style: oneOf(BORDER_STYLES), color });
   set("border", bw !== undefined || bo ? { ...(bw !== undefined && { width: bw }), ...bo } : undefined);
@@ -408,6 +418,8 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
   if (style.fontStyle) out.base.push(`font-style:${style.fontStyle}`);
   if (style.textDecoration) out.base.push(`text-decoration:${style.textDecoration}`);
   if (style.textTransform) out.base.push(`text-transform:${style.textTransform}`);
+  if (style.textShadow) out.base.push(`text-shadow:${style.textShadow.x}px ${style.textShadow.y}px ${style.textShadow.blur}px ${colorValue(style.textShadow.color)}`);
+  if (style.writingMode) out.base.push("writing-mode:vertical-rl", "text-orientation:mixed");
   if (style.color?.text) out.base.push(`color:${colorValue(style.color.text)}`);
   if (style.color?.background) out.base.push(`background:${colorValue(style.color.background)}`);
   if (style.border?.width || style.border?.style || style.border?.color) {

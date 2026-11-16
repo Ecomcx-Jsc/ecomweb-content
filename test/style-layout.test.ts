@@ -135,3 +135,12 @@ test("đường chia 1.29: một ::after, mặt nạ theo hình, đường trên
   assert.equal(normalizeStyle({ divider: { top: { shape: "star", color: "primary" }, bottom: { shape: "curve" } } }), undefined);
   assert.equal(normalizeStyle({ divider: { bottom: { shape: "curve", color: "primary", height: 500 } } })?.divider?.bottom?.height, undefined);
 });
+
+test("bóng chữ tự chỉnh + chữ dọc 1.29: ra CSS text-shadow / writing-mode; số ngoài khoảng, thiếu màu, chế độ lạ bị bỏ", () => {
+  const st = normalizeStyle({ textShadow: { x: 2, y: 4, blur: 8, color: "black/40" }, writingMode: "vertical" })!;
+  const css = styleCss(st, "x");
+  assert.match(css, /text-shadow:2px 4px 8px color-mix\(in srgb, var\(--ecx-color-black, black\) 40%, transparent\)/);
+  assert.match(css, /writing-mode:vertical-rl;text-orientation:mixed/);
+  assert.equal(normalizeStyle({ textShadow: { x: 99, y: 4, blur: 8, color: "black" }, writingMode: "sideways" }), undefined);
+  assert.equal(normalizeStyle({ textShadow: { x: 1, y: 1, blur: 1 } }), undefined);
+});
