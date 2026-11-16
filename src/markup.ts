@@ -100,7 +100,10 @@ export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: str
     case "image": return { tag: "figure", className: cls("ecx-image cms-image", attrs.align && `ecx-align-${attrs.align} align${attrs.align}`, attrs.mediaId && `ecx-image-${attrs.mediaId} cms-image-${attrs.mediaId}`) };
     case "gallery": {
       const cols = Math.min(6, Math.max(1, Number(attrs.columns) || 3));
-      return { tag: "figure", className: cls("ecx-gallery cms-gallery", `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "grid", gap: 8, gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } };
+      // Khoảng cách ảnh: biến --ecx-gallery-gap (ô "Khoảng cách ảnh" ghi vào đây), mặc định 8px
+      const gap = "var(--ecx-gallery-gap, 8px)";
+      if (attrs.layout === "masonry") return { tag: "figure", className: cls("ecx-gallery cms-gallery is-masonry", `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "block", columnCount: cols, columnGap: gap } };
+      return { tag: "figure", className: cls("ecx-gallery cms-gallery", `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "grid", gap, gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } };
     }
     case "pullquote": return { tag: "figure", className: "ecx-pullquote" };
     case "customHtml": return { tag: "div", className: "ecx-html" };

@@ -457,6 +457,9 @@
   :where(.ecx-icon-box-more) :where(a) { color: var(--ecx-color-link); text-decoration: none; }
   :where(.ecx-icon-box-more) :where(a:hover) { text-decoration: underline; }
   @media (prefers-reduced-motion: reduce) { :where(.ecx-icon-box) :where(.ecx-icon-box-icon) { transition: none; } }
+  /* 1.28 Thư viện ảnh kiểu masonry: ảnh nối cột, không bị cắt giữa chừng; chú thích chung nằm dưới cả các cột */
+  :where(.ecx-gallery.is-masonry) > :where(.ecx-gallery-item) { break-inside: avoid; padding-bottom: var(--ecx-gallery-gap, 8px); }
+  :where(.ecx-gallery.is-masonry) > :where(.ecx-gallery-caption) { column-span: all; }
   :where(.ecx-image-box-media) { margin: 0 0 var(--ecx-spacing-md); }
   :where(.ecx-image-box-media) :where(img) { display: block; width: 100%; height: auto; border-radius: var(--ecx-radius-md); }
   :where(.ecx-icon-list) { display: flex; flex-direction: column; gap: var(--ecx-spacing-xs); padding: 0; list-style: none; }

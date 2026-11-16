@@ -1,0 +1,73 @@
+{
+  "name": "gallery-masonry",
+  "note": "Thư viện ảnh 1.28: kiểu masonry, link riêng từng ảnh; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "gallery",
+              "attrs": {
+                "layout": "masonry",
+                "columns": 3,
+                "images": [
+                  {
+                    "src": "/uploads/a.jpg",
+                    "alt": "A",
+                    "href": "/san-pham/a"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "gallery",
+              "attrs": {
+                "layout": "mosaic",
+                "images": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "gallery",
+              "attrs": {
+                "layout": "masonry",
+                "columns": 3,
+                "images": [
+                  {
+                    "src": "/uploads/a.jpg",
+                    "alt": "A",
+                    "href": "/san-pham/a"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "gallery",
+              "attrs": {
+                "images": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

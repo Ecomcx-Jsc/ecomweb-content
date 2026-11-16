@@ -203,6 +203,9 @@ export const CORE_CONTROLS = [
             link: { label: "%part.link%", selector: `${W} a`, props: ["typography", "color"], hover: "self" },
         } }),
     // Gallery: từng ảnh (thường / rê chuột lên ảnh) và chú thích chung
+    defineBlockControls({ id: "core/gallery", blocks: ["gallery"], attributes: {
+            galleryGap: length("gallery", { [W]: "--ecx-gallery-gap: {{VALUE}}" }, true),
+        } }),
     defineBlockControls({ id: "core/gallery-parts", partsOnly: true, blocks: ["gallery"], attributes: {}, parts: {
             image: { label: "%part.image%", selector: `${W} .ecx-gallery-item img`, props: ["border", "radius", "shadow"], hover: "self" },
             caption: { label: "%part.caption%", selector: `${W} .ecx-gallery-caption`, props: ["typography", "color", "margin"] },

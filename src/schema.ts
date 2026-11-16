@@ -66,7 +66,9 @@ export const CORE_NODES: Record<string, NodeSpec> = {
       href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), lightbox: b({ default: false }),
     },
   },
-  gallery: { attrs: { align: wide, images: { type: "json", default: [] }, columns: i({ min: 1, max: 6, default: 3 }), caption: s(), linkTo: s({ enum: ["none", "media"], default: "media" }), imageCrop: b({ default: true }), lightbox: b({ default: false }) } },
+  gallery: { attrs: { align: wide, images: { type: "json", default: [] }, columns: i({ min: 1, max: 6, default: 3 }), caption: s(), linkTo: s({ enum: ["none", "media"], default: "media" }), imageCrop: b({ default: true }), lightbox: b({ default: false }),
+    // 1.28: lưới đều | masonry (cột, ảnh giữ tỉ lệ); link riêng từng ảnh nằm trong images[].href
+    layout: s({ enum: ["grid", "masonry"], default: "grid" }) } },
   // next: hành vi phát — autoplay chỉ chạy khi muted (trình duyệt chặn nếu có tiếng); controls / playsInline mặc định bật
   video: { attrs: { align: wide, ...media, poster: url(), autoplay: b(), loop: b(), muted: b(), controls: b({ default: true }), playsInline: b({ default: true }), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
   audio: { attrs: { ...media, autoplay: b(), loop: b(), preload: s({ enum: ["none", "metadata", "auto"], default: "metadata" }) } },
