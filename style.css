@@ -23,6 +23,7 @@
     --ecx-color-info: var(--ecx-color-primary);
     --ecx-color-success: #15803d;
     --ecx-color-warning: #b45309;
+    --ecx-color-rating: #f59e0b;
     --ecx-color-danger: #b91c1c;
     --ecx-color-white: #fff;
     --ecx-color-black: #111;
@@ -481,6 +482,16 @@
   :where(.ecx-testimonial-meta) { display: flex; flex-direction: column; }
   :where(.ecx-testimonial-name) { font-style: normal; font-weight: 600; }
   :where(.ecx-testimonial-role) { color: var(--ecx-color-muted); font-size: var(--ecx-font-size-sm); }
+  /* 1.28 Lời chứng thực: kiểu trơn / bong bóng (đuôi bong bóng lấy nền của lời trích), sao đánh giá, dấu trích */
+  :where(.ecx-testimonial.is-plain, .ecx-testimonial.is-bubble) { padding: 0; border: 0; border-radius: 0; background: none; }
+  :where(.ecx-testimonial.is-bubble) :where(.ecx-testimonial-quote) { position: relative; padding: var(--ecx-spacing-lg); border-radius: var(--ecx-radius-lg); background: var(--ecx-color-surface); }
+  :where(.ecx-testimonial.is-bubble) :where(.ecx-testimonial-quote)::after { content: ""; position: absolute; top: calc(100% - .5rem); inset-inline-start: 1.5rem; width: 1rem; height: 1rem; background: inherit; transform: rotate(45deg); }
+  :where(.ecx-testimonial.is-bubble[style*="center"]) :where(.ecx-testimonial-quote)::after { inset-inline-start: calc(50% - .5rem); }
+  :where(.ecx-testimonial.is-bubble[style*="right"]) :where(.ecx-testimonial-quote)::after { inset-inline: auto 1.5rem; }
+  :where(.ecx-testimonial.is-bubble) :where(.ecx-testimonial-author) { margin-top: var(--ecx-spacing-lg); }
+  :where(.ecx-testimonial-mark) { display: block; height: .55em; font-family: Georgia, "Times New Roman", serif; font-size: 3.5rem; font-style: normal; line-height: 1; color: var(--ecx-color-primary); margin-bottom: var(--ecx-spacing-sm); }
+  :where(.ecx-testimonial-rating) { display: block; margin-bottom: var(--ecx-spacing-xs); font-size: 1.125rem; font-style: normal; letter-spacing: .1em; line-height: 1; color: var(--ecx-color-rating); }
+  :where(.ecx-testimonial-rating) > :where(.is-off) { color: var(--ecx-color-border); }
   :where(.ecx-progress-head) { display: flex; justify-content: space-between; gap: var(--ecx-spacing-sm); margin-bottom: var(--ecx-spacing-xs); font-weight: 600; }
   :where(.ecx-progress-track) { height: .625rem; overflow: hidden; border-radius: var(--ecx-radius-pill); background: var(--ecx-color-border); }
   :where(.ecx-progress-bar) { height: 100%; border-radius: inherit; background: var(--ecx-color-primary); transform-origin: left; transition: transform var(--ecx-progress-duration, 1.2s) var(--ecx-motion-ease); }

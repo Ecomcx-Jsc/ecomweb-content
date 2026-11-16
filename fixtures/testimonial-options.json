@@ -1,0 +1,68 @@
+{
+  "name": "testimonial-options",
+  "note": "Lời chứng thực 1.28: kiểu bong bóng, sao đánh giá 0–5, dấu trích; giá trị sai bị bỏ / kẹp",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Tốt",
+                "name": "Lan",
+                "variant": "bubble",
+                "rating": 4,
+                "quoteMark": true
+              }
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Ổn",
+                "variant": "neon",
+                "rating": 9,
+                "quoteMark": "yes"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Tốt",
+                "name": "Lan",
+                "variant": "bubble",
+                "rating": 4,
+                "quoteMark": true
+              }
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Ổn",
+                "rating": 5
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

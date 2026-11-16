@@ -131,10 +131,14 @@ export function widgetMarkup(type, a = {}, editing = false) {
         }
         case "testimonial": {
             const src = a.src ? safeUrl(a.src, "") : "";
+            const stars = Math.min(5, Math.max(0, Math.round(Number(a.rating)) || 0));
             const name = text("cite", "ecx-testimonial-name", a, "name", editing), role = text("span", "ecx-testimonial-role", a, "role", editing);
             return {
-                tag: "figure", className: "ecx-testimonial", style: alignCss(a),
-                children: kids({ tag: "blockquote", className: "ecx-testimonial-quote", children: kids(text("p", undefined, a, "quote", editing)) }, src || name || role ? {
+                tag: "figure", className: cls("ecx-testimonial", (a.variant === "plain" || a.variant === "bubble") && `is-${a.variant}`), style: alignCss(a),
+                children: kids(a.quoteMark === true ? { tag: "span", className: "ecx-testimonial-mark", props: { "aria-hidden": "true" }, children: ["\u201C"] } : null, stars > 0 ? {
+                    tag: "span", className: "ecx-testimonial-rating", props: { role: "img", "aria-label": `${stars}/5` },
+                    children: [1, 2, 3, 4, 5].map((n) => ({ tag: "span", className: n <= stars ? "is-on" : "is-off", props: { "aria-hidden": "true" }, children: ["\u2605"] })),
+                } : null, { tag: "blockquote", className: "ecx-testimonial-quote", children: kids(text("p", undefined, a, "quote", editing)) }, src || name || role ? {
                     tag: "figcaption", className: "ecx-testimonial-author",
                     children: kids(src ? { tag: "img", className: "ecx-testimonial-avatar", props: { src, alt: str(a.alt), width: 48, height: 48, loading: "lazy", decoding: "async" } } : null, name || role ? { tag: "span", className: "ecx-testimonial-meta", children: kids(name, role) } : null),
                 } : null),

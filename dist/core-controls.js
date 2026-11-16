@@ -154,7 +154,9 @@ export const CORE_CONTROLS = [
         } }),
     defineBlockControls({ id: "core/testimonial-parts", partsOnly: true, blocks: ["testimonial"], attributes: {}, parts: {
             box: { label: "%part.box%", selector: W, props: BOX, hover: true },
-            quote: { label: "%part.quote%", selector: `${W} .ecx-testimonial-quote`, props: TEXT },
+            mark: { label: "%part.quoteMark%", selector: `${W} .ecx-testimonial-mark`, props: ["color", "typography"] },
+            rating: { label: "%part.rating%", selector: `${W} .ecx-testimonial-rating`, props: ["color", "typography", "margin"] },
+            quote: { label: "%part.quote%", selector: `${W} .ecx-testimonial-quote`, props: ["typography", "color", "background", "radius", "padding", "margin"] },
             avatar: { label: "%part.avatar%", selector: `${W} .ecx-testimonial-avatar`, props: ["size", "radius", "border"], toggle: true },
             name: { label: "%part.name%", selector: `${W} .ecx-testimonial-name`, props: ["typography", "color"], toggle: true },
             role: { label: "%part.role%", selector: `${W} .ecx-testimonial-role`, props: ["typography", "color"], toggle: true },

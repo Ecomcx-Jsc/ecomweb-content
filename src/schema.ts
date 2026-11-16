@@ -206,7 +206,9 @@ export const CORE_NODES: Record<string, NodeSpec> = {
       separator: s({ enum: ["none", ",", ".", "space"], default: "none" }), textAlign: align,
     },
   },
-  testimonial: { attrs: { quote: s(), name: s(), role: s(), src: url(), mediaId: { type: "json" }, alt: s(), textAlign: align } },
+  // 1.28: kiểu thẻ / trơn / bong bóng, sao đánh giá (0 = không hiện), dấu trích ở đầu
+  testimonial: { attrs: { quote: s(), name: s(), role: s(), src: url(), mediaId: { type: "json" }, alt: s(), textAlign: align,
+    variant: s({ enum: ["card", "plain", "bubble"], default: "card" }), rating: i({ min: 0, max: 5, default: 0 }), quoteMark: b() } },
   // 1.26: giá trị / tối đa (không chỉ %), tiền tố / hậu tố của số (mặc định "%"), vị trí chữ (trên | trong thanh | dưới), thời gian chạy (ms)
   progressBar: { attrs: { label: s(), value: i({ min: 0, max: 1000000, default: 50 }), max: i({ min: 1, max: 1000000, default: 100 }), showValue: b({ default: true }), prefix: s(), suffix: s(), textPosition: s({ enum: ["above", "inside", "below"], default: "above" }), duration: i({ min: 0, max: 10000, default: 1200 }) } },
 };
