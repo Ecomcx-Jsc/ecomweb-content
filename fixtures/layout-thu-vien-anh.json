@@ -1,0 +1,44 @@
+{
+  "name": "layout-thu-vien-anh",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "gallery",
+              "attrs": {
+                "columns": 3,
+                "images": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "gallery",
+              "attrs": {
+                "columns": 3,
+                "images": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

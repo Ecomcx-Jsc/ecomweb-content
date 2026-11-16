@@ -1,0 +1,120 @@
+{
+  "name": "layout-dang-ky-nhan-tin",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "style": {
+                  "color": {
+                    "background": "primary/10"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nhận tin mới"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Đăng ký để không bỏ lỡ."
+                    }
+                  ]
+                },
+                {
+                  "type": "form",
+                  "attrs": {
+                    "submitText": "Đăng ký",
+                    "formId": "f_pa45vya7"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "style": {
+                  "color": {
+                    "background": "primary/10"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nhận tin mới"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Đăng ký để không bỏ lỡ."
+                    }
+                  ]
+                },
+                {
+                  "type": "form",
+                  "attrs": {
+                    "submitText": "Đăng ký",
+                    "formId": "f_pa45vya7"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

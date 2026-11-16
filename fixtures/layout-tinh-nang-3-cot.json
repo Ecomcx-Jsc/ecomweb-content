@@ -1,0 +1,144 @@
+{
+  "name": "layout-tinh-nang-3-cot",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "textAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tính năng nổi bật"
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "iconBox",
+                      "attrs": {
+                        "icon": "star",
+                        "title": "Nhanh",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "iconBox",
+                      "attrs": {
+                        "icon": "heart",
+                        "title": "Dễ dùng",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "iconBox",
+                      "attrs": {
+                        "icon": "check",
+                        "title": "An toàn",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "textAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tính năng nổi bật"
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "iconBox",
+                      "attrs": {
+                        "icon": "star",
+                        "title": "Nhanh",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "iconBox",
+                      "attrs": {
+                        "icon": "heart",
+                        "title": "Dễ dùng",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "iconBox",
+                      "attrs": {
+                        "icon": "check",
+                        "title": "An toàn",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

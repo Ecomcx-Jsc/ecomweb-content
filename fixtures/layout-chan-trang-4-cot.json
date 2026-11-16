@@ -1,0 +1,372 @@
+{
+  "name": "layout-chan-trang-4-cot",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "muted/20"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "columns",
+                  "content": [
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Công ty"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Giới thiệu"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Tuyển dụng"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Sản phẩm"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Tính năng"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Bảng giá"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Hỗ trợ"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Hướng dẫn"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Liên hệ"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Theo dõi"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Facebook"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Zalo"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "© 2026 Công ty. Bảo lưu mọi quyền."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "muted/20"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "columns",
+                  "content": [
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Công ty"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Giới thiệu"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Tuyển dụng"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Sản phẩm"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Tính năng"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Bảng giá"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Hỗ trợ"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Hướng dẫn"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Liên hệ"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 4
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Theo dõi"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Facebook"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Zalo"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "© 2026 Công ty. Bảo lưu mọi quyền."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

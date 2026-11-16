@@ -1,0 +1,148 @@
+{
+  "name": "layout-hero-chia-doi",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 1
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Tiêu đề lớn bên trái"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "buttons",
+                      "content": [
+                        {
+                          "type": "button",
+                          "attrs": {
+                            "text": "Dùng thử",
+                            "variant": "primary",
+                            "href": "#"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Ảnh minh hoạ",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 1
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Tiêu đề lớn bên trái"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "buttons",
+                      "content": [
+                        {
+                          "type": "button",
+                          "attrs": {
+                            "text": "Dùng thử",
+                            "variant": "primary",
+                            "href": "#"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Ảnh minh hoạ",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

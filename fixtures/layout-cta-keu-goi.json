@@ -1,0 +1,140 @@
+{
+  "name": "layout-cta-keu-goi",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "accent/20"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Sẵn sàng bắt đầu?"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Đăng ký miễn phí",
+                        "variant": "primary",
+                        "href": "#"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "accent/20"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Sẵn sàng bắt đầu?"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Đăng ký miễn phí",
+                        "variant": "primary",
+                        "href": "#"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

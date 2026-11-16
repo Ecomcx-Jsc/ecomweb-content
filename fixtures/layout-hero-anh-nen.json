@@ -1,0 +1,134 @@
+{
+  "name": "layout-hero-anh-nen",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "cover",
+              "attrs": {
+                "overlay": "primary",
+                "opacity": 60,
+                "minHeight": "360px",
+                "align": "full"
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Hero ảnh nền"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Liên hệ",
+                        "variant": "primary",
+                        "href": "#"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "cover",
+              "attrs": {
+                "overlay": "primary",
+                "opacity": 60,
+                "minHeight": "360px",
+                "align": "full"
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Hero ảnh nền"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Liên hệ",
+                        "variant": "primary",
+                        "href": "#"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

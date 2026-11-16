@@ -1,0 +1,182 @@
+{
+  "name": "layout-lien-he-60-40",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 60
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Gửi tin nhắn"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "form",
+                      "attrs": {
+                        "formId": "f_mf6j32u4"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 40
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Thông tin"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Địa chỉ: 1 Đường ABC"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Điện thoại: 0123 456 789"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "map",
+                      "attrs": {
+                        "address": "Hà Nội",
+                        "height": 240
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 60
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Gửi tin nhắn"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "form",
+                      "attrs": {
+                        "formId": "f_mf6j32u4"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 40
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Thông tin"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Địa chỉ: 1 Đường ABC"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Điện thoại: 0123 456 789"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "map",
+                      "attrs": {
+                        "address": "Hà Nội",
+                        "height": 240
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

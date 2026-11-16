@@ -1,0 +1,174 @@
+{
+  "name": "layout-hoi-dap-faq",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "textAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Câu hỏi thường gặp"
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "attrs": {
+                "columns": 1
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Làm sao để bắt đầu?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Giá thế nào?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Có hỗ trợ không?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "textAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Câu hỏi thường gặp"
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "attrs": {
+                "columns": 1
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Làm sao để bắt đầu?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Giá thế nào?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Có hỗ trợ không?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

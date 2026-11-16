@@ -1,0 +1,88 @@
+{
+  "name": "layout-banner-tieu-de-trang",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "medium",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "muted/15"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "breadcrumbs"
+                },
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Tên trang"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "medium",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "muted/15"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "breadcrumbs"
+                },
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Tên trang"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

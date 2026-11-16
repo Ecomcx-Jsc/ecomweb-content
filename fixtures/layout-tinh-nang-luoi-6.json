@@ -1,0 +1,166 @@
+{
+  "name": "layout-tinh-nang-luoi-6",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "layout": {
+                    "type": "grid",
+                    "columns": {
+                      "base": 3,
+                      "tablet": 2,
+                      "mobile": 1
+                    }
+                  },
+                  "gap": {
+                    "base": "md"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "star",
+                    "title": "Tính năng star",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "heart",
+                    "title": "Tính năng heart",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "check",
+                    "title": "Tính năng check",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "phone",
+                    "title": "Tính năng phone",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "mail",
+                    "title": "Tính năng mail",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "clock",
+                    "title": "Tính năng clock",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "gap": {
+                    "base": "md"
+                  },
+                  "layout": {
+                    "type": "grid",
+                    "columns": {
+                      "base": 3,
+                      "tablet": 2,
+                      "mobile": 1
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "star",
+                    "title": "Tính năng star",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "heart",
+                    "title": "Tính năng heart",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "check",
+                    "title": "Tính năng check",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "phone",
+                    "title": "Tính năng phone",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "mail",
+                    "title": "Tính năng mail",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "icon": "clock",
+                    "title": "Tính năng clock",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

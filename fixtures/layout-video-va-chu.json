@@ -1,0 +1,146 @@
+{
+  "name": "layout-video-va-chu",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "youtube",
+                      "attrs": {
+                        "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Xem giới thiệu"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "buttons",
+                      "content": [
+                        {
+                          "type": "button",
+                          "attrs": {
+                            "text": "Tìm hiểu thêm",
+                            "variant": "primary",
+                            "href": "#"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "youtube",
+                      "attrs": {
+                        "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Xem giới thiệu"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "buttons",
+                      "content": [
+                        {
+                          "type": "button",
+                          "attrs": {
+                            "text": "Tìm hiểu thêm",
+                            "variant": "primary",
+                            "href": "#"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

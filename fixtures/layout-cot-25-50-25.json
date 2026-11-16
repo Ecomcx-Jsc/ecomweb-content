@@ -1,0 +1,166 @@
+{
+  "name": "layout-cot-25-50-25",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 25
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Cột trái hẹp"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 50
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Cột giữa rộng"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 25
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Cột phải hẹp"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 25
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Cột trái hẹp"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 50
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Cột giữa rộng"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 25
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Cột phải hẹp"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

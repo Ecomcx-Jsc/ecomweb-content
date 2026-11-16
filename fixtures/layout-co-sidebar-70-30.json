@@ -1,0 +1,248 @@
+{
+  "name": "layout-co-sidebar-70-30",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 70
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung chính"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 30
+                  },
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thanh bên"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Danh mục"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Bài mới"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 70
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung chính"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 30
+                  },
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thanh bên"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Danh mục"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Bài mới"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

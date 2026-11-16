@@ -1,0 +1,156 @@
+{
+  "name": "layout-hero-giua",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "primary/15"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Xây website nhanh hơn"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Bắt đầu ngay",
+                        "variant": "primary",
+                        "href": "#"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Xem demo",
+                        "variant": "outline",
+                        "href": "#"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "primary/15"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Xây website nhanh hơn"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Bắt đầu ngay",
+                        "variant": "primary",
+                        "href": "#"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Xem demo",
+                        "variant": "outline",
+                        "href": "#"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

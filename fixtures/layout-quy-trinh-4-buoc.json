@@ -1,0 +1,150 @@
+{
+  "name": "layout-quy-trinh-4-buoc",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "layout": {
+                    "type": "grid",
+                    "columns": {
+                      "base": 4,
+                      "tablet": 2,
+                      "mobile": 1
+                    }
+                  },
+                  "gap": {
+                    "base": "md"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "1",
+                    "title": "Bước 1",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "2",
+                    "title": "Bước 2",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "3",
+                    "title": "Bước 3",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "4",
+                    "title": "Bước 4",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "gap": {
+                    "base": "md"
+                  },
+                  "layout": {
+                    "type": "grid",
+                    "columns": {
+                      "base": 4,
+                      "tablet": 2,
+                      "mobile": 1
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "1",
+                    "title": "Bước 1",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "2",
+                    "title": "Bước 2",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "3",
+                    "title": "Bước 3",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "iconBox",
+                  "attrs": {
+                    "media": "number",
+                    "number": "4",
+                    "title": "Bước 4",
+                    "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                    "textAlign": "center"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

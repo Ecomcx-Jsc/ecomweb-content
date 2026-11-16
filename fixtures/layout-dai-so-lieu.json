@@ -1,0 +1,142 @@
+{
+  "name": "layout-dai-so-lieu",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "style": {
+                  "color": {
+                    "background": "primary/10"
+                  },
+                  "layout": {
+                    "type": "grid",
+                    "columns": {
+                      "base": 4,
+                      "tablet": 2,
+                      "mobile": 1
+                    }
+                  },
+                  "gap": {
+                    "base": "md"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 1200,
+                    "title": "Khách hàng",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 350,
+                    "title": "Dự án",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 98,
+                    "title": "Hài lòng %",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 15,
+                    "title": "Năm",
+                    "textAlign": "center"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "style": {
+                  "gap": {
+                    "base": "md"
+                  },
+                  "color": {
+                    "background": "primary/10"
+                  },
+                  "layout": {
+                    "type": "grid",
+                    "columns": {
+                      "base": 4,
+                      "tablet": 2,
+                      "mobile": 1
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 1200,
+                    "title": "Khách hàng",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 350,
+                    "title": "Dự án",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 98,
+                    "title": "Hài lòng %",
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "type": "counter",
+                  "attrs": {
+                    "end": 15,
+                    "title": "Năm",
+                    "textAlign": "center"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

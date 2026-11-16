@@ -1,0 +1,112 @@
+{
+  "name": "layout-the-bai-viet-3",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Bài viết 1",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Bài viết 2",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Bài viết 3",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Bài viết 1",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Bài viết 2",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "imageBox",
+                      "attrs": {
+                        "title": "Bài viết 3",
+                        "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

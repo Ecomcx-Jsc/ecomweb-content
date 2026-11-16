@@ -1,0 +1,219 @@
+{
+  "name": "layout-section-co-duong-chia",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "primary/20"
+                  },
+                  "divider": {
+                    "bottom": {
+                      "shape": "wave",
+                      "color": "white",
+                      "height": 80
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Section có sóng"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "accent/20"
+                  },
+                  "divider": {
+                    "top": {
+                      "shape": "tilt",
+                      "color": "primary/20"
+                    },
+                    "bottom": {
+                      "shape": "curve",
+                      "color": "white"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Section vát"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "primary/20"
+                  },
+                  "divider": {
+                    "bottom": {
+                      "shape": "wave",
+                      "color": "white"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Section có sóng"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "large",
+                "align": "full",
+                "style": {
+                  "color": {
+                    "background": "accent/20"
+                  },
+                  "divider": {
+                    "top": {
+                      "shape": "tilt",
+                      "color": "primary/20"
+                    },
+                    "bottom": {
+                      "shape": "curve",
+                      "color": "white"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Section vát"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

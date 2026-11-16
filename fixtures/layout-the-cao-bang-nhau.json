@@ -1,0 +1,394 @@
+{
+  "name": "layout-the-cao-bang-nhau",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "stretch"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thẻ 1"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chi tiết",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thẻ 2"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chi tiết",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thẻ 3"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chi tiết",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "stretch"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thẻ 1"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chi tiết",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thẻ 2"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chi tiết",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Thẻ 3"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chi tiết",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

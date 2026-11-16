@@ -1,0 +1,538 @@
+{
+  "name": "layout-bang-gia-3-cot",
+  "note": "Bố cục trang thường gặp (dựng bằng trình soạn): chuẩn hoá không làm mất thuộc tính nào",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "stretch"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Cơ bản"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "199k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Tính năng một"
+                              },
+                              {
+                                "text": "Tính năng hai"
+                              },
+                              {
+                                "text": "Hỗ trợ 24/7"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "attrs": {
+                            "align": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chọn gói",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Chuyên nghiệp"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "499k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Tính năng một"
+                              },
+                              {
+                                "text": "Tính năng hai"
+                              },
+                              {
+                                "text": "Hỗ trợ 24/7"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "attrs": {
+                            "align": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chọn gói",
+                                "variant": "primary",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "radius": "12px",
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Doanh nghiệp"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "999k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Tính năng một"
+                              },
+                              {
+                                "text": "Tính năng hai"
+                              },
+                              {
+                                "text": "Hỗ trợ 24/7"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "attrs": {
+                            "align": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chọn gói",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "columns",
+              "attrs": {
+                "verticalAlign": "stretch"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Cơ bản"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "199k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Tính năng một"
+                              },
+                              {
+                                "text": "Tính năng hai"
+                              },
+                              {
+                                "text": "Hỗ trợ 24/7"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "attrs": {
+                            "align": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chọn gói",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Chuyên nghiệp"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "499k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Tính năng một"
+                              },
+                              {
+                                "text": "Tính năng hai"
+                              },
+                              {
+                                "text": "Hỗ trợ 24/7"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "attrs": {
+                            "align": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chọn gói",
+                                "variant": "primary",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "muted/10"
+                          },
+                          "border": {
+                            "width": "1px",
+                            "style": "solid",
+                            "color": "muted/30"
+                          },
+                          "radius": "12px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 3,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Doanh nghiệp"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2,
+                            "textAlign": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "999k"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Tính năng một"
+                              },
+                              {
+                                "text": "Tính năng hai"
+                              },
+                              {
+                                "text": "Hỗ trợ 24/7"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "attrs": {
+                            "align": "center"
+                          },
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Chọn gói",
+                                "variant": "outline",
+                                "href": "#"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
