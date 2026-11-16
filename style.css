@@ -154,6 +154,10 @@
   :where(.ecx-button.is-icon-only) { aspect-ratio: 1; }
   /* Rộng cố định của nút (ô Kiểu dáng): chưa đặt thì auto */
   :where(.ecx-button) { width: var(--ecx-button-width, auto); max-width: 100%; box-sizing: border-box; text-align: center; }
+  /* 1.29 Icon cạnh chữ của Tiêu đề / Đoạn văn: mặt nạ SVG (--ecx-text-icon) tô màu chữ, cỡ theo chữ */
+  :where(.ecx-has-icon)::before { content: ""; display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; background: currentColor; -webkit-mask: var(--ecx-text-icon, none) center / contain no-repeat; mask: var(--ecx-text-icon, none) center / contain no-repeat; margin-inline-end: .4em; }
+  :where(.ecx-has-icon.ecx-icon-right)::before { content: none; margin: 0; }
+  :where(.ecx-has-icon.ecx-icon-right)::after { content: ""; display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; background: currentColor; -webkit-mask: var(--ecx-text-icon, none) center / contain no-repeat; mask: var(--ecx-text-icon, none) center / contain no-repeat; margin-inline-start: .4em; }
   :where(.ecx-button.is-icon-reveal) > :where(.ecx-widget-icon) { width: 0; margin-inline: 0; opacity: 0; transition: width .2s var(--ecx-motion-ease), margin .2s var(--ecx-motion-ease), opacity .2s var(--ecx-motion-ease); }
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon) { width: 1em; margin-inline: .5em; opacity: 1; }
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon:first-child) { margin-inline-start: 0; }

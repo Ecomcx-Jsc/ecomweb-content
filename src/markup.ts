@@ -30,11 +30,20 @@ export function alignStyle(attrs?: Attrs): Record<string, string> | undefined {
 const containerTag = (attrs: Attrs) => (CONTAINER_TAGS.includes(attrs.tagName as string) ? (attrs.tagName as string) : "div");
 const num = (v: unknown, fallback: number) => (Number(v) > 0 ? Number(v) : fallback);
 
+/** Icon cạnh chữ (Tiêu đề / Đoạn văn): vẽ bằng ::before / ::after có mặt nạ SVG (biến --ecx-text-icon), nên không thêm nút nào vào nội dung gõ. */
+function withIcon(sh: BlockShell, attrs: Attrs): BlockShell {
+  const d = typeof attrs.icon === "string" ? ICON_PATHS[attrs.icon] : undefined;
+  if (!d) return sh;
+  const svg = `%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='${d}'/%3E%3C/svg%3E`;
+  const title = typeof attrs.iconTitle === "string" && attrs.iconTitle.trim() ? attrs.iconTitle.trim().slice(0, 200) : undefined;
+  return { ...sh, className: `ecx-has-icon ecx-icon-${attrs.iconPosition === "right" ? "right" : "left"}`, style: { ...sh.style, "--ecx-text-icon": `url("data:image/svg+xml,${svg}")` }, ...(title && { attrs: { title } }) };
+}
+
 /** Vỏ của khối lõi; `null` = khối này chưa có vỏ dùng chung (mỗi bên tự vẽ như cũ). `parent` cần cho `column` (đọc `stack` của `columns`). */
 export function blockShell(type: string, attrs: Attrs = {}, parent?: { type: string; attrs?: Attrs }): BlockShell | null {
   switch (type) {
-    case "paragraph": return { tag: "p", style: alignStyle(attrs) };
-    case "heading": return { tag: `h${Math.min(6, Math.max(1, Number(attrs.level) || 2))}`, style: alignStyle(attrs) };
+    case "paragraph": return withIcon({ tag: "p", style: alignStyle(attrs) }, attrs);
+    case "heading": return withIcon({ tag: `h${Math.min(6, Math.max(1, Number(attrs.level) || 2))}`, style: alignStyle(attrs) }, attrs);
     case "blockquote": return { tag: "blockquote" };
     case "columns": {
       const stack = attrs.stack !== false;

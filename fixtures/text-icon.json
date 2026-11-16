@@ -1,0 +1,114 @@
+{
+  "name": "text-icon",
+  "note": "Icon cạnh chữ 1.29 + tên mục lục: icon ngoài bộ bị bỏ, vị trí lạ bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "icon": "star",
+                "iconPosition": "right",
+                "iconTitle": "Nổi bật",
+                "tocTitle": "Mục nổi bật"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "attrs": {
+                "icon": "rocket",
+                "iconPosition": "top",
+                "iconTitle": "x"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Đoạn"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "attrs": {
+                "icon": "phone"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Gọi"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "icon": "star",
+                "iconPosition": "right",
+                "iconTitle": "Nổi bật",
+                "tocTitle": "Mục nổi bật"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "attrs": {
+                "iconTitle": "x"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Đoạn"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "attrs": {
+                "icon": "phone"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Gọi"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

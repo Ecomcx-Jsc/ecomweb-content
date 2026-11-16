@@ -45,8 +45,9 @@ const media = { src: url(), name: s(), mime: s(), mediaId: { type: "json" } as A
 export const CORE_NODES: Record<string, NodeSpec> = {
   doc: {},
   text: {},
-  paragraph: { attrs: { textAlign: align } },
-  heading: { attrs: { level: i({ min: 1, max: 6, default: 2 }), textAlign: align, id: s() } },
+  // 1.29: icon cạnh chữ (icon trong bộ có sẵn, trước / sau chữ), chú thích khi rê chuột; tiêu đề có thể có tên khác trong mục lục
+  paragraph: { attrs: { textAlign: align, icon: s({ enum: ICON_NAMES }), iconPosition: s({ enum: ["left", "right"], default: "left" }), iconTitle: s() } },
+  heading: { attrs: { level: i({ min: 1, max: 6, default: 2 }), textAlign: align, id: s(), icon: s({ enum: ICON_NAMES }), iconPosition: s({ enum: ["left", "right"], default: "left" }), iconTitle: s(), tocTitle: s() } },
   bulletList: {},
   orderedList: { attrs: { start: i({ min: 0, default: 1 }), reversed: b({ default: false }) } },
   listItem: {},

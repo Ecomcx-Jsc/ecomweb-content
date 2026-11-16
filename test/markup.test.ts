@@ -64,3 +64,15 @@ test("nút (1.26): icon → inline-flex + icon hợp lệ, rộng hết khung, n
   assert.equal(buttonIcon({ icon: "khong-co" }), null);
   assert.equal(blockShell("button", { text: "x" })!.style?.display, "inline-block");
 });
+
+test("icon cạnh chữ 1.29: vỏ có class + biến mặt nạ + chú thích; icon lạ / không có thì giữ vỏ cũ", () => {
+  const sh = blockShell("heading", { level: 2, icon: "star", iconPosition: "right", iconTitle: " Nổi bật " })!;
+  assert.equal(sh.className, "ecx-has-icon ecx-icon-right");
+  assert.match(String(sh.style?.["--ecx-text-icon"]), /^url\("data:image\/svg\+xml,%3Csvg[^"]*stroke='black'[^"]*"\)$/);
+  assert.deepEqual(sh.attrs, { title: "Nổi bật" });
+  const left = blockShell("paragraph", { icon: "phone" })!;
+  assert.equal(left.className, "ecx-has-icon ecx-icon-left");
+  assert.equal(left.attrs, undefined);
+  assert.equal(blockShell("paragraph", { icon: "rocket" })!.className, undefined);
+  assert.equal(blockShell("paragraph", {})!.className, undefined);
+});
