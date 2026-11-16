@@ -1,0 +1,165 @@
+{
+  "name": "background-overlay-layers",
+  "note": "Lớp phủ nền 1.28: chuyển màu / ảnh / blend mode; blend lạ và đường dẫn ảnh nguy hiểm bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "image": {
+                      "base": "/uploads/a.jpg"
+                    },
+                    "overlayGradient": "linear-gradient(180deg, #0f1e29 0%, #1a597b 100%)",
+                    "overlayBlend": "multiply",
+                    "overlayOpacity": 60
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "overlayImage": "javascript:alert(1)",
+                    "overlayBlend": "burn",
+                    "overlayOpacity": 40
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "b"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "overlayImage": "/uploads/pattern.png",
+                    "overlay": "primary/50"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "c"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "image": {
+                      "base": "/uploads/a.jpg"
+                    },
+                    "overlayGradient": "linear-gradient(180deg, #0f1e29 0%, #1a597b 100%)",
+                    "overlayBlend": "multiply",
+                    "overlayOpacity": 60
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "b"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "overlay": "primary/50",
+                    "overlayImage": "/uploads/pattern.png"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "c"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

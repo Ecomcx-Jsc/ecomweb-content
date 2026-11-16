@@ -100,3 +100,15 @@ test("cấu trúc (1.27): z-index, hệ số giãn, thứ tự theo khổ; ghim 
   assert.match(styleCss(normalizeStyle({ zIndex: 50, position: { type: "sticky" } })!, "x"), /position:sticky;top:0;z-index:50/);
   assert.equal(normalizeStyle({ zIndex: 100000, grow: -1, order: 99 }), undefined);
 });
+
+test("lớp phủ nền 1.28: chuyển màu + hoà trộn; ảnh + màu website 50%; blend lạ và ảnh nguy hiểm bị bỏ", () => {
+  const rule = (st: unknown) => styleCss(normalizeStyle(st)!, "x").split("}").filter((r) => r.includes("::before")).join("}");
+  const a = rule({ background: { overlayGradient: "linear-gradient(180deg, #0f1e29 0%, #1a597b 100%)", overlayBlend: "multiply", overlayOpacity: 60 } });
+  assert.match(a, /background-image:linear-gradient\(180deg, #0f1e29 0%, #1a597b 100%\);mix-blend-mode:multiply;opacity:0\.6;/);
+  const b = rule({ background: { overlay: "primary/50", overlayImage: "/uploads/p.png" } });
+  assert.ok(b.includes("background-color:color-mix(in srgb, var(--ecx-color-primary, primary) 50%, transparent)") && b.includes('background-image:url("/uploads/p.png")') && b.includes("background-size:cover"), b);
+  const bad = normalizeStyle({ background: { overlayImage: "javascript:alert(1)", overlayBlend: "burn", overlayOpacity: 40 } });
+  assert.equal(bad, undefined);
+  const noBlend = normalizeStyle({ background: { overlay: "#000", overlayBlend: "burn" } });
+  assert.equal(noBlend?.background?.overlayBlend, undefined);
+});

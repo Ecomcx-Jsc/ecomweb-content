@@ -72,7 +72,14 @@ export interface BlockBackground {
   fixed?: true;
   overlay?: string;
   overlayOpacity?: number;
+  /** 1.28: lớp phủ chuyển màu / ảnh (xếp trên màu phủ) và kiểu hoà trộn với nền (mix-blend-mode). */
+  overlayGradient?: string;
+  overlayImage?: string;
+  overlayBlend?: string;
 }
+
+export const OVERLAY_BLENDS = ["multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "difference", "exclusion", "hue", "saturation", "color", "luminosity"] as const;
+const hasOverlay = (bg?: BlockBackground) => !!(bg && (bg.overlay || bg.overlayGradient || bg.overlayImage));
 
 /**
  * Chuyển động của khối (1.16). `in` là mã hiệu ứng: hiệu ứng lõi (`MOTION_IN`) hoặc của plugin (CSS `@keyframes ecx-in-<mã>`);
@@ -229,9 +236,12 @@ function background(v: unknown): BlockBackground | undefined {
   const pos = responsive(v.position, bgPosition); if (pos) out.position = pos;
   if (v.repeat === true) out.repeat = true;
   if (v.fixed === true) out.fixed = true;
-  const ov = color(v.overlay);
-  if (ov) {
-    out.overlay = ov;
+  const ov = color(v.overlay), og = normalizeGradient(v.overlayGradient), oi = bgUrl(v.overlayImage);
+  if (ov) out.overlay = ov;
+  if (og) out.overlayGradient = og;
+  if (oi) out.overlayImage = oi;
+  if (ov || og || oi) {
+    const blend = oneOf(OVERLAY_BLENDS)(v.overlayBlend); if (blend) out.overlayBlend = blend;
     const n = typeof v.overlayOpacity === "number" ? v.overlayOpacity : typeof v.overlayOpacity === "string" && /^\d{1,3}$/.test(v.overlayOpacity) ? Number(v.overlayOpacity) : NaN;
     if (Number.isInteger(n) && n >= 0 && n <= 100) out.overlayOpacity = n;
   }
@@ -384,7 +394,7 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
   if (style.shadow) out.base.push(`box-shadow:${shadowValue(style.shadow)}`);
   if (style.aspectRatio) out.base.push(`aspect-ratio:${style.aspectRatio}`, "object-fit:cover");
   if (style.position) out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, `z-index:${style.zIndex ?? 10}`);
-  else if (style.zIndex !== undefined) out.base.push(...(style.background?.overlay ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
+  else if (style.zIndex !== undefined) out.base.push(...(hasOverlay(style.background) ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
   if (style.grow !== undefined) out.base.push(`flex-grow:${style.grow}`);
   // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
   const bg = style.background;
@@ -402,7 +412,7 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
       // Cố định khi cuộn: điện thoại (iOS) không hỗ trợ và giật → cuộn bình thường trên khổ nhỏ
       if (bg.fixed) { out.base.push("background-attachment:fixed"); out.tablet.push("background-attachment:scroll"); }
     }
-    if (bg.overlay) { out.base.push("isolation:isolate"); if (!style.position) out.base.push("position:relative"); }
+    if (hasOverlay(bg)) { out.base.push("isolation:isolate"); if (!style.position) out.base.push("position:relative"); }
   }
   if (style.hover) out.base.push("transition:color .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease");
   return out;
@@ -520,8 +530,12 @@ export function ruleCss(selector: string, style: BlockStyle): string {
   if (style.link?.color) css += `${each(" a")}{color:${colorValue(style.link.color)}}`;
   if (style.link?.hover) css += `${each(" a:hover")}{color:${colorValue(style.link.hover)}}`;
   // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)
-  const ov = style.background?.overlay;
-  if (ov) css += `${each("::before")}{content:"";position:absolute;inset:0;background:${colorValue(ov)};opacity:${(style.background!.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
+  const bgo = style.background;
+  if (hasOverlay(bgo)) {
+    // Lớp phủ: màu (nền) + chuyển màu / ảnh xếp trên; hoà trộn với nền bằng mix-blend-mode
+    const layers = [bgo!.overlayImage ? `url("${bgo!.overlayImage}")` : "", bgo!.overlayGradient ? gradientValue(bgo!.overlayGradient) : ""].filter(Boolean).join(",");
+    css += `${each("::before")}{content:"";position:absolute;inset:0;${bgo!.overlay ? `${layers ? "background-color" : "background"}:${colorValue(bgo!.overlay)};` : ""}${layers ? `background-image:${layers};` : ""}${bgo!.overlayImage ? "background-size:cover;background-position:center;background-repeat:no-repeat;" : ""}${bgo!.overlayBlend ? `mix-blend-mode:${bgo!.overlayBlend};` : ""}opacity:${(bgo!.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
+  }
   // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
   if (style.layout) css += `${each(" > *")}{margin-block:0}`;
   return css;

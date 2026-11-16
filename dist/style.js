@@ -6,6 +6,8 @@
  */
 export const BREAKPOINTS = { tablet: 1024, mobile: 640 };
 export const DEVICES = ["base", "tablet", "mobile"];
+export const OVERLAY_BLENDS = ["multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "difference", "exclusion", "hue", "saturation", "color", "luminosity"];
+const hasOverlay = (bg) => !!(bg && (bg.overlay || bg.overlayGradient || bg.overlayImage));
 const SIDES = ["top", "right", "bottom", "left"];
 const CORNERS = ["topLeft", "topRight", "bottomRight", "bottomLeft"];
 const LENGTH = /^(0|-?\d{1,4}(\.\d{1,3})?(px|rem|em|%|vw|vh))$/;
@@ -176,9 +178,17 @@ function background(v) {
         out.repeat = true;
     if (v.fixed === true)
         out.fixed = true;
-    const ov = color(v.overlay);
-    if (ov) {
+    const ov = color(v.overlay), og = normalizeGradient(v.overlayGradient), oi = bgUrl(v.overlayImage);
+    if (ov)
         out.overlay = ov;
+    if (og)
+        out.overlayGradient = og;
+    if (oi)
+        out.overlayImage = oi;
+    if (ov || og || oi) {
+        const blend = oneOf(OVERLAY_BLENDS)(v.overlayBlend);
+        if (blend)
+            out.overlayBlend = blend;
         const n = typeof v.overlayOpacity === "number" ? v.overlayOpacity : typeof v.overlayOpacity === "string" && /^\d{1,3}$/.test(v.overlayOpacity) ? Number(v.overlayOpacity) : NaN;
         if (Number.isInteger(n) && n >= 0 && n <= 100)
             out.overlayOpacity = n;
@@ -409,7 +419,7 @@ function declarations(style) {
     if (style.position)
         out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, `z-index:${style.zIndex ?? 10}`);
     else if (style.zIndex !== undefined)
-        out.base.push(...(style.background?.overlay ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
+        out.base.push(...(hasOverlay(style.background) ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
     if (style.grow !== undefined)
         out.base.push(`flex-grow:${style.grow}`);
     // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
@@ -438,7 +448,7 @@ function declarations(style) {
                 out.tablet.push("background-attachment:scroll");
             }
         }
-        if (bg.overlay) {
+        if (hasOverlay(bg)) {
             out.base.push("isolation:isolate");
             if (!style.position)
                 out.base.push("position:relative");
@@ -570,9 +580,12 @@ export function ruleCss(selector, style) {
     if (style.link?.hover)
         css += `${each(" a:hover")}{color:${colorValue(style.link.hover)}}`;
     // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)
-    const ov = style.background?.overlay;
-    if (ov)
-        css += `${each("::before")}{content:"";position:absolute;inset:0;background:${colorValue(ov)};opacity:${(style.background.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
+    const bgo = style.background;
+    if (hasOverlay(bgo)) {
+        // Lớp phủ: màu (nền) + chuyển màu / ảnh xếp trên; hoà trộn với nền bằng mix-blend-mode
+        const layers = [bgo.overlayImage ? `url("${bgo.overlayImage}")` : "", bgo.overlayGradient ? gradientValue(bgo.overlayGradient) : ""].filter(Boolean).join(",");
+        css += `${each("::before")}{content:"";position:absolute;inset:0;${bgo.overlay ? `${layers ? "background-color" : "background"}:${colorValue(bgo.overlay)};` : ""}${layers ? `background-image:${layers};` : ""}${bgo.overlayImage ? "background-size:cover;background-position:center;background-repeat:no-repeat;" : ""}${bgo.overlayBlend ? `mix-blend-mode:${bgo.overlayBlend};` : ""}opacity:${(bgo.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
+    }
     // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
     if (style.layout)
         css += `${each(" > *")}{margin-block:0}`;

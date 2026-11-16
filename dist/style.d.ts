@@ -96,7 +96,12 @@ export interface BlockBackground {
     fixed?: true;
     overlay?: string;
     overlayOpacity?: number;
+    /** 1.28: lớp phủ chuyển màu / ảnh (xếp trên màu phủ) và kiểu hoà trộn với nền (mix-blend-mode). */
+    overlayGradient?: string;
+    overlayImage?: string;
+    overlayBlend?: string;
 }
+export declare const OVERLAY_BLENDS: readonly ["multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "difference", "exclusion", "hue", "saturation", "color", "luminosity"];
 /**
  * Chuyển động của khối (1.16). `in` là mã hiệu ứng: hiệu ứng lõi (`MOTION_IN`) hoặc của plugin (CSS `@keyframes ecx-in-<mã>`);
  * mã lạ vẫn được giữ — khối hiện bình thường nếu website không có keyframes đó. `stagger`: hiệu ứng áp cho từng khối con, lần lượt.
