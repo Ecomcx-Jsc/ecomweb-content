@@ -59,7 +59,8 @@ export const CORE_NODES = {
     columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }), tagName: s({ enum: CONTAINER_TAGS }) } },
     // 1.26: href = liên kết phủ cả cột (bấm đâu trong cột cũng mở); linkLabel = tên liên kết cho trình đọc màn hình
     column: { attrs: { width: n({ min: 5, max: 100 }), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s(), tagName: s({ enum: CONTAINER_TAGS }) } },
-    group: { attrs: { tagName: s({ enum: CONTAINER_TAGS }), align: wide, constrained: b({ default: false }), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
+    // 1.28: contentWidth = độ rộng nội dung bên trong tự nhập (vd "900px"); có giá trị thì khối con canh giữa theo độ rộng này (thắng `constrained` = theo độ rộng của website)
+    group: { attrs: { tagName: s({ enum: CONTAINER_TAGS }), align: wide, constrained: b({ default: false }), contentWidth: s(), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
     callout: { attrs: { tone: s({ enum: ["info", "success", "warning", "danger"], default: "info" }), title: s() } },
     button: {
         attrs: {

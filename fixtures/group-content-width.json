@@ -1,0 +1,102 @@
+{
+  "name": "group-content-width",
+  "note": "Nhóm 1.28: độ rộng nội dung tự nhập; giá trị không phải chuỗi bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "contentWidth": "900px",
+                "align": "full"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "contentWidth": 900
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "contentWidth": "900px",
+                "align": "full"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "contentWidth": "900"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

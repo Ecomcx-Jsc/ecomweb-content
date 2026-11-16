@@ -35,7 +35,9 @@ export function blockShell(type, attrs = {}, parent) {
         case "group": {
             const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);
             const pad = PADDING[attrs.padding] ?? (bg ? PADDING.medium : undefined);
-            return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, attrs.constrained === true && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined }) };
+            // Độ rộng nội dung tự nhập: chỉ nhận độ dài thật (px / rem / % / vw…), không nhận preset khoảng cách
+            const cw = typeof attrs.contentWidth === "string" && /\d/.test(attrs.contentWidth) ? spacingValue(attrs.contentWidth) : undefined;
+            return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, (attrs.constrained === true || cw) && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined, "--ecx-group-width": cw }) };
         }
         case "callout": {
             const tone = calloutTone(attrs);
