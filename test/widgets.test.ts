@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { CORE_NODES, ICON_NAMES, WIDGET_BLOCKS, formatCounter, widgetMarkup, type WidgetEl } from "../src/index.js";
+import { CORE_NODES, ICON_NAMES, WIDGET_BLOCKS, formatCounter, mapEmbedUrl, widgetMarkup, type WidgetEl } from "../src/index.js";
 
 const find = (el: WidgetEl | string | null, cls: string): WidgetEl | undefined => {
   if (!el || typeof el === "string") return undefined;
@@ -80,4 +80,12 @@ test("đếm ngược 1.29: mốc theo giờ tường của múi giờ; mốc c�
   assert.equal(countdownTarget({ target: "2026-12-01T09:00", timezone: "Mars/Olympus" }), Date.parse("2026-12-01T09:00"));
   assert.equal(wallInZone(Date.UTC(2026, 11, 1, 2, 0), "Asia/Ho_Chi_Minh"), "2026-12-01T09:00");
   assert.ok(Number.isNaN(countdownTarget({ target: "không phải ngày" })));
+});
+
+test("bản đồ: địa chỉ có emoji bị cắt giữa cặp ký tự thay thế không làm ném URIError (website sập 500)", () => {
+  const address = "a".repeat(199) + "😀 và tiếp"; // cắt 200 ký tự rơi giữa cặp surrogate
+  assert.doesNotThrow(() => mapEmbedUrl({ address }));
+  const url = mapEmbedUrl({ address })!;
+  assert.match(url, /^https:\/\/www\.google\.com\/maps\?q=a+%EF%BF%BD&z=14/);
+  assert.equal(mapEmbedUrl({ address: "Hà Nội 😀" }), "https://www.google.com/maps?q=H%C3%A0%20N%E1%BB%99i%20%F0%9F%98%80&z=14&t=m&output=embed");
 });

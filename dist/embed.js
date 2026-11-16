@@ -1,5 +1,6 @@
 const UrlCtor = globalThis.URL;
-const enc = encodeURIComponent;
+import { encodeSafe } from "./url.js";
+const enc = encodeSafe;
 /** Giây bắt đầu từ ?t=1m30s / ?t=90 / ?start=90. */
 function startSeconds(url) {
     const t = url.searchParams.get("t") ?? url.searchParams.get("start") ?? "";

@@ -529,7 +529,7 @@
   /* 1.20 Độ rộng khối — đặt CUỐI lớp: cùng độ ưu tiên 0 với margin của từng khối (.ecx-group, .ecx-cover, figure…) nên đứng sau mới thắng.
      Độ rộng khối (như alignwide / alignfull của WP). Khối "rộng" vượt cột chữ tới --ecx-wide-width, "toàn trang" tràn
      hết màn hình (--ecx-full-width), luôn căn giữa theo cột chữ. Theme có sidebar đặt cả hai biến = 100% để khối không đè sidebar. */
-  :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) { box-sizing: border-box; max-width: none; margin-left: calc((100% - var(--_w)) / 2); margin-right: calc((100% - var(--_w)) / 2); width: var(--_w); }
+  :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) { box-sizing: border-box; max-width: none; margin-left: calc((100% - var(--_w)) / 2) !important; margin-right: calc((100% - var(--_w)) / 2) !important; width: var(--_w); } /* !important: lề trái / phải do người dùng đặt (margin: 0 cho cả 4 cạnh) không được phá căn giữa của khối rộng / toàn trang */
   :where(.ecx-content) :where(.ecx-align-wide) { --_w: min(var(--ecx-wide-width, 1200px), 100vw - 2rem); }
   :where(.ecx-content) :where(.ecx-align-full) { --_w: var(--ecx-full-width, 100vw); }
   :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; }
@@ -539,5 +539,5 @@
   :where(.ecx-group.ecx-is-constrained) > :where(*) { box-sizing: border-box; width: 100%; max-width: var(--ecx-group-width, var(--ecx-content-width, 760px)); margin-left: auto; margin-right: auto; }
   :where(.ecx-cover.ecx-is-constrained) > :where(.ecx-cover-inner) { max-width: var(--ecx-content-width, 760px); }
   /* Khối Rộng/Toàn trang nằm TRONG nhóm / cột / bìa: chỉ rộng bằng khung chứa nó (như WP) — không thể rộng bằng màn hình mà không tràn ngang hoặc lệch trái */
-  :where(.ecx-content) :where(.ecx-group, .ecx-columns, .ecx-cover, .ecx-media-text, .ecx-callout, li) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; max-width: none; margin-left: 0; margin-right: 0; }
+  :where(.ecx-content) :where(.ecx-group, .ecx-columns, .ecx-cover, .ecx-media-text, .ecx-callout, li) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; max-width: none; margin-left: 0 !important; margin-right: 0 !important; }
 }

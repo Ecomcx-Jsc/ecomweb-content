@@ -24,7 +24,8 @@ const UrlCtor = (globalThis as unknown as { URL: new (input: string) => Url }).U
 
 type Rule = { provider: string; title: string; match: RegExp; src(m: RegExpMatchArray, url: Url): string; aspect?: number; height?: number | ((m: RegExpMatchArray) => number); maxWidth?: number };
 
-const enc = encodeURIComponent;
+import { encodeSafe } from "./url.js";
+const enc = encodeSafe;
 
 /** Giây bắt đầu từ ?t=1m30s / ?t=90 / ?start=90. */
 function startSeconds(url: Url): number {

@@ -1,0 +1,188 @@
+{
+  "name": "block-tabs",
+  "note": "Khối sau khi đổi các ô điều khiển trong trình soạn: nội dung trình soạn ghi ra phải qua chuẩn hoá giống nhau ở content và máy chủ, vẽ được ở website",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề bài"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Nội dung bài viết."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Đoạn thứ hai."
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": ""
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "justify",
+                        "style": {
+                          "fontFamily": "mono",
+                          "fontSize": {
+                            "base": "6em"
+                          },
+                          "letterSpacing": {
+                            "base": "abc"
+                          },
+                          "fontWeight": "900",
+                          "fontStyle": "italic",
+                          "textDecoration": "line-through",
+                          "textTransform": "capitalize",
+                          "textAlign": {
+                            "base": "justify"
+                          },
+                          "writingMode": "vertical"
+                        },
+                        "anchor": "abc",
+                        "className": "abc"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": ""
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề bài"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Nội dung bài viết."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Đoạn thứ hai."
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": ""
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "justify",
+                        "style": {
+                          "fontFamily": "mono",
+                          "fontSize": {
+                            "base": "6em"
+                          },
+                          "letterSpacing": {
+                            "base": "abc"
+                          },
+                          "fontWeight": "900",
+                          "fontStyle": "italic",
+                          "textDecoration": "line-through",
+                          "textTransform": "capitalize",
+                          "textAlign": {
+                            "base": "justify"
+                          },
+                          "writingMode": "vertical"
+                        },
+                        "anchor": "abc",
+                        "className": "abc"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": ""
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

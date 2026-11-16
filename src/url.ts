@@ -16,3 +16,9 @@ export function isSafeUrl(url: unknown): boolean {
 
 /** URL an toàn hoặc chuỗi thay thế. */
 export const safeUrl = (url: unknown, fallback = "#"): string => (isSafeUrl(url) && url != null ? String(url) : fallback);
+
+/** Thay ký tự thay thế (surrogate) đơn lẻ bằng U+FFFD: cắt chuỗi giữa cặp emoji để lại ký tự lẻ, `encodeURIComponent` ném URIError ("URI malformed") và làm sập trang. */
+export const wellFormed = (s: string): string => s.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "\uFFFD");
+/** `encodeURIComponent` không bao giờ ném lỗi. */
+export const encodeSafe = (s: string): string => encodeURIComponent(wellFormed(s));
+

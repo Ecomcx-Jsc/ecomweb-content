@@ -1,0 +1,164 @@
+{
+  "name": "block-countdown",
+  "note": "Khối sau khi đổi các ô điều khiển trong trình soạn: nội dung trình soạn ghi ra phải qua chuẩn hoá giống nhau ở content và máy chủ, vẽ được ở website",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề bài"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Nội dung bài viết."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Đoạn thứ hai."
+                }
+              ]
+            },
+            {
+              "type": "countdown",
+              "attrs": {
+                "divider": true,
+                "pad": false,
+                "showDays": false,
+                "showSeconds": false,
+                "target": "abc",
+                "label": "abc",
+                "postText": "abc",
+                "expiredText": "abc",
+                "layout": "inline",
+                "hoursLabel": "abc",
+                "minutesLabel": "abc",
+                "parts": {
+                  "label": {
+                    "style": {
+                      "fontFamily": "mono",
+                      "fontSize": {
+                        "base": "6em"
+                      },
+                      "letterSpacing": {
+                        "base": "4em"
+                      },
+                      "fontWeight": "800",
+                      "textDecoration": "line-through",
+                      "textTransform": "capitalize",
+                      "textAlign": {
+                        "base": "right"
+                      }
+                    }
+                  }
+                },
+                "anchor": "abc",
+                "className": "abc"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề bài"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Nội dung bài viết."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Đoạn thứ hai."
+                }
+              ]
+            },
+            {
+              "type": "countdown",
+              "attrs": {
+                "divider": true,
+                "pad": false,
+                "showDays": false,
+                "showSeconds": false,
+                "target": "abc",
+                "label": "abc",
+                "postText": "abc",
+                "expiredText": "abc",
+                "layout": "inline",
+                "hoursLabel": "abc",
+                "minutesLabel": "abc",
+                "parts": {
+                  "label": {
+                    "style": {
+                      "fontFamily": "mono",
+                      "fontSize": {
+                        "base": "6em"
+                      },
+                      "letterSpacing": {
+                        "base": "4em"
+                      },
+                      "fontWeight": "800",
+                      "textDecoration": "line-through",
+                      "textTransform": "capitalize",
+                      "textAlign": {
+                        "base": "right"
+                      }
+                    }
+                  }
+                },
+                "anchor": "abc",
+                "className": "abc"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

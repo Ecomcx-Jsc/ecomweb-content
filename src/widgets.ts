@@ -1,4 +1,4 @@
-import { safeUrl } from "./url.js";
+import { encodeSafe, safeUrl } from "./url.js";
 /**
  * 1.23: khối "widget" của lõi (Icon Box, Image Box, Icon List, Counter, Testimonial, Progress Bar) — markup dựng MỘT lần ở đây
  * thành cây phần tử (khoá props kiểu React); website (theme-sdk) và khung soạn (TextEditor) chỉ đổi cây ra React → hai nơi vẽ y hệt.
@@ -93,7 +93,7 @@ export function mapEmbedUrl(a: Attrs): string | null {
   const address = str(a.address).replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 200);
   if (!address) return null;
   const zoom = Math.min(20, Math.max(1, Math.round(Number(a.zoom)) || 14));
-  return `https://www.google.com/maps?q=${encodeURIComponent(address)}&z=${zoom}&t=${a.mapType === "satellite" ? "k" : "m"}&output=embed`;
+  return `https://www.google.com/maps?q=${encodeSafe(address)}&z=${zoom}&t=${a.mapType === "satellite" ? "k" : "m"}&output=embed`;
 }
 
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
