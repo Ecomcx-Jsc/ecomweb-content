@@ -10,6 +10,8 @@ const SIDES = ["top", "right", "bottom", "left"];
 const CORNERS = ["topLeft", "topRight", "bottomRight", "bottomLeft"];
 const LENGTH = /^(0|-?\d{1,4}(\.\d{1,3})?(px|rem|em|%|vw|vh))$/;
 const PRESET = /^([a-z][a-z0-9-]{0,30}|[1-9]x[sl])$/;
+/** Màu của website kèm độ đậm: `primary/40` = màu chính 40% (còn lại trong suốt) — nền mờ nhìn xuyên được ảnh phía sau. */
+const PRESET_ALPHA = /^([a-z][a-z0-9-]{0,30})\/([1-9]\d?)$/;
 const COLOR = /^(#[0-9a-f]{3,8}|(rgb|hsl)a?\([\d\s.,%/]{1,40}\))$/i;
 const WEIGHTS = ["300", "400", "500", "600", "700", "800", "900"];
 const ALIGNS = ["left", "center", "right", "justify"];
@@ -185,7 +187,7 @@ function background(v) {
 }
 const isObj = (v) => !!v && typeof v === "object" && !Array.isArray(v);
 const size = (v) => (typeof v === "string" && (LENGTH.test(v) || PRESET.test(v)) ? v : undefined);
-const color = (v) => (typeof v === "string" && (COLOR.test(v.trim()) || PRESET.test(v)) ? v.trim() : undefined);
+const color = (v) => (typeof v === "string" && (COLOR.test(v.trim()) || PRESET.test(v) || PRESET_ALPHA.test(v.trim())) ? v.trim() : undefined);
 const oneOf = (list) => (v) => (typeof v === "string" && list.includes(v) ? v : undefined);
 const lineHeight = (v) => {
     const n = typeof v === "number" ? v : typeof v === "string" && v.trim() !== "" ? Number(v) : NaN;
@@ -294,7 +296,12 @@ export function normalizeStyle(v) {
 const lit = (v) => v === "auto" || v === "0" || LENGTH.test(v);
 const spacing = (v) => (lit(v) ? v : `var(--ecx-spacing-${v})`);
 const fontSize = (v) => (lit(v) ? v : `var(--ecx-font-size-${v})`);
-const colorValue = (v) => (COLOR.test(v) ? v : `var(--ecx-color-${v}, ${v})`);
+const colorValue = (v) => {
+    if (COLOR.test(v))
+        return v;
+    const m = PRESET_ALPHA.exec(v);
+    return m ? `color-mix(in srgb, var(--ecx-color-${m[1]}, ${m[1]}) ${m[2]}%, transparent)` : `var(--ecx-color-${v}, ${v})`;
+};
 function boxDecl(prop, v) {
     if (typeof v === "string")
         return [`${prop}:${spacing(v)}`];
