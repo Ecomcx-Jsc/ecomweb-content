@@ -118,10 +118,12 @@ export const CORE_NODES = {
     siteTitle: { attrs: { level: i({ min: 0, max: 6, default: 0 }), link: b({ default: true }), textAlign: align } },
     siteLogo: { attrs: { width: n({ min: 16, max: 600, default: 120 }), link: b({ default: true }) } },
     siteTagline: { attrs: { textAlign: align } },
-    navigation: { attrs: { location: s({ default: "primary" }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobile: b({ default: true }), overlayMenu: s({ enum: ["never", "mobile", "always"], default: "mobile" }) } },
+    navigation: { attrs: { location: s({ default: "primary" }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobile: b({ default: true }), overlayMenu: s({ enum: ["never", "mobile", "tablet", "always"], default: "mobile" }) } },
     search: { attrs: { placeholder: s(), buttonText: s(), postType: s(), showLabel: b({ default: false }), buttonPosition: s({ enum: ["right", "left", "below"], default: "right" }),
             // 1.28: nút là chữ hoặc chỉ icon kính lúp (chữ nút thành aria-label)
-            buttonStyle: s({ enum: ["text", "icon"], default: "text" }) } },
+            buttonStyle: s({ enum: ["text", "icon"], default: "text" }),
+            // 1.27: ô chọn phạm vi tìm kiếm (Tất cả / loại nội dung): scopes = "product:Sản phẩm, post:Tin tức"
+            scopeSelect: b({ default: false }), scopes: s() } },
     languageSwitcher: { attrs: { display: s({ enum: ["inline", "dropdown"], default: "inline" }) } },
     copyright: { attrs: { text: s(), textAlign: align } },
     postTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), link: b({ default: false }), textAlign: align } },
@@ -151,12 +153,15 @@ export const CORE_NODES = {
     query: {
         attrs: {
             align: wide, inherit: b({ default: true }), postType: s({ default: "post" }), perPage: i({ min: 1, max: 50, default: 10 }),
-            category: s(), tag: s(), orderBy: s({ enum: ["date", "title", "modified", "menu_order", "comment_count", "rand"], default: "date" }), order: s({ enum: ["desc", "asc"], default: "desc" }),
+            category: s(), tag: s(),
+            // 1.27: lọc theo phân loại bất kỳ (vd product_cat) — taxonomy + term (slug); category / tag vẫn dùng cho bài viết
+            taxonomy: s(), term: s(), orderBy: s({ enum: ["date", "title", "modified", "menu_order", "comment_count", "rand"], default: "date" }), order: s({ enum: ["desc", "asc"], default: "desc" }),
             // next: lọc thêm theo tác giả, từ khoá, loại trừ bài, bài ghim, khoá meta (đã khai báo filterable)
             authorId: i({ min: 1 }), search: s(), exclude: s(), sticky: s({ enum: ["any", "only", "exclude"], default: "any" }), orderByMeta: s(), paginate: b({ default: false }),
         },
     },
-    postTemplate: { attrs: { layout: s({ enum: ["list", "grid"], default: "list" }), columns: i({ min: 1, max: 6, default: 3 }) } },
+    // 1.27: "carousel" = một hàng cuộn ngang có nút trước / sau (columns = số thẻ thấy cùng lúc trên máy tính); gap = khoảng cách thẻ (preset hoặc độ dài)
+    postTemplate: { attrs: { layout: s({ enum: ["list", "grid", "carousel"], default: "list" }), columns: i({ min: 1, max: 6, default: 3 }), columnsTablet: i({ min: 1, max: 6 }), columnsMobile: i({ min: 1, max: 4 }), gap: s(), arrows: b({ default: true }) } },
     pagination: { attrs: { type: s({ enum: ["numbers", "prevNext", "both"], default: "both" }), midSize: i({ min: 0, max: 5, default: 2 }) } },
     queryEmpty: {},
     templatePart: { attrs: { slug: s(), tagName: s({ enum: ["div", "header", "footer", "aside", "section"], default: "div" }) } },
