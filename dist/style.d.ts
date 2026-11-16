@@ -82,6 +82,18 @@ export interface BlockStyle {
     zIndex?: number;
     grow?: number;
     order?: Responsive<number>;
+    /** 1.29: đường chia trên / dưới khối (hình tự vẽ, tô màu của khối kế bên). */
+    divider?: {
+        top?: BlockDivider;
+        bottom?: BlockDivider;
+    };
+}
+export declare const DIVIDER_SHAPES: readonly ["wave", "curve", "tilt", "triangle", "zigzag"];
+export interface BlockDivider {
+    shape: (typeof DIVIDER_SHAPES)[number];
+    color: string; /** px, 10–300 (mặc định 80) */
+    height?: number; /** lật ngang */
+    flip?: true;
 }
 /**
  * Ảnh nền của khối (1.22). Ảnh: đường dẫn trong site (`/uploads/…`) hoặc https, theo khổ (điện thoại dùng ảnh khác được).
@@ -138,6 +150,7 @@ export declare const MOTION_IN: readonly ["fade", "slide-up", "slide-down", "sli
 export declare const MOTION_HOVER: readonly ["lift", "grow", "brighten", "glow"];
 /** Gradient: preset hoặc linear/radial-gradient(hướng?, 2–6 điểm màu hex/rgb/hsl kèm %) — dạng chuẩn hoá khoảng trắng. */
 export declare function normalizeGradient(v: unknown): string | undefined;
+export declare const DIVIDER_PATHS: Record<BlockDivider["shape"], string>;
 /** Chuẩn hoá `attrs.style`: giữ đúng thứ tự khoá, bỏ giá trị không hợp lệ. Rỗng → undefined. */
 export declare function normalizeStyle(v: unknown): BlockStyle | undefined;
 /** Độ dài / preset khoảng cách hợp lệ → giá trị CSS (preset thành biến); không hợp lệ → undefined. Dùng cho thuộc tính khối như chiều cao khoảng trống. */

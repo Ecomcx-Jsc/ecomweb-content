@@ -121,3 +121,17 @@ test("màu nền theo khổ 1.29: tablet / điện thoại có màu riêng trong
   assert.match(css, /background-color:color-mix\(in srgb, var\(--ecx-color-primary, primary\) 40%, transparent\)/);
   assert.equal(normalizeStyle({ background: { color: { tablet: "javascript:1" } } }), undefined);
 });
+
+test("đường chia 1.29: một ::after, mặt nạ theo hình, đường trên lật dọc; hình lạ / thiếu màu / cao quá bị bỏ", () => {
+  const st = normalizeStyle({ divider: { top: { shape: "wave", color: "primary", height: 120, flip: true }, bottom: { shape: "tilt", color: "white", height: 80 } } })!;
+  assert.deepEqual(st.divider, { top: { shape: "wave", color: "primary", height: 120, flip: true }, bottom: { shape: "tilt", color: "white" } });
+  const css = styleCss(st, "x");
+  const after = css.split("}").find((r) => r.includes("::after"))!;
+  assert.match(after, /background-position:top,bottom/);
+  assert.match(after, /background-size:100% 120px,100% 80px/);
+  assert.ok(after.includes("matrix(-1 0 0 -1 1200 100)") && after.includes("matrix(1 0 0 1 0 0)"), after);
+  assert.match(css, /isolation:isolate/);
+  assert.match(after, /z-index:-1/);
+  assert.equal(normalizeStyle({ divider: { top: { shape: "star", color: "primary" }, bottom: { shape: "curve" } } }), undefined);
+  assert.equal(normalizeStyle({ divider: { bottom: { shape: "curve", color: "primary", height: 500 } } })?.divider?.bottom?.height, undefined);
+});

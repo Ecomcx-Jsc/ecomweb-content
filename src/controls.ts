@@ -84,7 +84,7 @@ const partStyle = (v: unknown): BlockStyle | undefined => {
   const st = normalizeStyle(v);
   if (!st) return undefined;
   const rest: Record<string, unknown> = { ...st };
-  for (const k of ["motion", "layout", "hide", "background", "position", "hover"]) delete rest[k];
+  for (const k of ["motion", "layout", "hide", "background", "position", "hover", "divider"]) delete rest[k];
   return Object.keys(rest).length ? (rest as BlockStyle) : undefined;
 };
 

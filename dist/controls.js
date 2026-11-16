@@ -22,7 +22,7 @@ const partStyle = (v) => {
     if (!st)
         return undefined;
     const rest = { ...st };
-    for (const k of ["motion", "layout", "hide", "background", "position", "hover"])
+    for (const k of ["motion", "layout", "hide", "background", "position", "hover", "divider"])
         delete rest[k];
     return Object.keys(rest).length ? rest : undefined;
 };

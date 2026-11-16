@@ -6,7 +6,7 @@ export { contentText, nodeText, visitNodes, wordCount } from "./text.js";
 export { isSafeUrl, safeUrl } from "./url.js";
 export { BLOCK_VERSION_ATTR, blockDefaults, blockNodeSpec, defineBlock, migrateBlockAttrs } from "./block.js";
 export { EMBED_PROVIDERS, embedInfo } from "./embed.js";
-export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss } from "./style.js";
+export { BREAKPOINTS, DEVICES, DIVIDER_PATHS, DIVIDER_SHAPES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss } from "./style.js";
 export { controlValue, controlsCss, defineBlockControls, normalizeParts, optionValue, partsFor } from "./controls.js";
 export { CORE_CONTROLS, coreControlsFor } from "./core-controls.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss } from "./style.js";

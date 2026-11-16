@@ -6,6 +6,7 @@
  */
 export const BREAKPOINTS = { tablet: 1024, mobile: 640 };
 export const DEVICES = ["base", "tablet", "mobile"];
+export const DIVIDER_SHAPES = ["wave", "curve", "tilt", "triangle", "zigzag"];
 export const OVERLAY_BLENDS = ["multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "difference", "exclusion", "hue", "saturation", "color", "luminosity"];
 const hasOverlay = (bg) => !!(bg && (bg.overlay || bg.overlayGradient || bg.overlayImage));
 const SIDES = ["top", "right", "bottom", "left"];
@@ -161,6 +162,45 @@ const bgPosition = (v) => {
     const m = typeof v === "string" ? /^(\d{1,3})% (\d{1,3})%$/.exec(v.trim()) : null;
     return m && Number(m[1]) <= 100 && Number(m[2]) <= 100 ? `${Number(m[1])}% ${Number(m[2])}%` : undefined;
 };
+function dividerOne(v) {
+    if (!isObj(v))
+        return undefined;
+    const shape = oneOf(DIVIDER_SHAPES)(v.shape), c = color(v.color);
+    if (!shape || !c)
+        return undefined;
+    const h = int(10, 300)(v.height);
+    return { shape, color: c, ...(h !== undefined && h !== DIVIDER_HEIGHT && { height: h }), ...(v.flip === true && { flip: true }) };
+}
+function dividers(v) {
+    if (!isObj(v))
+        return undefined;
+    const top = dividerOne(v.top), bottom = dividerOne(v.bottom);
+    return top || bottom ? { ...(top && { top }), ...(bottom && { bottom }) } : undefined;
+}
+const DIVIDER_HEIGHT = 80;
+/** Hình đường chia: vẽ trong khung 1200 × 100, phần tô nằm phía dưới (đường chia dưới); đường chia trên lật dọc. */
+function zigzagPath() { let d = "M0 100V40"; for (let x = 0; x < 1200; x += 60)
+    d += `L${x + 30} 0L${x + 60} 40`; return `${d}V100Z`; }
+export const DIVIDER_PATHS = {
+    wave: "M0 50C200 0 400 0 600 50S1000 100 1200 50V100H0Z",
+    curve: "M0 100Q600 -100 1200 100Z",
+    tilt: "M0 100L1200 0V100Z",
+    triangle: "M0 100L600 0L1200 100Z",
+    zigzag: zigzagPath(),
+};
+const dividerImage = (d, top) => {
+    const m = `${d.flip ? -1 : 1} 0 0 ${top ? -1 : 1} ${d.flip ? 1200 : 0} ${top ? 100 : 0}`;
+    return `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath transform='matrix(${m})' d='${DIVIDER_PATHS[d.shape]}'/%3E%3C/svg%3E")`;
+};
+/** CSS đường chia: một ::after phủ kín khối; mỗi đường là một lớp nền (màu) cắt bằng mặt nạ hình. */
+function dividerCss(div) {
+    const L = [["top", div.top], ["bottom", div.bottom]].filter((x) => !!x[1]);
+    const h = (d) => `${d.height ?? DIVIDER_HEIGHT}px`;
+    const join = (f) => L.map(([s, d]) => f(s, d)).join(",");
+    const bgc = join((_, d) => `linear-gradient(${colorValue(d.color)},${colorValue(d.color)})`);
+    const size = join((_, d) => `100% ${h(d)}`), pos = join((s) => s), rep = join(() => "no-repeat"), img = join((s, d) => dividerImage(d, s === "top"));
+    return `content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:${bgc};background-size:${size};background-position:${pos};background-repeat:${rep};-webkit-mask-image:${img};mask-image:${img};-webkit-mask-size:${size};mask-size:${size};-webkit-mask-position:${pos};mask-position:${pos};-webkit-mask-repeat:${rep};mask-repeat:${rep}`;
+}
 function background(v) {
     if (!isObj(v))
         return undefined;
@@ -298,6 +338,7 @@ export function normalizeStyle(v) {
     set("hover", hover(v.hover));
     set("motion", motion(v.motion));
     set("background", background(v.background));
+    set("divider", dividers(v.divider));
     set("zIndex", int(-1, 9999)(v.zIndex));
     set("grow", int(0, 10)(v.grow));
     set("order", responsive(v.order, int(-10, 10)));
@@ -460,6 +501,8 @@ function declarations(style) {
                 out.base.push("position:relative");
         }
     }
+    if (style.divider && !hasOverlay(style.background))
+        out.base.push("isolation:isolate", ...(style.position ? [] : ["position:relative"]));
     if (style.hover)
         out.base.push("transition:color .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease");
     return out;
@@ -592,6 +635,8 @@ export function ruleCss(selector, style) {
         const layers = [bgo.overlayImage ? `url("${bgo.overlayImage}")` : "", bgo.overlayGradient ? gradientValue(bgo.overlayGradient) : ""].filter(Boolean).join(",");
         css += `${each("::before")}{content:"";position:absolute;inset:0;${bgo.overlay ? `${layers ? "background-color" : "background"}:${colorValue(bgo.overlay)};` : ""}${layers ? `background-image:${layers};` : ""}${bgo.overlayImage ? "background-size:cover;background-position:center;background-repeat:no-repeat;" : ""}${bgo.overlayBlend ? `mix-blend-mode:${bgo.overlayBlend};` : ""}opacity:${(bgo.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
     }
+    if (style.divider)
+        css += `${each("::after")}{${dividerCss(style.divider)}}`;
     // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
     if (style.layout)
         css += `${each(" > *")}{margin-block:0}`;

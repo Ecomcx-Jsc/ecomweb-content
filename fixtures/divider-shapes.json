@@ -1,0 +1,135 @@
+{
+  "name": "divider-shapes",
+  "note": "Đường chia 1.29: hình lạ / thiếu màu bị bỏ; cao mặc định 80 không lưu; cao ngoài 10–300 bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "divider": {
+                    "top": {
+                      "shape": "wave",
+                      "color": "primary",
+                      "height": 120,
+                      "flip": true
+                    },
+                    "bottom": {
+                      "shape": "tilt",
+                      "color": "#ffffff",
+                      "height": 80
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "divider": {
+                    "top": {
+                      "shape": "star",
+                      "color": "primary"
+                    },
+                    "bottom": {
+                      "shape": "curve",
+                      "height": 500
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "divider": {
+                    "top": {
+                      "shape": "wave",
+                      "color": "primary",
+                      "height": 120,
+                      "flip": true
+                    },
+                    "bottom": {
+                      "shape": "tilt",
+                      "color": "#ffffff"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

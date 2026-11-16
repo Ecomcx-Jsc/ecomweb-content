@@ -6,7 +6,7 @@ export { contentText, nodeText, visitNodes, wordCount } from "./text.js";
 export { isSafeUrl, safeUrl } from "./url.js";
 export { BLOCK_VERSION_ATTR, blockDefaults, blockNodeSpec, defineBlock, migrateBlockAttrs, type AttrControl, type BlockAttrSpec, type BlockContent, type BlockDefinition, type BlockDefinitionInput, type BlockPlaceholder } from "./block.js";
 export { EMBED_PROVIDERS, embedInfo, type EmbedInfo } from "./embed.js";
-export { BREAKPOINTS, DEVICES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss, type BlockBackground, type BlockLayout, type BlockMotion, type BlockStyle, type Box, type Corners, type Device, type Responsive } from "./style.js";
+export { BREAKPOINTS, DEVICES, DIVIDER_PATHS, DIVIDER_SHAPES, MOTION_HOVER, MOTION_IN, collectStyles, colorCss, motionClasses, motionCss, normalizeGradient, normalizeStyle, ruleCss, spacingValue, styleClass, styleCss, type BlockBackground, type BlockDivider, type BlockLayout, type BlockMotion, type BlockStyle, type Box, type Corners, type Device, type Responsive } from "./style.js";
 export { controlValue, controlsCss, defineBlockControls, normalizeParts, optionValue, partsFor, type BlockControls, type ControlSpec, type PartProp, type PartSpec, type PartValue } from "./controls.js";
 export { CORE_CONTROLS, coreControlsFor } from "./core-controls.js";
 export { BLOCK_SELECTORS, CORE_BLOCK_STYLES, ELEMENT_SELECTORS, mergePresets, normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizePresets, presetCss, type StylePresets } from "./style.js";
