@@ -1,0 +1,103 @@
+{
+  "name": "counter-progress-options",
+  "note": "Bộ đếm 1.28: số thập phân tự đặt, thẻ tiêu đề. Thanh tiến độ 1.28: giá trị lẻ, số thập phân, kiểu chạy, tắt hiệu ứng, nhãn đọc màn hình; giá trị sai bị bỏ / kẹp",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "counter",
+              "attrs": {
+                "end": 12.5,
+                "decimals": 2,
+                "titleTag": "h3",
+                "title": "Năm"
+              }
+            },
+            {
+              "type": "counter",
+              "attrs": {
+                "end": 10,
+                "decimals": 9,
+                "titleTag": "script"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "label": "A",
+                "value": 72.25,
+                "decimals": 1,
+                "easing": "linear",
+                "animate": false,
+                "ariaLabel": "Tiến độ A"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "value": -3.5,
+                "decimals": 7,
+                "easing": "bounce",
+                "animate": "no"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "counter",
+              "attrs": {
+                "end": 12.5,
+                "decimals": 2,
+                "titleTag": "h3",
+                "title": "Năm"
+              }
+            },
+            {
+              "type": "counter",
+              "attrs": {
+                "end": 10,
+                "decimals": 3
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "label": "A",
+                "value": 72.25,
+                "decimals": 1,
+                "easing": "linear",
+                "animate": false,
+                "ariaLabel": "Tiến độ A"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "value": 0,
+                "decimals": 2
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

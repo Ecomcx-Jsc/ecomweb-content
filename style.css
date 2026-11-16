@@ -494,7 +494,7 @@
   :where(.ecx-testimonial-rating) > :where(.is-off) { color: var(--ecx-color-border); }
   :where(.ecx-progress-head) { display: flex; justify-content: space-between; gap: var(--ecx-spacing-sm); margin-bottom: var(--ecx-spacing-xs); font-weight: 600; }
   :where(.ecx-progress-track) { height: .625rem; overflow: hidden; border-radius: var(--ecx-radius-pill); background: var(--ecx-color-border); }
-  :where(.ecx-progress-bar) { height: 100%; border-radius: inherit; background: var(--ecx-color-primary); transform-origin: left; transition: transform var(--ecx-progress-duration, 1.2s) var(--ecx-motion-ease); }
+  :where(.ecx-progress-bar) { height: 100%; border-radius: inherit; background: var(--ecx-color-primary); transform-origin: left; transition: transform var(--ecx-progress-duration, 1.2s) var(--ecx-progress-ease, var(--ecx-motion-ease)); }
   /* 1.26 chữ dưới thanh / trong thanh (thanh dày lên, chữ màu nền) */
   :where(.ecx-progress.is-text-below) :where(.ecx-progress-head) { margin: var(--ecx-spacing-xs) 0 0; }
   :where(.ecx-progress.is-text-inside) :where(.ecx-progress-track) { height: 1.75rem; }

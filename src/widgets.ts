@@ -79,7 +79,7 @@ function boxImage(a: Attrs): WidgetEl | null {
 }
 
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
-export const counterDecimals = (a: Attrs) => Math.min(3, Math.max(...[a.start, a.end].map((v) => (String(Number(v) || 0).split(".")[1] ?? "").length)));
+export const counterDecimals = (a: Attrs) => Number.isFinite(Number(a.decimals)) && a.decimals !== undefined && a.decimals !== null && a.decimals !== "" ? Math.min(3, Math.max(0, Math.round(Number(a.decimals)))) : Math.min(3, Math.max(...[a.start, a.end].map((v) => (String(Number(v) || 0).split(".")[1] ?? "").length)));
 
 /** Viết số của Counter: dấu nhóm nghìn theo `separator` (none | , | . | space); dấu thập phân "," khi nhóm bằng ".", còn lại ".". */
 export function formatCounter(value: number, decimals: number, separator: unknown): string {
@@ -159,7 +159,7 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
               a.suffix ? { tag: "span", className: "ecx-counter-suffix", children: [str(a.suffix)] } : null,
             ),
           },
-          text("p", "ecx-counter-title", a, "title", editing),
+          text(["div", "h2", "h3", "h4", "h5", "h6"].includes(a.titleTag) ? a.titleTag : "p", "ecx-counter-title", a, "title", editing),
         ),
       };
     }
@@ -188,22 +188,27 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
     }
     case "progressBar": {
       const max = Math.max(1, Math.round(Number(a.max ?? 100) || 100));
-      const value = Math.min(max, Math.max(0, Math.round(Number(a.value ?? 50) || 0)));
+      const dec = Math.min(2, Math.max(0, Math.round(Number(a.decimals)) || 0));
+      const value = Math.min(max, Math.max(0, Number((Number(a.value ?? 50) || 0).toFixed(dec))));
       const pct = Math.round((value / max) * 1000) / 10;
       const label = str(a.label);
-      const shown = `${str(a.prefix)}${value}${a.suffix === undefined ? "%" : str(a.suffix)}`;
+      const shown = `${str(a.prefix)}${value.toFixed(dec)}${a.suffix === undefined ? "%" : str(a.suffix)}`;
+      const ease = ["ease", "linear", "ease-in", "ease-out", "ease-in-out"].includes(a.easing) ? String(a.easing) : null;
+      const vars: Record<string, string> = {};
       const pos = a.textPosition === "inside" || a.textPosition === "below" ? a.textPosition : "above";
       const valueEl = a.showValue !== false ? { tag: "span", className: "ecx-progress-value", props: { "aria-hidden": "true" }, children: [shown] } : null;
       const head = label || editing || valueEl ? { tag: "div", className: "ecx-progress-head", children: kids(text("span", "ecx-progress-label", a, "label", editing), valueEl) } : null;
       const dur = Number(a.duration);
+      if (Number.isFinite(dur) && a.duration !== undefined) vars["--ecx-progress-duration"] = `${Math.min(10000, Math.max(0, Math.round(dur)))}ms`;
+      if (ease) vars["--ecx-progress-ease"] = ease;
       // `ecx-in`: script chuyển động của website (IntersectionObserver, bỏ qua khi giảm chuyển động) đặt `is-in` → thanh chạy từ 0 (CSS)
       return {
-        tag: "div", className: pos === "above" ? "ecx-progress ecx-in" : `ecx-progress ecx-in is-text-${pos}`,
-        style: Number.isFinite(dur) && a.duration !== undefined ? { "--ecx-progress-duration": `${Math.min(10000, Math.max(0, Math.round(dur)))}ms` } : undefined,
+        tag: "div", className: cls("ecx-progress", a.animate !== false && "ecx-in", pos !== "above" && `is-text-${pos}`),
+        style: Object.keys(vars).length ? vars : undefined,
         children: kids(
           pos === "above" ? head : null,
           {
-            tag: "div", className: "ecx-progress-track", props: { role: "progressbar", "aria-valuenow": value, "aria-valuemin": 0, "aria-valuemax": max, "aria-label": label || shown },
+            tag: "div", className: "ecx-progress-track", props: { role: "progressbar", "aria-valuenow": value, "aria-valuemin": 0, "aria-valuemax": max, "aria-label": str(a.ariaLabel) || label || shown },
             children: [{ tag: "div", className: "ecx-progress-bar", style: { width: `${pct}%` }, children: pos === "inside" ? kids(head) : undefined }],
           },
           pos === "below" ? head : null,

@@ -204,13 +204,17 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     attrs: {
       start: n({ default: 0 }), end: n({ default: 100 }), prefix: s(), suffix: s(), title: s(), duration: i({ min: 0, max: 10000, default: 2000 }),
       separator: s({ enum: ["none", ",", ".", "space"], default: "none" }), textAlign: align,
+      // 1.28: số chữ thập phân tự đặt (không đặt = theo số đầu / cuối), thẻ HTML của tiêu đề
+      decimals: i({ min: 0, max: 3 }), titleTag: s({ enum: ["p", "div", "h2", "h3", "h4", "h5", "h6"], default: "p" }),
     },
   },
   // 1.28: kiểu thẻ / trơn / bong bóng, sao đánh giá (0 = không hiện), dấu trích ở đầu
   testimonial: { attrs: { quote: s(), name: s(), role: s(), src: url(), mediaId: { type: "json" }, alt: s(), textAlign: align,
     variant: s({ enum: ["card", "plain", "bubble"], default: "card" }), rating: i({ min: 0, max: 5, default: 0 }), quoteMark: b() } },
   // 1.26: giá trị / tối đa (không chỉ %), tiền tố / hậu tố của số (mặc định "%"), vị trí chữ (trên | trong thanh | dưới), thời gian chạy (ms)
-  progressBar: { attrs: { label: s(), value: i({ min: 0, max: 1000000, default: 50 }), max: i({ min: 1, max: 1000000, default: 100 }), showValue: b({ default: true }), prefix: s(), suffix: s(), textPosition: s({ enum: ["above", "inside", "below"], default: "above" }), duration: i({ min: 0, max: 10000, default: 1200 }) } },
+  progressBar: { attrs: { label: s(), value: n({ min: 0, max: 1000000, default: 50 }), max: i({ min: 1, max: 1000000, default: 100 }), showValue: b({ default: true }), prefix: s(), suffix: s(), textPosition: s({ enum: ["above", "inside", "below"], default: "above" }), duration: i({ min: 0, max: 10000, default: 1200 }),
+    // 1.28: số chữ thập phân của số hiện, kiểu chạy, tắt hiệu ứng chạy, nhãn đọc màn hình riêng
+    decimals: i({ min: 0, max: 2, default: 0 }), easing: s({ enum: ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] }), animate: b({ default: true }), ariaLabel: s() } },
 };
 
 /** Tên ô của form: chữ thường, số, gạch dưới — khoá trong bài gửi. */
