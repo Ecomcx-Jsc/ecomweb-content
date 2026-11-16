@@ -123,7 +123,9 @@ export const CORE_NODES = {
             // 1.28: nút là chữ hoặc chỉ icon kính lúp (chữ nút thành aria-label)
             buttonStyle: s({ enum: ["text", "icon"], default: "text" }),
             // 1.27: ô chọn phạm vi tìm kiếm (Tất cả / loại nội dung): scopes = "product:Sản phẩm, post:Tin tức"
-            scopeSelect: b({ default: false }), scopes: s() } },
+            scopeSelect: b({ default: false }), scopes: s(),
+            // 1.27: thu thành nút kính lúp (bấm mở ô nhập) trên tablet / điện thoại
+            collapse: s({ enum: ["never", "tablet", "mobile"], default: "never" }) } },
     languageSwitcher: { attrs: { display: s({ enum: ["inline", "dropdown"], default: "inline" }) } },
     copyright: { attrs: { text: s(), textAlign: align } },
     postTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), link: b({ default: false }), textAlign: align } },
@@ -158,12 +160,20 @@ export const CORE_NODES = {
             taxonomy: s(), term: s(), orderBy: s({ enum: ["date", "title", "modified", "menu_order", "comment_count", "rand"], default: "date" }), order: s({ enum: ["desc", "asc"], default: "desc" }),
             // next: lọc thêm theo tác giả, từ khoá, loại trừ bài, bài ghim, khoá meta (đã khai báo filterable)
             authorId: i({ min: 1 }), search: s(), exclude: s(), sticky: s({ enum: ["any", "only", "exclude"], default: "any" }), orderByMeta: s(), paginate: b({ default: false }),
+            // 1.27 bộ lọc: nguồn (mới nhất / chọn tay / liên quan), nhiều mục của phân loại (bất kỳ / tất cả / loại trừ), điều kiện trường tuỳ biến, khoảng ngày,
+            // bài con của trang, bỏ N bài đầu, loại bài đang xem, cùng tác giả, và nhận bộ lọc từ thanh lọc trên URL (?fq_…)
+            source: s({ enum: ["latest", "manual", "related"], default: "latest" }), include: s(), terms: s(), termMode: s({ enum: ["any", "all", "none"], default: "any" }),
+            metaKey: s(), metaCompare: s({ enum: ["=", "!=", ">", ">=", "<", "<=", "LIKE", "EXISTS", "NOT EXISTS"], default: "=" }), metaValue: s(), metaValue2: s(),
+            dateRange: s({ enum: ["any", "7", "30", "90", "365"], default: "any" }), after: s(), before: s(), parent: i({ min: 1 }), offset: i({ min: 0, max: 1000 }),
+            excludeCurrent: b({ default: true }), authorCurrent: b({ default: false }), urlFilters: b({ default: false }),
         },
     },
     // 1.27: "carousel" = một hàng cuộn ngang có nút trước / sau (columns = số thẻ thấy cùng lúc trên máy tính); gap = khoảng cách thẻ (preset hoặc độ dài)
     postTemplate: { attrs: { layout: s({ enum: ["list", "grid", "carousel"], default: "list" }), columns: i({ min: 1, max: 6, default: 3 }), columnsTablet: i({ min: 1, max: 6 }), columnsMobile: i({ min: 1, max: 4 }), gap: s(), arrows: b({ default: true }) } },
     pagination: { attrs: { type: s({ enum: ["numbers", "prevNext", "both"], default: "both" }), midSize: i({ min: 0, max: 5, default: 2 }) } },
     queryEmpty: {},
+    // 1.27: thanh lọc cho khối Query (bật "Nhận bộ lọc từ thanh lọc"): ô tìm, mục phân loại (liên kết / nút lọc / ô chọn), sắp xếp
+    queryFilter: { attrs: { align: wide, taxonomy: s(), termStyle: s({ enum: ["none", "links", "chips", "select"], default: "links" }), allLabel: s(), showSearch: b({ default: false }), showSort: b({ default: false }), sortOptions: s(), placeholder: s(), submitText: s(), action: s() } },
     templatePart: { attrs: { slug: s(), tagName: s({ enum: ["div", "header", "footer", "aside", "section"], default: "div" }) } },
     /** Mẫu đồng bộ: tham chiếu tới mẫu (id) — sửa mẫu gốc thì mọi chỗ dùng đổi theo. */
     syncedPattern: { attrs: { ref: i({ min: 1 }) } },
@@ -219,7 +229,7 @@ export const DYNAMIC_NODES = [
     "siteTitle", "siteLogo", "siteTagline", "navigation", "search", "languageSwitcher", "copyright",
     "postTitle", "postContent", "postExcerpt", "featuredImage", "postDate", "postAuthor", "postTerms", "comments", "readMore", "commentsCount", "avatar", "queryTotal", "termList", "pageList", "archives", "loginout",
     "queryTitle", "termDescription", "breadcrumbs", "postNavigation",
-    "query", "postTemplate", "pagination", "queryEmpty", "templatePart", "syncedPattern",
+    "query", "postTemplate", "pagination", "queryEmpty", "queryFilter", "templatePart", "syncedPattern",
 ];
 export const CORE_MARKS = {
     bold: {}, italic: {}, underline: {}, strike: {}, code: {}, kbd: {}, footnote: { attrs: { note: s() } }, subscript: {}, superscript: {},

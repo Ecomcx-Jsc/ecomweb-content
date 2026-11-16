@@ -589,6 +589,32 @@
   :where(nav.pagination) :where(a:hover) { border-color: currentColor; }
   :where(nav.pagination) :where([aria-current="page"], .current) { background: var(--ecx-color-text); border-color: var(--ecx-color-text); color: var(--ecx-color-background); }
 
+  /* 1.27 Thanh lọc của khối Query */
+  :where(.ecx-visually-hidden) { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  :where(.ecx-query-filter) { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 0 0 1.25rem; }
+  :where(.ecx-filter-terms) { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; border: 0; }
+  :where(.ecx-filter-terms) :where(a, label) { display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 .9rem; border: var(--ecx-border-width) solid var(--ecx-border, color-mix(in srgb, currentColor 22%, transparent)); border-radius: 999px; text-decoration: none; color: inherit; cursor: pointer; }
+  :where(.ecx-filter-terms) :where(.is-active) { font-weight: 700; border-color: currentColor; box-shadow: inset 0 0 0 1px currentColor; }
+  :where(.ecx-filter-terms) :where(input[type="radio"]) { position: absolute; opacity: 0; pointer-events: none; }
+  :where(.ecx-query-filter) :where(input[type="search"], select) { min-height: 2.25rem; padding: 0 .7rem; border: var(--ecx-border-width) solid var(--ecx-border, color-mix(in srgb, currentColor 22%, transparent)); border-radius: var(--ecx-radius-md); background: transparent; color: inherit; font: inherit; }
+  :where(.ecx-query-filter) :where(button[type="submit"]) { min-height: 2.25rem; padding: 0 1rem; border: 0; border-radius: var(--ecx-radius-md); background: var(--ecx-color-text); color: var(--ecx-color-background); font: inherit; cursor: pointer; }
+
+  /* Tìm kiếm thu gọn: nút kính lúp + ô nhập thả xuống dưới nút (collapse = tablet ≤1024px | mobile ≤640px) */
+  :where(.ecx-search) { position: relative; }
+  :where(.ecx-search-toggle) { display: none; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; }
+  @media (max-width: 1024px) {
+    :where(.ecx-search-collapse.collapse-tablet) > :where(.ecx-search-toggle) { display: inline-flex; }
+    :where(.ecx-search-collapse.collapse-tablet) > :where(.ecx-search-panel) { display: none; }
+    :where(.ecx-search-collapse.collapse-tablet.is-open) > :where(.ecx-search-panel) { display: block; }
+  }
+  @media (max-width: 640px) {
+    :where(.ecx-search-collapse.collapse-mobile) > :where(.ecx-search-toggle) { display: inline-flex; }
+    :where(.ecx-search-collapse.collapse-mobile) > :where(.ecx-search-panel) { display: none; }
+    :where(.ecx-search-collapse.collapse-mobile.is-open) > :where(.ecx-search-panel) { display: block; }
+  }
+  :where(.ecx-search-panel) { position: absolute; top: 100%; right: 0; z-index: 60; box-sizing: border-box; width: min(92vw, 420px); padding: .75rem; background: var(--ecx-color-background); color: var(--ecx-color-text); box-shadow: 0 8px 24px rgb(0 0 0 / .16); }
+  :where(.ecx-search-collapse:not(.is-open)) > :where(.ecx-search-panel) { position: static; width: auto; padding: 0; box-shadow: none; background: none; }
+  :where(.ecx-search-panel) :where(.search-form) { max-width: none; }
   /* Ô chọn phạm vi tìm kiếm nằm cạnh ô nhập */
   :where(.ecx-search) :where(.search-scope) { padding: .5em .7em; border: 1px solid var(--ecx-border, color-mix(in srgb, currentColor 16%, transparent)); border-radius: var(--ecx-radius-md, 8px); background: var(--ecx-color-background); color: inherit; font: inherit; }
 
