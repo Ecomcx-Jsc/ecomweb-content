@@ -1,0 +1,87 @@
+{
+  "name": "background-color-per-device",
+  "note": "Màu nền riêng theo khổ 1.29: màu lạ bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "color": {
+                    "background": "primary"
+                  },
+                  "background": {
+                    "color": {
+                      "tablet": "#0f1e29",
+                      "mobile": "primary/40",
+                      "base": "url(x)"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "color": {
+                    "background": "primary"
+                  },
+                  "background": {
+                    "color": {
+                      "tablet": "#0f1e29",
+                      "mobile": "primary/40"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "a"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

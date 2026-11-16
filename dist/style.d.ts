@@ -88,6 +88,8 @@ export interface BlockStyle {
  * Nền chuyển màu (`gradient`) nếu có được phủ lên trên ảnh. `overlay`: màu phủ giữa ảnh và nội dung (độ mờ 0–100, mặc định 50).
  */
 export interface BlockBackground {
+    /** 1.29: màu nền riêng theo khổ (tablet / điện thoại); màu của máy tính vẫn ở `style.color.background`. */
+    color?: Responsive<string>;
     image?: Responsive<string>;
     size?: Responsive<"cover" | "contain" | "auto">;
     /** Điểm lấy nét "x% y%" (0–100). */

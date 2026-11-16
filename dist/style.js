@@ -165,6 +165,9 @@ function background(v) {
     if (!isObj(v))
         return undefined;
     const out = {};
+    const bgc = responsive(v.color, color);
+    if (bgc)
+        out.color = bgc;
     const image = responsive(v.image, bgUrl);
     if (image)
         out.image = image;
@@ -426,6 +429,9 @@ function declarations(style) {
     const bg = style.background;
     if (bg) {
         for (const d of DEVICES) {
+            const dc = bg.color?.[d];
+            if (dc)
+                out[d].push(`background-color:${colorValue(dc)}`);
             const img = bg.image?.[d];
             if (img)
                 out[d].push(`background-image:${style.gradient ? `${gradientValue(style.gradient)},` : ""}url("${img}")`);

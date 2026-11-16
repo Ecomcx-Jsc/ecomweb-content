@@ -112,3 +112,12 @@ test("lớp phủ nền 1.28: chuyển màu + hoà trộn; ảnh + màu website 
   const noBlend = normalizeStyle({ background: { overlay: "#000", overlayBlend: "burn" } });
   assert.equal(noBlend?.background?.overlayBlend, undefined);
 });
+
+test("màu nền theo khổ 1.29: tablet / điện thoại có màu riêng trong media query; màu lạ bị bỏ", () => {
+  const st = normalizeStyle({ color: { background: "primary" }, background: { color: { tablet: "#0f1e29", mobile: "primary/40", base: "url(x)" } } })!;
+  assert.deepEqual(st.background?.color, { tablet: "#0f1e29", mobile: "primary/40" });
+  const css = styleCss(st, "x");
+  assert.match(css, /@media[^{]*\{[^}]*background-color:#0f1e29/);
+  assert.match(css, /background-color:color-mix\(in srgb, var\(--ecx-color-primary, primary\) 40%, transparent\)/);
+  assert.equal(normalizeStyle({ background: { color: { tablet: "javascript:1" } } }), undefined);
+});

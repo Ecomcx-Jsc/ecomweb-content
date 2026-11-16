@@ -64,6 +64,8 @@ export interface BlockStyle {
  * Nền chuyển màu (`gradient`) nếu có được phủ lên trên ảnh. `overlay`: màu phủ giữa ảnh và nội dung (độ mờ 0–100, mặc định 50).
  */
 export interface BlockBackground {
+  /** 1.29: màu nền riêng theo khổ (tablet / điện thoại); màu của máy tính vẫn ở `style.color.background`. */
+  color?: Responsive<string>;
   image?: Responsive<string>;
   size?: Responsive<"cover" | "contain" | "auto">;
   /** Điểm lấy nét "x% y%" (0–100). */
@@ -231,6 +233,7 @@ const bgPosition = (v: unknown) => {
 function background(v: unknown): BlockBackground | undefined {
   if (!isObj(v)) return undefined;
   const out: BlockBackground = {};
+  const bgc = responsive(v.color, color); if (bgc) out.color = bgc;
   const image = responsive(v.image, bgUrl); if (image) out.image = image;
   const sz = responsive(v.size, oneOf(BG_SIZES)); if (sz) out.size = sz as BlockBackground["size"];
   const pos = responsive(v.position, bgPosition); if (pos) out.position = pos;
@@ -400,6 +403,7 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
   const bg = style.background;
   if (bg) {
     for (const d of DEVICES) {
+      const dc = bg.color?.[d]; if (dc) out[d].push(`background-color:${colorValue(dc)}`);
       const img = bg.image?.[d];
       if (img) out[d].push(`background-image:${style.gradient ? `${gradientValue(style.gradient)},` : ""}url("${img}")`);
       const sz = bg.size?.[d]; if (sz) out[d].push(`background-size:${sz}`);
