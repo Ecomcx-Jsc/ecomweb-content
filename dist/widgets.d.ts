@@ -20,7 +20,7 @@ export interface WidgetEl {
     /** Website thay phần tử này bằng component trình duyệt (đếm số khi cuộn tới). */
     client?: "counter";
 }
-export declare const WIDGET_BLOCKS: readonly ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar"];
+export declare const WIDGET_BLOCKS: readonly ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar", "map"];
 type Attrs = Record<string, any>;
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */
 /** Class của danh sách icon (dùng chung website và khung soạn). */
@@ -31,6 +31,8 @@ export declare function tabsClass(a: Record<string, any>): string;
 export declare const formSizeClass: (a: Record<string, any>) => string;
 export declare const formClass: (a: Record<string, any>) => string;
 export declare function iconEl(name: unknown, fallback?: string, stroke?: unknown): WidgetEl;
+/** Địa chỉ khung bản đồ: host cố định, địa chỉ mã hoá trong `q` (không nhận URL do người dùng dán). Rỗng → null. */
+export declare function mapEmbedUrl(a: Attrs): string | null;
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
 export declare const counterDecimals: (a: Attrs) => number;
 /** Viết số của Counter: dấu nhóm nghìn theo `separator` (none | , | . | space); dấu thập phân "," khi nhóm bằng ".", còn lại ".". */

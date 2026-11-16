@@ -226,6 +226,9 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     number: { label: "%part.number%", selector: `${W} .ecx-countdown-parts strong`, props: ["typography", "color"] },
     unitLabel: { label: "%part.unitLabel%", selector: `${W} .ecx-countdown-parts small`, props: ["typography", "color"] },
   } }),
+  defineBlockControls({ id: "core/map-parts", partsOnly: true, blocks: ["map"], attributes: {}, parts: {
+    frame: { label: "%part.map%", selector: `${W} iframe`, props: ["border", "radius", "shadow"], hover: true },
+  } }),
   // Form: nhãn, ô nhập (thường / rê chuột), dấu *, gợi ý, báo lỗi, báo thành công, nút gửi
   defineBlockControls({ id: "core/form-parts", partsOnly: true, blocks: ["form"], attributes: {}, parts: {
     label: { label: "%part.label%", selector: `${W} .ecx-field label, ${W} .ecx-field legend`, props: TEXT },

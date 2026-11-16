@@ -585,7 +585,7 @@ export const BLOCK_SELECTORS: Record<string, string> = {
   preformatted: ".ecx-pre", horizontalRule: "hr", image: ".ecx-image", gallery: ".ecx-gallery", table: ".ecx-table table", group: ".ecx-group",
   columns: ".ecx-columns", column: ".ecx-column", buttons: ".ecx-buttons-group", button: ".ecx-button", spacer: ".ecx-spacer", callout: ".ecx-callout",
   cover: ".ecx-cover", mediaText: ".ecx-media-text", pullquote: ".ecx-pullquote", details: ".ecx-details", accordion: ".ecx-accordion", countdown: ".ecx-countdown", rating: ".ecx-rating", socialLinks: ".ecx-social", form: ".ecx-form-blocks",
-  iconBox: ".ecx-icon-box", imageBox: ".ecx-image-box", iconList: ".ecx-icon-list", counter: ".ecx-counter", testimonial: ".ecx-testimonial", progressBar: ".ecx-progress",
+  iconBox: ".ecx-icon-box", imageBox: ".ecx-image-box", iconList: ".ecx-icon-list", counter: ".ecx-counter", testimonial: ".ecx-testimonial", progressBar: ".ecx-progress", map: ".ecx-map",
   siteTitle: ".ecx-site-title", siteTagline: ".ecx-site-tagline", navigation: ".ecx-navigation", postTitle: ".ecx-post-title", postExcerpt: ".ecx-post-excerpt",
   postDate: ".ecx-post-date", featuredImage: ".ecx-featured-image", query: ".ecx-query",
 };

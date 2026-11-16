@@ -22,7 +22,7 @@ export const ICON_PATHS = {
 export const ICON_NAMES = Object.keys(ICON_PATHS);
 /** Kính lúp của khối Tìm kiếm (không nằm trong bảng icon chọn được). */
 export const SEARCH_ICON_PATH = "M21 21l-4.3-4.3M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z";
-export const WIDGET_BLOCKS = ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar"];
+export const WIDGET_BLOCKS = ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar", "map"];
 const str = (v) => (typeof v === "string" ? v : "");
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */
 /** Class của danh sách icon (dùng chung website và khung soạn). */
@@ -66,6 +66,14 @@ function boxImage(a) {
     const sizes = "(max-width: 768px) 100vw, 33vw";
     const tag = { tag: "img", props: { src, srcSet: str(a.srcset) || undefined, sizes: a.srcset ? sizes : undefined, alt: str(a.alt), width: Number(a.width) || undefined, height: Number(a.height) || undefined, loading: "lazy", decoding: "async" } };
     return a.webpSrcset ? { tag: "picture", children: [{ tag: "source", props: { type: "image/webp", srcSet: str(a.webpSrcset), sizes } }, tag] } : tag;
+}
+/** Địa chỉ khung bản đồ: host cố định, địa chỉ mã hoá trong `q` (không nhận URL do người dùng dán). Rỗng → null. */
+export function mapEmbedUrl(a) {
+    const address = str(a.address).replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 200);
+    if (!address)
+        return null;
+    const zoom = Math.min(20, Math.max(1, Math.round(Number(a.zoom)) || 14));
+    return `https://www.google.com/maps?q=${encodeURIComponent(address)}&z=${zoom}&t=${a.mapType === "satellite" ? "k" : "m"}&output=embed`;
 }
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
 export const counterDecimals = (a) => Number.isFinite(Number(a.decimals)) && a.decimals !== undefined && a.decimals !== null && a.decimals !== "" ? Math.min(3, Math.max(0, Math.round(Number(a.decimals)))) : Math.min(3, Math.max(...[a.start, a.end].map((v) => (String(Number(v) || 0).split(".")[1] ?? "").length)));
@@ -151,6 +159,16 @@ export function widgetMarkup(type, a = {}, editing = false) {
                     tag: "figcaption", className: "ecx-testimonial-author",
                     children: kids(src ? { tag: "img", className: "ecx-testimonial-avatar", props: { src, alt: str(a.alt), width: 48, height: 48, loading: "lazy", decoding: "async" } } : null, name || role ? { tag: "span", className: "ecx-testimonial-meta", children: kids(name, role) } : null),
                 } : null),
+            };
+        }
+        case "map": {
+            const src = mapEmbedUrl(a);
+            const height = Math.min(1000, Math.max(150, Math.round(Number(a.height)) || 360));
+            if (!src)
+                return editing ? { tag: "div", className: "ecx-map is-empty", style: { minHeight: `${height}px` }, children: [{ tag: "span", className: "ecx-map-address", field: "address", children: [str(a.address)] }] } : null;
+            return {
+                tag: "div", className: "ecx-map",
+                children: [{ tag: "iframe", props: { src, title: str(a.title) || str(a.address), loading: "lazy", referrerPolicy: "no-referrer-when-downgrade", allowFullScreen: true }, style: { height: `${height}px` } }],
             };
         }
         case "progressBar": {

@@ -467,6 +467,10 @@
   /* 1.28 Thư viện ảnh kiểu masonry: ảnh nối cột, không bị cắt giữa chừng; chú thích chung nằm dưới cả các cột */
   :where(.ecx-gallery.is-masonry) > :where(.ecx-gallery-item) { break-inside: avoid; padding-bottom: var(--ecx-gallery-gap, 8px); }
   :where(.ecx-gallery.is-masonry) > :where(.ecx-gallery-caption) { column-span: all; }
+  /* 1.28 Bản đồ */
+  :where(.ecx-map) { margin: var(--ecx-flow) 0; }
+  :where(.ecx-map) :where(iframe) { display: block; width: 100%; max-width: 100%; border: 0; border-radius: var(--ecx-radius-md); background: var(--ecx-color-surface); }
+  :where(.ecx-map.is-empty) { display: grid; place-items: center; padding: var(--ecx-spacing-md); border: var(--ecx-border-width) dashed var(--ecx-color-border); border-radius: var(--ecx-radius-md); background: var(--ecx-color-surface); }
   :where(.ecx-image-box-media) { margin: 0 0 var(--ecx-spacing-md); }
   :where(.ecx-image-box-media) :where(img) { display: block; width: 100%; height: auto; border-radius: var(--ecx-radius-md); }
   :where(.ecx-icon-list) { display: flex; flex-direction: column; gap: var(--ecx-spacing-xs); padding: 0; list-style: none; }

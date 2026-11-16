@@ -37,7 +37,7 @@ export interface WidgetEl {
   client?: "counter";
 }
 
-export const WIDGET_BLOCKS = ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar"] as const;
+export const WIDGET_BLOCKS = ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar", "map"] as const;
 
 type Attrs = Record<string, any>;
 const str = (v: unknown) => (typeof v === "string" ? v : "");
@@ -86,6 +86,14 @@ function boxImage(a: Attrs): WidgetEl | null {
   const sizes = "(max-width: 768px) 100vw, 33vw";
   const tag: WidgetEl = { tag: "img", props: { src, srcSet: str(a.srcset) || undefined, sizes: a.srcset ? sizes : undefined, alt: str(a.alt), width: Number(a.width) || undefined, height: Number(a.height) || undefined, loading: "lazy", decoding: "async" } };
   return a.webpSrcset ? { tag: "picture", children: [{ tag: "source", props: { type: "image/webp", srcSet: str(a.webpSrcset), sizes } }, tag] } : tag;
+}
+
+/** Địa chỉ khung bản đồ: host cố định, địa chỉ mã hoá trong `q` (không nhận URL do người dùng dán). Rỗng → null. */
+export function mapEmbedUrl(a: Attrs): string | null {
+  const address = str(a.address).replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, 200);
+  if (!address) return null;
+  const zoom = Math.min(20, Math.max(1, Math.round(Number(a.zoom)) || 14));
+  return `https://www.google.com/maps?q=${encodeURIComponent(address)}&z=${zoom}&t=${a.mapType === "satellite" ? "k" : "m"}&output=embed`;
 }
 
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
@@ -194,6 +202,15 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
             ),
           } : null,
         ),
+      };
+    }
+    case "map": {
+      const src = mapEmbedUrl(a);
+      const height = Math.min(1000, Math.max(150, Math.round(Number(a.height)) || 360));
+      if (!src) return editing ? { tag: "div", className: "ecx-map is-empty", style: { minHeight: `${height}px` }, children: [{ tag: "span", className: "ecx-map-address", field: "address", children: [str(a.address)] }] } : null;
+      return {
+        tag: "div", className: "ecx-map",
+        children: [{ tag: "iframe", props: { src, title: str(a.title) || str(a.address), loading: "lazy", referrerPolicy: "no-referrer-when-downgrade", allowFullScreen: true }, style: { height: `${height}px` } }],
       };
     }
     case "progressBar": {

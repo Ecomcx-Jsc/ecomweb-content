@@ -187,6 +187,8 @@ export const CORE_NODES = {
     /** items: [{ text, href?, icon? }] — icon riêng của mục thắng icon chung. */
     // 1.27: số cột (điện thoại về 1), căn icon theo dòng chữ, khung icon, độ dày nét; mục có icon "none" = không vẽ icon
     iconList: { attrs: { items: { type: "json", default: [] }, icon: s({ enum: ICON_NAMES, default: "check" }), layout: s({ enum: ["list", "inline"], default: "list" }), columns: i({ min: 1, max: 4, default: 1 }), iconAlign: s({ enum: ["top", "center", "bottom"], default: "top" }), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), stroke: n({ min: 0.5, max: 4, default: 2 }) } },
+    // 1.28: Bản đồ — địa chỉ gõ tay → khung Google Maps (địa chỉ chỉ nằm trong tham số q của URL cố định, không nhúng được trang tuỳ ý)
+    map: { attrs: { address: s(), zoom: i({ min: 1, max: 20, default: 14 }), height: i({ min: 150, max: 1000, default: 360 }), mapType: s({ enum: ["roadmap", "satellite"], default: "roadmap" }), title: s() } },
     counter: {
         attrs: {
             start: n({ default: 0 }), end: n({ default: 100 }), prefix: s(), suffix: s(), title: s(), duration: i({ min: 0, max: 10000, default: 2000 }),

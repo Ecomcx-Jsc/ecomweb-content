@@ -56,3 +56,17 @@ test("URL không an toàn bị bỏ; chữ rỗng không vẽ (trừ khi đang s
   assert.equal(JSON.stringify(list).includes("javascript"), false);
   assert.equal(widgetMarkup("iconList", { items: [] }), null);
 });
+
+test("map: URL Google Maps cố định, địa chỉ mã hoá trong q; zoom / cao kẹp; rỗng thì không vẽ (trừ khi đang soạn)", () => {
+  const el = widgetMarkup("map", { address: "Hà Nội & <b>x</b>\n\"q\"", zoom: 99, height: 5, mapType: "satellite" })!;
+  const f = el.children![0] as any;
+  const u = new URL(f.props.src);
+  assert.equal(u.origin + u.pathname, "https://www.google.com/maps");
+  assert.equal(u.searchParams.get("z"), "20");
+  assert.equal(u.searchParams.get("t"), "k");
+  assert.equal(u.searchParams.get("output"), "embed");
+  assert.ok(!/[<>"\n]/.test(f.props.src) && u.searchParams.get("q")!.includes("Hà Nội & <b>x</b>"), f.props.src);
+  assert.equal(f.style.height, "150px");
+  assert.equal(widgetMarkup("map", { address: "   " }), null);
+  assert.equal((widgetMarkup("map", {}, true)!.children![0] as any).field, "address");
+});

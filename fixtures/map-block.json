@@ -1,0 +1,69 @@
+{
+  "name": "map-block",
+  "note": "Bản đồ 1.28: địa chỉ, zoom 1–20, cao 150–1000, kiểu; giá trị sai bị bỏ / kẹp",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "map",
+              "attrs": {
+                "address": "1 Phạm Văn Đồng, Hà Nội",
+                "zoom": 16,
+                "height": 420,
+                "mapType": "satellite",
+                "title": "Văn phòng"
+              }
+            },
+            {
+              "type": "map",
+              "attrs": {
+                "address": "A",
+                "zoom": 99,
+                "height": 5,
+                "mapType": "terrain"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "map",
+              "attrs": {
+                "address": "1 Phạm Văn Đồng, Hà Nội",
+                "zoom": 16,
+                "height": 420,
+                "mapType": "satellite",
+                "title": "Văn phòng"
+              }
+            },
+            {
+              "type": "map",
+              "attrs": {
+                "address": "A",
+                "zoom": 20,
+                "height": 150
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
