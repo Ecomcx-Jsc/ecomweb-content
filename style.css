@@ -433,6 +433,12 @@
   :where(.ecx-icon-box-icon.is-circle, .ecx-icon-box-icon.is-square) { display: inline-grid; place-items: center; width: 1.9em; height: 1.9em; font-size: var(--ecx-font-size-2xl); background: color-mix(in srgb, var(--ecx-color-primary) 12%, transparent); }
   :where(.ecx-icon-box-icon.is-circle) { border-radius: 50%; }
   :where(.ecx-icon-box-icon.is-square) { border-radius: var(--ecx-radius-md); }
+  :where(.ecx-icon-box-icon.is-image) { max-width: 100%; overflow: hidden; font-size: inherit; }
+  :where(.ecx-icon-box-icon.is-image) :where(img) { display: block; width: 100%; height: auto; }
+  :where(.ecx-icon-box.is-left, .ecx-icon-box.is-right) > :where(.ecx-icon-box-icon.is-image) { flex: none; width: 6rem; }
+  :where(.ecx-icon-box.is-v-center) { align-items: center; }
+  :where(.ecx-icon-box.is-v-bottom) { align-items: flex-end; }
+  :where(.ecx-icon-box.is-full-height) { height: 100%; box-sizing: border-box; }
   :where(.ecx-icon-box-icon.is-number) { font-weight: 700; font-variant-numeric: tabular-nums; }
   :where(.ecx-icon-box.is-top[style*="center"]) > :where(.ecx-icon-box-icon) { align-self: center; }
   :where(.ecx-icon-box.is-top[style*="right"]) > :where(.ecx-icon-box-icon) { align-self: flex-end; }

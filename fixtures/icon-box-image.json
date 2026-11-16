@@ -1,0 +1,80 @@
+{
+  "name": "icon-box-image",
+  "note": "Hộp icon 1.28: media là ảnh (src + alt + cỡ), căn dọc media, cao bằng ô chứa; giá trị sai bị bỏ, URL nguy hiểm bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "A",
+                "media": "image",
+                "src": "/uploads/a.jpg",
+                "alt": "Ảnh A",
+                "width": 640,
+                "height": 480,
+                "position": "left",
+                "verticalAlign": "center",
+                "fullHeight": true
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "B",
+                "media": "image",
+                "src": "javascript:alert(1)",
+                "verticalAlign": "middle",
+                "fullHeight": "yes",
+                "width": 0
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "A",
+                "media": "image",
+                "src": "/uploads/a.jpg",
+                "alt": "Ảnh A",
+                "width": 640,
+                "height": 480,
+                "position": "left",
+                "verticalAlign": "center",
+                "fullHeight": true
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "B",
+                "media": "image",
+                "src": "javascript:alert(1)",
+                "width": 1
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -107,6 +107,7 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
   defineBlockControls({ id: "core/icon-box", blocks: ["iconBox"], attributes: {
     iconBoxIconColor: color("icon", { [`${W} .ecx-icon-box-icon`]: "color: {{VALUE}}" }),
     iconBoxIconSize: length("icon", { [`${W} .ecx-icon-box-icon`]: "font-size: {{VALUE}}" }, true),
+    iconBoxImageWidth: length("icon", { [`${W} .ecx-icon-box-icon.is-image`]: "width: {{VALUE}}" }, true),
     iconBoxTitleColor: color("content", { [`${W} .ecx-icon-box-title`]: "color: {{VALUE}}" }),
     iconBoxTextColor: color("content", { [`${W} .ecx-icon-box-text`]: "color: {{VALUE}}" }),
   } }),

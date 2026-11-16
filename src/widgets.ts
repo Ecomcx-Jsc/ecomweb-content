@@ -69,6 +69,15 @@ const alignCss = (a: Attrs) => (a.textAlign && a.textAlign !== "left" ? { textAl
 const cls = (...c: unknown[]) => c.filter((x) => typeof x === "string" && x).join(" ");
 const kids = (...c: Array<WidgetEl | null | false | undefined>) => c.filter(Boolean) as WidgetEl[];
 
+/** Ảnh của hộp: ảnh từ thư viện mang sẵn srcset (JPEG + WebP) và kích thước như khối image → responsive, không nhảy layout. */
+function boxImage(a: Attrs): WidgetEl | null {
+  const src = a.src ? safeUrl(a.src, "") : "";
+  if (!src) return null;
+  const sizes = "(max-width: 768px) 100vw, 33vw";
+  const tag: WidgetEl = { tag: "img", props: { src, srcSet: str(a.srcset) || undefined, sizes: a.srcset ? sizes : undefined, alt: str(a.alt), width: Number(a.width) || undefined, height: Number(a.height) || undefined, loading: "lazy", decoding: "async" } };
+  return a.webpSrcset ? { tag: "picture", children: [{ tag: "source", props: { type: "image/webp", srcSet: str(a.webpSrcset), sizes } }, tag] } : tag;
+}
+
 /** Số chữ thập phân của Counter (theo giá trị đầu / cuối, tối đa 3). */
 export const counterDecimals = (a: Attrs) => Math.min(3, Math.max(...[a.start, a.end].map((v) => (String(Number(v) || 0).split(".")[1] ?? "").length)));
 
@@ -87,10 +96,14 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
       const link = href(a);
       const mode = a.linkMode === "box" || a.linkMode === "button" ? a.linkMode : "title";
       const pos = a.position === "left" || a.position === "right" ? a.position : "top";
-      const media = a.media === "number" || a.media === "none" ? a.media : "icon";
+      const media = a.media === "number" || a.media === "none" || a.media === "image" ? a.media : "icon";
+      const img = media === "image" ? boxImage(a) : null;
+      const valign = pos !== "top" && (a.verticalAlign === "center" || a.verticalAlign === "bottom") ? a.verticalAlign : null;
       const style = a.iconStyle === "circle" || a.iconStyle === "square" ? a.iconStyle : null;
       const hover = a.hover === "grow" || a.hover === "flip" ? a.hover : null;
       const mediaEl: WidgetEl | null = media === "none" ? null
+        // Ảnh: không dùng khung tròn / vuông của icon (bo góc ảnh đặt ở phần "Icon / ảnh"); đang soạn mà chưa có ảnh → ô chọn ảnh
+        : media === "image" ? (img || editing ? { tag: "span", className: "ecx-icon-box-icon is-image", slot: img ? undefined : "media", children: kids(img) } : null)
         : media === "number" ? (str(a.number) || editing ? { tag: "span", className: cls("ecx-icon-box-icon is-number", style && `is-${style}`), children: [{ tag: "span", field: "number", children: [str(a.number)] }] } : null)
         : { tag: "span", className: cls("ecx-icon-box-icon", style && `is-${style}`), children: [iconEl(a.icon)] };
       // Nút "Xem thêm": chữ riêng, trống = chữ mặc định do renderer điền (ngôn ngữ của trang) — ở đây để trống là "→"
@@ -98,7 +111,7 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
       // Cả hộp là liên kết: thẻ <a> bọc ngoài (tiêu đề không còn link riêng — không lồng <a>); khi đang soạn vẫn là <div>
       const boxLink = mode === "box" && link && !editing;
       return {
-        tag: boxLink ? "a" : "div", className: cls("ecx-icon-box", `is-${pos}`, hover && `has-hover-${hover}`, boxLink && "is-link"), style: alignCss(a),
+        tag: boxLink ? "a" : "div", className: cls("ecx-icon-box", `is-${pos}`, valign && `is-v-${valign}`, a.fullHeight === true && "is-full-height", hover && `has-hover-${hover}`, boxLink && "is-link"), style: alignCss(a),
         props: boxLink ? { href: link } : undefined,
         children: kids(
           mediaEl,
@@ -107,11 +120,7 @@ export function widgetMarkup(type: string, a: Attrs = {}, editing = false): Widg
       };
     }
     case "imageBox": {
-      const src = a.src ? safeUrl(a.src, "") : "";
-      // Ảnh từ thư viện mang sẵn srcset (JPEG + WebP) và kích thước như khối image → responsive, không nhảy layout
-      const sizes = "(max-width: 768px) 100vw, 33vw";
-      const tag: WidgetEl | null = src ? { tag: "img", props: { src, srcSet: str(a.srcset) || undefined, sizes: a.srcset ? sizes : undefined, alt: str(a.alt), width: Number(a.width) || undefined, height: Number(a.height) || undefined, loading: "lazy", decoding: "async" } } : null;
-      const img = tag && a.webpSrcset ? { tag: "picture", children: [{ tag: "source", props: { type: "image/webp", srcSet: str(a.webpSrcset), sizes } }, tag] } : tag;
+      const img = boxImage(a);
       return {
         tag: "div", className: "ecx-image-box", style: alignCss(a),
         children: kids(
