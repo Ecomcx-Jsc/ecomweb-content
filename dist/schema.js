@@ -95,7 +95,9 @@ export const CORE_NODES = {
     carousel: { attrs: { align: wide, slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
     shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },
     // 1.26: chia 2 cột, icon mở / đóng (mũi tên | dấu cộng | không) bên trái / phải, thẻ của tiêu đề mục, FAQ Schema (Google)
-    accordion: { attrs: { align: wide, multiple: b({ default: false }), columns: i({ min: 1, max: 2, default: 1 }), icon: s({ enum: ["arrow", "plus", "none"], default: "arrow" }), iconSide: s({ enum: ["left", "right"], default: "right" }), titleTag: s({ enum: ["div", "h2", "h3", "h4", "h5", "h6"], default: "div" }), faq: b({ default: false }) } },
+    accordion: { attrs: { align: wide, multiple: b({ default: false }), columns: i({ min: 1, max: 2, default: 1 }), icon: s({ enum: ["arrow", "plus", "none"], default: "arrow" }), iconSide: s({ enum: ["left", "right"], default: "right" }), titleTag: s({ enum: ["div", "h2", "h3", "h4", "h5", "h6"], default: "div" }), faq: b({ default: false }),
+            // 1.28: mục mở sẵn khi tải trang — không | mục đầu | tất cả (nhóm "mở một mục" chỉ mở được mục đầu); mục tự đặt `open` thì giữ nguyên
+            startOpen: s({ enum: ["none", "first", "all"], default: "none" }) } },
     // 1.26: bố cục khối | một dòng, dấu ":" giữa các ô, số dạng 00, chữ sau, ẩn ngày / giây, nhãn riêng từng đơn vị
     countdown: { attrs: { target: s(), label: s(), expiredText: s(), layout: s({ enum: ["block", "inline"], default: "block" }), divider: b({ default: false }), pad: b({ default: true }), postText: s(), showDays: b({ default: true }), showSeconds: b({ default: true }), daysLabel: s(), hoursLabel: s(), minutesLabel: s(), secondsLabel: s() } },
     rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },

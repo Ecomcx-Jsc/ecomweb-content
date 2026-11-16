@@ -180,6 +180,7 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     item: { label: "%part.item%", selector: `${W} details, ${W}:is(details)`, props: ["background", "border", "radius", "shadow", "padding", "margin"] },
     title: { label: "%part.paneTitle%", selector: `${W} details > summary, ${W}:is(details) > summary`, props: ["typography", "color", "background", "border", "radius", "padding"], hover: "self",
       active: `${W} details[open] > summary, ${W}:is([open]) > summary` },
+    icon: { label: "%part.icon%", selector: `${W} details > summary::after`, props: ["color", "iconSize"], active: `${W} details[open] > summary::after` },
     content: { label: "%part.paneContent%", selector: `${W} details > :not(summary), ${W}:is(details) > :not(summary)`, props: ["typography", "color", "background", "padding"] },
   } }),
   // Tab: thanh tab, nút tab (thường / rê chuột / đang chọn), vùng nội dung

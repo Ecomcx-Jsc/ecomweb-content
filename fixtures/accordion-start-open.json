@@ -1,0 +1,133 @@
+{
+  "name": "accordion-start-open",
+  "note": "Accordion 1.28: mở sẵn không / mục đầu / tất cả; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "accordion",
+              "attrs": {
+                "startOpen": "first"
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "A"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "a"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "attrs": {
+                "startOpen": "everything",
+                "multiple": true
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "B"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "b"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "accordion",
+              "attrs": {
+                "startOpen": "first"
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "A"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "a"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "attrs": {
+                "multiple": true
+              },
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "B"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "b"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
