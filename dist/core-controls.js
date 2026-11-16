@@ -78,6 +78,8 @@ export const CORE_CONTROLS = [
             tabsBorderColor: color("tabs", { [`${W} [role=tablist]`]: "border-bottom-color: {{VALUE}}" }),
             tabsGap: length("tabs", { [`${W} [role=tablist]`]: "gap: {{VALUE}}" }),
             tabsAlign: choice("tabs", ["flex-start", "center", "flex-end", "space-between"], { [`${W} [role=tablist]`]: "justify-content: {{VALUE}}" }),
+            tabsTitleWidth: length("tabs", { [`${W} [role=tab]`]: "flex: 0 0 {{VALUE}}" }, true),
+            tabsPanelMinHeight: length("tabs", { [`${W} [role=tabpanel]`]: "min-height: {{VALUE}}" }, true),
             tabsContentPadding: length("tabs", { [`${W} [role=tabpanel]`]: "padding: {{VALUE}}" }, true),
         } }),
     defineBlockControls({ id: "core/accordion", blocks: ["accordion", "details"], attributes: {

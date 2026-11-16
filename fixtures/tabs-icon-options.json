@@ -1,0 +1,134 @@
+{
+  "name": "tabs-icon-options",
+  "note": "Tab 1.28: vị trí icon, chỉ hiện icon; giá trị sai bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tabs",
+              "attrs": {
+                "iconPosition": "top",
+                "iconOnly": true
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "A",
+                    "icon": "star"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "a"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "attrs": {
+                "iconPosition": "bottom",
+                "iconOnly": "yes"
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "B"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "b"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "tabs",
+              "attrs": {
+                "iconPosition": "top",
+                "iconOnly": true
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "A",
+                    "icon": "star"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "a"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "B"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "b"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

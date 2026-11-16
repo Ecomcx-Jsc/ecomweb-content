@@ -114,7 +114,9 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown / rating là khối nguyên tử.
   // tabs > tab(title) > nội dung; carousel: mỗi con trực tiếp là một slide; shortcode chèn shortcode của plugin/theme
   // 1.26: tab dọc, thành accordion trên điện thoại; mỗi tab có icon (tên trong ICON_PATHS) + phụ đề; neo của tab = `anchor` chung (mở thẳng bằng #neo)
-  tabs: { attrs: { align: wide, initial: i({ min: 1 }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobileAccordion: b({ default: false }) } },
+  tabs: { attrs: { align: wide, initial: i({ min: 1 }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobileAccordion: b({ default: false }),
+    // 1.28: vị trí icon của nút tab (trái / phải / trên), chỉ hiện icon (chữ giữ cho trình đọc màn hình)
+    iconPosition: s({ enum: ["left", "right", "top"], default: "left" }), iconOnly: b({ default: false }) } },
   tab: { attrs: { title: s(), icon: s({ enum: ICON_NAMES }), subtitle: s() } },
   carousel: { attrs: { align: wide, slidesPerView: i({ min: 1, max: 4, default: 1 }) } },
   shortcode: { attrs: { name: s(), args: { type: "json", default: {} } } },

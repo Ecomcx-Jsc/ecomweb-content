@@ -28,6 +28,10 @@ export function iconListClass(a) {
     const cols = a.layout === "inline" ? 1 : Math.min(4, Math.max(1, Math.round(Number(a.columns)) || 1));
     return cls("ecx-icon-list", a.layout === "inline" && "is-inline", cols > 1 && `is-cols-${cols}`, (a.iconAlign === "center" || a.iconAlign === "bottom") && `is-icon-${a.iconAlign}`, (a.iconStyle === "circle" || a.iconStyle === "square") && `has-icon-${a.iconStyle}`);
 }
+/** Class của khối Tab (dùng chung website và khung soạn). */
+export function tabsClass(a) {
+    return cls("ecx-tabs", a.orientation === "vertical" && "is-vertical", a.mobileAccordion === true && "has-mobile-accordion", (a.iconPosition === "right" || a.iconPosition === "top") && `has-icon-${a.iconPosition}`, a.iconOnly === true && "is-icon-only");
+}
 export function iconEl(name, fallback = "star", stroke) {
     const d = ICON_PATHS[str(name)] ?? ICON_PATHS[fallback];
     return {

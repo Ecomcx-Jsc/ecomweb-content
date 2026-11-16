@@ -225,6 +225,10 @@
   /* 1.26 Tabs: icon + phụ đề trên tiêu đề tab; tab dọc (thanh tiêu đề bên trái); thành accordion trên điện thoại (tiêu đề ngay trên panel của nó) */
   :where(.ecx-tab-button) { display: inline-flex; align-items: center; gap: .5em; text-align: start; }
   :where(.ecx-tab-icon) { flex: none; }
+  :where(.ecx-tabs.has-icon-right) :where(.ecx-tab-button) { flex-direction: row-reverse; }
+  :where(.ecx-tabs.has-icon-top) :where(.ecx-tab-button) { flex-direction: column; justify-content: center; text-align: center; }
+  :where(.ecx-tabs.has-icon-top) :where(.ecx-tab-label) { align-items: center; }
+  :where(.ecx-tabs.is-icon-only) :where(.ecx-tab-button:has(.ecx-tab-icon)) :where(.ecx-tab-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   :where(.ecx-tab-label) { display: inline-flex; flex-direction: column; }
   :where(.ecx-tab-subtitle) { font-size: .8em; font-weight: 400; color: var(--ecx-color-muted); }
   :where(.ecx-tabs.is-vertical) { display: grid; grid-template-columns: minmax(10rem, 28%) 1fr; gap: var(--ecx-spacing-md); }

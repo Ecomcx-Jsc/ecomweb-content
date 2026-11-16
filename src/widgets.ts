@@ -47,6 +47,11 @@ export function iconListClass(a: Record<string, any>): string {
   return cls("ecx-icon-list", a.layout === "inline" && "is-inline", cols > 1 && `is-cols-${cols}`, (a.iconAlign === "center" || a.iconAlign === "bottom") && `is-icon-${a.iconAlign}`,
     (a.iconStyle === "circle" || a.iconStyle === "square") && `has-icon-${a.iconStyle}`);
 }
+/** Class của khối Tab (dùng chung website và khung soạn). */
+export function tabsClass(a: Record<string, any>): string {
+  return cls("ecx-tabs", a.orientation === "vertical" && "is-vertical", a.mobileAccordion === true && "has-mobile-accordion",
+    (a.iconPosition === "right" || a.iconPosition === "top") && `has-icon-${a.iconPosition}`, a.iconOnly === true && "is-icon-only");
+}
 export function iconEl(name: unknown, fallback = "star", stroke?: unknown): WidgetEl {
   const d = ICON_PATHS[str(name)] ?? ICON_PATHS[fallback];
   return {
