@@ -42,3 +42,18 @@ export function normalizeLock(v) {
 export function normalizeTemplateLock(v) {
     return v === "all" || v === "insert" || v === "contentOnly" || v === "none" ? v : undefined;
 }
+/**
+ * Thuộc tính gắn dữ liệu được (attrs.bindings) của khối lõi — dùng chung cho website (theme-sdk) và trình soạn.
+ * Giá trị lấy lúc hiển thị là chữ thường; đường dẫn đi qua safeUrl. Khối của plugin khai báo riêng (BlockType.bindable).
+ * 1.32: mở rộng từ 4 khối lên hầu hết ô chữ / đường dẫn / ảnh của khối lõi (như Dynamic Tags của Elementor, Dynamic Content của Kadence Pro).
+ */
+export const CORE_BINDABLE = {
+    paragraph: ["content"], heading: ["content", "href"], image: ["src", "alt", "caption"], button: ["text", "href", "tooltip"],
+    icon: ["label", "href", "tooltip"], iconBox: ["title", "text", "href"], imageBox: ["src", "alt", "title", "text", "href"],
+    imageOverlay: ["src", "alt", "title", "subtitle", "href"], testimonial: ["quote", "name", "role", "src", "alt"],
+    counter: ["title", "prefix", "suffix"], progressBar: ["label"], cover: ["src", "alt"], video: ["src", "poster"], audio: ["src"],
+    file: ["src", "name"], map: ["address", "title"], group: ["href"], column: ["href"], search: ["placeholder", "buttonText"],
+    details: ["summary"], tab: ["title", "subtitle"], blockquote: ["citation"], countdown: ["target"],
+};
+/** Thuộc tính là đường dẫn: giá trị gắn vào phải qua safeUrl. */
+export const BINDING_URL_ATTRS = new Set(["src", "href", "poster"]);

@@ -1,6 +1,8 @@
 export { CONTENT_VERSION, type Block, type ContentDoc, type RichMark, type RichNode } from "./types.js";
 export { CONTAINER_TAGS, CORE_MARKS, CORE_NODES, DYNAMIC_NODES, FORM_FIELD_KINDS, FORM_FIELD_NAME, WIDE_BLOCKS, coerceAttr, normalizeAttrs, type AttrSpec, type AttrType, type NodeSpec } from "./schema.js";
 export { normalizeContent, type NormalizeOptions, type NormalizeResult } from "./normalize.js";
+export { OVERRIDE_KEY, applyPatternOverrides, patternOverridables, type Overridable } from "./pattern-overrides.js";
+export { BINDING_URL_ATTRS, CORE_BINDABLE } from "./bindings.js";
 export { migrateContent } from "./migrate.js";
 export { LEGACY_TYPES, upgradeLegacyContent } from "./legacy.js";
 export { contentText, nodeText, visitNodes, wordCount } from "./text.js";

@@ -215,7 +215,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   queryFilter: { attrs: { align: wide, taxonomy: s(), termStyle: s({ enum: ["none", "links", "chips", "select", "checks"], default: "links" }), showRange: b({ default: false }), rangeParam: s({ pattern: "^[a-z][a-z0-9_]{0,30}$" }), rangeLabel: s(), rangeMax: n({ min: 1, max: 100000000 }), allLabel: s(), showSearch: b({ default: false }), showSort: b({ default: false }), showYear: b({ default: false }), showReset: b({ default: false }), sortOptions: s(), placeholder: s(), submitText: s(), action: s() } },
   templatePart: { attrs: { slug: s(), tagName: s({ enum: ["div", "header", "footer", "aside", "section"], default: "div" }) } },
   /** Mẫu đồng bộ: tham chiếu tới mẫu (id) — sửa mẫu gốc thì mọi chỗ dùng đổi theo. */
-  syncedPattern: { attrs: { ref: i({ min: 1 }) } },
+  syncedPattern: { attrs: { ref: i({ min: 1 }), overrides: { type: "json" } } },
   // 1.21: form cơ bản của lõi (liên hệ, đăng ký nhận tin, đặt lịch đơn giản): `form` chứa các ô `formField` và khối chữ; máy chủ đọc lại
   // định nghĩa form từ chính trang / template chứa nó để kiểm bài gửi. formId cố định theo form (không đổi khi sửa ô). Form nâng cao: plugin.
   // 1.26: email nhận có thể nhiều địa chỉ (dấu phẩy), đồng gửi (Cc), tiêu đề email riêng, chuyển trang sau khi gửi

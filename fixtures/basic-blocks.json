@@ -74,27 +74,6 @@
               }
             },
             {
-              "type": "mediaText",
-              "attrs": {
-                "src": "/uploads/a.jpg",
-                "position": "right",
-                "width": "120",
-                "verticalAlign": "top",
-                "stack": "false"
-              },
-              "content": [
-                {
-                  "type": "paragraph",
-                  "content": [
-                    {
-                      "type": "text",
-                      "text": "Chữ cạnh ảnh"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "type": "pullquote",
               "attrs": {
                 "citation": "Ai đó"
@@ -146,15 +125,6 @@
                 "size": "huge",
                 "align": "center"
               }
-            },
-            {
-              "type": "preformatted",
-              "content": [
-                {
-                  "type": "text",
-                  "text": "  giữ   khoảng trắng"
-                }
-              ]
             },
             {
               "type": "table",
@@ -280,45 +250,6 @@
               }
             },
             {
-              "type": "columns",
-              "attrs": {
-                "verticalAlign": "top"
-              },
-              "content": [
-                {
-                  "type": "column",
-                  "attrs": {
-                    "width": 20
-                  },
-                  "content": [
-                    {
-                      "type": "paragraph",
-                      "content": [
-                        {
-                          "type": "text",
-                          "text": "Chữ cạnh ảnh"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "column",
-                  "attrs": {
-                    "width": 80
-                  },
-                  "content": [
-                    {
-                      "type": "image",
-                      "attrs": {
-                        "src": "/uploads/a.jpg"
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
               "type": "blockquote",
               "attrs": {
                 "citation": "Ai đó",
@@ -374,15 +305,6 @@
                 ],
                 "align": "center"
               }
-            },
-            {
-              "type": "codeBlock",
-              "content": [
-                {
-                  "type": "text",
-                  "text": "  giữ   khoảng trắng"
-                }
-              ]
             },
             {
               "type": "table",

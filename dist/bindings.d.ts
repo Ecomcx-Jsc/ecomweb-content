@@ -17,3 +17,11 @@ export declare function normalizeLock(v: unknown): {
 } | undefined;
 /** `attrs.templateLock` của khối chứa: all | insert | contentOnly | none (khối con thoát khoá của khối ngoài). */
 export declare function normalizeTemplateLock(v: unknown): "all" | "insert" | "contentOnly" | "none" | undefined;
+/**
+ * Thuộc tính gắn dữ liệu được (attrs.bindings) của khối lõi — dùng chung cho website (theme-sdk) và trình soạn.
+ * Giá trị lấy lúc hiển thị là chữ thường; đường dẫn đi qua safeUrl. Khối của plugin khai báo riêng (BlockType.bindable).
+ * 1.32: mở rộng từ 4 khối lên hầu hết ô chữ / đường dẫn / ảnh của khối lõi (như Dynamic Tags của Elementor, Dynamic Content của Kadence Pro).
+ */
+export declare const CORE_BINDABLE: Record<string, readonly string[]>;
+/** Thuộc tính là đường dẫn: giá trị gắn vào phải qua safeUrl. */
+export declare const BINDING_URL_ATTRS: ReadonlySet<string>;
