@@ -50,7 +50,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "id": "main",

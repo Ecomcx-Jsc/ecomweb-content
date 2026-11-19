@@ -1,0 +1,554 @@
+{
+  "name": "legacy-v3",
+  "note": "Định dạng 2 (v3): nội dung bản 1 có khối cũ tự đổi sang khối thay thế khi đọc (legacy.ts / ContentLegacy.cs)",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Có chú thích"
+                },
+                {
+                  "type": "text",
+                  "text": "¹",
+                  "marks": [
+                    {
+                      "type": "footnote",
+                      "attrs": {
+                        "note": "Nguồn: báo cáo 2025"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "horizontalRule",
+              "attrs": {
+                "hrStyle": "dashed",
+                "hrWeight": "3px",
+                "hrWidth": "60%",
+                "hrColor": "#ff0000",
+                "style": {
+                  "margin": {
+                    "top": "lg"
+                  }
+                }
+              }
+            },
+            {
+              "type": "youtube",
+              "attrs": {
+                "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                "align": "wide"
+              }
+            },
+            {
+              "type": "mediaText",
+              "attrs": {
+                "src": "/uploads/a.jpg",
+                "alt": "Ảnh",
+                "position": "right",
+                "width": 40,
+                "verticalAlign": "top",
+                "stack": false
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Chữ bên trái"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "callout",
+              "attrs": {
+                "tone": "warning",
+                "title": "Lưu ý"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung ghi chú"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "pullquote",
+              "attrs": {
+                "citation": "Ai đó"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Câu nổi bật"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "preformatted",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "  giữ   khoảng trắng"
+                }
+              ]
+            },
+            {
+              "type": "taskList",
+              "content": [
+                {
+                  "type": "taskItem",
+                  "attrs": {
+                    "checked": true
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Xong"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "taskItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Chưa"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rating",
+              "attrs": {
+                "value": 3.6,
+                "max": 5,
+                "label": "4/5 sao"
+              }
+            },
+            {
+              "type": "pageBreak"
+            },
+            {
+              "type": "details",
+              "attrs": {
+                "summary": "Câu hỏi lẻ"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Trả lời"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Trong accordion"
+                  },
+                  "content": [
+                    {
+                      "type": "callout",
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "lồng"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "testimonial",
+              "attrs": {
+                "quote": "Tốt",
+                "name": "An"
+              }
+            },
+            {
+              "type": "footnotes",
+              "attrs": {
+                "title": "Chú thích"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 2,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Có chú thích"
+                },
+                {
+                  "type": "text",
+                  "text": "¹",
+                  "marks": [
+                    {
+                      "type": "footnote",
+                      "attrs": {
+                        "note": "Nguồn: báo cáo 2025"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "spacer",
+              "attrs": {
+                "style": {
+                  "margin": {
+                    "base": {
+                      "top": "lg"
+                    }
+                  }
+                },
+                "height": "md",
+                "line": true,
+                "lineStyle": "dashed",
+                "lineWeight": 3,
+                "lineWidth": 60,
+                "lineColor": "#ff0000"
+              }
+            },
+            {
+              "type": "video",
+              "attrs": {
+                "align": "wide",
+                "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              }
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "stack": false,
+                "verticalAlign": "top"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 60
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Chữ bên trái"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 40
+                  },
+                  "content": [
+                    {
+                      "type": "image",
+                      "attrs": {
+                        "src": "/uploads/a.jpg",
+                        "alt": "Ảnh"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "padding": "medium",
+                "style": {
+                  "color": {
+                    "background": "#fff4e0"
+                  },
+                  "radius": "8px"
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Lưu ý",
+                      "marks": [
+                        {
+                          "type": "bold"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Nội dung ghi chú"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "blockquote",
+              "attrs": {
+                "citation": "Ai đó",
+                "quoteAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Câu nổi bật"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "codeBlock",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "  giữ   khoảng trắng"
+                }
+              ]
+            },
+            {
+              "type": "bulletList",
+              "attrs": {
+                "listMarker": "none"
+              },
+              "content": [
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "☑ "
+                        },
+                        {
+                          "type": "text",
+                          "text": "Xong"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "☐ "
+                        },
+                        {
+                          "type": "text",
+                          "text": "Chưa"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "★★★★☆ 4/5 sao"
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi lẻ"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Trả lời"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Trong accordion"
+                  },
+                  "content": [
+                    {
+                      "type": "group",
+                      "attrs": {
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "#e8f1f6"
+                          },
+                          "radius": "8px"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "lồng"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "testimonials",
+              "attrs": {
+                "columns": 1
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Tốt",
+                    "name": "An"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Chú thích",
+                  "marks": [
+                    {
+                      "type": "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "orderedList",
+              "content": [
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nguồn: báo cáo 2025"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

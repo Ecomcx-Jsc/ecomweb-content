@@ -50,20 +50,16 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   // 1.29: icon cạnh chữ (icon trong bộ có sẵn, trước / sau chữ), chú thích khi rê chuột; tiêu đề có thể có tên khác trong mục lục
   paragraph: { attrs: { textAlign: align, icon: s({ pattern: ICON_VALUE }), iconPosition: s({ enum: ["left", "right"], default: "left" }), iconTitle: s() } },
   heading: { attrs: { htmlTag: s({ enum: ["p", "span", "div"] }), level: i({ min: 1, max: 6, default: 2 }), textAlign: align, id: s(), icon: s({ pattern: ICON_VALUE }), iconPosition: s({ enum: ["left", "right"], default: "left" }), iconTitle: s(), tocTitle: s(),
+    // 1.32: liên kết cả tiêu đề (như Link của widget Heading): địa chỉ, mở tab mới, rel (nofollow / sponsored)
+    href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkRel: s(),
     // 1.30: chữ gõ ở cuối tiêu đề — nhóm từ cách nhau "|" (tối đa 8 từ × 40 ký tự), tốc độ gõ (ms / ký tự), dừng giữa hai từ (ms), lặp — xem typed.ts
     typedWords: s(), typedSpeed: i({ min: 30, max: 200, default: 80 }), typedPause: i({ min: 600, max: 6000, default: 1800 }), typedLoop: b({ default: true }) } },
   bulletList: {},
   orderedList: { attrs: { start: i({ min: 0, default: 1 }), reversed: b({ default: false }) } },
   listItem: {},
-  taskList: {},
-  taskItem: { attrs: { checked: b({ default: false }) } },
   blockquote: { attrs: { citation: s() } },
   codeBlock: { attrs: { language: s() } },
   hardBreak: {},
-  horizontalRule: {},
-  // 1.18: pageBreak chia bài nhiều trang (?trang=N); footnotes liệt kê chú thích của mark `footnote` (attrs.note)
-  pageBreak: {},
-  footnotes: { attrs: { title: s() } },
   image: {
     attrs: {
       src: url(), alt: s(), title: s(), width: n({ min: 1 }), height: n({ min: 1 }), srcset: s(), webpSrcset: s(),
@@ -91,7 +87,6 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   tableRow: {},
   tableHeader: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
   tableCell: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
-  youtube: { attrs: { align: wide, src: url(), start: i({ min: 0 }), width: n({ min: 1 }), height: n({ min: 1 }) } },
   // Bố cục (1.2): cột, nhóm, hộp lưu ý chứa khối khác; nút; nhúng theo đường dẫn (embedInfo)
   // 1.27: tagName = thẻ HTML của khối chứa (ngữ nghĩa: section, header, article…)
   columns: { attrs: { align: wide, verticalAlign: s({ enum: ["top", "center", "bottom", "stretch"] }), stack: b({ default: true }), tagName: s({ enum: CONTAINER_TAGS }) } },
@@ -101,7 +96,6 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   // href = liên kết phủ cả nhóm / Section (bấm đâu trong khối cũng mở); linkLabel = tên liên kết cho trình đọc màn hình
   // collapseHeight: chiều cao thu gọn (vd "12rem") — có thì website cắt khối ở mức đó kèm nút "Xem thêm / Thu gọn" (moreText / lessText); không cần JS
   group: { attrs: { collapseFade: b({ default: true }), collapseOnce: b({ default: false }), collapseHeight: s(), moreText: s(), lessText: s(), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), linkLabel: s(), tagName: s({ enum: CONTAINER_TAGS }), align: wide, constrained: b({ default: false }), contentWidth: s(), background: s(), textColor: s(), padding: s({ enum: ["none", "small", "medium", "large"], default: "medium" }) } },
-  callout: { attrs: { tone: s({ enum: ["info", "success", "warning", "danger"], default: "info" }), title: s() } },
   button: {
     attrs: {
       text: s(), href: url(), target: s(), rel: s(), tooltip: s(),
@@ -126,19 +120,12 @@ export const CORE_NODES: Record<string, NodeSpec> = {
       videoSrc: url(),
     },
   },
-  mediaText: {
-    attrs: {
-      align: wide, src: url(), mediaId: { type: "json" }, alt: s(), position: s({ enum: ["left", "right"], default: "left" }), width: i({ min: 20, max: 80, default: 50 }),
-      verticalAlign: s({ enum: ["top", "center", "bottom"], default: "center" }), stack: b({ default: true }),
-    },
-  },
-  pullquote: { attrs: { align: wide, citation: s() } },
   // popup: nút mở + hộp thoại chứa các khối con. size = rộng tối đa (sm 28 / md 40 / lg 56 / xl 72rem); anim = hiệu ứng mở; overlayOpacity = độ tối nền (0–100)
   popup: { attrs: { align: wide, triggerText: s(), triggerStyle: s({ enum: ["primary", "outline", "link", "play"], default: "primary" }), triggerImage: url(), popupId: s({ pattern: "^[a-z][a-z0-9-]{0,40}$" }), autoOpen: s({ enum: ["none", "delay", "scroll", "exit", "idle"], default: "none" }), autoDelay: i({ min: 0, max: 300, default: 5 }), autoScroll: i({ min: 5, max: 100, default: 50 }), onceDays: i({ min: 0, max: 365, default: 0 }), triggerAlign: s({ enum: ["left", "center", "right"], default: "left" }),
     size: s({ enum: ["sm", "md", "lg", "xl"], default: "md" }), anim: s({ enum: ["fade", "up", "zoom", "none"], default: "fade" }), overlayOpacity: i({ min: 0, max: 100, default: 60 }),
     vAlign: s({ enum: ["top", "center"], default: "center" }), closeButton: b({ default: true }), closeOnOverlay: b({ default: true }), label: s() } },
   details: { attrs: { summary: s(), open: b({ default: false }) } },
-  // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown / rating là khối nguyên tử.
+  // next: accordion = nhiều khối details; multiple=false → mở một mục thì mục khác đóng. countdown là khối nguyên tử.
   // tabs > tab(title) > nội dung; carousel: mỗi con trực tiếp là một slide; shortcode chèn shortcode của plugin/theme
   // 1.26: tab dọc, thành accordion trên điện thoại; mỗi tab có icon (tên trong ICON_PATHS) + phụ đề; neo của tab = `anchor` chung (mở thẳng bằng #neo)
   tabs: { attrs: { align: wide, initial: i({ min: 1 }), orientation: s({ enum: ["horizontal", "vertical"], default: "horizontal" }), mobileAccordion: b({ default: false }),
@@ -160,14 +147,12 @@ export const CORE_NODES: Record<string, NodeSpec> = {
     expireAction: s({ enum: ["zero", "message", "hide", "redirect"] }), redirectUrl: url(), repeat: s({ enum: ["none", "daily", "weekly", "monthly", "yearly"], default: "none" }),
     mode: s({ enum: ["date", "evergreen"], default: "date" }), evergreenHours: i({ min: 0, max: 2160 }), evergreenMinutes: i({ min: 0, max: 59 }), evergreenReset: i({ min: 0, max: 365, default: 30 }), pauseButton: b({ default: false }),
     layout: s({ enum: ["block", "inline"], default: "block" }), divider: b({ default: false }), pad: b({ default: true }), postText: s(), showDays: b({ default: true }), showSeconds: b({ default: true }), daysLabel: s(), hoursLabel: s(), minutesLabel: s(), secondsLabel: s() } },
-  rating: { attrs: { value: n({ min: 0, max: 10, default: 5 }), max: i({ min: 1, max: 10, default: 5 }), label: s() } },
   customHtml: { attrs: { align: wide, html: s() } },
   socialLinks: { attrs: { links: { type: "json", default: [] }, size: s({ enum: ["small", "medium", "large"], default: "medium" }), align: s({ enum: ["left", "center", "right"] }), showLabels: b({ default: false }) } },
   // 1.26: khoảng cấp tiêu đề H2–H6, thu gọn được (+ bắt đầu thu gọn), kiểu danh sách, số cột, cuộn mượt, tô đậm mục đang đọc
   tableOfContents: { attrs: { title: s(), minLevel: i({ min: 2, max: 6, default: 2 }), maxLevel: i({ min: 2, max: 6, default: 3 }), collapsible: b({ default: false }), startCollapsed: b({ default: false }), listStyle: s({ enum: ["numbers", "bullets", "none"], default: "numbers" }), columns: i({ min: 1, max: 3, default: 1 }), smoothScroll: b({ default: false }), highlight: b({ default: false }),
     // 1.28: ẩn tiêu đề (bỏ qua khi thu gọn được — tiêu đề là nút mở / đóng)
     showTitle: b({ default: true }) } },
-  preformatted: {},
   // Khối động (1.6): lấy dữ liệu lúc hiển thị theo ngữ cảnh (website, trang đang xem, bài trong vòng lặp) — dùng trong template
   siteTitle: { attrs: { level: i({ min: 0, max: 6, default: 0 }), link: b({ default: true }), textAlign: align } },
   siteLogo: { attrs: { width: n({ min: 16, max: 600, default: 120 }), link: b({ default: true }) } },

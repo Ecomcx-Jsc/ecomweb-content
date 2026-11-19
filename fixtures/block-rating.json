@@ -72,7 +72,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -110,11 +110,8 @@
               ]
             },
             {
-              "type": "rating",
+              "type": "paragraph",
               "attrs": {
-                "value": 5,
-                "max": 5,
-                "label": "abc",
                 "style": {
                   "fontFamily": "mono",
                   "fontSize": {
@@ -132,9 +129,15 @@
                   },
                   "writingMode": "vertical"
                 },
-                "anchor": "abc",
-                "className": "abc"
-              }
+                "className": "abc",
+                "anchor": "abc"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "★★★★★ abc"
+                }
+              ]
             }
           ]
         }

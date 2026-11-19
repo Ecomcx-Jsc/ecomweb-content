@@ -29,6 +29,10 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     textIconColor: color("icon", { [W]: "--ecx-text-icon-color: {{VALUE}}" }),
     textIconSize: length("icon", { [W]: "--ecx-text-icon-size: {{VALUE}}" }),
     textIconGap: length("icon", { [W]: "--ecx-text-icon-gap: {{VALUE}}" }),
+    // 1.32 viền chữ (text stroke) + hoà trộn với nền
+    textStrokeWidth: length("textFx", { [W]: "--ecx-text-stroke-w: {{VALUE}}" }),
+    textStrokeColor: color("textFx", { [W]: "--ecx-text-stroke-c: {{VALUE}}" }),
+    textBlend: choice("textFx", ["multiply", "screen", "overlay", "darken", "lighten", "difference", "exclusion"], { [W]: "mix-blend-mode: {{VALUE}}" }),
   } }),
   // Khối Icon: như tab Style của widget Icon (màu, nền, viền, bo, đệm, bóng, xoay, hiệu ứng rê) — mỗi thứ có bản "Rê chuột"
   defineBlockControls({ id: "core/icon", blocks: ["icon"], attributes: {
@@ -145,14 +149,6 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
     columnsGap: length("columns", { [W]: "--ecx-columns-gap: {{VALUE}}" }, true),
     columnsRowGap: length("columns", { [W]: "--ecx-columns-row-gap: {{VALUE}}" }, true),
     columnsDirection: choice("columns", ["row", "row-reverse", "column", "column-reverse"], { [W]: "flex-direction: {{VALUE}}" }, { responsive: true }),
-  } }),
-  defineBlockControls({ id: "core/separator", blocks: ["horizontalRule"], attributes: {
-    hrStyle: choice("separator", ["solid", "dashed", "dotted", "double"], { [W]: "border-top-style: {{VALUE}}" }, { tab: "settings" }),
-    hrWeight: length("separator", { [W]: "border-top-width: {{VALUE}}" }),
-    hrColor: color("separator", { [W]: "border-top-color: {{VALUE}}" }),
-    hrWidth: { ...length("separator", { [W]: "width: {{VALUE}}" }, true), tab: "settings" },
-    hrAlign: choice("separator", ["start", "center", "end"], { [W]: "margin-inline: var(--ecx-margin-inline-{{VALUE}})" }, { tab: "settings" }),
-    hrGap: { ...length("separator", { [W]: "margin-block: {{VALUE}}" }, true), tab: "settings" },
   } }),
   // 1.32 Cài đặt (bố cục / cách hiển thị) của các khối đơn giản — như tab Content của Elementor
   defineBlockControls({ id: "core/buttons", blocks: ["buttons"], attributes: {
@@ -381,16 +377,9 @@ export const CORE_CONTROLS: readonly BlockControls[] = [
   defineBlockControls({ id: "core/social-parts", partsOnly: true, blocks: ["socialLinks"], attributes: {}, parts: {
     item: { label: "%part.item%", selector: `${W} a`, props: ["color", "background", "border", "radius", "padding", "iconSize"], hover: "self" },
   } }),
-  // Ghi chú: tiêu đề; Ảnh bìa: vùng nội dung; Ảnh & chữ: ảnh, vùng chữ
-  defineBlockControls({ id: "core/callout-parts", blocks: ["callout"], attributes: {}, parts: {
-    title: { label: "%part.title%", selector: `${W} .ecx-callout-title`, props: TEXT },
-  } }),
+  // Ảnh bìa: vùng nội dung
   defineBlockControls({ id: "core/cover-parts", blocks: ["cover"], attributes: {}, parts: {
     inner: { label: "%part.content%", selector: `${W} .ecx-cover-inner`, props: ["typography", "color", "background", "radius", "padding"] },
-  } }),
-  defineBlockControls({ id: "core/media-text-parts", blocks: ["mediaText"], attributes: {}, parts: {
-    media: { label: "%part.image%", selector: `${W} .ecx-media-text-media img`, props: ["border", "radius", "shadow"], hover: true },
-    content: { label: "%part.content%", selector: `${W} .ecx-media-text-content`, props: ["typography", "color", "background", "radius", "padding"] },
   } }),
   defineBlockControls({ id: "core/icon-list-parts", partsOnly: true, blocks: ["iconList"], attributes: {}, parts: {
     item: { label: "%part.item%", selector: `${W} > li`, props: ["typography", "color", "padding"] },

@@ -53,13 +53,6 @@ export function blockShell(type, attrs = {}, parent) {
             const cw = typeof attrs.contentWidth === "string" && /\d/.test(attrs.contentWidth) ? spacingValue(attrs.contentWidth) : undefined;
             return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, (attrs.constrained === true || cw) && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined, "--ecx-group-width": cw, ...(typeof attrs.href === "string" && safeUrl(attrs.href, "") ? { position: "relative" } : {}) }) };
         }
-        case "callout": {
-            const tone = calloutTone(attrs);
-            return {
-                tag: "div", className: cls("ecx-callout cms-callout", `ecx-callout-${tone} cms-callout-${tone}`), attrs: { role: "note" },
-                style: { borderLeft: `4px solid ${TONES[tone]}`, background: `color-mix(in srgb, ${TONES[tone]} 8%, transparent)`, padding: "0.75rem 1rem", borderRadius: "var(--ecx-radius-md, 8px)" },
-            };
-        }
         case "buttons": return { tag: "div", className: cls("ecx-buttons-group", attrs.align && `is-${attrs.align}`, attrs.orientation === "vertical" && "is-vertical") };
         case "button": {
             const variant = buttonVariant(attrs);
@@ -104,10 +97,6 @@ export function blockShell(type, attrs = {}, parent) {
                 style: compact({ minHeight: spacingValue(attrs.minHeight ?? "400px"), backgroundImage: attrs.fixed && src ? `url("${safeUrl(src, "").replace(/["\\()]/g, encodeURIComponent)}")` : undefined, backgroundPosition: attrs.fixed && src ? focalPoint(attrs.focal) : undefined }),
             };
         }
-        case "mediaText": {
-            const width = Math.min(80, Math.max(20, Number(attrs.width) || 50));
-            return { tag: "div", className: cls("ecx-media-text", attrs.position === "right" && "is-right", attrs.verticalAlign && attrs.verticalAlign !== "center" && `is-${attrs.verticalAlign}`, attrs.stack !== false && "is-stack"), style: { "--ecx-media-width": `${width}%` } };
-        }
         case "image": return { tag: "figure", className: cls("ecx-image cms-image", attrs.align && `ecx-align-${attrs.align} align${attrs.align}`, attrs.mediaId && `ecx-image-${attrs.mediaId} cms-image-${attrs.mediaId}`) };
         case "gallery": {
             const cols = Math.min(6, Math.max(1, Number(attrs.columns) || 3));
@@ -122,7 +111,6 @@ export function blockShell(type, attrs = {}, parent) {
                 return { tag: "figure", className: cls("ecx-gallery cms-gallery is-mosaic" + capCls, `ecx-gallery-columns-${Math.max(2, cols)} columns-${Math.max(2, cols)}`), style: { display: "grid", gap, gridAutoFlow: "dense", gridTemplateColumns: `repeat(${Math.max(2, cols)}, minmax(0, 1fr))` } };
             return { tag: "figure", className: cls("ecx-gallery cms-gallery" + capCls, `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "grid", gap, gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } };
         }
-        case "pullquote": return { tag: "figure", className: "ecx-pullquote" };
         case "customHtml": return { tag: "div", className: "ecx-html" };
         case "embed": {
             const info = embedInfo(attrs.url);
@@ -137,9 +125,7 @@ export function blockShell(type, attrs = {}, parent) {
     }
 }
 const PADDING = { none: "0", small: "0.75rem", medium: "1.5rem", large: "3rem" };
-const TONES = { info: "var(--ecx-color-info, #1a597b)", success: "var(--ecx-color-success, #15803d)", warning: "var(--ecx-color-warning, #b45309)", danger: "var(--ecx-color-danger, #b91c1c)" };
 const compact = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined));
-const calloutTone = (a) => (TONES[a.tone] ? a.tone : "info");
 const buttonVariant = (a) => (a.variant === "secondary" || a.variant === "outline" ? a.variant : "primary");
 /**
  * 1.20: class độ rộng của khối (`ecx-align-wide|full` + `alignwide|alignfull` như WP để theme viết CSS quen tay).

@@ -73,7 +73,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -81,58 +81,96 @@
           "type": "doc",
           "content": [
             {
-              "type": "mediaText",
+              "type": "columns",
               "attrs": {
-                "position": "left"
+                "verticalAlign": "center"
               },
               "content": [
                 {
-                  "type": "heading",
+                  "type": "column",
                   "attrs": {
-                    "level": 2
+                    "width": 50
                   },
                   "content": [
                     {
-                      "type": "text",
-                      "text": "Ảnh bên trái"
+                      "type": "image"
                     }
                   ]
                 },
                 {
-                  "type": "paragraph",
+                  "type": "column",
+                  "attrs": {
+                    "width": 50
+                  },
                   "content": [
                     {
-                      "type": "text",
-                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Ảnh bên trái"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
                     }
                   ]
                 }
               ]
             },
             {
-              "type": "mediaText",
+              "type": "columns",
               "attrs": {
-                "position": "right"
+                "verticalAlign": "center"
               },
               "content": [
                 {
-                  "type": "heading",
+                  "type": "column",
                   "attrs": {
-                    "level": 2
+                    "width": 50
                   },
                   "content": [
                     {
-                      "type": "text",
-                      "text": "Ảnh bên phải"
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Ảnh bên phải"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                        }
+                      ]
                     }
                   ]
                 },
                 {
-                  "type": "paragraph",
+                  "type": "column",
+                  "attrs": {
+                    "width": 50
+                  },
                   "content": [
                     {
-                      "type": "text",
-                      "text": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối."
+                      "type": "image"
                     }
                   ]
                 }

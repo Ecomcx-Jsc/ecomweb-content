@@ -19,14 +19,13 @@ test("blockquote: trích dẫn; khối lạ → null", () => {
   assert.equal(blockShell("nope"), null);
 });
 
-test("group/callout/button/spacer/cover/mediaText/pullquote có vỏ; nút đứng riêng có vỏ bọc", () => {
+test("group/button/spacer/cover có vỏ; nút đứng riêng có vỏ bọc", () => {
   assert.equal(blockShell("group", { padding: "small" })!.style!.padding, "0.75rem");
   assert.equal(blockShell("group", { background: "#fff" })!.style!.padding, "1.5rem");
-  assert.equal(blockShell("callout", { tone: "x" })!.className, "ecx-callout cms-callout ecx-callout-info cms-callout-info");
   assert.equal(blockShell("button", { variant: "outline" })!.tag, "a");
   assert.equal(blockShell("spacer", {})!.style!.height !== undefined, true);
-  assert.equal(blockShell("mediaText", { position: "right" })!.className, "ecx-media-text is-right is-stack");
-  assert.equal(blockShell("pullquote")!.tag, "figure");
+  // 2 (v3): callout / mediaText / pullquote đã bỏ — không còn vỏ
+  for (const t of ["callout", "mediaText", "pullquote"]) assert.equal(blockShell(t), null);
   assert.equal(buttonWrapShell({ align: "center" }).style!.textAlign, "center");
   assert.equal(coverParts({ src: "/a.jpg", fixed: true }).fixed, true);
 });

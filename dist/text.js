@@ -1,4 +1,4 @@
-const BLOCK_BREAK = new Set(["paragraph", "heading", "listItem", "taskItem", "blockquote", "codeBlock", "tableCell", "tableHeader"]);
+const BLOCK_BREAK = new Set(["paragraph", "heading", "listItem", "blockquote", "codeBlock", "tableCell", "tableHeader"]);
 /** Chữ thuần của một nút (không định dạng). */
 export function nodeText(node) {
     if (node.type === "text")

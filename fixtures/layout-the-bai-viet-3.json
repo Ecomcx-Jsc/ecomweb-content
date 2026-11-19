@@ -56,7 +56,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",

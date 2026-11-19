@@ -53,7 +53,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -91,11 +91,10 @@
               ]
             },
             {
-              "type": "youtube",
+              "type": "video",
               "attrs": {
-                "start": 5,
-                "anchor": "abc",
-                "className": "abc"
+                "className": "abc",
+                "anchor": "abc"
               }
             }
           ]

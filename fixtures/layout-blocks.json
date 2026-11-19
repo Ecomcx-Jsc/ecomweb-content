@@ -121,7 +121,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "id": "main",
@@ -168,11 +168,31 @@
                   },
                   "content": [
                     {
-                      "type": "callout",
+                      "type": "group",
                       "attrs": {
-                        "title": "Lưu ý"
+                        "padding": "medium",
+                        "style": {
+                          "color": {
+                            "background": "#e8f1f6"
+                          },
+                          "radius": "8px"
+                        }
                       },
                       "content": [
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Lưu ý",
+                              "marks": [
+                                {
+                                  "type": "bold"
+                                }
+                              ]
+                            }
+                          ]
+                        },
                         {
                           "type": "paragraph",
                           "content": [
@@ -214,9 +234,15 @@
               ]
             },
             {
-              "type": "callout",
+              "type": "group",
               "attrs": {
-                "tone": "warning"
+                "padding": "medium",
+                "style": {
+                  "color": {
+                    "background": "#fff4e0"
+                  },
+                  "radius": "8px"
+                }
               },
               "content": [
                 {

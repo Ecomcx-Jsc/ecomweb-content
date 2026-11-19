@@ -70,7 +70,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -108,9 +108,8 @@
               ]
             },
             {
-              "type": "pullquote",
+              "type": "blockquote",
               "attrs": {
-                "citation": "abc",
                 "style": {
                   "fontFamily": "mono",
                   "fontSize": {
@@ -128,8 +127,10 @@
                   },
                   "writingMode": "vertical"
                 },
+                "className": "abc",
                 "anchor": "abc",
-                "className": "abc"
+                "citation": "abc",
+                "quoteAlign": "center"
               }
             }
           ]

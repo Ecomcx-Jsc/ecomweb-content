@@ -1,4 +1,5 @@
 import { blockNodeSpec, migrateBlockAttrs, type BlockDefinition } from "./block.js";
+import { upgradeLegacyContent } from "./legacy.js";
 import { migrateContent } from "./migrate.js";
 import { CORE_MARKS, CORE_NODES, normalizeAttrs, type NodeSpec } from "./schema.js";
 import { normalizeAnchor, normalizeBlockStyleName, normalizeClassName, normalizeStyle } from "./style.js";
@@ -41,12 +42,14 @@ export function normalizeContent(input: unknown, options: NormalizeOptions = {})
   if (typeof input === "string") return { doc: { version: CONTENT_VERSION, blocks: input ? [{ id: "main", type: "html", data: { html: input } }] : [] }, issues };
   if (!isObj(input)) { issues.push("content is not an object"); return { doc: empty(), issues }; }
   if (input.type === "doc") input = { version: CONTENT_VERSION, blocks: [{ id: "main", type: "richtext", data: input }] };
-  const raw = input as Record<string, unknown>;
+  let raw = input as Record<string, unknown>;
   if (!Array.isArray(raw.blocks)) { issues.push("content has no blocks"); return { doc: empty(), issues }; }
 
   const version = typeof raw.version === "number" && Number.isInteger(raw.version) && raw.version > 0 ? raw.version : CONTENT_VERSION;
+  // Bản 1: đổi khối cũ sang khối v3 trước khi chuẩn hoá (khối cũ không còn trong schema)
+  if (version < 2) raw = upgradeLegacyContent(raw);
   const blocks: Block[] = [];
-  for (const b of raw.blocks) {
+  for (const b of raw.blocks as unknown[]) {
     const block = normalizeBlock(b, state);
     if (block) blocks.push(block);
   }

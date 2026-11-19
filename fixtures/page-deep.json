@@ -552,7 +552,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -929,10 +929,13 @@
                                   },
                                   "content": [
                                     {
-                                      "type": "rating",
-                                      "attrs": {
-                                        "value": 4
-                                      }
+                                      "type": "paragraph",
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "★★★★☆"
+                                        }
+                                      ]
                                     }
                                   ]
                                 }
@@ -1009,10 +1012,13 @@
                                   },
                                   "content": [
                                     {
-                                      "type": "rating",
-                                      "attrs": {
-                                        "value": 4
-                                      }
+                                      "type": "paragraph",
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "★★★★☆"
+                                        }
+                                      ]
                                     }
                                   ]
                                 }
@@ -1089,10 +1095,13 @@
                                   },
                                   "content": [
                                     {
-                                      "type": "rating",
-                                      "attrs": {
-                                        "value": 4
-                                      }
+                                      "type": "paragraph",
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "★★★★☆"
+                                        }
+                                      ]
                                     }
                                   ]
                                 }

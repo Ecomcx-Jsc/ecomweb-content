@@ -209,7 +209,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "id": "main",
@@ -280,30 +280,49 @@
               }
             },
             {
-              "type": "mediaText",
+              "type": "columns",
               "attrs": {
-                "src": "/uploads/a.jpg",
-                "position": "right",
-                "width": 80,
-                "verticalAlign": "top",
-                "stack": false
+                "verticalAlign": "top"
               },
               "content": [
                 {
-                  "type": "paragraph",
+                  "type": "column",
+                  "attrs": {
+                    "width": 20
+                  },
                   "content": [
                     {
-                      "type": "text",
-                      "text": "Chữ cạnh ảnh"
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Chữ cạnh ảnh"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 80
+                  },
+                  "content": [
+                    {
+                      "type": "image",
+                      "attrs": {
+                        "src": "/uploads/a.jpg"
+                      }
                     }
                   ]
                 }
               ]
             },
             {
-              "type": "pullquote",
+              "type": "blockquote",
               "attrs": {
-                "citation": "Ai đó"
+                "citation": "Ai đó",
+                "quoteAlign": "center"
               },
               "content": [
                 {
@@ -313,17 +332,22 @@
               ]
             },
             {
-              "type": "details",
-              "attrs": {
-                "summary": "Câu hỏi?"
-              },
+              "type": "accordion",
               "content": [
                 {
-                  "type": "paragraph",
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi?"
+                  },
                   "content": [
                     {
-                      "type": "text",
-                      "text": "Trả lời"
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Trả lời"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -352,7 +376,7 @@
               }
             },
             {
-              "type": "preformatted",
+              "type": "codeBlock",
               "content": [
                 {
                   "type": "text",

@@ -132,7 +132,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "id": "main",
@@ -221,22 +221,38 @@
               }
             },
             {
-              "type": "testimonial",
+              "type": "testimonials",
               "attrs": {
-                "quote": "Dịch vụ rất tốt, giao hàng đúng hẹn.",
-                "name": "Nguyễn An",
-                "role": "Chủ shop",
-                "src": "https://example.com/an.jpg",
-                "mediaId": 7,
-                "textAlign": "center"
-              }
+                "columns": 1
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Dịch vụ rất tốt, giao hàng đúng hẹn.",
+                    "name": "Nguyễn An",
+                    "role": "Chủ shop",
+                    "src": "https://example.com/an.jpg",
+                    "mediaId": 7,
+                    "textAlign": "center"
+                  }
+                }
+              ]
             },
             {
-              "type": "testimonial",
+              "type": "testimonials",
               "attrs": {
-                "quote": "Không có ảnh",
-                "name": "Bình"
-              }
+                "columns": 1
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Không có ảnh",
+                    "name": "Bình"
+                  }
+                }
+              ]
             },
             {
               "type": "progressBar",

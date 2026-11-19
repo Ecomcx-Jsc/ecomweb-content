@@ -62,7 +62,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -76,13 +76,21 @@
                   "type": "column",
                   "content": [
                     {
-                      "type": "testimonial",
+                      "type": "testimonials",
                       "attrs": {
-                        "quote": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
-                        "name": "Khách hàng 1",
-                        "role": "Giám đốc",
-                        "rating": 5
-                      }
+                        "columns": 1
+                      },
+                      "content": [
+                        {
+                          "type": "testimonial",
+                          "attrs": {
+                            "quote": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                            "name": "Khách hàng 1",
+                            "role": "Giám đốc",
+                            "rating": 5
+                          }
+                        }
+                      ]
                     }
                   ]
                 },
@@ -90,13 +98,21 @@
                   "type": "column",
                   "content": [
                     {
-                      "type": "testimonial",
+                      "type": "testimonials",
                       "attrs": {
-                        "quote": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
-                        "name": "Khách hàng 2",
-                        "role": "Giám đốc",
-                        "rating": 5
-                      }
+                        "columns": 1
+                      },
+                      "content": [
+                        {
+                          "type": "testimonial",
+                          "attrs": {
+                            "quote": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                            "name": "Khách hàng 2",
+                            "role": "Giám đốc",
+                            "rating": 5
+                          }
+                        }
+                      ]
                     }
                   ]
                 },
@@ -104,13 +120,21 @@
                   "type": "column",
                   "content": [
                     {
-                      "type": "testimonial",
+                      "type": "testimonials",
                       "attrs": {
-                        "quote": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
-                        "name": "Khách hàng 3",
-                        "role": "Giám đốc",
-                        "rating": 5
-                      }
+                        "columns": 1
+                      },
+                      "content": [
+                        {
+                          "type": "testimonial",
+                          "attrs": {
+                            "quote": "Nội dung mẫu để thử bố cục: đủ dài để xuống dòng khi cột hẹp và để thấy khoảng cách giữa các khối.",
+                            "name": "Khách hàng 3",
+                            "role": "Giám đốc",
+                            "rating": 5
+                          }
+                        }
+                      ]
                     }
                   ]
                 }

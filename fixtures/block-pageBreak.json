@@ -52,7 +52,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -88,13 +88,6 @@
                   "text": "Đoạn thứ hai."
                 }
               ]
-            },
-            {
-              "type": "pageBreak",
-              "attrs": {
-                "anchor": "abc",
-                "className": "abc"
-              }
             }
           ]
         }

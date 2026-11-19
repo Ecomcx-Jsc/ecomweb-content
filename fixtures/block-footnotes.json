@@ -70,7 +70,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -106,31 +106,6 @@
                   "text": "Đoạn thứ hai."
                 }
               ]
-            },
-            {
-              "type": "footnotes",
-              "attrs": {
-                "title": "abc",
-                "style": {
-                  "fontFamily": "mono",
-                  "fontSize": {
-                    "base": "6em"
-                  },
-                  "letterSpacing": {
-                    "base": "abc"
-                  },
-                  "fontWeight": "900",
-                  "fontStyle": "italic",
-                  "textDecoration": "line-through",
-                  "textTransform": "capitalize",
-                  "textAlign": {
-                    "base": "justify"
-                  },
-                  "writingMode": "vertical"
-                },
-                "anchor": "abc",
-                "className": "abc"
-              }
             }
           ]
         }

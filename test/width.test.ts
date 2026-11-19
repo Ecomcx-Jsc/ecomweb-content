@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { WIDE_BLOCKS, blockShell, normalizeContent, normalizePresets, presetCss, widthClass } from "../src/index.js";
 
 test("WIDE_BLOCKS: khối bố cục / media có align wide|full, khối chữ và nút thì không", () => {
-  for (const t of ["group", "columns", "cover", "mediaText", "gallery", "image", "video", "embed", "table", "query"]) assert.ok(WIDE_BLOCKS.includes(t), t);
+  for (const t of ["group", "columns", "cover", "gallery", "image", "video", "embed", "table", "query"]) assert.ok(WIDE_BLOCKS.includes(t), t);
   for (const t of ["paragraph", "heading", "button", "buttons", "socialLinks"]) assert.ok(!WIDE_BLOCKS.includes(t), t);
 });
 

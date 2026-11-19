@@ -78,7 +78,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -116,9 +116,15 @@
               ]
             },
             {
-              "type": "callout",
+              "type": "group",
               "attrs": {
-                "tone": "info"
+                "padding": "medium",
+                "style": {
+                  "color": {
+                    "background": "#e8f1f6"
+                  },
+                  "radius": "8px"
+                }
               },
               "content": [
                 {

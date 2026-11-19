@@ -24,7 +24,6 @@ test("nút: màu Thường / Rê chuột qua biến của vỏ nút; ảnh: cả
 test("bảng, tabs, đường kẻ, widget: bộ chọn theo markup chung", () => {
   assert.equal(css("table", { tableHeaderBg: "#000", tableStripe: "#fafafa" }), ".X.X th{background: #000}.X.X tbody tr:nth-child(even) > td{background: #fafafa}");
   assert.equal(css("tabs", { tabsActiveColor: "#f00" }), ".X.X [role=tab][aria-selected=true]{color: #f00}");
-  assert.equal(css("horizontalRule", { hrStyle: "dashed", hrColor: "#ccc" }), ".X.X{border-top-style: dashed;border-top-color: #ccc}");
   assert.equal(css("progressBar", { progressBarColor: "accent" }), ".X.X .ecx-progress-bar{background: var(--ecx-color-accent, accent)}");
   assert.equal(css("columns", { columnsDirection: { mobile: "column-reverse" } }), "@media (max-width:640px){.X.X{flex-direction: column-reverse}}");
 });
@@ -33,7 +32,7 @@ test("giá trị sai bị bỏ; ô chỉ áp cho đúng loại khối; nội dun
   assert.equal(css("bulletList", { listMarker: "url(x)", listMarkerColor: "red;}" }), "");
   assert.equal(css("paragraph", { listMarker: "disc" }), "");
   assert.equal(controlsCss(CORE_CONTROLS, "group", { background: "#fff", padding: "large" }), null);
-  assert.deepEqual(Object.keys(coreControlsFor("heading")), ["textShadow", "textIconColor", "textIconSize", "textIconGap", "textColumns", "textColumnGap", "dropCap", "textMaxWidth"]);
+  assert.deepEqual(Object.keys(coreControlsFor("heading")), ["textShadow", "textIconColor", "textIconSize", "textIconGap", "textStrokeWidth", "textStrokeColor", "textBlend", "textColumns", "textColumnGap", "dropCap", "textMaxWidth"]);
   assert.ok(Object.keys(coreControlsFor("iconList")).includes("iconListIconColor"));
 });
 
@@ -80,7 +79,6 @@ test("1.32 ô ở tab Cài đặt: danh sách chia cột / xếp ngang, nhóm n�
   const css = (type: string, attrs: Record<string, unknown>) => controlsCss(CORE_CONTROLS, type, attrs)?.css ?? "";
   assert.match(css("bulletList", { listColumns: { base: "2", mobile: "1" }, listLayout: "flex" }), /columns: 2.*--ecx-list-display: flex.*@media \(max-width:640px\)\{[^}]*columns: 1/);
   assert.match(css("buttons", { buttonsDirection: { mobile: "column" }, buttonsFill: { mobile: "1" } }), /@media \(max-width:640px\)\{[^}]*flex-direction: column[^]*flex-grow: 1/);
-  assert.match(css("horizontalRule", { hrGap: "3rem" }), /margin-block: 3rem/);
   assert.match(css("socialLinks", { socialShape: "none" }), /--ecx-social-radius: var\(--ecx-radius-none, 0\)/);
   assert.match(css("paragraph", { dropCap: "3" }), /::first-letter\{initial-letter: 3\}/);
   assert.equal(css("paragraph", { dropCap: "9" }), ""); // ngoài danh sách → bỏ

@@ -38,10 +38,7 @@ test("image.href / linkTarget, blockquote.citation, orderedList.reversed, postDa
   assert.equal(run({ type: "postDate", attrs: { displayType: "x" } }).displayType, undefined);
 });
 
-test("block mới: rating kẹp giá trị, countdown/accordion giữ thuộc tính, gallery/navigation enum sai bị bỏ", () => {
-  const r = run({ type: "rating", attrs: { value: 99, max: 3, label: "x" } });
-  assert.equal(r.value, 10);
-  assert.equal(r.max, 3);
+test("block mới: countdown/accordion giữ thuộc tính, gallery/navigation enum sai bị bỏ", () => {
   assert.equal(run({ type: "countdown", attrs: { target: "2030-01-01T00:00:00Z", label: "Sale" } }).target, "2030-01-01T00:00:00Z");
   assert.equal(run({ type: "accordion", attrs: { multiple: "true" } }).multiple, true);
   assert.equal(run({ type: "gallery", attrs: { images: [], linkTo: "bogus", imageCrop: false } }).linkTo, undefined);
@@ -77,14 +74,13 @@ test("mark kbd được giữ", () => {
   assert.equal(doc.blocks[0].data.content[0].content[0].marks?.[0].type, "kbd");
 });
 
-test("icon: tên ngoài danh sách bị bỏ, cỡ kẹp; loginout / footnotes / pageBreak / mark footnote", () => {
+test("icon: tên ngoài danh sách bị bỏ, cỡ kẹp; loginout / mark footnote", () => {
   assert.equal(run({ type: "icon", attrs: { name: "<script>", size: 999 } }).name, undefined);
   assert.equal(run({ type: "icon", attrs: { name: "mail", size: 999 } }).size, 128);
   assert.equal(run({ type: "loginout", attrs: { loginText: "Vào" } }).loginText, "Vào");
-  assert.equal(run({ type: "footnotes", attrs: { title: "Chú thích" } }).title, "Chú thích");
   const doc = normalizeContent({ version: 1, blocks: [{ id: "main", type: "richtext", data: { type: "doc", content: [{ type: "paragraph", content: [{ type: "text", text: "a", marks: [{ type: "footnote", attrs: { note: "ghi chú" } }] }] }, { type: "pageBreak" }] } }] } as never).doc as never as { blocks: { data: { content: { type: string; content?: { marks?: { attrs?: { note: string } }[] }[] }[] } }[] };
   assert.equal(doc.blocks[0].data.content[0].content?.[0].marks?.[0].attrs?.note, "ghi chú");
-  assert.equal(doc.blocks[0].data.content[1].type, "pageBreak");
+  assert.equal(doc.blocks[0].data.content.length, 1); // 2 (v3): pageBreak của bản 1 bị bỏ
 });
 
 test("comments: perPage kẹp 1–50, order chỉ asc|desc, avatarSize kẹp, showDate ép bool", () => {

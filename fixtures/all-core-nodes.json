@@ -391,7 +391,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "id": "main",
@@ -590,17 +590,21 @@
               ]
             },
             {
-              "type": "taskList",
+              "type": "bulletList",
+              "attrs": {
+                "listMarker": "none"
+              },
               "content": [
                 {
-                  "type": "taskItem",
-                  "attrs": {
-                    "checked": true
-                  },
+                  "type": "listItem",
                   "content": [
                     {
                       "type": "paragraph",
                       "content": [
+                        {
+                          "type": "text",
+                          "text": "☑ "
+                        },
                         {
                           "type": "text",
                           "text": "Xong"
@@ -638,7 +642,11 @@
               ]
             },
             {
-              "type": "horizontalRule"
+              "type": "spacer",
+              "attrs": {
+                "height": "md",
+                "line": true
+              }
             },
             {
               "type": "image",
@@ -768,10 +776,9 @@
               ]
             },
             {
-              "type": "youtube",
+              "type": "video",
               "attrs": {
-                "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                "start": 10
+                "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
               }
             }
           ]

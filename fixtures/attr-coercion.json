@@ -112,7 +112,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "id": "main",
@@ -161,17 +161,21 @@
               }
             },
             {
-              "type": "taskList",
+              "type": "bulletList",
+              "attrs": {
+                "listMarker": "none"
+              },
               "content": [
                 {
-                  "type": "taskItem",
-                  "attrs": {
-                    "checked": true
-                  },
+                  "type": "listItem",
                   "content": [
                     {
                       "type": "paragraph",
                       "content": [
+                        {
+                          "type": "text",
+                          "text": "☐ "
+                        },
                         {
                           "type": "text",
                           "text": "d"

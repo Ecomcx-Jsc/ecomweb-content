@@ -73,7 +73,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -90,7 +90,7 @@
                   "type": "column",
                   "content": [
                     {
-                      "type": "youtube",
+                      "type": "video",
                       "attrs": {
                         "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                       }

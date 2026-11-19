@@ -75,7 +75,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -113,32 +113,37 @@
               ]
             },
             {
-              "type": "details",
+              "type": "accordion",
               "content": [
                 {
-                  "type": "paragraph",
-                  "attrs": {
-                    "textAlign": "justify",
-                    "style": {
-                      "fontFamily": "mono",
-                      "fontSize": {
-                        "base": "6em"
-                      },
-                      "letterSpacing": {
-                        "base": "abc"
-                      },
-                      "fontWeight": "900",
-                      "fontStyle": "italic",
-                      "textDecoration": "line-through",
-                      "textTransform": "capitalize",
-                      "textAlign": {
-                        "base": "justify"
-                      },
-                      "writingMode": "vertical"
-                    },
-                    "anchor": "abc",
-                    "className": "abc"
-                  }
+                  "type": "details",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "justify",
+                        "style": {
+                          "fontFamily": "mono",
+                          "fontSize": {
+                            "base": "6em"
+                          },
+                          "letterSpacing": {
+                            "base": "abc"
+                          },
+                          "fontWeight": "900",
+                          "fontStyle": "italic",
+                          "textDecoration": "line-through",
+                          "textTransform": "capitalize",
+                          "textAlign": {
+                            "base": "justify"
+                          },
+                          "writingMode": "vertical"
+                        },
+                        "anchor": "abc",
+                        "className": "abc"
+                      }
+                    }
+                  ]
                 }
               ]
             }

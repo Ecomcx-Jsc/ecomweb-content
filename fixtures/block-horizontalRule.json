@@ -53,7 +53,7 @@
     ]
   },
   "expected": {
-    "version": 1,
+    "version": 2,
     "blocks": [
       {
         "type": "richtext",
@@ -91,11 +91,13 @@
               ]
             },
             {
-              "type": "horizontalRule",
+              "type": "spacer",
               "attrs": {
                 "blockStyle": "wide",
+                "className": "abc",
                 "anchor": "abc",
-                "className": "abc"
+                "height": "md",
+                "line": true
               }
             }
           ]
