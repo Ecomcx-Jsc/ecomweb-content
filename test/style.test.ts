@@ -57,3 +57,10 @@ test("token: tên biến cũ của theme vẫn được đọc", () => {
   for (const legacy of ["--primary", "--ecx-accent", "--ecx-muted", "--ecx-surface", "--ecx-border", "--ecx-code-bg", "--ecx-code-fg", "--ecx-button-bg", "--ecx-button-fg", "--ecx-input-bg"])
     assert.ok(css.includes(`var(${legacy},`), `thiếu alias ${legacy}`);
 });
+
+test("style.css: nhịp giữa khối cấp trên cùng (flow) — đứng trước quy tắc riêng của từng khối, khối đầu không có lề trên", () => {
+  const flow = css.indexOf(":where(.ecx-content) > :where(* + *) { margin-block-start: var(--ecx-flow); }");
+  assert.ok(flow > 0, "thiếu quy tắc flow");
+  assert.ok(css.includes(":where(.ecx-content) > :where(:first-child) { margin-block-start: 0; }"));
+  assert.ok(flow < css.indexOf(":where(.ecx-content) :where(figure)"), "flow phải đứng trước quy tắc figure để figure giữ lề riêng");
+});

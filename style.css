@@ -102,6 +102,12 @@
   }
 
   :where(.ecx-content) { overflow-wrap: break-word; }
+  /* Nhịp giữa các khối ở cấp trên cùng (như layout "flow" của WordPress): mỗi khối cách khối trước --ecx-flow, khối đầu / cuối không để lề thừa.
+     Trình soạn và website cùng mang class .ecx-content nên khoảng cách giống nhau mà không cần theme viết selector riêng; theme muốn khác thì đặt
+     --ecx-flow hoặc viết CSS của mình (luôn thắng vì file này ở layer thấp nhất). Đặt TRƯỚC các quy tắc riêng của từng khối bên dưới. */
+  :where(.ecx-content) > :where(*) { margin-block-end: 0; }
+  :where(.ecx-content) > :where(* + *) { margin-block-start: var(--ecx-flow); }
+  :where(.ecx-content) > :where(:first-child) { margin-block-start: 0; }
 
   :where(.ecx-content) :where(h1, h2, h3, h4, h5, h6) { font-weight: var(--ecx-font-weight-heading); line-height: var(--ecx-line-height-heading); letter-spacing: var(--ecx-letter-spacing-heading); text-wrap: balance; }
   :where(.ecx-content) :where(ul, ol) { padding-left: 1.5em; }

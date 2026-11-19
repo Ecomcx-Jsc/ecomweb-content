@@ -24,7 +24,7 @@ Mọi khối lõi (`style.css`, kiểu inline của nút / callout trong `src/ma
 | | `--ecx-line-height-body` / `-heading` | 1.65 / 1.2 |
 | | `--ecx-font-weight-heading`, `--ecx-letter-spacing-heading` | 700, -.015em |
 | Khoảng cách | `--ecx-spacing-xs` … `-3xl` | .25 / .5 / 1 / 1.5 / 2.5 / 4 / 6 rem |
-| | `--ecx-flow` (nhịp giữa các khối) | 1.5em |
+| | `--ecx-flow` (nhịp giữa các khối cấp trên cùng của `.ecx-content`: mỗi khối cách khối trước `--ecx-flow`, khối đầu không lề trên — như layout "flow" của WordPress; trình soạn và website cùng quy tắc nên giống nhau) | 1.5em |
 | Hình | `--ecx-radius-sm` / `-md` / `-lg` / `-xl` / `-pill` | 4 / 8 / 12 / 16 / 999 px |
 | | `--ecx-border-width` | 1px |
 | | `--ecx-shadow-sm` … `-xl` | trùng giá trị mặc định của `style.shadow` |
