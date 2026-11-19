@@ -1,3 +1,4 @@
+import { type SvgIcon } from "./svg-icon.js";
 /**
  * 1.23: khối "widget" của lõi (Icon Box, Image Box, Icon List, Counter, Testimonial, Progress Bar) — markup dựng MỘT lần ở đây
  * thành cây phần tử (khoá props kiểu React); website (theme-sdk) và khung soạn (TextEditor) chỉ đổi cây ra React → hai nơi vẽ y hệt.
@@ -6,6 +7,22 @@
 /** Tập icon cố định (24×24, nét 2, lucide). Chỉ nhận tên trong bảng — không nhận SVG tuỳ ý (chống XSS). Khối `icon` dùng chung. */
 export declare const ICON_PATHS: Record<string, string>;
 export declare const ICON_NAMES: readonly string[];
+/** Số icon lõi (56) — phần còn lại do thư viện nạp thêm (registerIconLibrary). */
+export declare const ICON_CORE_COUNT: number;
+/**
+ * Nạp thư viện icon lớn (`@ecomcx/ecomweb-content/icon-library`, ~1.900 icon Lucide) — website nạp ở máy chủ, trình soạn nạp lúc khởi động.
+ * Tên của bộ lõi (camelCase) giữ nguyên; icon thư viện đặt tên kebab-case nên không đè nhau. Gọi nhiều lần vô hại.
+ */
+export declare function registerIconLibrary(lib: Record<string, string>): void;
+/** Icon của một giá trị: tên trong bảng (nét) hoặc SVG riêng đã lọc (`svg:…`); không có → undefined. */
+export type ResolvedIcon = {
+    kind: "path";
+    d: string;
+} | {
+    kind: "svg";
+    icon: SvgIcon;
+};
+export declare function resolveIcon(value: unknown): ResolvedIcon | undefined;
 /** Kính lúp của khối Tìm kiếm (không nằm trong bảng icon chọn được). */
 export declare const SEARCH_ICON_PATH = "M21 21l-4.3-4.3M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z";
 /** Phần tử của cây markup. `field` = chữ lấy từ thuộc tính đó (khung soạn gõ trực tiếp); `slot: "media"` = chỗ chọn ảnh khi soạn. */
@@ -20,7 +37,9 @@ export interface WidgetEl {
     /** Website thay phần tử này bằng component trình duyệt (đếm số khi cuộn tới). */
     client?: "counter";
 }
-export declare const WIDGET_BLOCKS: readonly ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar", "map"];
+export declare const IMAGE_OVERLAY_RATIOS: readonly string[];
+export declare const IMAGE_OVERLAY_EFFECTS: readonly string[];
+export declare const WIDGET_BLOCKS: readonly ["iconBox", "imageBox", "imageOverlay", "iconList", "counter", "testimonial", "progressBar", "map"];
 type Attrs = Record<string, any>;
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */
 /** Class của danh sách icon (dùng chung website và khung soạn). */

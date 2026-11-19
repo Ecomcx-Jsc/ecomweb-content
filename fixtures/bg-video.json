@@ -1,0 +1,178 @@
+{
+  "name": "bg-video",
+  "note": "Video nền (mp4/webm trong site hoặc https; địa chỉ lạ bị bỏ) và làm mờ nền sau khối (0–40px)",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "video": "/uploads/hero.mp4",
+                    "image": {
+                      "base": "/uploads/poster.jpg"
+                    },
+                    "fixed": true
+                  },
+                  "backdropBlur": "12px",
+                  "color": {
+                    "background": "primary/40"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "A"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "video": "javascript:alert(1)"
+                  },
+                  "backdropBlur": "99px"
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "B"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "video": "https://cdn.example.com/x.webm?v=2"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "C"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "backdropBlur": "12px",
+                  "color": {
+                    "background": "primary/40"
+                  },
+                  "background": {
+                    "image": {
+                      "base": "/uploads/poster.jpg"
+                    },
+                    "fixed": true,
+                    "video": "/uploads/hero.mp4"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "A"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "B"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "video": "https://cdn.example.com/x.webm?v=2"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "C"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

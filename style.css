@@ -78,6 +78,16 @@
     --ecx-button-padding-xl: 1em 2.1em;
     --ecx-filter-none: none;
     --ecx-filter-grayscale: grayscale(1);
+    --ecx-filter-invert: invert(1);
+    /* Mặt nạ hình cho ảnh (ô "Hình cắt" của khối Ảnh) */
+    --ecx-mask-circle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3C/svg%3E");
+    --ecx-mask-blob: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M78 20C92 36 100 56 88 74S56 100 36 92 0 70 6 46 24 4 46 2s18 2 32 18Z'/%3E%3C/svg%3E");
+    --ecx-mask-hexagon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M25 4h50l25 46-25 46H25L0 50Z'/%3E%3C/svg%3E");
+    --ecx-mask-diamond: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 100 50 50 100 0 50Z'/%3E%3C/svg%3E");
+    --ecx-mask-triangle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 100 96H0Z'/%3E%3C/svg%3E");
+    --ecx-mask-heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 92C20 68 2 50 2 30A24 24 0 0 1 50 22 24 24 0 0 1 98 30C98 50 80 68 50 92Z'/%3E%3C/svg%3E");
+    --ecx-mask-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 2 62 36 98 38 70 60 80 96 50 76 20 96 30 60 2 38 38 36Z'/%3E%3C/svg%3E");
+    --ecx-mask-arch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 100V50A50 50 0 0 1 100 50V100Z'/%3E%3C/svg%3E");
     --ecx-filter-sepia: sepia(.8);
     --ecx-filter-blur: blur(3px);
     --ecx-filter-bright: brightness(1.15);
@@ -101,6 +111,8 @@
   :where(.ecx-content) :where(.ecx-task-list) { list-style: none; padding-left: 0; }
   :where(.ecx-content) :where(.ecx-task-item) { display: flex; gap: .5em; align-items: baseline; }
 
+  /* 1.32 Danh sách xếp ngang (Cài đặt › Bố cục danh sách): --ecx-list-display: flex */
+  :where(.ecx-content) :where(ul, ol) { display: var(--ecx-list-display, block); flex-wrap: wrap; column-gap: 1.75em; }
   :where(.ecx-content) :where(blockquote) { margin: var(--ecx-flow) 0; padding: .25em 0 .25em 1em; border-left: 3px solid var(--ecx-color-link); color: var(--ecx-color-muted); }
   :where(.ecx-content) :where(pre) { padding: 1em 1.25em; border-radius: var(--ecx-radius-md); overflow-x: auto; background: var(--ecx-color-code-bg); color: var(--ecx-color-code-fg);
     font: .875rem/1.6 var(--ecx-font-family-mono); }
@@ -127,6 +139,21 @@
   :where(.ecx-content) :where(th, td) > :where(p) { margin: 0; }
   :where(.ecx-content) :where(tfoot td, tfoot th) { font-weight: 600; background: var(--ecx-color-surface); }
   :where(.ecx-content) :where(table.is-fixed) { table-layout: fixed; }
+  /* Ghim hàng tiêu đề / cột đầu khi cuộn (bật ở Cài đặt bảng: position:sticky); nền che chữ phía sau */
+  :where(.ecx-content) :where(thead th) { top: 0; z-index: 2; }
+  /* Cài đặt riêng của bảng (attrs: striped, hoverRows, lines, density, stickyHead, caption) */
+  :where(.ecx-content) :where(.ecx-table.is-striped) :where(tbody tr:nth-child(even) > td) { background: var(--ecx-color-surface); }
+  :where(.ecx-content) :where(.ecx-table.is-hover) :where(tbody tr:hover > td) { background: color-mix(in srgb, var(--ecx-accent, currentColor) 9%, transparent); }
+  :where(.ecx-content) :where(.ecx-table.is-lines-rows) :where(th, td) { border-inline-width: 0; }
+  :where(.ecx-content) :where(.ecx-table.is-lines-columns) :where(th, td) { border-block-width: 0; }
+  :where(.ecx-content) :where(.ecx-table.is-lines-none) :where(th, td) { border-width: 0; }
+  :where(.ecx-content) :where(.ecx-table.is-compact) :where(th, td) { padding: .25em .5em; height: auto; }
+  :where(.ecx-content) :where(.ecx-table.is-roomy) :where(th, td) { padding: .9em 1.1em; }
+  :where(.ecx-content) :where(.ecx-table.is-sticky-head) { max-height: 70vh; overflow-y: auto; }
+  :where(.ecx-content) :where(.ecx-table.is-sticky-head) :where(thead th) { position: sticky; background: var(--ecx-color-surface); }
+  :where(.ecx-content) :where(table caption) { caption-side: bottom; padding: .6em .75em; font-size: .9em; opacity: .75; text-align: start; }
+  :where(.ecx-content) :where(th, td):where(:first-child) { left: 0; z-index: 1; background-clip: padding-box; }
+  :where(.ecx-content) :where(td):where(:first-child) { background-color: var(--ecx-color-bg, Canvas); }
 
   :where(.ecx-content) :where(.ecx-youtube) { position: relative; aspect-ratio: 16 / 9; margin: var(--ecx-flow) 0; }
   :where(.ecx-content) :where(.ecx-youtube iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: var(--ecx-radius-md); }
@@ -155,9 +182,9 @@
   /* Rộng cố định của nút (ô Kiểu dáng): chưa đặt thì auto */
   :where(.ecx-button) { width: var(--ecx-button-width, auto); max-width: 100%; box-sizing: border-box; text-align: center; }
   /* 1.29 Icon cạnh chữ của Tiêu đề / Đoạn văn: mặt nạ SVG (--ecx-text-icon) tô màu chữ, cỡ theo chữ */
-  :where(.ecx-has-icon)::before { content: ""; display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; background: currentColor; -webkit-mask: var(--ecx-text-icon, none) center / contain no-repeat; mask: var(--ecx-text-icon, none) center / contain no-repeat; margin-inline-end: .4em; }
+  :where(.ecx-has-icon)::before { content: ""; display: inline-block; width: var(--ecx-text-icon-size, 1em); height: var(--ecx-text-icon-size, 1em); vertical-align: -.125em; background: var(--ecx-text-icon-color, currentColor); -webkit-mask: var(--ecx-text-icon, none) center / contain no-repeat; mask: var(--ecx-text-icon, none) center / contain no-repeat; margin-inline-end: var(--ecx-text-icon-gap, .4em); }
   :where(.ecx-has-icon.ecx-icon-right)::before { content: none; margin: 0; }
-  :where(.ecx-has-icon.ecx-icon-right)::after { content: ""; display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; background: currentColor; -webkit-mask: var(--ecx-text-icon, none) center / contain no-repeat; mask: var(--ecx-text-icon, none) center / contain no-repeat; margin-inline-start: .4em; }
+  :where(.ecx-has-icon.ecx-icon-right)::after { content: ""; display: inline-block; width: var(--ecx-text-icon-size, 1em); height: var(--ecx-text-icon-size, 1em); vertical-align: -.125em; background: var(--ecx-text-icon-color, currentColor); -webkit-mask: var(--ecx-text-icon, none) center / contain no-repeat; mask: var(--ecx-text-icon, none) center / contain no-repeat; margin-inline-start: var(--ecx-text-icon-gap, .4em); }
   :where(.ecx-button.is-icon-reveal) > :where(.ecx-widget-icon) { width: 0; margin-inline: 0; opacity: 0; transition: width .2s var(--ecx-motion-ease), margin .2s var(--ecx-motion-ease), opacity .2s var(--ecx-motion-ease); }
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon) { width: 1em; margin-inline: .5em; opacity: 1; }
   :where(.ecx-button.is-icon-reveal:hover, .ecx-button.is-icon-reveal:focus-visible) > :where(.ecx-widget-icon:first-child) { margin-inline-start: 0; }
@@ -204,7 +231,7 @@
   :where(.ecx-cover.is-top) { align-items: flex-start; }
   :where(.ecx-cover.is-bottom) { align-items: flex-end; }
   :where(.ecx-cover.is-fixed) { background-attachment: fixed; }
-  :where(.ecx-cover-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  :where(.ecx-cover-img, .ecx-cover-video) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   :where(.ecx-cover-overlay) { position: absolute; inset: 0; }
   :where(.ecx-cover-inner) { position: relative; width: 100%; max-width: 960px; margin-inline: auto; }
   :where(.ecx-cover-inner) > :where(:first-child) { margin-top: 0; }
@@ -259,6 +286,7 @@
     :where(.ecx-tabs.has-mobile-accordion) :where(.ecx-tab-button[aria-selected="true"])::after { content: "−"; }
     :where(.ecx-tabs.has-mobile-accordion) > :where(.ecx-tab-panel) { order: calc(var(--i, 0) * 2 + 1); }
   }
+  :where(.ecx-image img, img[class*="ecx-c-"]) { -webkit-mask: var(--ecx-img-mask, none) center / contain no-repeat; mask: var(--ecx-img-mask, none) center / contain no-repeat; }
   /* 1.24 hiệu ứng rê chuột / bộ lọc của ảnh (ô Kiểu dáng của khối ảnh) chuyển mượt */
   :where(.ecx-image img, img[class*="ecx-c-"]) { transition: transform .3s var(--ecx-motion-ease), filter .3s var(--ecx-motion-ease), opacity .3s var(--ecx-motion-ease); }
   @media (prefers-reduced-motion: reduce) { :where(.ecx-image img, img[class*="ecx-c-"]) { transition: none; } }
@@ -272,7 +300,7 @@
   :where(.ecx-countdown-parts) { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: var(--ecx-spacing-sm); }
   :where(.ecx-countdown-parts) > :where(span) { display: flex; flex-direction: column; align-items: center; min-width: 4.25rem; padding: var(--ecx-spacing-sm); border-radius: var(--ecx-radius-md); background: color-mix(in srgb, var(--ecx-color-primary) 8%, transparent); }
   :where(.ecx-countdown-parts strong) { font-size: 2em; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  :where(.ecx-countdown-parts small) { font-size: .75em; color: var(--ecx-color-muted); text-transform: uppercase; letter-spacing: .04em; }
+  :where(.ecx-countdown-parts small) { font-size: .75em; color: inherit; opacity: .75; text-transform: uppercase; letter-spacing: .04em; }
   :where(.ecx-countdown.has-divider) :where(.ecx-countdown-parts) > :where(span:not(:last-child))::after { content: ":"; position: absolute; }
   :where(.ecx-countdown.has-divider) :where(.ecx-countdown-parts) > :where(span) { position: relative; }
   :where(.ecx-countdown.has-divider) :where(.ecx-countdown-parts) > :where(span:not(:last-child))::after { inset-inline-end: calc(var(--ecx-spacing-sm) / -2 - .15em); top: var(--ecx-spacing-sm); font-size: 2em; line-height: 1.1; font-weight: 700; }
@@ -296,7 +324,7 @@
   :where(.ecx-social) { display: flex; flex-wrap: wrap; gap: .5em; margin: 1em 0; padding: 0; list-style: none; }
   :where(.ecx-social.is-center) { justify-content: center; }
   :where(.ecx-social.is-right) { justify-content: flex-end; }
-  :where(.ecx-social) :where(a) { display: inline-flex; align-items: center; gap: .4em; padding: .5em; border-radius: var(--ecx-radius-pill); background: var(--ecx-color-surface); color: inherit; text-decoration: none; font-size: 1.1em; font-weight: 600; line-height: 1; }
+  :where(.ecx-social) :where(a) { display: inline-flex; align-items: center; gap: .4em; padding: .5em; border-radius: var(--ecx-social-radius, var(--ecx-radius-pill)); background: var(--ecx-color-surface); color: inherit; text-decoration: none; font-size: 1.1em; font-weight: 600; line-height: 1; }
   :where(.ecx-social.has-labels) :where(a) { padding: .5em .9em; font-size: .875em; }
   :where(.ecx-social) :where(svg) { width: 1.1em; height: 1.1em; flex: none; }
   :where(.ecx-social.is-small) :where(a) { font-size: .85em; }
@@ -357,6 +385,17 @@
   @keyframes ecx-in-zoom-in { from { opacity: 0; scale: .9; } }
   @keyframes ecx-in-zoom-out { from { opacity: 0; scale: 1.1; } }
   @keyframes ecx-in-blur-in { from { opacity: 0; filter: blur(12px); } }
+  @keyframes ecx-in-flip-x { from { opacity: 0; transform: perspective(800px) rotateX(-70deg); } }
+  @keyframes ecx-in-flip-y { from { opacity: 0; transform: perspective(800px) rotateY(-70deg); } }
+  @keyframes ecx-in-rotate-in { from { opacity: 0; rotate: -12deg; scale: .9; } }
+  @keyframes ecx-in-bounce-in { 0% { opacity: 0; scale: .6; } 60% { opacity: 1; scale: 1.06; } 100% { scale: 1; } }
+  @keyframes ecx-in-reveal-up { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0); } }
+  @keyframes ecx-in-reveal-left { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+  @keyframes ecx-loop-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+  @keyframes ecx-loop-pulse { 0%, 100% { scale: 1; } 50% { scale: 1.05; } }
+  @keyframes ecx-loop-spin { to { rotate: 360deg; } }
+  @keyframes ecx-loop-swing { 0%, 100% { rotate: -3deg; } 50% { rotate: 3deg; } }
+  @keyframes ecx-parallax { from { translate: 0 calc(var(--ecx-px, -40px) * -1); } to { translate: 0 var(--ecx-px, -40px); } }
   /* Thứ tự khối con cho "hiện lần lượt" (tối đa 12, từ khối thứ 12 trở đi cùng nhịp) */
   :where(.ecx-in > :nth-child(2)) { --ecx-i: 1; } :where(.ecx-in > :nth-child(3)) { --ecx-i: 2; } :where(.ecx-in > :nth-child(4)) { --ecx-i: 3; }
   :where(.ecx-in > :nth-child(5)) { --ecx-i: 4; } :where(.ecx-in > :nth-child(6)) { --ecx-i: 5; } :where(.ecx-in > :nth-child(7)) { --ecx-i: 6; }
@@ -459,8 +498,15 @@
   /* 1.23: widget lõi (markup: src/widgets.ts). Chỉ token; icon theo màu chính, chữ phụ theo màu muted. */
   :where(.ecx-widget-icon) { width: 1em; height: 1em; flex: none; }
   /* Khối Icon: khung nền nhạt theo màu icon (tròn / vuông); có liên kết thì giữ màu của khối */
-  :where(.ecx-icon-shape) { display: inline-grid; place-items: center; color: inherit; line-height: 0; }
+  /* Hiệu ứng rê của icon (ô "Hiệu ứng khi rê" của khối Icon) */
+  :where(.ecx-icon-block) { --ecx-icon-fx-grow: scale(1.2); --ecx-icon-fx-shrink: scale(.85); --ecx-icon-fx-rotate: rotate(15deg); --ecx-icon-fx-lift: translateY(-4px); --ecx-icon-fx-spin: rotate(360deg); }
+  /* Tooltip thuần CSS (icon, mục của Icon List…): chữ ở data-ecx-tip, hiện khi rê chuột hoặc focus bàn phím */
+  :where([data-ecx-tip]) { position: relative; }
+  :where([data-ecx-tip]:hover, [data-ecx-tip]:focus-within)::after { content: attr(data-ecx-tip); position: absolute; z-index: 30; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); width: max-content; max-width: 16rem; padding: .4em .75em; border-radius: var(--ecx-radius-sm, 6px); background: var(--ecx-color-text); color: var(--ecx-color-background); font-size: .8rem; font-weight: 500; line-height: 1.35; text-align: center; white-space: normal; pointer-events: none; }
+  :where(.ecx-testimonial-icon) { flex: none; width: 2.5rem; height: 2.5rem; padding: .5rem; border-radius: 50%; background: color-mix(in srgb, currentColor 12%, transparent); color: var(--ecx-color-primary, currentColor); box-sizing: border-box; }
+  :where(.ecx-icon-shape) { display: inline-grid; place-items: center; color: inherit; line-height: 0; padding: var(--ecx-icon-pad, var(--ecx-icon-pad-auto, 0)); }
   :where(.ecx-icon-shape.is-circle, .ecx-icon-shape.is-square) { background: color-mix(in srgb, currentColor 12%, transparent); }
+  :where(.ecx-icon-shape) { transition: transform .25s var(--ecx-motion-ease, ease), color .2s, background .2s, border-color .2s, box-shadow .2s; }
   :where(.ecx-icon-shape.is-circle) { border-radius: 50%; }
   :where(.ecx-icon-shape.is-square) { border-radius: var(--ecx-radius-md); }
   :where(.ecx-icon-box, .ecx-image-box, .ecx-counter, .ecx-testimonial, .ecx-progress, .ecx-icon-list) { margin: var(--ecx-flow) 0; }
@@ -496,12 +542,131 @@
   :where(.ecx-icon-box-more) :where(a:hover) { text-decoration: underline; }
   @media (prefers-reduced-motion: reduce) { :where(.ecx-icon-box) :where(.ecx-icon-box-icon) { transition: none; } }
   /* 1.28 Thư viện ảnh kiểu masonry: ảnh nối cột, không bị cắt giữa chừng; chú thích chung nằm dưới cả các cột */
+  /* Mosaic: cứ 5 ảnh thì ảnh đầu to gấp đôi (chiếm 2×2), còn lại ô vuông */
+  :where(.ecx-gallery.is-mosaic) > :where(.ecx-gallery-item:nth-child(5n + 1)) { grid-column: span 2; grid-row: span 2; }
+  @media (max-width: 640px) { :where(.ecx-gallery.is-mosaic) > :where(.ecx-gallery-item:nth-child(5n + 1)) { grid-column: auto; grid-row: auto; } }
+  /* Tiles: ô dày đặc, mẫu lặp mỗi 7 ảnh (rộng, cao, vuông…) với hàng cao cố định */
+  :where(.ecx-gallery.is-tiles) > :where(.ecx-gallery-item) { overflow: hidden; }
+  :where(.ecx-gallery.is-tiles) > :where(.ecx-gallery-item) :where(img) { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto !important; }
+  :where(.ecx-gallery.is-tiles) > :where(.ecx-gallery-item:nth-child(7n + 1)) { grid-column: span 2; grid-row: span 2; }
+  :where(.ecx-gallery.is-tiles) > :where(.ecx-gallery-item:nth-child(7n + 4)) { grid-row: span 2; }
+  :where(.ecx-gallery.is-tiles) > :where(.ecx-gallery-item:nth-child(7n + 6)) { grid-column: span 2; }
+  @media (max-width: 640px) { :where(.ecx-gallery.is-tiles) > :where(.ecx-gallery-item) { grid-column: auto !important; grid-row: auto !important; } }
+  /* Kiểu chú thích: hiện khi rê chuột / phủ lên ảnh */
+  :where(.ecx-gallery.is-cap-hover, .ecx-gallery.is-cap-overlay) > :where(.ecx-gallery-item) { position: relative; overflow: hidden; }
+  :where(.ecx-gallery.is-cap-hover, .ecx-gallery.is-cap-overlay) > :where(.ecx-gallery-item) > :where(figcaption) { position: absolute; inset: auto 0 0 0; margin: 0; padding: 2rem .75rem .6rem; background: linear-gradient(transparent, rgb(0 0 0 / .7)); color: white; font-size: .85em; }
+  :where(.ecx-gallery.is-cap-hover) > :where(.ecx-gallery-item) > :where(figcaption) { opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s; }
+  :where(.ecx-gallery.is-cap-hover) > :where(.ecx-gallery-item:hover, .ecx-gallery-item:focus-within) > :where(figcaption) { opacity: 1; transform: none; }
+  @media (hover: none) { :where(.ecx-gallery.is-cap-hover) > :where(.ecx-gallery-item) > :where(figcaption) { opacity: 1; transform: none; } }
+  /* Thumbnail slider: ảnh lớn + dải ảnh nhỏ */
+  :where(.ecx-gallery-thumbs) { display: grid; gap: var(--ecx-gallery-gap, 8px); margin: var(--ecx-flow) 0; }
+  :where(.ecx-gt-main) > :where(.ecx-gallery-item) :where(img) { width: 100%; height: auto; max-height: 70vh; object-fit: contain; }
+  :where(.ecx-gt-strip) { display: flex; gap: var(--ecx-gallery-gap, 8px); overflow-x: auto; scroll-snap-type: x proximity; }
+  :where(.ecx-gt-thumb) { flex: 0 0 5.5rem; padding: 0; border: 2px solid transparent; border-radius: var(--ecx-radius-sm, 6px); background: none; cursor: pointer; opacity: .6; scroll-snap-align: start; }
+  :where(.ecx-gt-thumb) :where(img) { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: inherit; }
+  :where(.ecx-gt-thumb[aria-selected="true"]) { opacity: 1; border-color: var(--ecx-color-primary, currentColor); }
   :where(.ecx-gallery.is-masonry) > :where(.ecx-gallery-item) { break-inside: avoid; padding-bottom: var(--ecx-gallery-gap, 8px); }
   :where(.ecx-gallery.is-masonry) > :where(.ecx-gallery-caption) { column-span: all; }
   /* 1.28 Bản đồ */
   :where(.ecx-map) { margin: var(--ecx-flow) 0; }
   :where(.ecx-map) :where(iframe) { display: block; width: 100%; max-width: 100%; border: 0; border-radius: var(--ecx-radius-md); background: var(--ecx-color-surface); }
   :where(.ecx-map.is-empty) { display: grid; place-items: center; padding: var(--ecx-spacing-md); border: var(--ecx-border-width) dashed var(--ecx-color-border); border-radius: var(--ecx-radius-md); background: var(--ecx-color-surface); }
+  /* Ảnh phủ chữ: lớp màu + khung viền + chữ hiện khi rê / lấy nét; chữ trượt lên 24px; hiệu ứng ảnh (phóng to, đen trắng, mờ, trượt) */
+  :where(.ecx-image-overlay) { position: relative; overflow: hidden; margin: var(--ecx-flow) 0; border-radius: var(--ecx-radius-md); background: color-mix(in srgb, currentColor 18%, transparent); color: white; --_dur: var(--ecx-dur-slow, .35s); }
+  :where(.ecx-image-overlay.has-ratio) { aspect-ratio: var(--ecx-ov-ratio, 4/3); }
+  :where(.ecx-image-overlay-media) { margin: 0; }
+  :where(.ecx-image-overlay.has-ratio .ecx-image-overlay-media) { position: absolute; inset: 0; }
+  :where(.ecx-image-overlay-media) :where(img) { display: block; width: 100%; height: auto; max-width: none; margin: 0; transition: transform var(--_dur) ease-in-out, filter var(--_dur) ease-in-out; }
+  :where(.ecx-image-overlay.has-ratio .ecx-image-overlay-media img) { height: 100%; object-fit: cover; }
+  :where(.ecx-image-overlay-tint) { position: absolute; inset: 0; background: var(--ecx-ov-color, var(--ecx-color-primary, black)); opacity: var(--ecx-ov-rest, 0); transition: opacity var(--_dur) ease-in-out; pointer-events: none; }
+  :where(.ecx-image-overlay:hover .ecx-image-overlay-tint, .ecx-image-overlay:focus-within .ecx-image-overlay-tint) { opacity: var(--ecx-ov-hover, .6); }
+  :where(.ecx-image-overlay-body) { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .25rem; padding: 1rem; text-align: center; box-sizing: border-box; pointer-events: none; }
+  :where(.ecx-image-overlay.is-h-left .ecx-image-overlay-body) { align-items: flex-start; text-align: left; }
+  :where(.ecx-image-overlay.is-h-right .ecx-image-overlay-body) { align-items: flex-end; text-align: right; }
+  :where(.ecx-image-overlay.is-v-top .ecx-image-overlay-body) { justify-content: flex-start; }
+  :where(.ecx-image-overlay.is-v-bottom .ecx-image-overlay-body) { justify-content: flex-end; }
+  :where(.ecx-image-overlay.has-frame .ecx-image-overlay-body)::before { content: ""; position: absolute; inset: var(--ecx-ov-inset, 10px); border: 2px solid rgb(255 255 255 / .8); opacity: 0; transition: opacity var(--_dur) ease-in-out; pointer-events: none; }
+  :where(.ecx-image-overlay:hover .ecx-image-overlay-body, .ecx-image-overlay:focus-within .ecx-image-overlay-body)::before { opacity: 1; }
+  :where(.ecx-image-overlay-title, .ecx-image-overlay-subtitle, .ecx-image-overlay-divider) { position: relative; margin: 0; color: inherit; transform: translateY(24px); transition: transform var(--_dur), opacity var(--_dur) ease-in-out; }
+  :where(.ecx-image-overlay-title) { font-size: var(--ecx-font-size-xl); line-height: 1.4; }
+  :where(.ecx-image-overlay-subtitle) { opacity: 0; transition-delay: 50ms; }
+  :where(.ecx-image-overlay-divider) { display: block; width: 3rem; height: 2px; background: currentColor; opacity: 0; transition-delay: 50ms; }
+  :where(.ecx-image-overlay:hover, .ecx-image-overlay:focus-within) :where(.ecx-image-overlay-title, .ecx-image-overlay-subtitle, .ecx-image-overlay-divider) { opacity: 1; transform: none; }
+  :where(.ecx-image-overlay.is-subtitle-always) :where(.ecx-image-overlay-title, .ecx-image-overlay-subtitle, .ecx-image-overlay-divider) { opacity: 1; transform: none; }
+  :where(.ecx-image-overlay-link) { position: absolute; inset: 0; z-index: 3; }
+  :where(.ecx-image-overlay.is-fx-zoom:hover img, .ecx-image-overlay.is-fx-zoom:focus-within img) { transform: scale(1.05); }
+  :where(.ecx-image-overlay.is-fx-grayscale:hover img, .ecx-image-overlay.is-fx-grayscale:focus-within img) { filter: grayscale(1); }
+  :where(.ecx-image-overlay.is-fx-blur:hover img, .ecx-image-overlay.is-fx-blur:focus-within img) { filter: blur(3px); }
+  :where(.ecx-image-overlay.is-fx-slide img) { width: calc(100% + 40px); transform: translateX(-40px); }
+  :where(.ecx-image-overlay.is-fx-slide:hover img, .ecx-image-overlay.is-fx-slide:focus-within img) { transform: none; }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-image-overlay *) { transition: none !important; } :where(.ecx-image-overlay) :where(img) { transform: none !important; } :where(.ecx-image-overlay-title, .ecx-image-overlay-subtitle, .ecx-image-overlay-divider) { transform: none; opacity: 1; } }
+  /* Popup: nút mở + hộp thoại (dialog) có nền tối, nút đóng, hiệu ứng mở; nội dung nằm sẵn trong HTML (SEO) nhưng ẩn tới khi mở */
+  :where(.ecx-popup) { margin: var(--ecx-flow) 0; }
+  :where(.ecx-popup.is-align-center) { text-align: center; }
+  :where(.ecx-popup.is-align-right) { text-align: right; }
+  /* Cột hẹp (≤ 26% / ≤ 34%) không bị ép 14rem ở tablet / máy tính: hàng 4 cột nhỏ vẫn nằm một dòng; điện thoại vẫn xếp chồng */
+  @media (min-width: 641px) { :where(.ecx-col-xs) { min-width: min(100%, 9rem) !important; } :where(.ecx-col-sm) { min-width: min(100%, 11rem) !important; } }
+  :where(.ecx-form-step) { margin: 0 0 .5rem; font-size: .85em; opacity: .7; }
+  :where(.ecx-form-back) { margin-right: .5rem; padding: .55em 1em; border: 1px solid currentColor; border-radius: var(--ecx-radius-md); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+  :where(.ecx-field[hidden]) { display: none !important; }
+  /* Video nền của Section / Row / Column: nằm dưới nội dung, phủ kín khối */
+  :where(.ecx-bg-video) { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; max-width: none; object-fit: cover; pointer-events: none; }
+  :where(.ecx-sm) { display: contents; }
+  :where(.ecx-sm-in) { position: absolute; opacity: 0; pointer-events: none; }
+  :where(.ecx-sm-in:not(:checked) + *) { max-height: var(--ecx-sm-h, 12rem); overflow: hidden; position: relative; }
+  :where(.ecx-sm.is-nofade .ecx-sm-in:not(:checked) + *)::after { content: none; }
+  :where(.ecx-sm.is-once .ecx-sm-in:checked ~ .ecx-sm-btn) { display: none; }
+  :where(.ecx-sm-in:not(:checked) + *)::after { content: ""; position: absolute; inset: auto 0 0 0; height: 4rem; background: linear-gradient(transparent, var(--ecx-color-background, Canvas)); pointer-events: none; }
+  :where(.ecx-sm-btn) { display: inline-block; margin-top: .75rem; cursor: pointer; font-weight: 600; color: var(--ecx-color-link, currentColor); text-decoration: underline; }
+  :where(.ecx-sm-in:focus-visible ~ .ecx-sm-btn) { outline: 2px solid currentColor; outline-offset: 2px; }
+  :where(.ecx-sm-less, .ecx-sm-in:checked ~ .ecx-sm-btn .ecx-sm-more) { display: none; }
+  :where(.ecx-sm-in:checked ~ .ecx-sm-btn .ecx-sm-less) { display: inline; }
+  :where(.ecx-aud) { display: contents; }
+  :where(.ecx-aud[hidden]) { display: none; }
+  :where(.ecx-popup-trigger) { cursor: pointer; font: inherit; }
+  /* Video Popup: khung 16:9 có ảnh bìa + nút phát tròn */
+  :where(.ecx-popup-trigger.is-play) { position: relative; display: block; width: min(100%, 28rem); aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: var(--ecx-radius-md); background: var(--ecx-color-text, CanvasText) center / cover no-repeat; overflow: hidden; }
+  :where(.ecx-popup-trigger.is-play)::before { content: ""; position: absolute; left: 50%; top: 50%; width: 4rem; height: 4rem; margin: -2rem 0 0 -2rem; border-radius: 50%; background: rgb(255 255 255 / .92); box-shadow: 0 6px 20px rgb(0 0 0 / .3); transition: scale .2s; }
+  :where(.ecx-popup-trigger.is-play)::after { content: ""; position: absolute; left: 50%; top: 50%; margin: -.8rem 0 0 -.45rem; border-style: solid; border-width: .8rem 0 .8rem 1.4rem; border-color: transparent transparent transparent var(--ecx-color-primary, CanvasText); }
+  :where(.ecx-popup-trigger.is-play:hover)::before { scale: 1.08; }
+  :where(.ecx-popup-trigger.is-link) { background: none; border: 0; padding: 0; color: var(--ecx-color-link, currentColor); text-decoration: underline; }
+  :where(.ecx-popup-dialog) { --_w: 40rem; width: min(var(--_w), calc(100vw - 2rem)); max-height: calc(100vh - 2rem); margin: auto; padding: 0; border: 0; border-radius: var(--ecx-radius-lg, 12px); background: var(--ecx-color-background); color: var(--ecx-color-text); box-shadow: 0 24px 64px rgb(0 0 0 / .3); overflow: visible; text-align: left; }
+  :where(.ecx-popup.is-size-sm .ecx-popup-dialog) { --_w: 28rem; }
+  :where(.ecx-popup.is-size-lg .ecx-popup-dialog) { --_w: 56rem; }
+  :where(.ecx-popup.is-size-xl .ecx-popup-dialog) { --_w: 72rem; }
+  :where(.ecx-popup.is-valign-top .ecx-popup-dialog) { margin-top: 2rem; }
+  :where(.ecx-popup-dialog)::backdrop { background: rgb(0 0 0 / var(--ecx-popup-dim, .6)); }
+  :where(.ecx-popup-body) { padding: 2rem; max-height: calc(100vh - 2rem); overflow: auto; border-radius: inherit; box-sizing: border-box; }
+  :where(.ecx-popup-body) > :where(:first-child) { margin-top: 0; }
+  :where(.ecx-popup-body) > :where(:last-child) { margin-bottom: 0; }
+  :where(.ecx-popup-close) { position: absolute; top: -14px; right: -14px; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 999px; background: var(--ecx-color-text); color: var(--ecx-color-background); cursor: pointer; box-shadow: 0 2px 8px rgb(0 0 0 / .3); }
+  @media (max-width: 640px) { :where(.ecx-popup-close) { top: 6px; right: 6px; } :where(.ecx-popup-body) { padding: 1.25rem; } }
+  :where(.ecx-popup.is-anim-fade .ecx-popup-dialog[open]) { animation: ecx-popup-fade var(--ecx-dur-slow, .3s) ease-out; }
+  :where(.ecx-popup.is-anim-up .ecx-popup-dialog[open]) { animation: ecx-popup-up var(--ecx-dur-slow, .3s) ease-out; }
+  :where(.ecx-popup.is-anim-zoom .ecx-popup-dialog[open]) { animation: ecx-popup-zoom var(--ecx-dur-slow, .3s) ease-out; }
+  @keyframes ecx-popup-fade { from { opacity: 0; } }
+  @keyframes ecx-popup-up { from { opacity: 0; transform: translateY(24px); } }
+  @keyframes ecx-popup-zoom { from { opacity: 0; transform: scale(.92); } }
+  :where(html.ecx-popup-open) { overflow: hidden; }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-popup-dialog[open]) { animation: none !important; } }
+  /* Chữ gõ của Tiêu đề: con trỏ nhấp nháy sau chữ; giảm chuyển động thì không nhấp nháy */
+  :where(.ecx-typed) { white-space: nowrap; color: var(--ecx-typed-color, inherit); }
+  :where(.ecx-typed)::after { content: ""; display: inline-block; width: .08em; height: 1em; margin-left: .06em; vertical-align: -.1em; background: currentColor; animation: ecx-typed-caret 1s steps(1) infinite; }
+  @keyframes ecx-typed-caret { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-typed)::after { animation: none; } }
+  /* Khoảng trống kèm đường kẻ: đường kẻ nằm giữa chiều cao (vẽ bằng ::before) */
+  :where(.ecx-spacer.has-line) { position: relative; }
+  :where(.ecx-spacer.has-line)::before { content: ""; position: absolute; top: 50%; width: var(--ecx-sp-length, 100%); border-top: var(--ecx-sp-weight, 1px) var(--ecx-sp-style, solid) var(--ecx-sp-color, var(--ecx-border, color-mix(in srgb, currentColor 22%, transparent))); transform: translateY(-50%); }
+  :where(.ecx-spacer.has-line.is-line-center)::before { left: 50%; transform: translate(-50%, -50%); }
+  :where(.ecx-spacer.has-line.is-line-left)::before { left: 0; }
+  :where(.ecx-spacer.has-line.is-line-right)::before { right: 0; }
+  /* Ảnh: tỉ lệ khung (cắt vừa); object-fit / bộ lọc / hiệu ứng rê do ô Kiểu dáng đặt */
+  :where(img.has-ratio) { width: 100%; height: auto; aspect-ratio: var(--ecx-img-ratio, 4/3); object-fit: cover; }
+  /* Lời chứng thực nhiều mục: lưới theo số cột từng khổ (cùng biến với Slider); dạng slider dùng .ecx-carousel */
+  :where(.ecx-testimonials) { --_per: var(--ecx-per, 3); --_gap: var(--ecx-gap, 1.5rem); display: grid; grid-template-columns: repeat(var(--_per), minmax(0, 1fr)); gap: var(--_gap); align-items: stretch; margin: var(--ecx-flow) 0; }
+  @media (max-width: 1024px) { :where(.ecx-testimonials) { --_per: var(--ecx-per-t, 2); } }
+  @media (max-width: 640px) { :where(.ecx-testimonials) { --_per: var(--ecx-per-m, 1); } }
+  :where(.ecx-testimonials > *, .ecx-carousel-slide > .ecx-testimonial) { margin-top: 0; margin-bottom: 0; height: 100%; box-sizing: border-box; }
   :where(.ecx-image-box-media) { margin: 0 0 var(--ecx-spacing-md); }
   :where(.ecx-image-box-media) :where(img) { display: block; width: 100%; height: auto; border-radius: var(--ecx-radius-md); }
   :where(.ecx-icon-list) { display: flex; flex-direction: column; gap: var(--ecx-spacing-xs); padding: 0; list-style: none; }
@@ -551,7 +716,17 @@
   :where([dir="rtl"]) :where(.ecx-progress-bar) { transform-origin: right; }
   /* Thanh chạy từ 0 khi cuộn tới: chỉ khi script chuyển động chạy (html.ecx-js — không đặt khi giảm chuyển động) */
   :where(html.ecx-js) :where(.ecx-progress.ecx-in:not(.is-in)) :where(.ecx-progress-bar) { transform: scaleX(0); }
-  @media (prefers-reduced-motion: reduce) { :where(.ecx-progress-bar) { transition: none; } }
+  /* Thanh tiến độ dạng tròn / bán nguyệt: nét SVG, số ở giữa vòng, nhãn bên dưới */
+  :where(.ecx-progress.is-circle, .ecx-progress.is-half) { display: flex; flex-direction: column; align-items: center; gap: var(--ecx-spacing-xs); }
+  :where(.ecx-progress-ring) { position: relative; width: var(--ecx-progress-size, 10rem); max-width: 100%; }
+  :where(.ecx-progress-ring) :where(svg) { display: block; width: 100%; height: auto; overflow: visible; }
+  :where(.ecx-progress-ring-track, .ecx-progress-ring-bar) { stroke-width: 8; stroke-linecap: round; }
+  :where(.ecx-progress-ring-track) { stroke: var(--ecx-color-border); }
+  :where(.ecx-progress-ring-bar) { stroke: var(--ecx-color-primary); transition: stroke-dasharray var(--ecx-progress-duration, 1.2s) var(--ecx-progress-ease, ease-out); }
+  :where(.ecx-progress-ring) :where(.ecx-progress-value) { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; font-weight: 700; }
+  :where(.ecx-progress.is-half .ecx-progress-ring .ecx-progress-value) { align-items: flex-end; padding-bottom: .25rem; }
+  :where(html.ecx-js) :where(.ecx-progress.ecx-in:not(.is-in)) :where(.ecx-progress-ring-bar) { stroke-dasharray: 0 100; }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-progress-bar, .ecx-progress-ring-bar) { transition: none; } }
 
   /* 1.20 Độ rộng khối — đặt CUỐI lớp: cùng độ ưu tiên 0 với margin của từng khối (.ecx-group, .ecx-cover, figure…) nên đứng sau mới thắng.
      Độ rộng khối (như alignwide / alignfull của WP). Khối "rộng" vượt cột chữ tới --ecx-wide-width, "toàn trang" tràn
@@ -559,11 +734,13 @@
   :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) { box-sizing: border-box; max-width: none; margin-left: calc((100% - var(--_w)) / 2) !important; margin-right: calc((100% - var(--_w)) / 2) !important; width: var(--_w); } /* !important: lề trái / phải do người dùng đặt (margin: 0 cho cả 4 cạnh) không được phá căn giữa của khối rộng / toàn trang */
   :where(.ecx-content) :where(.ecx-align-wide) { --_w: min(var(--ecx-wide-width, 1200px), 100vw - 2rem); }
   :where(.ecx-content) :where(.ecx-align-full) { --_w: var(--ecx-full-width, 100vw); }
+  /* Các Phần (khối rộng hết trang) xếp liền nhau: nền chạm nhau, không hở một dải trắng giữa hai phần */
+  :where(.ecx-content) > :where(.ecx-align-full) + :where(.ecx-align-full) { margin-top: 0 !important; }
   :where(.ecx-content) :where(.ecx-align-wide, .ecx-align-full) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; }
   /* Thanh cuộn dọc nằm trong 100vw → khối toàn trang dư vài px gây cuộn ngang: cắt (clip không tạo vùng cuộn, sticky vẫn chạy) */
   :where(body:has(.ecx-content .ecx-align-full, .ecx-content .ecx-align-wide)) { overflow-x: clip; }
   /* Nhóm / bìa tràn rộng nhưng chữ bên trong giữ bề rộng cột chữ */
-  :where(.ecx-group.ecx-is-constrained) > :where(*) { box-sizing: border-box; width: 100%; max-width: var(--ecx-group-width, var(--ecx-content-width, 760px)); margin-left: auto; margin-right: auto; }
+  :where(.ecx-group.ecx-is-constrained) > :where(*) { box-sizing: border-box; width: 100%; max-width: var(--ecx-group-width, var(--ecx-content-width, 760px)); margin-left: auto !important; margin-right: auto !important; }
   :where(.ecx-cover.ecx-is-constrained) > :where(.ecx-cover-inner) { max-width: var(--ecx-content-width, 760px); }
   /* Khối Rộng/Toàn trang nằm TRONG nhóm / cột / bìa: chỉ rộng bằng khung chứa nó (như WP) — không thể rộng bằng màn hình mà không tràn ngang hoặc lệch trái */
   :where(.ecx-content) :where(.ecx-group, .ecx-columns, .ecx-cover, .ecx-media-text, .ecx-callout, li) :where(.ecx-align-wide, .ecx-align-full) { --_w: 100%; max-width: none; margin-left: 0 !important; margin-right: 0 !important; }
@@ -580,6 +757,51 @@
   :where(.ecx-post-template.is-carousel) > :where(.ecx-post) { scroll-snap-align: start; min-width: 0; margin: 0 !important; }
   @media (max-width: 1024px) { :where(.ecx-post-template.is-carousel) { --_per: var(--per-tablet, 3); } }
   @media (max-width: 640px) { :where(.ecx-post-template.is-carousel) { --_per: var(--per-mobile, 2); } }
+  /* HTML tuỳ chỉnh: nội dung rộng cố định (bảng, iframe, khối 2400px) cuộn trong khối thay vì kéo cả trang tràn ngang */
+  :where(.ecx-html) { max-width: 100%; overflow-x: auto; }
+  /* Khối Carousel: track cuộn ngang bám mép slide (vuốt trên điện thoại), số slide thấy cùng lúc theo khổ máy; nút trước-sau, chấm, nút tạm dừng.
+     Trình soạn và website dùng chung các lớp này. */
+  :where(.ecx-carousel) { --_per: var(--ecx-per, 1); --_gap: var(--ecx-gap, 1rem); position: relative; }
+  @media (max-width: 1024px) { :where(.ecx-carousel) { --_per: var(--ecx-per-t, var(--ecx-per, 1)); } }
+  @media (max-width: 640px) { :where(.ecx-carousel) { --_per: var(--ecx-per-m, var(--ecx-per-t, var(--ecx-per, 1))); } }
+  :where(.ecx-carousel-track) { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - (var(--_per) - 1) * var(--_gap)) / var(--_per)); gap: var(--_gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; position: relative; }
+  :where(.ecx-carousel-track::-webkit-scrollbar) { display: none; }
+  :where(.ecx-carousel-track) > :where(*) { scroll-snap-align: start; min-width: 0; margin-top: 0; margin-bottom: 0; }
+  :where(.ecx-carousel-arrow) { position: absolute; top: calc(50% - 20px); z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--ecx-border, color-mix(in srgb, currentColor 16%, transparent)); border-radius: 999px; background: var(--ecx-color-background); color: var(--ecx-color-text); box-shadow: 0 2px 8px rgb(0 0 0 / .12); cursor: pointer; }
+  :where(.ecx-carousel-arrow.is-prev) { left: 8px; }
+  :where(.ecx-carousel-arrow.is-next) { right: 8px; }
+  /* Nhiều slide cùng lúc: chừa lề hai bên cho nút Trước / Sau, không đè lên chữ của thẻ đầu / cuối và không làm tràn trang */
+  @media (min-width: 641px) { :where(.ecx-carousel[data-multi]:not([data-arrow-pos="bottom"])) { padding-inline: 48px; box-sizing: border-box; } :where(.ecx-carousel[data-multi]:not([data-arrow-pos="bottom"]) .ecx-carousel-arrow.is-prev) { left: 4px; } :where(.ecx-carousel[data-multi]:not([data-arrow-pos="bottom"]) .ecx-carousel-arrow.is-next) { right: 4px; } }
+  :where(.ecx-carousel-arrow:hover:not(:disabled)) { background: var(--ecx-color-text); color: var(--ecx-color-background); }
+  :where(.ecx-carousel-arrow:disabled) { opacity: .35; cursor: default; }
+  :where(.ecx-carousel-dots) { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: .75rem; }
+  :where(.ecx-carousel-dot) { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 999px; background: color-mix(in srgb, currentColor 28%, transparent); cursor: pointer; transition: width .15s ease, background .15s ease; }
+  :where(.ecx-carousel-dot[aria-current="true"]) { width: 22px; background: var(--ecx-color-primary, currentColor); }
+  :where(.ecx-carousel-pause) { width: 28px; height: 28px; padding: 0; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; opacity: .7; }
+  /* Slider: chiều cao slide theo tỉ lệ khung / tối thiểu; slide là Nhóm có nền nên căn dọc nội dung bằng chính Nhóm */
+  :where(.ecx-carousel[data-height="ratio"] > .ecx-carousel-track > *) { aspect-ratio: var(--ecx-ratio, 16/9); }
+  :where(.ecx-carousel[data-height="min"] > .ecx-carousel-track > *) { min-height: var(--ecx-min-h, 24rem); }
+  :where(.ecx-carousel[data-height="ratio"] > .ecx-carousel-track > *, .ecx-carousel[data-height="min"] > .ecx-carousel-track > *) { display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow: hidden; }
+  /* Mờ dần: mọi slide chồng cùng một ô, chỉ slide đang hiện (is-active) rõ nét */
+  :where(.ecx-carousel[data-effect="fade"] > .ecx-carousel-track) { display: grid; grid-auto-flow: row; grid-auto-columns: 100%; overflow: hidden; scroll-snap-type: none; }
+  :where(.ecx-carousel[data-effect="fade"] > .ecx-carousel-track) > :where(*) { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity var(--ecx-speed, 400ms) ease-in-out, visibility 0s linear var(--ecx-speed, 400ms); }
+  :where(.ecx-carousel[data-effect="fade"] > .ecx-carousel-track) > :where(:first-child, .is-active) { opacity: 1; visibility: visible; transition-delay: 0s; }
+  /* Khi trang đã chạy JS, slide không phải đang hiện được đánh dấu is-off (kể cả slide đầu) — không JS thì slide đầu vẫn thấy */
+  :where(.ecx-carousel[data-effect="fade"] > .ecx-carousel-track) > :where(.is-off) { opacity: 0; visibility: hidden; transition-delay: 0s, var(--ecx-speed, 400ms); }
+  /* Kiểu mũi tên / chấm */
+  :where(.ecx-carousel[data-arrows="square"] .ecx-carousel-arrow) { border-radius: 4px; }
+  :where(.ecx-carousel[data-arrows="plain"] .ecx-carousel-arrow) { border: 0; background: transparent; box-shadow: none; color: inherit; width: 44px; height: 44px; }
+  :where(.ecx-carousel[data-arrows="plain"] .ecx-carousel-arrow:hover:not(:disabled)) { background: transparent; color: inherit; opacity: .7; }
+  :where(.ecx-carousel[data-arrows="light"] .ecx-carousel-arrow) { background: rgb(255 255 255 / .9); color: black; border-color: transparent; }
+  :where(.ecx-carousel[data-arrows="light"] .ecx-carousel-arrow:hover:not(:disabled)) { background: white; color: black; }
+  :where(.ecx-carousel[data-arrow-pos="bottom"] .ecx-carousel-arrow) { top: auto; bottom: 8px; }
+  :where(.ecx-carousel[data-dots="line"] .ecx-carousel-dot) { width: 28px; height: 3px; border-radius: 2px; }
+  :where(.ecx-carousel[data-dots="line"] .ecx-carousel-dot[aria-current="true"]) { width: 44px; }
+  :where(.ecx-carousel[data-dots="light"] .ecx-carousel-dot) { background: rgb(255 255 255 / .5); }
+  :where(.ecx-carousel[data-dots="light"] .ecx-carousel-dot[aria-current="true"]) { background: white; }
+  :where(.ecx-carousel[data-dots="light"] .ecx-carousel-dots) { position: absolute; left: 0; right: 0; bottom: 12px; margin: 0; }
+  :where(.ecx-carousel[data-dots="light"] .ecx-carousel-pause) { color: white; }
+  @media (prefers-reduced-motion: reduce) { :where(.ecx-carousel-track) { scroll-behavior: auto; } :where(.ecx-carousel-dot) { transition: none; } }
   :where(.ecx-scroller-arrow) { position: absolute; top: 40%; z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--ecx-border, color-mix(in srgb, currentColor 16%, transparent)); border-radius: 999px; background: var(--ecx-color-background); color: var(--ecx-color-text); box-shadow: 0 2px 8px rgb(0 0 0 / .12); cursor: pointer; }
   :where(.ecx-scroller-arrow.is-prev) { left: 8px; }
   :where(.ecx-scroller-arrow.is-next) { right: 8px; }
@@ -600,11 +822,15 @@
   :where(.ecx-query-filter) { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 0 0 1.25rem; }
   :where(.ecx-filter-terms) { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; border: 0; }
   :where(.ecx-filter-terms) :where(a, label) { display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 .9rem; border: var(--ecx-border-width) solid var(--ecx-border, color-mix(in srgb, currentColor 22%, transparent)); border-radius: 999px; text-decoration: none; color: inherit; cursor: pointer; }
+  :where(.ecx-filter-terms.is-checks) :where(input[type="checkbox"]) { margin: 0 .45rem 0 0; accent-color: var(--ecx-color-primary, currentColor); }
+  :where(.ecx-filter-range) { display: inline-flex; align-items: center; gap: .4rem; margin: 0; padding: 0; border: 0; }
+  :where(.ecx-filter-range legend) { float: left; margin-right: .5rem; font-weight: 600; }
+  :where(.ecx-filter-range input[type="number"]) { width: 6rem; }
   :where(.ecx-filter-terms) :where(.is-active) { font-weight: 700; border-color: currentColor; box-shadow: inset 0 0 0 1px currentColor; }
   :where(.ecx-filter-terms) :where(input[type="radio"]) { position: absolute; opacity: 0; pointer-events: none; }
   :where(.ecx-query-filter) :where(input[type="search"], select) { min-height: 2.25rem; padding: 0 .7rem; border: var(--ecx-border-width) solid var(--ecx-border, color-mix(in srgb, currentColor 22%, transparent)); border-radius: var(--ecx-radius-md); background: transparent; color: inherit; font: inherit; }
   :where(.ecx-query-filter) :where(button[type="submit"]) { min-height: 2.25rem; padding: 0 1rem; border: 0; border-radius: var(--ecx-radius-md); background: var(--ecx-color-text); color: var(--ecx-color-background); font: inherit; cursor: pointer; }
-
+  :where(.ecx-query-filter) :where(.ecx-filter-reset) { color: inherit; opacity: .7; text-decoration: underline; cursor: pointer; font-size: .9em; }
   /* Tìm kiếm thu gọn: nút kính lúp + ô nhập thả xuống dưới nút (collapse = tablet ≤1024px | mobile ≤640px) */
   :where(.ecx-search) { position: relative; }
   :where(.ecx-search-toggle) { display: none; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; }

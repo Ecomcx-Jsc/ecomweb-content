@@ -1,0 +1,2109 @@
+{
+  "name": "page-agency",
+  "note": "Trang phức tạp «agency» dựng bằng JSON (lồng nhiều tầng, hiệu ứng, slider, tab): chuẩn hoá ổn định, vẽ được ở website",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "cover",
+              "attrs": {
+                "src": "/sample.svg",
+                "overlay": "primary",
+                "opacity": 55,
+                "minHeight": "520px",
+                "align": "full",
+                "contentAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center",
+                    "typedWords": "nổi bật|đáng nhớ|tăng trưởng",
+                    "style": {
+                      "motion": {
+                        "in": "reveal-up",
+                        "ease": "snappy"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Chúng tôi dựng thương hiệu"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center",
+                    "style": {
+                      "motion": {
+                        "in": "slide-up",
+                        "delay": 200
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Thiết kế, công nghệ và chiến lược dưới một mái nhà."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Xem dự án",
+                        "href": "#",
+                        "variant": "primary"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Liên hệ",
+                        "href": "#",
+                        "variant": "outline"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "margin": {
+                    "base": {
+                      "top": "-4rem"
+                    }
+                  },
+                  "zIndex": 2,
+                  "padding": {
+                    "base": "xl",
+                    "mobile": "md"
+                  },
+                  "color": {
+                    "background": "#ffffff"
+                  },
+                  "radius": "xl",
+                  "shadow": "xl"
+                }
+              },
+              "content": [
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true,
+                    "verticalAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 120,
+                            "suffix": "+",
+                            "title": "Dự án",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 8,
+                            "suffix": "",
+                            "title": "Năm",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 340,
+                            "suffix": "+",
+                            "title": "Khách hàng",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 99,
+                            "suffix": "%",
+                            "title": "Hài lòng",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "2xl",
+                    "mobile": "lg"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 50
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Quy trình rõ ràng"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Từ khảo sát tới vận hành, mỗi bước đều có người phụ trách và số liệu theo dõi."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Khảo sát & định hướng"
+                              },
+                              {
+                                "text": "Thiết kế giao diện"
+                              },
+                              {
+                                "text": "Lập trình & kiểm thử"
+                              },
+                              {
+                                "text": "Bàn giao & đào tạo"
+                              }
+                            ],
+                            "icon": "check"
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Tìm hiểu thêm",
+                                "href": "#",
+                                "variant": "primary"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 50
+                      },
+                      "content": [
+                        {
+                          "type": "image",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "alt": "Minh hoạ",
+                            "ratio": "4/3",
+                            "style": {
+                              "radius": "xl",
+                              "motion": {
+                                "in": "zoom-in",
+                                "loop": "float"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Dự án nổi bật",
+                            "subtitle": "Xem ngay",
+                            "ratio": "16/9"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "color": {
+                    "background": "#eef3f6"
+                  },
+                  "divider": {
+                    "top": {
+                      "shape": "wave",
+                      "color": "#ffffff"
+                    },
+                    "bottom": {
+                      "shape": "curve",
+                      "color": "#ffffff",
+                      "flip": true
+                    }
+                  },
+                  "padding": {
+                    "base": "3xl",
+                    "mobile": "xl"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Dịch vụ"
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "iconBox",
+                          "attrs": {
+                            "icon": "star",
+                            "title": "Thiết kế",
+                            "text": "Giải pháp trọn gói, đo lường được.",
+                            "hover": "grow",
+                            "iconStyle": "circle",
+                            "textAlign": "center",
+                            "style": {
+                              "motion": {
+                                "in": "slide-up",
+                                "delay": 0,
+                                "hover": "lift"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "iconBox",
+                          "attrs": {
+                            "icon": "check",
+                            "title": "Lập trình",
+                            "text": "Giải pháp trọn gói, đo lường được.",
+                            "hover": "grow",
+                            "iconStyle": "circle",
+                            "textAlign": "center",
+                            "style": {
+                              "motion": {
+                                "in": "slide-up",
+                                "delay": 150,
+                                "hover": "lift"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 34
+                      },
+                      "content": [
+                        {
+                          "type": "iconBox",
+                          "attrs": {
+                            "icon": "heart",
+                            "title": "Marketing",
+                            "text": "Giải pháp trọn gói, đo lường được.",
+                            "hover": "grow",
+                            "iconStyle": "circle",
+                            "textAlign": "center",
+                            "style": {
+                              "motion": {
+                                "in": "slide-up",
+                                "delay": 300,
+                                "hover": "lift"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "attrs": {
+                "initial": 1
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Chiến lược",
+                    "icon": "star"
+                  },
+                  "content": [
+                    {
+                      "type": "columns",
+                      "attrs": {
+                        "stack": true
+                      },
+                      "content": [
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 60
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 3
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Giai đoạn 1"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Nội dung chi tiết của giai đoạn, kèm các chỉ số theo dõi bên cạnh."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Hoàn thành",
+                                "value": 40,
+                                "shape": "bar"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 40
+                          },
+                          "content": [
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Mức độ",
+                                "value": 70,
+                                "shape": "circle"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Triển khai",
+                    "icon": "check"
+                  },
+                  "content": [
+                    {
+                      "type": "columns",
+                      "attrs": {
+                        "stack": true
+                      },
+                      "content": [
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 60
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 3
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Giai đoạn 2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Nội dung chi tiết của giai đoạn, kèm các chỉ số theo dõi bên cạnh."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Hoàn thành",
+                                "value": 60,
+                                "shape": "bar"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 40
+                          },
+                          "content": [
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Mức độ",
+                                "value": 80,
+                                "shape": "circle"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Báo cáo",
+                    "icon": "heart"
+                  },
+                  "content": [
+                    {
+                      "type": "columns",
+                      "attrs": {
+                        "stack": true
+                      },
+                      "content": [
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 60
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 3
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Giai đoạn 3"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Nội dung chi tiết của giai đoạn, kèm các chỉ số theo dõi bên cạnh."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Hoàn thành",
+                                "value": 80,
+                                "shape": "bar"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 40
+                          },
+                          "content": [
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Mức độ",
+                                "value": 90,
+                                "shape": "circle"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "carousel",
+              "attrs": {
+                "slidesPerView": 1,
+                "effect": "fade",
+                "autoplay": true,
+                "interval": 6,
+                "arrows": true,
+                "dots": true,
+                "heightMode": "min",
+                "minHeight": "18rem"
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "background": {
+                        "image": {
+                          "base": "/sample.svg"
+                        },
+                        "overlay": "primary",
+                        "overlayOpacity": 60
+                      },
+                      "padding": "xl",
+                      "layout": {
+                        "type": "flex",
+                        "direction": "column",
+                        "justify": "center",
+                        "align": "center"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2,
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện 1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Một slide trong slider nhiều lớp."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "background": {
+                        "image": {
+                          "base": "/sample.svg"
+                        },
+                        "overlay": "primary",
+                        "overlayOpacity": 60
+                      },
+                      "padding": "xl",
+                      "layout": {
+                        "type": "flex",
+                        "direction": "column",
+                        "justify": "center",
+                        "align": "center"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2,
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện 2"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Một slide trong slider nhiều lớp."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "background": {
+                        "image": {
+                          "base": "/sample.svg"
+                        },
+                        "overlay": "primary",
+                        "overlayOpacity": 60
+                      },
+                      "padding": "xl",
+                      "layout": {
+                        "type": "flex",
+                        "direction": "column",
+                        "justify": "center",
+                        "align": "center"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2,
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện 3"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Một slide trong slider nhiều lớp."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "testimonials",
+              "attrs": {
+                "layout": "carousel",
+                "columns": 3,
+                "columnsTablet": 2,
+                "columnsMobile": 1
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 1",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 2",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 3",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 4",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 5",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "gradient": "linear-gradient(135deg, #1a597b, #f26251)",
+                  "padding": {
+                    "base": "2xl",
+                    "mobile": "lg"
+                  },
+                  "color": {
+                    "text": "#ffffff"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Ưu đãi kết thúc sau"
+                    }
+                  ]
+                },
+                {
+                  "type": "countdown",
+                  "attrs": {
+                    "target": "2099-01-01T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi 1?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu trả lời ngắn gọn, đầy đủ."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "iconList",
+                      "attrs": {
+                        "items": [
+                          {
+                            "text": "Ý một"
+                          },
+                          {
+                            "text": "Ý hai"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi 2?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu trả lời ngắn gọn, đầy đủ."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "iconList",
+                      "attrs": {
+                        "items": [
+                          {
+                            "text": "Ý một"
+                          },
+                          {
+                            "text": "Ý hai"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi 3?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu trả lời ngắn gọn, đầy đủ."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "iconList",
+                      "attrs": {
+                        "items": [
+                          {
+                            "text": "Ý một"
+                          },
+                          {
+                            "text": "Ý hai"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "cover",
+              "attrs": {
+                "src": "/sample.svg",
+                "overlay": "primary",
+                "opacity": 55,
+                "minHeight": "520px",
+                "align": "full",
+                "contentAlign": "center"
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center",
+                    "typedWords": "nổi bật|đáng nhớ|tăng trưởng",
+                    "style": {
+                      "motion": {
+                        "in": "reveal-up",
+                        "ease": "snappy"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Chúng tôi dựng thương hiệu"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center",
+                    "style": {
+                      "motion": {
+                        "in": "slide-up",
+                        "delay": 200
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Thiết kế, công nghệ và chiến lược dưới một mái nhà."
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Xem dự án",
+                        "href": "#",
+                        "variant": "primary"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Liên hệ",
+                        "href": "#",
+                        "variant": "outline"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "xl",
+                    "mobile": "md"
+                  },
+                  "margin": {
+                    "base": {
+                      "top": "-4rem"
+                    }
+                  },
+                  "color": {
+                    "background": "#ffffff"
+                  },
+                  "radius": "xl",
+                  "shadow": "xl",
+                  "zIndex": 2
+                }
+              },
+              "content": [
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true,
+                    "verticalAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 120,
+                            "suffix": "+",
+                            "title": "Dự án",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 8,
+                            "suffix": "",
+                            "title": "Năm",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 340,
+                            "suffix": "+",
+                            "title": "Khách hàng",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "counter",
+                          "attrs": {
+                            "start": 0,
+                            "end": 99,
+                            "suffix": "%",
+                            "title": "Hài lòng",
+                            "textAlign": "center"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "2xl",
+                    "mobile": "lg"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 50
+                      },
+                      "content": [
+                        {
+                          "type": "heading",
+                          "attrs": {
+                            "level": 2
+                          },
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Quy trình rõ ràng"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "paragraph",
+                          "content": [
+                            {
+                              "type": "text",
+                              "text": "Từ khảo sát tới vận hành, mỗi bước đều có người phụ trách và số liệu theo dõi."
+                            }
+                          ]
+                        },
+                        {
+                          "type": "iconList",
+                          "attrs": {
+                            "items": [
+                              {
+                                "text": "Khảo sát & định hướng"
+                              },
+                              {
+                                "text": "Thiết kế giao diện"
+                              },
+                              {
+                                "text": "Lập trình & kiểm thử"
+                              },
+                              {
+                                "text": "Bàn giao & đào tạo"
+                              }
+                            ],
+                            "icon": "check"
+                          }
+                        },
+                        {
+                          "type": "buttons",
+                          "content": [
+                            {
+                              "type": "button",
+                              "attrs": {
+                                "text": "Tìm hiểu thêm",
+                                "href": "#",
+                                "variant": "primary"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 50
+                      },
+                      "content": [
+                        {
+                          "type": "image",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "alt": "Minh hoạ",
+                            "ratio": "4/3",
+                            "style": {
+                              "radius": "xl",
+                              "motion": {
+                                "in": "zoom-in",
+                                "loop": "float"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Dự án nổi bật",
+                            "subtitle": "Xem ngay",
+                            "ratio": "16/9"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "3xl",
+                    "mobile": "xl"
+                  },
+                  "color": {
+                    "background": "#eef3f6"
+                  },
+                  "divider": {
+                    "top": {
+                      "shape": "wave",
+                      "color": "#ffffff"
+                    },
+                    "bottom": {
+                      "shape": "curve",
+                      "color": "#ffffff",
+                      "flip": true
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Dịch vụ"
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "iconBox",
+                          "attrs": {
+                            "icon": "star",
+                            "title": "Thiết kế",
+                            "text": "Giải pháp trọn gói, đo lường được.",
+                            "hover": "grow",
+                            "iconStyle": "circle",
+                            "textAlign": "center",
+                            "style": {
+                              "motion": {
+                                "in": "slide-up",
+                                "hover": "lift"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "iconBox",
+                          "attrs": {
+                            "icon": "check",
+                            "title": "Lập trình",
+                            "text": "Giải pháp trọn gói, đo lường được.",
+                            "hover": "grow",
+                            "iconStyle": "circle",
+                            "textAlign": "center",
+                            "style": {
+                              "motion": {
+                                "in": "slide-up",
+                                "delay": 150,
+                                "hover": "lift"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 34
+                      },
+                      "content": [
+                        {
+                          "type": "iconBox",
+                          "attrs": {
+                            "icon": "heart",
+                            "title": "Marketing",
+                            "text": "Giải pháp trọn gói, đo lường được.",
+                            "hover": "grow",
+                            "iconStyle": "circle",
+                            "textAlign": "center",
+                            "style": {
+                              "motion": {
+                                "in": "slide-up",
+                                "delay": 300,
+                                "hover": "lift"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "tabs",
+              "attrs": {
+                "initial": 1
+              },
+              "content": [
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Chiến lược",
+                    "icon": "star"
+                  },
+                  "content": [
+                    {
+                      "type": "columns",
+                      "attrs": {
+                        "stack": true
+                      },
+                      "content": [
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 60
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 3
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Giai đoạn 1"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Nội dung chi tiết của giai đoạn, kèm các chỉ số theo dõi bên cạnh."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Hoàn thành",
+                                "value": 40,
+                                "shape": "bar"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 40
+                          },
+                          "content": [
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Mức độ",
+                                "value": 70,
+                                "shape": "circle"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Triển khai",
+                    "icon": "check"
+                  },
+                  "content": [
+                    {
+                      "type": "columns",
+                      "attrs": {
+                        "stack": true
+                      },
+                      "content": [
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 60
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 3
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Giai đoạn 2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Nội dung chi tiết của giai đoạn, kèm các chỉ số theo dõi bên cạnh."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Hoàn thành",
+                                "value": 60,
+                                "shape": "bar"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 40
+                          },
+                          "content": [
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Mức độ",
+                                "value": 80,
+                                "shape": "circle"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tab",
+                  "attrs": {
+                    "title": "Báo cáo",
+                    "icon": "heart"
+                  },
+                  "content": [
+                    {
+                      "type": "columns",
+                      "attrs": {
+                        "stack": true
+                      },
+                      "content": [
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 60
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 3
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Giai đoạn 3"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Nội dung chi tiết của giai đoạn, kèm các chỉ số theo dõi bên cạnh."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Hoàn thành",
+                                "value": 80,
+                                "shape": "bar"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "column",
+                          "attrs": {
+                            "width": 40
+                          },
+                          "content": [
+                            {
+                              "type": "progressBar",
+                              "attrs": {
+                                "label": "Mức độ",
+                                "value": 90,
+                                "shape": "circle"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "carousel",
+              "attrs": {
+                "slidesPerView": 1,
+                "effect": "fade",
+                "autoplay": true,
+                "interval": 6,
+                "arrows": true,
+                "dots": true,
+                "heightMode": "min",
+                "minHeight": "18rem"
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "xl"
+                      },
+                      "layout": {
+                        "type": "flex",
+                        "direction": {
+                          "base": "column"
+                        },
+                        "justify": {
+                          "base": "center"
+                        },
+                        "align": {
+                          "base": "center"
+                        }
+                      },
+                      "background": {
+                        "image": {
+                          "base": "/sample.svg"
+                        },
+                        "overlay": "primary",
+                        "overlayOpacity": 60
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2,
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện 1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Một slide trong slider nhiều lớp."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "xl"
+                      },
+                      "layout": {
+                        "type": "flex",
+                        "direction": {
+                          "base": "column"
+                        },
+                        "justify": {
+                          "base": "center"
+                        },
+                        "align": {
+                          "base": "center"
+                        }
+                      },
+                      "background": {
+                        "image": {
+                          "base": "/sample.svg"
+                        },
+                        "overlay": "primary",
+                        "overlayOpacity": 60
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2,
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện 2"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Một slide trong slider nhiều lớp."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "xl"
+                      },
+                      "layout": {
+                        "type": "flex",
+                        "direction": {
+                          "base": "column"
+                        },
+                        "justify": {
+                          "base": "center"
+                        },
+                        "align": {
+                          "base": "center"
+                        }
+                      },
+                      "background": {
+                        "image": {
+                          "base": "/sample.svg"
+                        },
+                        "overlay": "primary",
+                        "overlayOpacity": 60
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2,
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện 3"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "attrs": {
+                        "textAlign": "center",
+                        "style": {
+                          "color": {
+                            "text": "#ffffff"
+                          }
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Một slide trong slider nhiều lớp."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "testimonials",
+              "attrs": {
+                "layout": "carousel",
+                "columns": 3,
+                "columnsTablet": 2,
+                "columnsMobile": 1
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 1",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 2",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 3",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 4",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                },
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Làm việc chuyên nghiệp, đúng hạn.",
+                    "name": "Khách 5",
+                    "role": "Giám đốc",
+                    "rating": 5,
+                    "variant": "card"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "2xl",
+                    "mobile": "lg"
+                  },
+                  "color": {
+                    "text": "#ffffff"
+                  },
+                  "gradient": "linear-gradient(135deg, #1a597b, #f26251)"
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Ưu đãi kết thúc sau"
+                    }
+                  ]
+                },
+                {
+                  "type": "countdown",
+                  "attrs": {
+                    "target": "2099-01-01T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "accordion",
+              "content": [
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi 1?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu trả lời ngắn gọn, đầy đủ."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "iconList",
+                      "attrs": {
+                        "items": [
+                          {
+                            "text": "Ý một"
+                          },
+                          {
+                            "text": "Ý hai"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi 2?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu trả lời ngắn gọn, đầy đủ."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "iconList",
+                      "attrs": {
+                        "items": [
+                          {
+                            "text": "Ý một"
+                          },
+                          {
+                            "text": "Ý hai"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "details",
+                  "attrs": {
+                    "summary": "Câu hỏi 3?"
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu trả lời ngắn gọn, đầy đủ."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "iconList",
+                      "attrs": {
+                        "items": [
+                          {
+                            "text": "Ý một"
+                          },
+                          {
+                            "text": "Ý hai"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

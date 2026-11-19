@@ -1,0 +1,660 @@
+{
+  "name": "page-event",
+  "note": "Trang phức tạp «event» dựng bằng JSON (lồng nhiều tầng, hiệu ứng, slider, tab): chuẩn hoá ổn định, vẽ được ở website",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": false,
+                "style": {
+                  "padding": "md",
+                  "color": {
+                    "background": "#f26251",
+                    "text": "#ffffff"
+                  },
+                  "hide": [
+                    "mobile"
+                  ]
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Thanh thông báo chỉ hiện trên máy tính"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "cover",
+              "attrs": {
+                "src": "/sample.svg",
+                "minHeight": "480px",
+                "align": "full",
+                "overlay": "primary",
+                "opacity": 60,
+                "fixed": true
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center",
+                    "style": {
+                      "motion": {
+                        "in": "bounce-in"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Hội thảo Công nghệ 2099"
+                    }
+                  ]
+                },
+                {
+                  "type": "countdown",
+                  "attrs": {
+                    "target": "2099-06-01T09:00:00+07:00",
+                    "timezone": "Asia/Ho_Chi_Minh"
+                  }
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Đăng ký ngay",
+                        "href": "#",
+                        "variant": "primary"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": "xl"
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Diễn giả"
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 1",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 0
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 2",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 100
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 3",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 200
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 4",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 300
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": "lg",
+                  "schedule": {
+                    "from": "2000-01-01T00:00:00Z",
+                    "until": "2999-01-01T00:00:00Z"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "audience": "guest",
+                      "padding": "md",
+                      "color": {
+                        "background": "#fff7e6"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Chỉ khách thấy: Đăng nhập để nhận ưu đãi."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "collapseHeight": "6rem",
+                    "moreText": "Đọc thêm",
+                    "style": {
+                      "padding": "md"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. "
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "form",
+              "attrs": {
+                "submitText": "Gửi đăng ký",
+                "formId": "f_giw73y5i"
+              },
+              "content": [
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "text",
+                    "name": "ten",
+                    "label": "Họ tên",
+                    "required": true
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "email",
+                    "name": "email",
+                    "label": "Email",
+                    "required": true
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "textarea",
+                    "name": "ghi_chu",
+                    "label": "Ghi chú"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "map",
+              "attrs": {
+                "address": "Hà Nội",
+                "zoom": 12
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": false,
+                "style": {
+                  "padding": {
+                    "base": "md"
+                  },
+                  "color": {
+                    "text": "#ffffff",
+                    "background": "#f26251"
+                  },
+                  "hide": [
+                    "mobile"
+                  ]
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Thanh thông báo chỉ hiện trên máy tính"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "cover",
+              "attrs": {
+                "src": "/sample.svg",
+                "minHeight": "480px",
+                "align": "full",
+                "overlay": "primary",
+                "opacity": 60,
+                "fixed": true
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 1,
+                    "textAlign": "center",
+                    "style": {
+                      "motion": {
+                        "in": "bounce-in"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Hội thảo Công nghệ 2099"
+                    }
+                  ]
+                },
+                {
+                  "type": "countdown",
+                  "attrs": {
+                    "target": "2099-06-01T09:00:00+07:00",
+                    "timezone": "Asia/Ho_Chi_Minh"
+                  }
+                },
+                {
+                  "type": "buttons",
+                  "attrs": {
+                    "align": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Đăng ký ngay",
+                        "href": "#",
+                        "variant": "primary"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "xl"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Diễn giả"
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 1",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 2",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 100
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 3",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 200
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 25
+                      },
+                      "content": [
+                        {
+                          "type": "imageOverlay",
+                          "attrs": {
+                            "src": "/sample.svg",
+                            "title": "Diễn giả 4",
+                            "subtitle": "CTO",
+                            "ratio": "1/1",
+                            "style": {
+                              "motion": {
+                                "in": "flip-y",
+                                "delay": 300
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "lg"
+                  },
+                  "schedule": {
+                    "from": "2000-01-01T00:00:00.000Z"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "md"
+                      },
+                      "color": {
+                        "background": "#fff7e6"
+                      },
+                      "audience": "guest"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Chỉ khách thấy: Đăng nhập để nhận ưu đãi."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "collapseHeight": "6rem",
+                    "moreText": "Đọc thêm",
+                    "style": {
+                      "padding": {
+                        "base": "md"
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. Lịch trình dài. "
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "form",
+              "attrs": {
+                "submitText": "Gửi đăng ký",
+                "formId": "f_giw73y5i"
+              },
+              "content": [
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "text",
+                    "name": "ten",
+                    "label": "Họ tên",
+                    "required": true
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "email",
+                    "name": "email",
+                    "label": "Email",
+                    "required": true
+                  }
+                },
+                {
+                  "type": "formField",
+                  "attrs": {
+                    "kind": "textarea",
+                    "name": "ghi_chu",
+                    "label": "Ghi chú"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "map",
+              "attrs": {
+                "address": "Hà Nội",
+                "zoom": 12
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

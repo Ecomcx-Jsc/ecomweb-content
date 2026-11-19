@@ -1,0 +1,200 @@
+{
+  "name": "transform-place",
+  "note": "Định vị tuỳ ý (relative/absolute/fixed + lệch theo khổ) và biến đổi (xoay/phóng/nghiêng/dịch/điểm gốc); giá trị hỏng bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/uploads/a.jpg",
+                "style": {
+                  "place": {
+                    "type": "absolute",
+                    "top": {
+                      "base": "10px",
+                      "mobile": "-5px"
+                    },
+                    "right": {
+                      "base": "0"
+                    }
+                  },
+                  "transform": {
+                    "rotate": {
+                      "base": -12,
+                      "mobile": "0"
+                    },
+                    "scale": {
+                      "base": 1.15
+                    },
+                    "skewX": {
+                      "base": 8
+                    },
+                    "x": {
+                      "base": "-20px"
+                    },
+                    "y": {
+                      "tablet": "2rem"
+                    },
+                    "origin": "top left"
+                  }
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "attrs": {
+                "style": {
+                  "place": {
+                    "type": "static"
+                  },
+                  "transform": {
+                    "rotate": {
+                      "base": 999
+                    },
+                    "scale": {
+                      "base": 9
+                    },
+                    "x": {
+                      "base": "url(x)"
+                    },
+                    "origin": "evil"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "hỏng"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "place": {
+                    "type": "fixed",
+                    "bottom": {
+                      "base": "1rem"
+                    },
+                    "left": {
+                      "base": "1rem"
+                    }
+                  },
+                  "transform": {
+                    "origin": "center"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "C"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/uploads/a.jpg",
+                "style": {
+                  "place": {
+                    "type": "absolute",
+                    "top": {
+                      "base": "10px",
+                      "mobile": "-5px"
+                    },
+                    "right": {
+                      "base": "0"
+                    }
+                  },
+                  "transform": {
+                    "rotate": {
+                      "base": -12,
+                      "mobile": 0
+                    },
+                    "scale": {
+                      "base": 1.15
+                    },
+                    "skewX": {
+                      "base": 8
+                    },
+                    "x": {
+                      "base": "-20px"
+                    },
+                    "y": {
+                      "tablet": "2rem"
+                    },
+                    "origin": "top left"
+                  }
+                }
+              }
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "hỏng"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "place": {
+                    "type": "fixed",
+                    "bottom": {
+                      "base": "1rem"
+                    },
+                    "left": {
+                      "base": "1rem"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "C"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -11,6 +11,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./icon-library": {
+      "types": "./dist/icon-library.d.ts",
+      "default": "./dist/icon-library.js"
+    },
     "./style.css": "./style.css",
     "./fixtures/*": "./fixtures/*",
     "./package.json": "./package.json"

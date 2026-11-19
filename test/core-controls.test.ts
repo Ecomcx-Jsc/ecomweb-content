@@ -33,7 +33,7 @@ test("giá trị sai bị bỏ; ô chỉ áp cho đúng loại khối; nội dun
   assert.equal(css("bulletList", { listMarker: "url(x)", listMarkerColor: "red;}" }), "");
   assert.equal(css("paragraph", { listMarker: "disc" }), "");
   assert.equal(controlsCss(CORE_CONTROLS, "group", { background: "#fff", padding: "large" }), null);
-  assert.deepEqual(Object.keys(coreControlsFor("heading")), ["textShadow"]);
+  assert.deepEqual(Object.keys(coreControlsFor("heading")), ["textShadow", "textIconColor", "textIconSize", "textIconGap", "textColumns", "textColumnGap", "dropCap", "textMaxWidth"]);
   assert.ok(Object.keys(coreControlsFor("iconList")).includes("iconListIconColor"));
 });
 
@@ -57,7 +57,7 @@ test("phần: giá trị sai bị bỏ; nhóm chỉ hợp cả khối (chuyển 
   const same = controlsCss(CORE_CONTROLS, "iconBox", { iconBoxTitleColor: "primary", parts: { nothing: { hidden: true } } })!;
   assert.equal(old.cls, same.cls);
   assert.equal(controlsCss(CORE_CONTROLS, "iconBox", { parts: { text: { hidden: true } } }) !== null, true);
-  assert.deepEqual(partsFor(CORE_CONTROLS, "iconBox").map(([n]) => n), ["box", "icon", "title", "text"]);
+  assert.deepEqual(partsFor(CORE_CONTROLS, "iconBox").map(([n]) => n), ["box", "icon", "title", "text", "more"]);
 });
 
 test("phần (1.26): rê chuột lên chính phần, trạng thái đang mở, bộ chọn nhiều nhánh", () => {
@@ -67,4 +67,24 @@ test("phần (1.26): rê chuột lên chính phần, trạng thái đang mở, b
   assert.ok(r.css.includes(`.${c}.${c} details[open] > summary,.${c}.${c}:is([open]) > summary{background:#eeeeee`), r.css);
   const img = controlsCss(CORE_CONTROLS, "image", { parts: { image: { style: { radius: "12px" } } } })!;
   assert.ok(img.css.includes(`.${img.cls}.${img.cls} img,.${img.cls}.${img.cls}:is(img){border-radius:12px`), img.css);
+});
+
+test("khối Icon: màu, nền, viền, bo, đệm, bóng, xoay, hiệu ứng rê sinh CSS đúng bộ chọn; giá trị sai bị bỏ", () => {
+  const out = css("icon", { iconColor: "#ff0000", iconHoverColor: "#00ff00", iconBg: "#111111", iconRadius: "12px", iconPad: "20px", iconRotate: "90", iconHoverEffect: "spin", iconBorderWidth: "2px", iconBorderColor: "#333333" })!;
+  for (const need of ["color:#ff0000", "color:#00ff00", "background:#111111", "border-radius:12px", "--ecx-icon-pad:20px", "rotate:90deg", "var(--ecx-icon-fx-spin)", "border:2px solid", "border-color:#333333"]) assert.ok(out.replace(/ /g, "").includes(need.replace(/ /g, "")), need + "\n" + out);
+  assert.equal(css("icon", { iconRotate: "99", iconHoverEffect: "bogus", iconColor: "red;}" }), "");
+  assert.equal(css("paragraph", { iconColor: "#fff" }), "");
+});
+
+test("1.32 ô ở tab Cài đặt: danh sách chia cột / xếp ngang, nhóm nút, đường kẻ, trích dẫn, mạng xã hội — CSS thật, chỉ khai báo tab cho giao diện", () => {
+  const css = (type: string, attrs: Record<string, unknown>) => controlsCss(CORE_CONTROLS, type, attrs)?.css ?? "";
+  assert.match(css("bulletList", { listColumns: { base: "2", mobile: "1" }, listLayout: "flex" }), /columns: 2.*--ecx-list-display: flex.*@media \(max-width:640px\)\{[^}]*columns: 1/);
+  assert.match(css("buttons", { buttonsDirection: { mobile: "column" }, buttonsFill: { mobile: "1" } }), /@media \(max-width:640px\)\{[^}]*flex-direction: column[^]*flex-grow: 1/);
+  assert.match(css("horizontalRule", { hrGap: "3rem" }), /margin-block: 3rem/);
+  assert.match(css("socialLinks", { socialShape: "none" }), /--ecx-social-radius: var\(--ecx-radius-none, 0\)/);
+  assert.match(css("paragraph", { dropCap: "3" }), /::first-letter\{initial-letter: 3\}/);
+  assert.equal(css("paragraph", { dropCap: "9" }), ""); // ngoài danh sách → bỏ
+  // tab chỉ là thông tin giao diện
+  assert.equal(coreControlsFor("bulletList").listMarker.tab, "settings");
+  assert.equal(coreControlsFor("bulletList").listGap.tab, undefined);
 });

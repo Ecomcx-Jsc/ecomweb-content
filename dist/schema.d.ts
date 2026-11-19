@@ -10,6 +10,8 @@ export interface AttrSpec {
     default?: unknown;
     /** Chỉ nhận các giá trị này. */
     enum?: readonly unknown[];
+    /** Chuỗi: phải khớp biểu thức chính quy này (cú pháp dùng chung với .NET). */
+    pattern?: string;
     /** Số: kẹp trong [min, max]. */
     min?: number;
     max?: number;
@@ -23,10 +25,6 @@ export declare const CONTAINER_TAGS: string[];
 export declare const FORM_AUTOCOMPLETE: string[];
 /** Loại ô của khối formField (form cơ bản của lõi). consent = ô đồng ý (bắt buộc tick khi required). */
 export declare const FORM_FIELD_KINDS: readonly ["text", "email", "tel", "textarea", "select", "radio", "checkbox", "consent", "number", "date"];
-/**
- * Khối lõi trong nội dung soạn thảo (khối `richtext`). Thuộc tính không có trong danh sách vẫn được giữ nguyên
- * (plugin có thể thêm thuộc tính vào khối lõi) — chỉ thuộc tính có mô tả mới được kiểm kiểu.
- */
 export declare const CORE_NODES: Record<string, NodeSpec>;
 /** Tên ô của form: chữ thường, số, gạch dưới — khoá trong bài gửi. */
 export declare const FORM_FIELD_NAME: RegExp;

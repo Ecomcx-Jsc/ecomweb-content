@@ -2,7 +2,8 @@ import { colorCss, spacingValue } from "./style.js";
 import { embedInfo } from "./embed.js";
 import { safeUrl } from "./url.js";
 import { CONTAINER_TAGS, WIDE_BLOCKS } from "./schema.js";
-import { ICON_PATHS, iconEl } from "./widgets.js";
+import { iconEl, resolveIcon } from "./widgets.js";
+import { svgIconDataUrl } from "./svg-icon.js";
 const cls = (...parts) => parts.filter(Boolean).join(" ") || undefined;
 /** `text-align` chỉ ghi khi khác mặc định (left) — website không in thừa. */
 export function alignStyle(attrs) {
@@ -13,18 +14,22 @@ const containerTag = (attrs) => (CONTAINER_TAGS.includes(attrs.tagName) ? attrs.
 const num = (v, fallback) => (Number(v) > 0 ? Number(v) : fallback);
 /** Icon cạnh chữ (Tiêu đề / Đoạn văn): vẽ bằng ::before / ::after có mặt nạ SVG (biến --ecx-text-icon), nên không thêm nút nào vào nội dung gõ. */
 function withIcon(sh, attrs) {
-    const d = typeof attrs.icon === "string" ? ICON_PATHS[attrs.icon] : undefined;
-    if (!d)
+    const r = resolveIcon(attrs.icon);
+    if (!r)
         return sh;
+    const custom = r.kind === "svg" ? svgIconDataUrl(attrs.icon) : null;
+    if (r.kind === "svg" && !custom)
+        return sh;
+    const d = r.kind === "path" ? r.d : "";
     const svg = `%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='${d}'/%3E%3C/svg%3E`;
     const title = typeof attrs.iconTitle === "string" && attrs.iconTitle.trim() ? attrs.iconTitle.trim().slice(0, 200) : undefined;
-    return { ...sh, className: `ecx-has-icon ecx-icon-${attrs.iconPosition === "right" ? "right" : "left"}`, style: { ...sh.style, "--ecx-text-icon": `url("data:image/svg+xml,${svg}")` }, ...(title && { attrs: { title } }) };
+    return { ...sh, className: `ecx-has-icon ecx-icon-${attrs.iconPosition === "right" ? "right" : "left"}`, style: { ...sh.style, "--ecx-text-icon": custom ? `url("${custom}")` : `url("data:image/svg+xml,${svg}")` }, ...(title && { attrs: { title } }) };
 }
 /** Vỏ của khối lõi; `null` = khối này chưa có vỏ dùng chung (mỗi bên tự vẽ như cũ). `parent` cần cho `column` (đọc `stack` của `columns`). */
 export function blockShell(type, attrs = {}, parent) {
     switch (type) {
         case "paragraph": return withIcon({ tag: "p", style: alignStyle(attrs) }, attrs);
-        case "heading": return withIcon({ tag: `h${Math.min(6, Math.max(1, Number(attrs.level) || 2))}`, style: alignStyle(attrs) }, attrs);
+        case "heading": return withIcon({ tag: attrs.htmlTag === "p" || attrs.htmlTag === "span" || attrs.htmlTag === "div" ? attrs.htmlTag : `h${Math.min(6, Math.max(1, Number(attrs.level) || 2))}`, style: alignStyle(attrs) }, attrs);
         case "blockquote": return { tag: "blockquote" };
         case "columns": {
             const stack = attrs.stack !== false;
@@ -39,14 +44,14 @@ export function blockShell(type, attrs = {}, parent) {
         }
         case "column": {
             const stack = parent?.attrs?.stack !== false;
-            return { tag: containerTag(attrs), className: "ecx-column cms-column", style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
+            return { tag: containerTag(attrs), className: cls("ecx-column cms-column", stack && num(attrs.width, 50) <= 26 && "ecx-col-xs", stack && num(attrs.width, 50) > 26 && num(attrs.width, 50) <= 34 && "ecx-col-sm"), style: { flex: `${num(attrs.width, 1)} 1 0`, minWidth: stack ? "min(100%, 14rem)" : 0, ...(attrs.href ? { position: "relative" } : {}) } };
         }
         case "group": {
             const bg = colorCss(attrs.background), fg = colorCss(attrs.textColor);
             const pad = PADDING[attrs.padding] ?? (bg ? PADDING.medium : undefined);
             // Độ rộng nội dung tự nhập: chỉ nhận độ dài thật (px / rem / % / vw…), không nhận preset khoảng cách
             const cw = typeof attrs.contentWidth === "string" && /\d/.test(attrs.contentWidth) ? spacingValue(attrs.contentWidth) : undefined;
-            return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, (attrs.constrained === true || cw) && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined, "--ecx-group-width": cw }) };
+            return { tag: containerTag(attrs), className: cls("ecx-group cms-group", attrs.padding && `ecx-group-${attrs.padding} cms-group-${attrs.padding}`, (attrs.constrained === true || cw) && "ecx-is-constrained"), style: compact({ background: bg, color: fg, padding: pad, borderRadius: bg && attrs.align !== "full" ? 12 : undefined, "--ecx-group-width": cw, ...(typeof attrs.href === "string" && safeUrl(attrs.href, "") ? { position: "relative" } : {}) }) };
         }
         case "callout": {
             const tone = calloutTone(attrs);
@@ -77,7 +82,21 @@ export function blockShell(type, attrs = {}, parent) {
                     : icon && attrs.iconOnly === true && typeof attrs.text === "string" && attrs.text.trim() ? { attrs: { "aria-label": attrs.text.trim().slice(0, 200) } } : {}),
             };
         }
-        case "spacer": return { tag: "div", className: "ecx-spacer", style: { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" }, attrs: { "aria-hidden": "true" } };
+        case "spacer": {
+            // Khoảng trống có thể kèm một đường kẻ ở giữa (gộp "Đường kẻ" vào đây): kiểu nét, độ dày, độ dài %, căn, màu — vẽ bằng ::before nên vẫn là div rỗng
+            const style = { height: spacingValue(attrs.height ?? "lg") ?? "1.5rem" };
+            if (attrs.line !== true)
+                return { tag: "div", className: "ecx-spacer", style, attrs: { "aria-hidden": "true" } };
+            const w = Math.round(Number(attrs.lineWeight)), len = Math.round(Number(attrs.lineWidth));
+            style["--ecx-sp-style"] = ["solid", "dashed", "dotted", "double"].includes(String(attrs.lineStyle)) ? String(attrs.lineStyle) : "solid";
+            style["--ecx-sp-weight"] = `${Number.isFinite(w) ? Math.min(12, Math.max(1, w)) : 1}px`;
+            style["--ecx-sp-length"] = `${Number.isFinite(len) ? Math.min(100, Math.max(5, len)) : 100}%`;
+            const c = colorCss(attrs.lineColor);
+            if (c)
+                style["--ecx-sp-color"] = c;
+            const al = ["left", "center", "right"].includes(String(attrs.lineAlign)) ? String(attrs.lineAlign) : "center";
+            return { tag: "div", className: `ecx-spacer has-line is-line-${al}`, style, attrs: { "aria-hidden": "true" } };
+        }
         case "cover": {
             const src = attrs.src ? String(attrs.src) : "";
             return {
@@ -94,9 +113,14 @@ export function blockShell(type, attrs = {}, parent) {
             const cols = Math.min(6, Math.max(1, Number(attrs.columns) || 3));
             // Khoảng cách ảnh: biến --ecx-gallery-gap (ô "Khoảng cách ảnh" ghi vào đây), mặc định 8px
             const gap = "var(--ecx-gallery-gap, 8px)";
+            const capCls = attrs.captionStyle === "hover" || attrs.captionStyle === "overlay" ? ` is-cap-${attrs.captionStyle}` : "";
             if (attrs.layout === "masonry")
-                return { tag: "figure", className: cls("ecx-gallery cms-gallery is-masonry", `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "block", columnCount: cols, columnGap: gap } };
-            return { tag: "figure", className: cls("ecx-gallery cms-gallery", `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "grid", gap, gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } };
+                return { tag: "figure", className: cls("ecx-gallery cms-gallery is-masonry" + capCls, `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "block", columnCount: cols, columnGap: gap } };
+            if (attrs.layout === "tiles")
+                return { tag: "figure", className: cls("ecx-gallery cms-gallery is-tiles" + capCls, `ecx-gallery-columns-${Math.max(2, cols)} columns-${Math.max(2, cols)}`), style: { display: "grid", gap, gridAutoFlow: "dense", gridAutoRows: "var(--ecx-gallery-row, 11rem)", gridTemplateColumns: `repeat(${Math.max(2, cols)}, minmax(0, 1fr))` } };
+            if (attrs.layout === "mosaic")
+                return { tag: "figure", className: cls("ecx-gallery cms-gallery is-mosaic" + capCls, `ecx-gallery-columns-${Math.max(2, cols)} columns-${Math.max(2, cols)}`), style: { display: "grid", gap, gridAutoFlow: "dense", gridTemplateColumns: `repeat(${Math.max(2, cols)}, minmax(0, 1fr))` } };
+            return { tag: "figure", className: cls("ecx-gallery cms-gallery" + capCls, `ecx-gallery-columns-${cols} columns-${cols}`), style: { display: "grid", gap, gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } };
         }
         case "pullquote": return { tag: "figure", className: "ecx-pullquote" };
         case "customHtml": return { tag: "div", className: "ecx-html" };
@@ -134,6 +158,11 @@ export function focalPoint(v) {
  * Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau.
  * 1.24: ảnh và lớp phủ mang kiểu inline phủ kín khối (CSS `img { height: auto }` của theme không làm ảnh co lại), điểm lấy nét `focal`.
  */
+/** Địa chỉ video nền của khối Ảnh bìa: chỉ nhận đường dẫn trong site hoặc https, đuôi mp4 / webm / ogg / m4v / mov; khác → null. */
+export function coverVideo(attrs = {}) {
+    const u = typeof attrs.videoSrc === "string" ? safeUrl(attrs.videoSrc, "") : "";
+    return u && /^(\/(?!\/)|https:\/\/)/i.test(u) && /\.(mp4|webm|ogv|ogg|m4v|mov)(\?[^#]*)?(#.*)?$/i.test(u) ? u : null;
+}
 export function coverParts(attrs = {}) {
     const src = attrs.src ? String(attrs.src) : "";
     const overlay = colorCss(attrs.overlay) ?? (src ? "#000" : undefined);
@@ -161,5 +190,11 @@ export function linkRel(rel, target) {
 }
 /** 1.26: icon của nút (svg trang trí) hoặc null; vị trí trái / phải theo attrs.iconPosition (mặc định trái). */
 export function buttonIcon(attrs) {
-    return typeof attrs.icon === "string" && ICON_PATHS[attrs.icon] ? iconEl(attrs.icon) : null;
+    return resolveIcon(attrs.icon) ? iconEl(attrs.icon) : null;
+}
+/** Class của khối Bảng theo cài đặt (kẻ sọc, rê hàng, đường kẻ, mật độ, ghim hàng đầu, cố định cột) — website và trình soạn dùng chung. */
+export function tableClass(a) {
+    const x = a ?? {};
+    return ["ecx-table", "table-wrap", x.striped === true && "is-striped", x.hoverRows === true && "is-hover", typeof x.lines === "string" && x.lines !== "all" && `is-lines-${x.lines}`,
+        typeof x.density === "string" && x.density !== "normal" && `is-${x.density}`, x.stickyHead === true && "is-sticky-head"].filter(Boolean).join(" ");
 }

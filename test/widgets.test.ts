@@ -10,10 +10,10 @@ const find = (el: WidgetEl | string | null, cls: string): WidgetEl | undefined =
 };
 const texts = (el: WidgetEl | string | undefined): string => (!el ? "" : typeof el === "string" ? el : (el.children ?? []).map(texts).join(""));
 
-test("widget: mỗi khối có schema và icon dùng chung tập ICON_NAMES", () => {
+test("widget: mỗi khối có schema và icon dùng chung một mẫu giá trị (tên hoặc svg:…)", () => {
   for (const t of WIDGET_BLOCKS) assert.ok(CORE_NODES[t], t);
-  assert.deepEqual(CORE_NODES.iconBox.attrs!.icon.enum, ICON_NAMES);
-  assert.deepEqual(CORE_NODES.icon.attrs!.name.enum, ICON_NAMES);
+  assert.equal(CORE_NODES.iconBox.attrs!.icon.pattern, CORE_NODES.icon.attrs!.name.pattern);
+  assert.ok(ICON_NAMES.includes("check"));
 });
 
 test("formatCounter: nhóm nghìn và dấu thập phân", () => {

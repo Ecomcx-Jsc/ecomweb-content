@@ -27,7 +27,7 @@
             {
               "type": "gallery",
               "attrs": {
-                "layout": "mosaic",
+                "layout": "puzzle",
                 "images": []
               }
             }

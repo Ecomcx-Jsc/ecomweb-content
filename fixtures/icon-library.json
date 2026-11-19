@@ -1,0 +1,153 @@
+{
+  "name": "icon-library",
+  "note": "Icon: tên bộ lõi, tên thư viện (kebab-case), SVG riêng (svg:…), tên hỏng bị bỏ; icon từng mục của Icon List",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "shopping-cart",
+                "title": "Giỏ"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "svg:<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M0 0L24 24\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/></svg>",
+                "title": "SVG riêng"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "<script>",
+                "title": "Tên hỏng"
+              }
+            },
+            {
+              "type": "icon",
+              "attrs": {
+                "name": "arrowRight",
+                "size": 40
+              }
+            },
+            {
+              "type": "iconList",
+              "attrs": {
+                "icon": "check",
+                "items": [
+                  {
+                    "text": "A",
+                    "icon": "rocket"
+                  },
+                  {
+                    "text": "B",
+                    "icon": "none"
+                  },
+                  {
+                    "text": "C",
+                    "icon": "svg:<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M0 0L24 24\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/></svg>"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "icon": "heart"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "shopping-cart",
+                "title": "Giỏ"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "icon": "svg:<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M0 0L24 24\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/></svg>",
+                "title": "SVG riêng"
+              }
+            },
+            {
+              "type": "iconBox",
+              "attrs": {
+                "title": "Tên hỏng"
+              }
+            },
+            {
+              "type": "icon",
+              "attrs": {
+                "name": "arrowRight",
+                "size": 40
+              }
+            },
+            {
+              "type": "iconList",
+              "attrs": {
+                "icon": "check",
+                "items": [
+                  {
+                    "text": "A",
+                    "icon": "rocket"
+                  },
+                  {
+                    "text": "B",
+                    "icon": "none"
+                  },
+                  {
+                    "text": "C",
+                    "icon": "svg:<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M0 0L24 24\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/></svg>"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "icon": "heart"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tiêu đề"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

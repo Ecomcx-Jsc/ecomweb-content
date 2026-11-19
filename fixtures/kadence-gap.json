@@ -1,0 +1,159 @@
+{
+  "name": "kadence-gap",
+  "note": "Heading dùng thẻ khác, Show More (mờ dần / ẩn nút), đường chia mountains / stairs, hình cắt ảnh",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "htmlTag": "p"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Thẻ p"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "htmlTag": "script"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Thẻ hỏng"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "collapseHeight": "10rem",
+                "collapseFade": false,
+                "collapseOnce": true,
+                "style": {
+                  "divider": {
+                    "bottom": {
+                      "shape": "mountains",
+                      "color": "primary"
+                    },
+                    "top": {
+                      "shape": "stairs",
+                      "color": "accent"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "A"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/uploads/a.jpg",
+                "imageMask": "hexagon"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2,
+                "htmlTag": "p"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Thẻ p"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "attrs": {
+                "level": 2
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Thẻ hỏng"
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "collapseHeight": "10rem",
+                "collapseFade": false,
+                "collapseOnce": true,
+                "style": {
+                  "divider": {
+                    "top": {
+                      "shape": "stairs",
+                      "color": "accent"
+                    },
+                    "bottom": {
+                      "shape": "mountains",
+                      "color": "primary"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "A"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/uploads/a.jpg",
+                "imageMask": "hexagon"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

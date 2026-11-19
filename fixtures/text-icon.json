@@ -85,6 +85,7 @@
             {
               "type": "paragraph",
               "attrs": {
+                "icon": "rocket",
                 "iconTitle": "x"
               },
               "content": [

@@ -1,0 +1,1213 @@
+{
+  "name": "page-portfolio",
+  "note": "Trang phức tạp «portfolio» dựng bằng JSON (lồng nhiều tầng, hiệu ứng, slider, tab): chuẩn hoá ổn định, vẽ được ở website",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": false,
+                "style": {
+                  "position": {
+                    "type": "sticky",
+                    "top": "0"
+                  },
+                  "zIndex": 50,
+                  "padding": "sm",
+                  "color": {
+                    "background": "#ffffff"
+                  },
+                  "layout": {
+                    "type": "flex",
+                    "direction": {
+                      "base": "row"
+                    },
+                    "justify": "between",
+                    "align": "center",
+                    "wrap": true
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 3
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "STUDIO"
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Dự án",
+                        "href": "#",
+                        "variant": "link"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Liên hệ",
+                        "href": "#",
+                        "variant": "outline"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "gallery",
+              "attrs": {
+                "images": [
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 1"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 2"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 3"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 4"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 5"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 6"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 7"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 8"
+                  }
+                ],
+                "columns": 4,
+                "layout": "masonry",
+                "lightbox": true
+              }
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": "2xl"
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Dự án"
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "layout": {
+                        "type": "grid",
+                        "columns": {
+                          "base": 3,
+                          "tablet": 2,
+                          "mobile": 1
+                        }
+                      },
+                      "gap": "md"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 1",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "4/3",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 0,
+                            "stagger": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 2",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "1/1",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 120,
+                            "stagger": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 3",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "4/3",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 240,
+                            "stagger": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 4",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "1/1",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 0,
+                            "stagger": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 5",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "4/3",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 120,
+                            "stagger": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 6",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "1/1",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 240,
+                            "stagger": false
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "carousel",
+              "attrs": {
+                "slidesPerView": 3,
+                "slidesTablet": 2,
+                "slidesMobile": 1,
+                "autoplay": false,
+                "arrows": true,
+                "dots": true,
+                "gap": "1rem"
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "padding": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "padding": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 2"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "padding": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 3"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "padding": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 4"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "padding": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 5"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "padding": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 6"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "stack": true,
+                "verticalAlign": "top"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 30
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Bên trái ghim khi cuộn."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 70
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Đoạn một."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Đoạn hai."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": false,
+                "style": {
+                  "padding": {
+                    "base": "sm"
+                  },
+                  "color": {
+                    "background": "#ffffff"
+                  },
+                  "layout": {
+                    "type": "flex",
+                    "direction": {
+                      "base": "row"
+                    },
+                    "justify": {
+                      "base": "between"
+                    },
+                    "align": {
+                      "base": "center"
+                    },
+                    "wrap": true
+                  },
+                  "position": {
+                    "type": "sticky",
+                    "top": "0"
+                  },
+                  "zIndex": 50
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 3
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "STUDIO"
+                    }
+                  ]
+                },
+                {
+                  "type": "buttons",
+                  "content": [
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Dự án",
+                        "href": "#"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "attrs": {
+                        "text": "Liên hệ",
+                        "href": "#",
+                        "variant": "outline"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "gallery",
+              "attrs": {
+                "images": [
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 1"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 2"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 3"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 4"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 5"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 6"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 7"
+                  },
+                  {
+                    "src": "/sample.svg",
+                    "alt": "Ảnh 8"
+                  }
+                ],
+                "columns": 4,
+                "layout": "masonry",
+                "lightbox": true
+              }
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "2xl"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2,
+                    "textAlign": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Dự án"
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "gap": {
+                        "base": "md"
+                      },
+                      "layout": {
+                        "type": "grid",
+                        "columns": {
+                          "base": 3,
+                          "tablet": 2,
+                          "mobile": 1
+                        }
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 1",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "4/3",
+                        "style": {
+                          "motion": {
+                            "in": "fade"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 2",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "1/1",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 120
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 3",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "4/3",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 240
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 4",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "1/1",
+                        "style": {
+                          "motion": {
+                            "in": "fade"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 5",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "4/3",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 120
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "imageOverlay",
+                      "attrs": {
+                        "src": "/sample.svg",
+                        "title": "Dự án 6",
+                        "subtitle": "Xem chi tiết",
+                        "ratio": "1/1",
+                        "style": {
+                          "motion": {
+                            "in": "fade",
+                            "delay": 240
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "carousel",
+              "attrs": {
+                "slidesPerView": 3,
+                "slidesTablet": 2,
+                "slidesMobile": 1,
+                "autoplay": false,
+                "arrows": true,
+                "dots": true,
+                "gap": "1rem"
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "lg"
+                      },
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "lg"
+                      },
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 2"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "lg"
+                      },
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 3"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "lg"
+                      },
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 4"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "lg"
+                      },
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 5"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "attrs": {
+                    "style": {
+                      "padding": {
+                        "base": "lg"
+                      },
+                      "color": {
+                        "background": "#f4f6f8"
+                      },
+                      "radius": "lg",
+                      "hover": {
+                        "lift": true
+                      }
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "icon",
+                      "attrs": {
+                        "icon": "star"
+                      }
+                    },
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 3
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mục 6"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Mô tả ngắn của mục trong slider ba cột."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "columns",
+              "attrs": {
+                "stack": true,
+                "verticalAlign": "top"
+              },
+              "content": [
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 30
+                  },
+                  "content": [
+                    {
+                      "type": "heading",
+                      "attrs": {
+                        "level": 2
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Câu chuyện"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Bên trái ghim khi cuộn."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "column",
+                  "attrs": {
+                    "width": 70
+                  },
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Đoạn một."
+                        }
+                      ]
+                    },
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "Đoạn hai."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,4 +1,6 @@
+import { colorCss } from "./style.js";
 import { encodeSafe, safeUrl } from "./url.js";
+import { svgIconOf } from "./svg-icon.js";
 /**
  * 1.23: khối "widget" của lõi (Icon Box, Image Box, Icon List, Counter, Testimonial, Progress Bar) — markup dựng MỘT lần ở đây
  * thành cây phần tử (khoá props kiểu React); website (theme-sdk) và khung soạn (TextEditor) chỉ đổi cây ra React → hai nơi vẽ y hệt.
@@ -65,9 +67,35 @@ export const ICON_PATHS = {
     arrowDown: "M12 5v14m19 12-7 7-7-7",
 };
 export const ICON_NAMES = Object.keys(ICON_PATHS);
+/** Số icon lõi (56) — phần còn lại do thư viện nạp thêm (registerIconLibrary). */
+export const ICON_CORE_COUNT = ICON_NAMES.length;
+/**
+ * Nạp thư viện icon lớn (`@ecomcx/ecomweb-content/icon-library`, ~1.900 icon Lucide) — website nạp ở máy chủ, trình soạn nạp lúc khởi động.
+ * Tên của bộ lõi (camelCase) giữ nguyên; icon thư viện đặt tên kebab-case nên không đè nhau. Gọi nhiều lần vô hại.
+ */
+export function registerIconLibrary(lib) {
+    const names = ICON_NAMES;
+    for (const [k, d] of Object.entries(lib))
+        if (!(k in ICON_PATHS)) {
+            ICON_PATHS[k] = d;
+            names.push(k);
+        }
+}
+export function resolveIcon(value) {
+    if (typeof value !== "string" || !value)
+        return undefined;
+    const custom = svgIconOf(value);
+    if (custom)
+        return { kind: "svg", icon: custom };
+    const d = Object.prototype.hasOwnProperty.call(ICON_PATHS, value) ? ICON_PATHS[value] : undefined;
+    return d ? { kind: "path", d } : undefined;
+}
+const svgNodeEl = (n) => ({ tag: n.tag, props: n.props, children: n.children.map(svgNodeEl) });
 /** Kính lúp của khối Tìm kiếm (không nằm trong bảng icon chọn được). */
 export const SEARCH_ICON_PATH = "M21 21l-4.3-4.3M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z";
-export const WIDGET_BLOCKS = ["iconBox", "imageBox", "iconList", "counter", "testimonial", "progressBar", "map"];
+export const IMAGE_OVERLAY_RATIOS = ["auto", "1/1", "4/3", "3/2", "16/9", "3/4", "2/3"];
+export const IMAGE_OVERLAY_EFFECTS = ["none", "zoom", "grayscale", "blur", "slide"];
+export const WIDGET_BLOCKS = ["iconBox", "imageBox", "imageOverlay", "iconList", "counter", "testimonial", "progressBar", "map"];
 const str = (v) => (typeof v === "string" ? v : "");
 /** SVG của icon (trang trí: aria-hidden). Tên lạ → icon mặc định. */
 /** Class của danh sách icon (dùng chung website và khung soạn). */
@@ -83,11 +111,16 @@ export function tabsClass(a) {
 export const formSizeClass = (a) => (a.inputSize === "sm" || a.inputSize === "lg" ? `is-size-${a.inputSize}` : "");
 export const formClass = (a) => cls("ecx-form-blocks", formSizeClass(a));
 export function iconEl(name, fallback = "star", stroke) {
-    const d = ICON_PATHS[str(name)] ?? ICON_PATHS[fallback];
+    const r = resolveIcon(name) ?? resolveIcon(fallback);
+    const aria = { "aria-hidden": "true", focusable: "false" };
+    if (r.kind === "svg") {
+        const root = r.icon.root;
+        return { tag: "svg", className: "ecx-widget-icon", props: { viewBox: r.icon.viewBox, width: 24, height: 24, fill: root.fill ?? "currentColor", ...(root.stroke ? { stroke: root.stroke } : {}), ...(root["stroke-width"] ? { strokeWidth: root["stroke-width"] } : {}), ...(root["stroke-linecap"] ? { strokeLinecap: root["stroke-linecap"] } : {}), ...(root["stroke-linejoin"] ? { strokeLinejoin: root["stroke-linejoin"] } : {}), ...aria }, children: r.icon.children.map(svgNodeEl) };
+    }
     return {
         tag: "svg", className: "ecx-widget-icon",
-        props: { viewBox: "0 0 24 24", width: 24, height: 24, fill: "none", stroke: "currentColor", strokeWidth: Math.min(4, Math.max(0.5, Number(stroke) || 2)), strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", focusable: "false" },
-        children: [{ tag: "path", props: { d } }],
+        props: { viewBox: "0 0 24 24", width: 24, height: 24, fill: "none", stroke: "currentColor", strokeWidth: Math.min(4, Math.max(0.5, Number(stroke) || 2)), strokeLinecap: "round", strokeLinejoin: "round", ...aria },
+        children: [{ tag: "path", props: { d: r.d } }],
     };
 }
 /** Chữ từ thuộc tính: rỗng thì bỏ (website), trừ khi đang soạn (ô gõ luôn có để người dùng điền). */
@@ -163,6 +196,31 @@ export function widgetMarkup(type, a = {}, editing = false) {
                 children: kids(img || editing ? { tag: "figure", className: "ecx-image-box-media", slot: img ? undefined : "media", children: kids(img) } : null, { tag: "div", className: "ecx-image-box-body", children: kids(text(level(a), "ecx-image-box-title", a, "title", editing, href(a)), text("p", "ecx-image-box-text", a, "text", editing)) }),
             };
         }
+        case "imageOverlay": {
+            // Ảnh phủ chữ: ảnh + lớp màu hiện khi rê / lấy nét + chữ (tiêu đề, phụ đề) trượt lên; cả khối là một liên kết (không bọc chữ trong <a> để khỏi lồng liên kết)
+            const img = boxImage(a);
+            const link = href(a);
+            const ratio = IMAGE_OVERLAY_RATIOS.includes(str(a.ratio)) ? str(a.ratio) : "4/3";
+            const pct = (v, d) => { const x = Number(v); return Number.isFinite(x) ? Math.min(100, Math.max(0, x)) : d; };
+            const inset = Math.min(40, Math.max(0, Number.isFinite(Number(a.frameInset)) ? Number(a.frameInset) : 10));
+            const oneOf = (v, list, d) => (list.includes(str(v)) ? str(v) : d);
+            const vars = { "--ecx-ov-hover": pct(a.overlayOpacity, 60) / 100, "--ecx-ov-rest": pct(a.restOpacity, 0) / 100, "--ecx-ov-inset": `${inset}px` };
+            const tint = colorCss(a.overlayColor);
+            if (tint)
+                vars["--ecx-ov-color"] = tint;
+            if (ratio !== "auto")
+                vars["--ecx-ov-ratio"] = ratio;
+            const hAlign = oneOf(a.hAlign, ["left", "center", "right"], "center"), vAlign = oneOf(a.vAlign, ["top", "center", "bottom"], "center");
+            return {
+                tag: "div",
+                className: cls("ecx-image-overlay", `is-fx-${oneOf(a.imageEffect, IMAGE_OVERLAY_EFFECTS, "zoom")}`, ratio !== "auto" && "has-ratio", a.frame !== false && "has-frame", a.subtitleMode === "always" && "is-subtitle-always", `is-h-${hAlign}`, `is-v-${vAlign}`),
+                style: vars,
+                children: kids(img || editing ? { tag: "figure", className: "ecx-image-overlay-media", slot: img ? undefined : "media", children: kids(img) } : null, { tag: "span", className: "ecx-image-overlay-tint", props: { "aria-hidden": "true" } }, {
+                    tag: "div", className: "ecx-image-overlay-body",
+                    children: kids(text(level(a), "ecx-image-overlay-title", a, "title", editing), a.divider === true && { tag: "span", className: "ecx-image-overlay-divider", props: { "aria-hidden": "true" } }, text("p", "ecx-image-overlay-subtitle", a, "subtitle", editing)),
+                }, link && !editing ? { tag: "a", className: "ecx-image-overlay-link", props: { href: link, target: a.linkTarget === "_blank" ? "_blank" : undefined, rel: a.linkTarget === "_blank" ? "noopener noreferrer" : undefined, "aria-label": str(a.title) || str(a.alt) || link } } : null),
+            };
+        }
         case "iconList": {
             const items = (Array.isArray(a.items) ? a.items : []).filter((it) => it && typeof it.text === "string" && it.text);
             if (!items.length && !editing)
@@ -170,10 +228,16 @@ export function widgetMarkup(type, a = {}, editing = false) {
             return {
                 tag: "ul", className: iconListClass(a),
                 children: items.map((it) => {
-                    const label = { tag: "span", children: [it.text] };
-                    const body = it.icon === "none" ? [label] : [iconEl(ICON_PATHS[str(it.icon)] ? it.icon : a.icon, "check", a.stroke), label];
+                    // Từng mục có thể đè màu icon / nền icon / màu chữ và có tooltip (Kadence: List item settings)
+                    const iconColor = colorCss(it.color), iconBg = colorCss(it.iconBg), textColor = colorCss(it.textColor);
+                    const tip = str(it.tip).trim().slice(0, 120);
+                    const label = { tag: "span", children: [it.text], ...(textColor ? { style: { color: textColor } } : {}) };
+                    const iconNode = it.icon === "none" ? null : iconEl(resolveIcon(it.icon) ? it.icon : a.icon, "check", a.stroke);
+                    if (iconNode && (iconColor || iconBg))
+                        iconNode.style = { ...(iconColor ? { color: iconColor } : {}), ...(iconBg ? { background: iconBg } : {}) };
+                    const body = iconNode ? [iconNode, label] : [label];
                     const link = it.href ? safeUrl(it.href, "") : "";
-                    return { tag: "li", children: link ? [{ tag: "a", props: { href: link }, children: body }] : body };
+                    return { tag: "li", ...(tip ? { props: { "data-ecx-tip": tip } } : {}), children: link ? [{ tag: "a", props: { href: link }, children: body }] : body };
                 }),
             };
         }
@@ -194,15 +258,19 @@ export function widgetMarkup(type, a = {}, editing = false) {
         case "testimonial": {
             const src = a.src ? safeUrl(a.src, "") : "";
             const stars = Math.min(5, Math.max(0, Math.round(Number(a.rating)) || 0));
+            // Đầu thẻ: ảnh đại diện, hoặc icon (mediaIcon) khi không có ảnh
+            const mIcon = !src && resolveIcon(a.mediaIcon) ? iconEl(a.mediaIcon) : null;
+            if (mIcon)
+                mIcon.className = "ecx-widget-icon ecx-testimonial-icon";
             const name = text("cite", "ecx-testimonial-name", a, "name", editing), role = text("span", "ecx-testimonial-role", a, "role", editing);
             return {
                 tag: "figure", className: cls("ecx-testimonial", (a.variant === "plain" || a.variant === "bubble") && `is-${a.variant}`), style: alignCss(a),
                 children: kids(a.quoteMark === true ? { tag: "span", className: "ecx-testimonial-mark", props: { "aria-hidden": "true" }, children: ["\u201C"] } : null, stars > 0 ? {
                     tag: "span", className: "ecx-testimonial-rating", props: { role: "img", "aria-label": `${stars}/5` },
                     children: [1, 2, 3, 4, 5].map((n) => ({ tag: "span", className: n <= stars ? "is-on" : "is-off", props: { "aria-hidden": "true" }, children: ["\u2605"] })),
-                } : null, { tag: "blockquote", className: "ecx-testimonial-quote", children: kids(text("p", undefined, a, "quote", editing)) }, src || name || role ? {
+                } : null, { tag: "blockquote", className: "ecx-testimonial-quote", children: kids(text("p", undefined, a, "quote", editing)) }, src || mIcon || name || role ? {
                     tag: "figcaption", className: "ecx-testimonial-author",
-                    children: kids(src ? { tag: "img", className: "ecx-testimonial-avatar", props: { src, alt: str(a.alt), width: 48, height: 48, loading: "lazy", decoding: "async" } } : null, name || role ? { tag: "span", className: "ecx-testimonial-meta", children: kids(name, role) } : null),
+                    children: kids(mIcon, src ? { tag: "img", className: "ecx-testimonial-avatar", props: { src, alt: str(a.alt), width: 48, height: 48, loading: "lazy", decoding: "async" } } : null, name || role ? { tag: "span", className: "ecx-testimonial-meta", children: kids(name, role) } : null),
                 } : null),
             };
         }
@@ -228,11 +296,27 @@ export function widgetMarkup(type, a = {}, editing = false) {
             const pos = a.textPosition === "inside" || a.textPosition === "below" ? a.textPosition : "above";
             const valueEl = a.showValue !== false ? { tag: "span", className: "ecx-progress-value", props: { "aria-hidden": "true" }, children: [shown] } : null;
             const head = label || editing || valueEl ? { tag: "div", className: "ecx-progress-head", children: kids(text("span", "ecx-progress-label", a, "label", editing), valueEl) } : null;
+            const shape = a.shape === "circle" || a.shape === "half" ? a.shape : "bar";
             const dur = Number(a.duration);
             if (Number.isFinite(dur) && a.duration !== undefined)
                 vars["--ecx-progress-duration"] = `${Math.min(10000, Math.max(0, Math.round(dur)))}ms`;
             if (ease)
                 vars["--ecx-progress-ease"] = ease;
+            // Dạng tròn / bán nguyệt: vòng SVG (pathLength=100 để độ dài nét = phần trăm), số ở giữa, nhãn bên dưới
+            if (shape !== "bar") {
+                const half = shape === "half";
+                const arc = half ? "M5 50A45 45 0 0 1 95 50" : "M50 5a45 45 0 1 1 0 90a45 45 0 1 1 0-90";
+                return {
+                    tag: "div", className: cls("ecx-progress", `is-${shape}`, a.animate !== false && "ecx-in"), style: Object.keys(vars).length ? vars : undefined,
+                    children: kids({
+                        tag: "div", className: "ecx-progress-ring", props: { role: "progressbar", "aria-valuenow": value, "aria-valuemin": 0, "aria-valuemax": max, "aria-label": str(a.ariaLabel) || label || shown },
+                        children: kids({ tag: "svg", props: { viewBox: half ? "0 0 100 55" : "0 0 100 100", "aria-hidden": "true", focusable: "false" }, children: [
+                                { tag: "path", className: "ecx-progress-ring-track", props: { d: arc, fill: "none", pathLength: 100 } },
+                                { tag: "path", className: "ecx-progress-ring-bar", props: { d: arc, fill: "none", pathLength: 100, strokeDasharray: `${pct} 100` } },
+                            ] }, valueEl),
+                    }, label || editing ? text("span", "ecx-progress-label", a, "label", editing) : null),
+                };
+            }
             // `ecx-in`: script chuyển động của website (IntersectionObserver, bỏ qua khi giảm chuyển động) đặt `is-in` → thanh chạy từ 0 (CSS)
             return {
                 tag: "div", className: cls("ecx-progress", a.animate !== false && "ecx-in", pos !== "above" && `is-text-${pos}`),

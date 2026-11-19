@@ -1,0 +1,367 @@
+{
+  "name": "blocks-1.30",
+  "note": "Khối 1.30: Slider (carousel nâng cấp), Khoảng trống kèm đường kẻ, Ảnh bìa video nền, Countdown evergreen / lặp / hết giờ, Thanh tiến độ tròn, Ảnh tỉ lệ, Nút tooltip, Gallery slider, Image Overlay, Popup, nhiều Đánh giá — ép kiểu / kẹp giá trị như nhau ở hai nơi",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "carousel",
+              "attrs": {
+                "effect": "fade",
+                "speed": 99999,
+                "heightMode": "min",
+                "ratio": "21/9",
+                "minHeight": "24rem",
+                "arrowStyle": "evil",
+                "dotStyle": "line",
+                "arrowPos": "bottom",
+                "hoverPause": false,
+                "slidesPerView": 9,
+                "autoplay": true,
+                "interval": "8"
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "spacer",
+              "attrs": {
+                "height": "xl",
+                "line": true,
+                "lineStyle": "dashed",
+                "lineWeight": 99,
+                "lineWidth": 2,
+                "lineAlign": "up",
+                "lineColor": "#1a597b"
+              }
+            },
+            {
+              "type": "cover",
+              "attrs": {
+                "src": "/a.jpg",
+                "videoSrc": "/hero.mp4",
+                "minHeight": "300px"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "c"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "countdown",
+              "attrs": {
+                "mode": "evergreen",
+                "evergreenHours": 5000,
+                "evergreenMinutes": "30",
+                "expireAction": "hide",
+                "repeat": "daily",
+                "redirectUrl": "/cam-on",
+                "pauseButton": true,
+                "layout": "inline"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "shape": "circle",
+                "value": 1200,
+                "max": 2000,
+                "label": "X",
+                "textPosition": "inside"
+              }
+            },
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/a.jpg",
+                "ratio": "16/9"
+              }
+            },
+            {
+              "type": "button",
+              "attrs": {
+                "text": "Mua",
+                "href": "/mua",
+                "tooltip": "Giao 24h"
+              }
+            },
+            {
+              "type": "gallery",
+              "attrs": {
+                "layout": "slider",
+                "images": [],
+                "columns": 3,
+                "arrows": false,
+                "autoplay": true,
+                "interval": 99
+              }
+            },
+            {
+              "type": "imageOverlay",
+              "attrs": {
+                "src": "/a.jpg",
+                "title": "T",
+                "ratio": "16/9",
+                "overlayOpacity": 500,
+                "imageEffect": "zoom",
+                "hAlign": "left",
+                "frame": false,
+                "frameInset": 99,
+                "subtitleMode": "always"
+              }
+            },
+            {
+              "type": "popup",
+              "attrs": {
+                "triggerText": "Mở",
+                "size": "xl",
+                "anim": "zoom",
+                "overlayOpacity": 40,
+                "closeButton": false,
+                "vAlign": "evil"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "p"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "testimonials",
+              "attrs": {
+                "layout": "carousel",
+                "columns": 9,
+                "columnsMobile": 5,
+                "gap": "1rem",
+                "autoplay": true,
+                "interval": 1
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Tốt",
+                    "name": "Lan"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "carousel",
+              "attrs": {
+                "effect": "fade",
+                "speed": 1500,
+                "heightMode": "min",
+                "ratio": "21/9",
+                "minHeight": "24rem",
+                "dotStyle": "line",
+                "arrowPos": "bottom",
+                "hoverPause": false,
+                "slidesPerView": 4,
+                "autoplay": true,
+                "interval": 8
+              },
+              "content": [
+                {
+                  "type": "group",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "spacer",
+              "attrs": {
+                "height": "xl",
+                "line": true,
+                "lineStyle": "dashed",
+                "lineWeight": 12,
+                "lineWidth": 5,
+                "lineColor": "#1a597b"
+              }
+            },
+            {
+              "type": "cover",
+              "attrs": {
+                "src": "/a.jpg",
+                "videoSrc": "/hero.mp4",
+                "minHeight": "300px"
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "c"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "countdown",
+              "attrs": {
+                "mode": "evergreen",
+                "evergreenHours": 2160,
+                "evergreenMinutes": 30,
+                "expireAction": "hide",
+                "repeat": "daily",
+                "redirectUrl": "/cam-on",
+                "pauseButton": true,
+                "layout": "inline"
+              }
+            },
+            {
+              "type": "progressBar",
+              "attrs": {
+                "shape": "circle",
+                "value": 1200,
+                "max": 2000,
+                "label": "X",
+                "textPosition": "inside"
+              }
+            },
+            {
+              "type": "image",
+              "attrs": {
+                "src": "/a.jpg",
+                "ratio": "16/9"
+              }
+            },
+            {
+              "type": "button",
+              "attrs": {
+                "text": "Mua",
+                "href": "/mua",
+                "tooltip": "Giao 24h"
+              }
+            },
+            {
+              "type": "gallery",
+              "attrs": {
+                "layout": "slider",
+                "images": [],
+                "columns": 3,
+                "arrows": false,
+                "autoplay": true,
+                "interval": 30
+              }
+            },
+            {
+              "type": "imageOverlay",
+              "attrs": {
+                "src": "/a.jpg",
+                "title": "T",
+                "ratio": "16/9",
+                "overlayOpacity": 100,
+                "imageEffect": "zoom",
+                "hAlign": "left",
+                "frame": false,
+                "frameInset": 40,
+                "subtitleMode": "always"
+              }
+            },
+            {
+              "type": "popup",
+              "attrs": {
+                "triggerText": "Mở",
+                "size": "xl",
+                "anim": "zoom",
+                "overlayOpacity": 40,
+                "closeButton": false
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "p"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "testimonials",
+              "attrs": {
+                "layout": "carousel",
+                "columns": 4,
+                "columnsMobile": 2,
+                "gap": "1rem",
+                "autoplay": true,
+                "interval": 2
+              },
+              "content": [
+                {
+                  "type": "testimonial",
+                  "attrs": {
+                    "quote": "Tốt",
+                    "name": "Lan"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

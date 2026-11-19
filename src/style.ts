@@ -1,3 +1,4 @@
+import { normalizeCustomCss, scopeCustomCss } from "./custom-css.js";
 /**
  * Kiểu dáng của khối (`attrs.style`, mọi khối): khoảng cách, cỡ chữ, màu, viền, ẩn theo khổ màn hình.
  * Giá trị theo khổ: `{ base, tablet, mobile }` (tablet ≤ 1024px, mobile ≤ 640px). Giá trị là preset của theme
@@ -31,6 +32,8 @@ export interface BlockStyle {
   /** 1.29: bóng chữ tự chỉnh (px, màu) và chữ xếp dọc. */
   textShadow?: { x: number; y: number; blur: number; color: string };
   writingMode?: "vertical";
+  /** 1.31: làm mờ phần nền phía sau khối (kính mờ), px 0–40. */
+  backdropBlur?: string;
   color?: { text?: string; background?: string };
   /** `width`: một giá trị hoặc từng cạnh (1.26). */
   border?: { width?: Box; style?: string; color?: string };
@@ -50,6 +53,10 @@ export interface BlockStyle {
   aspectRatio?: string;
   /** Ghim khi cuộn (1.15): `{ type: "sticky", top }`. */
   position?: { type: "sticky"; top?: string };
+  /** 1.31: định vị tuỳ ý — relative / absolute / fixed với khoảng lệch trên / phải / dưới / trái theo khổ. Absolute: khối cha tự thành `position:relative`. */
+  place?: { type: "relative" | "absolute" | "fixed"; top?: Responsive<string>; right?: Responsive<string>; bottom?: Responsive<string>; left?: Responsive<string> };
+  /** 1.31: biến đổi — xoay (độ), phóng, nghiêng (độ), dịch (độ dài), điểm gốc; theo khổ (khổ nhỏ kế thừa khổ lớn). */
+  transform?: { rotate?: Responsive<number>; scale?: Responsive<number>; skewX?: Responsive<number>; skewY?: Responsive<number>; x?: Responsive<string>; y?: Responsive<string>; origin?: string };
   /** Khi rê chuột (1.15): màu chữ / nền / viền, bóng, nhấc lên. */
   hover?: { color?: { text?: string; background?: string }; border?: { color?: string }; shadow?: string; lift?: boolean };
   /** Chuyển động (1.16): hiệu ứng khi cuộn tới (`in`) và khi rê chuột (`hover`). */
@@ -60,11 +67,17 @@ export interface BlockStyle {
   zIndex?: number;
   grow?: number;
   order?: Responsive<number>;
+  /** 1.30: lịch hiển thị — website chỉ vẽ khối khi `now` nằm trong [from, until) (ISO UTC). Trình soạn vẫn thấy khối để sửa. */
+  schedule?: { from?: string; until?: string };
+  /** Ai thấy khối: chỉ khách (chưa đăng nhập) hoặc chỉ thành viên đã đăng nhập; bỏ trống = mọi người. Chỉ ẩn trên trình duyệt. */
+  audience?: "guest" | "user";
+  /** 1.30: CSS riêng của khối (viết với `selector`, lọc an toàn khi sinh CSS) — xem custom-css.ts. */
+  customCss?: string;
   /** 1.29: đường chia trên / dưới khối (hình tự vẽ, tô màu của khối kế bên). */
   divider?: { top?: BlockDivider; bottom?: BlockDivider };
 }
 
-export const DIVIDER_SHAPES = ["wave", "curve", "tilt", "triangle", "zigzag"] as const;
+export const DIVIDER_SHAPES = ["wave", "curve", "tilt", "triangle", "zigzag", "arrow", "stairs", "ripple", "mountains"] as const;
 export interface BlockDivider { shape: (typeof DIVIDER_SHAPES)[number]; color: string; /** px, 10–300 (mặc định 80) */ height?: number; /** lật ngang */ flip?: true }
 
 /**
@@ -80,16 +93,23 @@ export interface BlockBackground {
   position?: Responsive<string>;
   repeat?: true;
   fixed?: true;
+  /** 1.31: video nền (mp4 / webm / ogg; đường dẫn trong site hoặc https) — tự phát, tắt tiếng, lặp, nằm dưới nội dung. */
+  video?: string;
   overlay?: string;
   overlayOpacity?: number;
   /** 1.28: lớp phủ chuyển màu / ảnh (xếp trên màu phủ) và kiểu hoà trộn với nền (mix-blend-mode). */
   overlayGradient?: string;
   overlayImage?: string;
   overlayBlend?: string;
+  /** 1.32: hiệu ứng riêng cho ẢNH nền (độ mờ 0–100, làm mờ px, hoà trộn với màu nền) — vẽ bằng lớp ::before dưới nội dung. */
+  imageOpacity?: number;
+  imageBlur?: number;
+  imageBlend?: string;
 }
 
 export const OVERLAY_BLENDS = ["multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "difference", "exclusion", "hue", "saturation", "color", "luminosity"] as const;
-const hasOverlay = (bg?: BlockBackground) => !!(bg && (bg.overlay || bg.overlayGradient || bg.overlayImage));
+const hasBgFx = (bg?: BlockBackground) => !!(bg?.image && ((bg.imageOpacity ?? 100) < 100 || bg.imageBlur || bg.imageBlend));
+const hasOverlay = (bg?: BlockBackground) => !!(bg && (bg.overlay || bg.overlayGradient || bg.overlayImage || hasBgFx(bg)));
 
 /**
  * Chuyển động của khối (1.16). `in` là mã hiệu ứng: hiệu ứng lõi (`MOTION_IN`) hoặc của plugin (CSS `@keyframes ecx-in-<mã>`);
@@ -103,7 +123,12 @@ export interface BlockMotion {
   /** Chạy lại mỗi lần cuộn tới (mặc định: một lần). */
   repeat?: true;
   stagger?: true;
-  hover?: "lift" | "grow" | "brighten" | "glow";
+  hover?: (typeof MOTION_HOVER)[number];
+  ease?: (typeof MOTION_EASE)[number];
+  /** Chuyển động lặp liên tục (nổi, đập, xoay, lắc). */
+  loop?: (typeof MOTION_LOOP)[number];
+  /** Thị sai khi cuộn (trình duyệt hỗ trợ scroll-driven animation; còn lại đứng yên). */
+  parallax?: (typeof MOTION_PARALLAX)[number];
 }
 
 /** Bố cục của khối chứa. Không có `type` = luồng thường (khối con xếp dọc như văn bản). */
@@ -142,9 +167,13 @@ const JUSTIFY = ["start", "center", "end", "between", "around", "evenly"];
 const ALIGN_ITEMS = ["start", "center", "end", "stretch"];
 const RATIOS = ["1/1", "4/3", "3/2", "16/9", "21/9", "3/4", "2/3", "9/16"];
 /** Hiệu ứng khi cuộn tới có sẵn ở lõi (keyframes `ecx-in-<mã>` trong style.css). Plugin thêm mã khác. */
-export const MOTION_IN = ["fade", "slide-up", "slide-down", "slide-left", "slide-right", "zoom-in", "zoom-out", "blur-in"] as const;
+export const MOTION_IN = ["fade", "slide-up", "slide-down", "slide-left", "slide-right", "zoom-in", "zoom-out", "blur-in", "flip-x", "flip-y", "rotate-in", "bounce-in", "reveal-up", "reveal-left"] as const;
+/** 1.31: nhịp chạy (easing) của hiệu ứng vào, hiệu ứng lặp liên tục và thị sai (parallax) khi cuộn. */
+export const MOTION_EASE = ["smooth", "snappy", "bounce", "linear"] as const;
+export const MOTION_LOOP = ["float", "pulse", "spin", "swing"] as const;
+export const MOTION_PARALLAX = ["slow", "fast", "reverse"] as const;
 /** Hiệu ứng khi rê chuột có sẵn ở lõi. */
-export const MOTION_HOVER = ["lift", "grow", "brighten", "glow"] as const;
+export const MOTION_HOVER = ["lift", "grow", "brighten", "glow", "rotate", "tilt", "gray", "shrink"] as const;
 const MOTION_DURATIONS = { fast: 300, normal: 600, slow: 1000 } as const;
 const MOTION_ID = /^[a-z][a-z0-9-]{0,39}$/;
 const columns = (v: unknown) => {
@@ -228,9 +257,31 @@ function motion(v: unknown): BlockMotion | undefined {
   }
   const h = oneOf(MOTION_HOVER)(v.hover) as BlockMotion["hover"];
   if (h) out.hover = h;
+  const e = oneOf(MOTION_EASE)(v.ease) as BlockMotion["ease"];
+  if (out.in && e && e !== "smooth") out.ease = e;
+  const lp = oneOf(MOTION_LOOP)(v.loop) as BlockMotion["loop"];
+  if (lp) out.loop = lp;
+  const px = oneOf(MOTION_PARALLAX)(v.parallax) as BlockMotion["parallax"];
+  if (px && !out.in && !lp) out.parallax = px;
   return Object.keys(out).length ? out : undefined;
 }
 
+/** Địa chỉ video nền: đường dẫn trong site hoặc https, đuôi mp4 / webm / ogg / m4v / mov. */
+function bgVideoUrl(v: unknown): string | undefined {
+  const u = typeof v === "string" ? v.trim() : "";
+  return /^(\/(?!\/)|https:\/\/)[^\s"'()\\<>]{1,1000}$/.test(u) && /\.(mp4|webm|ogv|ogg|m4v|mov)(\?[^#]*)?(#.*)?$/i.test(u) ? u : undefined;
+}
+/** Video nền của khối (từ style.background.video đã chuẩn hoá); không có → null. */
+export function blockBgVideo(style: unknown): string | null {
+  return normalizeStyle(style as never)?.background?.video ?? null;
+}
+
+export const PLACE_TYPES = ["relative", "absolute", "fixed"] as const;
+export const TRANSFORM_ORIGINS = ["top left", "top", "top right", "left", "center", "right", "bottom left", "bottom", "bottom right"] as const;
+const numIn = (min: number, max: number) => (v: unknown): number | undefined => {
+  const n = typeof v === "number" ? v : typeof v === "string" && /^-?\d{1,4}(\.\d{1,3})?$/.test(v.trim()) ? Number(v) : NaN;
+  return Number.isFinite(n) && n >= min && n <= max ? n : undefined;
+};
 const BG_URL = /^(\/(?!\/)|https:\/\/)[^\s"'()\\<>]{1,1000}$/;
 const BG_SIZES = ["cover", "contain", "auto"];
 const bgUrl = (v: unknown) => (typeof v === "string" && BG_URL.test(v.trim()) ? v.trim() : undefined);
@@ -264,6 +315,10 @@ export const DIVIDER_PATHS: Record<BlockDivider["shape"], string> = {
   tilt: "M0 100L1200 0V100Z",
   triangle: "M0 100L600 0L1200 100Z",
   zigzag: zigzagPath(),
+  arrow: "M0 100V60H540L600 0L660 60H1200V100Z",
+  stairs: "M0 100V80H240V60H480V40H720V20H960V0H1200V100Z",
+  ripple: "M0 60C150 20 300 100 450 60S750 20 900 60 1050 100 1200 60V100H0Z",
+  mountains: "M0 100L200 30L360 70L600 0L820 60L1000 20L1200 80V100Z",
 };
 const dividerImage = (d: BlockDivider, top: boolean) => {
   const m = `${d.flip ? -1 : 1} 0 0 ${top ? -1 : 1} ${d.flip ? 1200 : 0} ${top ? 100 : 0}`;
@@ -288,10 +343,17 @@ function background(v: unknown): BlockBackground | undefined {
   const pos = responsive(v.position, bgPosition); if (pos) out.position = pos;
   if (v.repeat === true) out.repeat = true;
   if (v.fixed === true) out.fixed = true;
+  const vid = bgVideoUrl(v.video); if (vid) out.video = vid;
   const ov = color(v.overlay), og = normalizeGradient(v.overlayGradient), oi = bgUrl(v.overlayImage);
   if (ov) out.overlay = ov;
   if (og) out.overlayGradient = og;
   if (oi) out.overlayImage = oi;
+  const int = (x: unknown, max: number) => { const n = typeof x === "number" ? x : typeof x === "string" && /^\d{1,3}$/.test(x) ? Number(x) : NaN; return Number.isInteger(n) && n >= 0 && n <= max ? n : undefined; };
+  if (image) {
+    const io = int(v.imageOpacity, 100); if (io !== undefined && io < 100) out.imageOpacity = io;
+    const ib = int(v.imageBlur, 40); if (ib) out.imageBlur = ib;
+    const iBlend = oneOf(OVERLAY_BLENDS)(v.imageBlend); if (iBlend) out.imageBlend = iBlend;
+  }
   if (ov || og || oi) {
     const blend = oneOf(OVERLAY_BLENDS)(v.overlayBlend); if (blend) out.overlayBlend = blend;
     const n = typeof v.overlayOpacity === "number" ? v.overlayOpacity : typeof v.overlayOpacity === "string" && /^\d{1,3}$/.test(v.overlayOpacity) ? Number(v.overlayOpacity) : NaN;
@@ -358,6 +420,24 @@ export function normalizeStyle(v: unknown): BlockStyle | undefined {
   set("textAlign", responsive(v.textAlign, oneOf(ALIGNS)));
   set("textShadow", textShadow(v.textShadow));
   set("writingMode", oneOf(["vertical"])(v.writingMode) as "vertical" | undefined);
+  if (isObj(v.place) && (PLACE_TYPES as readonly string[]).includes(String(v.place.type))) {
+    const pl: NonNullable<BlockStyle["place"]> = { type: v.place.type as never };
+    for (const k of ["top", "right", "bottom", "left"] as const) { const r = responsive(v.place[k], size); if (r) pl[k] = r; }
+    set("place", pl);
+  }
+  if (isObj(v.transform)) {
+    const tr: NonNullable<BlockStyle["transform"]> = {};
+    const t = v.transform;
+    const rot = responsive(t.rotate, numIn(-360, 360)); if (rot) tr.rotate = rot;
+    const sc = responsive(t.scale, numIn(0.1, 3)); if (sc) tr.scale = sc;
+    const sx = responsive(t.skewX, numIn(-60, 60)); if (sx) tr.skewX = sx;
+    const sy = responsive(t.skewY, numIn(-60, 60)); if (sy) tr.skewY = sy;
+    const x = responsive(t.x, size); if (x) tr.x = x;
+    const y = responsive(t.y, size); if (y) tr.y = y;
+    if (typeof t.origin === "string" && (TRANSFORM_ORIGINS as readonly string[]).includes(t.origin) && t.origin !== "center") tr.origin = t.origin;
+    if (Object.keys(tr).length) set("transform", tr);
+  }
+  { const bb = typeof v.backdropBlur === "string" && /^([0-9]|[1-3][0-9]|40)(\.\d)?px$/.test(v.backdropBlur.trim()) ? v.backdropBlur.trim() : undefined; set("backdropBlur", bb); }
   set("color", group(v.color, { text: color, background: color }));
   const bw = isObj(v.border) ? box(v.border.width) : undefined, bo = group(v.border, { style: oneOf(BORDER_STYLES), color });
   set("border", bw !== undefined || bo ? { ...(bw !== undefined && { width: bw }), ...bo } : undefined);
@@ -377,6 +457,13 @@ export function normalizeStyle(v: unknown): BlockStyle | undefined {
   set("zIndex", int(-1, 9999)(v.zIndex));
   set("grow", int(0, 10)(v.grow));
   set("order", responsive(v.order, int(-10, 10)));
+  set("customCss", normalizeCustomCss(v.customCss));
+  if (isObj(v.schedule)) {
+    const iso = (x: unknown) => { const t = typeof x === "string" ? Date.parse(x) : NaN; return Number.isFinite(t) && t > 0 && t < 4102444800000 ? new Date(t).toISOString() : undefined; };
+    const from = iso(v.schedule.from), until = iso(v.schedule.until);
+    if (from || until) set("schedule", { ...(from ? { from } : {}), ...(until ? { until } : {}) });
+  }
+  if (v.audience === "guest" || v.audience === "user") set("audience", v.audience);
   return Object.keys(out).length ? out : undefined;
 }
 
@@ -420,6 +507,8 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
   if (style.textTransform) out.base.push(`text-transform:${style.textTransform}`);
   if (style.textShadow) out.base.push(`text-shadow:${style.textShadow.x}px ${style.textShadow.y}px ${style.textShadow.blur}px ${colorValue(style.textShadow.color)}`);
   if (style.writingMode) out.base.push("writing-mode:vertical-rl", "text-orientation:mixed");
+  if (style.background?.video) out.base.push("position:relative", "isolation:isolate", "overflow:hidden");
+  if (style.backdropBlur) out.base.push(`backdrop-filter:blur(${style.backdropBlur})`, `-webkit-backdrop-filter:blur(${style.backdropBlur})`);
   if (style.color?.text) out.base.push(`color:${colorValue(style.color.text)}`);
   if (style.color?.background) out.base.push(`background:${colorValue(style.color.background)}`);
   if (style.border?.width || style.border?.style || style.border?.color) {
@@ -450,20 +539,40 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
   if (style.textGradient) out.base.push(`background:${gradientValue(style.textGradient)}`, "-webkit-background-clip:text", "background-clip:text", "-webkit-text-fill-color:transparent");
   if (style.shadow) out.base.push(`box-shadow:${shadowValue(style.shadow)}`);
   if (style.aspectRatio) out.base.push(`aspect-ratio:${style.aspectRatio}`, "object-fit:cover");
+  // Định vị tuỳ ý (không dùng chung với ghim khi cuộn): kiểu + khoảng lệch theo khổ (khổ nhỏ kế thừa khổ lớn)
+  if (style.place && !style.position) {
+    out.base.push(`position:${style.place.type}`);
+    for (const d of DEVICES) for (const side of ["top", "right", "bottom", "left"] as const) { const v = style.place[side]?.[d]; if (v !== undefined) out[d].push(`${side}:${spacing(v)}`); }
+    if (style.zIndex === undefined && style.place.type !== "relative") out.base.push("z-index:1");
+  }
+  // Biến đổi: mỗi khổ phát CẢ chuỗi transform (CSS không trộn từng phần giữa các khổ) với giá trị kế thừa từ khổ lớn hơn
+  if (style.transform) {
+    const t = style.transform;
+    const eff = <T,>(r: Responsive<T> | undefined, d: Device): T | undefined => (r ? (d === "mobile" ? r.mobile ?? r.tablet ?? r.base : d === "tablet" ? r.tablet ?? r.base : r.base) : undefined);
+    for (const d of DEVICES) {
+      const touched = [t.rotate, t.scale, t.skewX, t.skewY, t.x, t.y].some((r) => r?.[d] !== undefined);
+      if (!touched) continue;
+      const x = eff(t.x, d), y = eff(t.y, d), rot = eff(t.rotate, d), sc = eff(t.scale, d), sx = eff(t.skewX, d), sy = eff(t.skewY, d);
+      const parts = [x !== undefined || y !== undefined ? `translate(${x !== undefined ? spacing(x) : "0"},${y !== undefined ? spacing(y) : "0"})` : "", rot ? `rotate(${rot}deg)` : "", sc !== undefined && sc !== 1 ? `scale(${sc})` : "", sx || sy ? `skew(${sx ?? 0}deg,${sy ?? 0}deg)` : ""].filter(Boolean);
+      out[d].push(`transform:${parts.length ? parts.join(" ") : "none"}`);
+    }
+    if (t.origin) out.base.push(`transform-origin:${t.origin}`);
+  }
   if (style.position) out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, `z-index:${style.zIndex ?? 10}`);
   else if (style.zIndex !== undefined) out.base.push(...(hasOverlay(style.background) ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
   if (style.grow !== undefined) out.base.push(`flex-grow:${style.grow}`);
   // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
   const bg = style.background;
+  const fx = hasBgFx(bg);
   if (bg) {
     for (const d of DEVICES) {
       const dc = bg.color?.[d]; if (dc) out[d].push(`background-color:${colorValue(dc)}`);
-      const img = bg.image?.[d];
+      const img = fx ? undefined : bg.image?.[d];
       if (img) out[d].push(`background-image:${style.gradient ? `${gradientValue(style.gradient)},` : ""}url("${img}")`);
-      const sz = bg.size?.[d]; if (sz) out[d].push(`background-size:${sz}`);
-      const pos = bg.position?.[d]; if (pos) out[d].push(`background-position:${pos}`);
+      const sz = bg.size?.[d]; if (sz && !fx) out[d].push(`background-size:${sz}`);
+      const pos = bg.position?.[d]; if (pos && !fx) out[d].push(`background-position:${pos}`);
     }
-    if (bg.image) {
+    if (bg.image && !fx) {
       if (!bg.size?.base) out.base.push("background-size:cover");
       if (!bg.position?.base) out.base.push("background-position:50% 50%");
       out.base.push(`background-repeat:${bg.repeat ? "repeat" : "no-repeat"}`);
@@ -515,7 +624,13 @@ const HOVER_FX: Record<string, string> = {
   grow: "transform:scale(1.04)",
   brighten: "filter:brightness(1.08)",
   glow: "box-shadow:0 0 28px color-mix(in srgb, var(--ecx-accent, var(--primary, #1a597b)) 45%, transparent)",
+  rotate: "transform:rotate(3deg)",
+  tilt: "transform:perspective(800px) rotateX(4deg) rotateY(-6deg) scale(1.02)",
+  gray: "filter:grayscale(0)",
+  shrink: "transform:scale(.96)",
 };
+const EASES: Record<string, string> = { smooth: "cubic-bezier(.2, .7, .3, 1)", snappy: "cubic-bezier(.7, 0, .2, 1)", bounce: "cubic-bezier(.34, 1.56, .64, 1)", linear: "linear" };
+const PARALLAX_PX: Record<string, string> = { slow: "-40px", fast: "-120px", reverse: "60px" };
 
 /**
  * CSS chuyển động của một khối (chỉ cho class riêng của khối — Global Styles không dùng, vì trạng thái ẩn cần class `ecx-in` + `is-in`).
@@ -528,16 +643,24 @@ export function motionCss(style: BlockStyle, cls: string): string {
   if (!m) return "";
   const sel = `.${cls}.${cls}`;
   let css = "";
+  // Hiệu ứng lặp dùng chung thuộc tính `animation` với hiệu ứng vào → gộp thành một danh sách. Thị sai đứng riêng (normalize bỏ nó khi có vào / lặp).
+  const loop = m.loop ? `ecx-loop-${m.loop} ${m.loop === "spin" ? "12s linear" : m.loop === "pulse" ? "2.4s ease-in-out" : "4s ease-in-out"} infinite` : "";
+  const anim = (first: string) => [first, loop].filter(Boolean).join(",");
+  if (!m.in && loop) css += `${sel}{animation:${loop}}`;
+  if (m.parallax) css += `@supports (animation-timeline:view()){${sel}{--ecx-px:${PARALLAX_PX[m.parallax]};animation:ecx-parallax linear both;animation-timeline:view()}}`;
   if (m.in) {
     const dur = MOTION_DURATIONS[m.duration ?? "normal"];
     const delay = m.delay ?? 0;
     const name = `ecx-in-${m.in}`;
+    const ease = m.ease ? EASES[m.ease] : EASE;
     if (m.stagger) {
       css += `html.ecx-js ${sel}.ecx-in:not(.is-in)>*{opacity:0}`;
-      css += `${sel}.is-in>*{animation:${name} ${dur}ms ${EASE} calc(${delay}ms + var(--ecx-i, 0) * var(--ecx-stagger-step, 80ms)) backwards}`;
+      css += `${sel}.is-in>*{animation:${name} ${dur}ms ${ease} calc(${delay}ms + var(--ecx-i, 0) * var(--ecx-stagger-step, 80ms)) backwards}`;
+      if (loop) css += `${sel}{animation:${loop}}`;
     } else {
       css += `html.ecx-js ${sel}.ecx-in:not(.is-in){opacity:0}`;
-      css += `${sel}.is-in{animation:${name} ${dur}ms ${EASE} ${delay}ms backwards}`;
+      css += `${sel}.is-in{animation:${anim(`${name} ${dur}ms ${ease} ${delay}ms backwards`)}}`;
+      if (loop) css += `${sel}:not(.is-in){animation:${loop}}`;
     }
   }
   if (m.hover) {
@@ -546,7 +669,8 @@ export function motionCss(style: BlockStyle, cls: string): string {
     css += `${sel}{transition:${props.map((p) => `${p} .25s ${EASE}`).join(",")}}`;
     css += `@media (hover:hover){${sel}:hover{${HOVER_FX[m.hover]}}}`;
   }
-  const calm = [m.in ? `${sel}.is-in,${sel}.is-in>*{animation:none}` : "", m.hover ? `${sel}{transition:none}${sel}:hover{transform:none}` : ""].join("");
+  if (m.hover === "gray") css += `${sel}{filter:grayscale(1)}`;
+  const calm = [m.loop || m.parallax ? `${sel}{animation:none}` : "", m.in ? `${sel}.is-in,${sel}.is-in>*{animation:none}` : "", m.hover ? `${sel}{transition:none}${sel}:hover{transform:none}` : ""].join("");
   if (calm) css += `@media (prefers-reduced-motion:reduce){${calm}}`;
   return css;
 }
@@ -567,7 +691,7 @@ export function styleClass(style: BlockStyle): string {
 
 /** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ + :hover. Rỗng → "". */
 export function styleCss(style: BlockStyle, cls = styleClass(style)): string {
-  return ruleCss(`.${cls}.${cls}`, style) + motionCss(style, cls);
+  return ruleCss(`.${cls}.${cls}`, style) + motionCss(style, cls) + scopeCustomCss(style.customCss, `.${cls}.${cls}`).css;
 }
 
 /**
@@ -579,6 +703,8 @@ export function ruleCss(selector: string, style: BlockStyle): string {
   const each = (suffix: string) => sel.split(",").map((x) => `${x.trim()}${suffix}`).join(",");
   const d = declarations(style);
   let css = d.base.length ? `${sel}{${d.base.join(";")}}` : "";
+  // Khối absolute: khối cha trực tiếp thành điểm neo (position:relative) trừ khi cha tự định vị bằng quy tắc mạnh hơn (độ ưu tiên 0)
+  if (style.place?.type === "absolute" && !style.position) css += `:where(:has(>${sel.split(",")[0].trim()})){position:relative}`;
   if (d.tablet.length) css += `@media (max-width:${BREAKPOINTS.tablet}px){${sel}{${d.tablet.join(";")}}}`;
   if (d.mobile.length) css += `@media (max-width:${BREAKPOINTS.mobile}px){${sel}{${d.mobile.join(";")}}}`;
   for (const h of style.hide ?? []) {
@@ -590,10 +716,26 @@ export function ruleCss(selector: string, style: BlockStyle): string {
   if (style.link?.hover) css += `${each(" a:hover")}{color:${colorValue(style.link.hover)}}`;
   // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)
   const bgo = style.background;
-  if (hasOverlay(bgo)) {
+  const fxOn = hasBgFx(bgo);
+  if (fxOn) {
+    // Ảnh nền có hiệu ứng: lớp ::before riêng (mờ / làm mờ / hoà trộn) nằm dưới nội dung; lớp phủ chuyển sang ::after
+    const b = bgo!;
+    const layer = (d: Device) => {
+      const img = b.image?.[d], sz = b.size?.[d], pos = b.position?.[d];
+      return [img ? `background-image:url("${img}")` : "", sz ? `background-size:${sz}` : "", pos ? `background-position:${pos}` : ""].filter(Boolean).join(";");
+    };
+    const blur = b.imageBlur ?? 0;
+    const baseDecl = `content:"";position:absolute;inset:${blur ? `-${blur * 2}px` : "0"};z-index:-1;pointer-events:none;border-radius:inherit;${layer("base")};${b.size?.base ? "" : "background-size:cover;"}${b.position?.base ? "" : "background-position:50% 50%;"}background-repeat:${b.repeat ? "repeat" : "no-repeat"};${b.fixed ? "background-attachment:fixed;" : ""}${(b.imageOpacity ?? 100) < 100 ? `opacity:${(b.imageOpacity ?? 100) / 100};` : ""}${blur ? `filter:blur(${blur}px);` : ""}${b.imageBlend ? `mix-blend-mode:${b.imageBlend};` : ""}`;
+    css += `${each("::before")}{${baseDecl.replace(/;$/, "")}}`;
+    if (blur) css += `${sel}{overflow:hidden}`;
+    const t = layer("tablet"), m = layer("mobile");
+    if (t) css += `@media (max-width:${BREAKPOINTS.tablet}px){${each("::before")}{${t}}}`;
+    if (m) css += `@media (max-width:${BREAKPOINTS.mobile}px){${each("::before")}{${m}}}`;
+  }
+  if (bgo && (bgo.overlay || bgo.overlayGradient || bgo.overlayImage)) {
     // Lớp phủ: màu (nền) + chuyển màu / ảnh xếp trên; hoà trộn với nền bằng mix-blend-mode
     const layers = [bgo!.overlayImage ? `url("${bgo!.overlayImage}")` : "", bgo!.overlayGradient ? gradientValue(bgo!.overlayGradient) : ""].filter(Boolean).join(",");
-    css += `${each("::before")}{content:"";position:absolute;inset:0;${bgo!.overlay ? `${layers ? "background-color" : "background"}:${colorValue(bgo!.overlay)};` : ""}${layers ? `background-image:${layers};` : ""}${bgo!.overlayImage ? "background-size:cover;background-position:center;background-repeat:no-repeat;" : ""}${bgo!.overlayBlend ? `mix-blend-mode:${bgo!.overlayBlend};` : ""}opacity:${(bgo!.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
+    css += `${each(fxOn ? "::after" : "::before")}{content:"";position:absolute;inset:0;${bgo!.overlay ? `${layers ? "background-color" : "background"}:${colorValue(bgo!.overlay)};` : ""}${layers ? `background-image:${layers};` : ""}${bgo!.overlayImage ? "background-size:cover;background-position:center;background-repeat:no-repeat;" : ""}${bgo!.overlayBlend ? `mix-blend-mode:${bgo!.overlayBlend};` : ""}opacity:${(bgo!.overlayOpacity ?? 50) / 100};pointer-events:none;z-index:-1;border-radius:inherit}`;
   }
   if (style.divider) css += `${each("::after")}{${dividerCss(style.divider)}}`;
   // Hàng ngang / lưới: khoảng cách do gap lo — bỏ lề dọc của khối con (lề luồng văn bản làm lệch hàng)
@@ -665,7 +807,7 @@ export const BLOCK_SELECTORS: Record<string, string> = {
   preformatted: ".ecx-pre", horizontalRule: "hr", image: ".ecx-image", gallery: ".ecx-gallery", table: ".ecx-table table", group: ".ecx-group",
   columns: ".ecx-columns", column: ".ecx-column", buttons: ".ecx-buttons-group", button: ".ecx-button", spacer: ".ecx-spacer", callout: ".ecx-callout",
   cover: ".ecx-cover", mediaText: ".ecx-media-text", pullquote: ".ecx-pullquote", details: ".ecx-details", accordion: ".ecx-accordion", countdown: ".ecx-countdown", rating: ".ecx-rating", socialLinks: ".ecx-social", form: ".ecx-form-blocks",
-  iconBox: ".ecx-icon-box", imageBox: ".ecx-image-box", iconList: ".ecx-icon-list", counter: ".ecx-counter", testimonial: ".ecx-testimonial", progressBar: ".ecx-progress", map: ".ecx-map",
+  iconBox: ".ecx-icon-box", imageBox: ".ecx-image-box", imageOverlay: ".ecx-image-overlay", iconList: ".ecx-icon-list", counter: ".ecx-counter", testimonial: ".ecx-testimonial", progressBar: ".ecx-progress", map: ".ecx-map",
   siteTitle: ".ecx-site-title", siteTagline: ".ecx-site-tagline", navigation: ".ecx-navigation", postTitle: ".ecx-post-title", postExcerpt: ".ecx-post-excerpt",
   postDate: ".ecx-post-date", featuredImage: ".ecx-featured-image", query: ".ecx-query",
 };
@@ -748,4 +890,13 @@ export function presetCss(presets: unknown, selector = ":root"): string {
   for (const [name, st] of Object.entries(p.elements ?? {})) css += ruleCss(scoped(ELEMENT_SELECTORS[name]), st);
   for (const [name, st] of Object.entries(p.blocks ?? {})) css += ruleCss(scoped(BLOCK_SELECTORS[name]), st);
   return css;
+}
+
+/** Khối có đang trong lịch hiển thị không (không đặt lịch → luôn hiện). Hết hạn = `until` đã qua; chưa tới = `from` chưa tới. */
+export function scheduleVisible(style: BlockStyle | undefined, now: number = Date.now()): boolean {
+  const sc = style?.schedule;
+  if (!sc) return true;
+  if (sc.from && now < Date.parse(sc.from)) return false;
+  if (sc.until && now >= Date.parse(sc.until)) return false;
+  return true;
 }

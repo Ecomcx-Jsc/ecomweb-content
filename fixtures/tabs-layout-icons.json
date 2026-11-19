@@ -107,6 +107,7 @@
                   "type": "tab",
                   "attrs": {
                     "title": "Hai",
+                    "icon": "khong-co",
                     "subtitle": ""
                   },
                   "content": [

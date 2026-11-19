@@ -1,0 +1,175 @@
+{
+  "name": "bg-image-fx",
+  "note": "Hiệu ứng ảnh nền (độ mờ / làm mờ / hoà trộn): chỉ khi có ảnh, giá trị ngoài khoảng bị bỏ",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "image": {
+                      "base": "/uploads/a.jpg",
+                      "mobile": "/uploads/m.jpg"
+                    },
+                    "imageOpacity": 40,
+                    "imageBlur": 6,
+                    "imageBlend": "multiply",
+                    "overlay": "#000",
+                    "overlayOpacity": 30
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Chữ trên nền mờ"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "image": {
+                      "base": "/uploads/a.jpg"
+                    },
+                    "imageOpacity": 140,
+                    "imageBlur": 99,
+                    "imageBlend": "nope"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Giá trị rác"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "imageOpacity": 30,
+                    "imageBlur": 5
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Không ảnh"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "id": "main",
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "image": {
+                      "base": "/uploads/a.jpg",
+                      "mobile": "/uploads/m.jpg"
+                    },
+                    "overlay": "#000",
+                    "imageOpacity": 40,
+                    "imageBlur": 6,
+                    "imageBlend": "multiply",
+                    "overlayOpacity": 30
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Chữ trên nền mờ"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "attrs": {
+                "style": {
+                  "background": {
+                    "image": {
+                      "base": "/uploads/a.jpg"
+                    }
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Giá trị rác"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Không ảnh"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

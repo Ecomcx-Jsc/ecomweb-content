@@ -31,6 +31,8 @@ export declare function focalPoint(v: unknown): string | undefined;
  * Các phần bên trong khối bìa: ảnh (khi không cố định), lớp phủ và nền cố định — cả hai bên vẽ y như nhau.
  * 1.24: ảnh và lớp phủ mang kiểu inline phủ kín khối (CSS `img { height: auto }` của theme không làm ảnh co lại), điểm lấy nét `focal`.
  */
+/** Địa chỉ video nền của khối Ảnh bìa: chỉ nhận đường dẫn trong site hoặc https, đuôi mp4 / webm / ogg / m4v / mov; khác → null. */
+export declare function coverVideo(attrs?: Attrs): string | null;
 export declare function coverParts(attrs?: Attrs): {
     src: string;
     fixed: boolean;
@@ -47,4 +49,6 @@ export declare const blockCitation: (attrs?: Attrs) => string | undefined;
 export declare function linkRel(rel: unknown, target: unknown): string | undefined;
 /** 1.26: icon của nút (svg trang trí) hoặc null; vị trí trái / phải theo attrs.iconPosition (mặc định trái). */
 export declare function buttonIcon(attrs: Record<string, unknown>): WidgetEl | null;
+/** Class của khối Bảng theo cài đặt (kẻ sọc, rê hàng, đường kẻ, mật độ, ghim hàng đầu, cố định cột) — website và trình soạn dùng chung. */
+export declare function tableClass(a: Record<string, unknown> | undefined): string;
 export {};

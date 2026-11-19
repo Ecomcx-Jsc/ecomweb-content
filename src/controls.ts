@@ -39,6 +39,8 @@ export interface ControlSpec {
   state?: "hover" | "active";
   /** 1.24 (chỉ giao diện): bước của ô số. */
   step?: number;
+  /** 1.32 (chỉ giao diện): "settings" = ô nằm ở tab Cài đặt (bố cục / cách hiển thị, như tab Content của Elementor) thay vì tab Kiểu dáng. */
+  tab?: "settings";
 }
 
 /** Nhóm thuộc tính kiểu dáng một phần cho chỉnh (giao diện hiện đúng các nhóm này, theo thứ tự). */

@@ -1,0 +1,1114 @@
+{
+  "name": "page-deep",
+  "note": "Trang phức tạp «deep» dựng bằng JSON (lồng nhiều tầng, hiệu ứng, slider, tab): chuẩn hoá ổn định, vẽ được ở website",
+  "input": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": "lg",
+                  "color": {
+                    "background": "#f8fafb"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Lồng nhiều tầng"
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 100
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "constrained": false,
+                            "style": {
+                              "padding": "md",
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "sm"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "heading",
+                                      "attrs": {
+                                        "level": 3
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "Cột lồng"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "tabs",
+                                      "content": [
+                                        {
+                                          "type": "tab",
+                                          "attrs": {
+                                            "title": "Tab A"
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "accordion",
+                                              "content": [
+                                                {
+                                                  "type": "details",
+                                                  "attrs": {
+                                                    "summary": "Lớp accordion",
+                                                    "open": true
+                                                  },
+                                                  "content": [
+                                                    {
+                                                      "type": "carousel",
+                                                      "attrs": {
+                                                        "slidesPerView": 2,
+                                                        "slidesMobile": 1
+                                                      },
+                                                      "content": [
+                                                        {
+                                                          "type": "group",
+                                                          "attrs": {
+                                                            "style": {
+                                                              "color": {
+                                                                "background": "#eef3f6"
+                                                              },
+                                                              "padding": "md",
+                                                              "radius": "md"
+                                                            }
+                                                          },
+                                                          "content": [
+                                                            {
+                                                              "type": "paragraph",
+                                                              "content": [
+                                                                {
+                                                                  "type": "text",
+                                                                  "text": "Lá 1"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "buttons",
+                                                              "content": [
+                                                                {
+                                                                  "type": "button",
+                                                                  "attrs": {
+                                                                    "text": "Mở",
+                                                                    "href": "#",
+                                                                    "variant": "primary"
+                                                                  }
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "group",
+                                                          "attrs": {
+                                                            "style": {
+                                                              "color": {
+                                                                "background": "#eef3f6"
+                                                              },
+                                                              "padding": "md",
+                                                              "radius": "md"
+                                                            }
+                                                          },
+                                                          "content": [
+                                                            {
+                                                              "type": "paragraph",
+                                                              "content": [
+                                                                {
+                                                                  "type": "text",
+                                                                  "text": "Lá 2"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "buttons",
+                                                              "content": [
+                                                                {
+                                                                  "type": "button",
+                                                                  "attrs": {
+                                                                    "text": "Mở",
+                                                                    "href": "#",
+                                                                    "variant": "primary"
+                                                                  }
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "group",
+                                                          "attrs": {
+                                                            "style": {
+                                                              "color": {
+                                                                "background": "#eef3f6"
+                                                              },
+                                                              "padding": "md",
+                                                              "radius": "md"
+                                                            }
+                                                          },
+                                                          "content": [
+                                                            {
+                                                              "type": "paragraph",
+                                                              "content": [
+                                                                {
+                                                                  "type": "text",
+                                                                  "text": "Lá 3"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "buttons",
+                                                              "content": [
+                                                                {
+                                                                  "type": "button",
+                                                                  "attrs": {
+                                                                    "text": "Mở",
+                                                                    "href": "#",
+                                                                    "variant": "primary"
+                                                                  }
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "details",
+                                                  "attrs": {
+                                                    "summary": "Lớp hai"
+                                                  },
+                                                  "content": [
+                                                    {
+                                                      "type": "paragraph",
+                                                      "content": [
+                                                        {
+                                                          "type": "text",
+                                                          "text": "Nội dung"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "tab",
+                                          "attrs": {
+                                            "title": "Tab B"
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "paragraph",
+                                              "content": [
+                                                {
+                                                  "type": "text",
+                                                  "text": "Trống"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "paragraph",
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "Cột phải"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "progressBar",
+                                      "attrs": {
+                                        "value": 65,
+                                        "label": "Tiến độ"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "padding": "medium",
+                            "style": {
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "md"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 4
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ 1"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ trong cột trong hàng."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "counter",
+                                      "attrs": {
+                                        "end": 10
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "rating",
+                                      "attrs": {
+                                        "value": 4
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "padding": "medium",
+                            "style": {
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "md"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 4
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ 2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ trong cột trong hàng."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "counter",
+                                      "attrs": {
+                                        "end": 20
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "rating",
+                                      "attrs": {
+                                        "value": 4
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 34
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "padding": "medium",
+                            "style": {
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "md"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 4
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ 3"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ trong cột trong hàng."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "counter",
+                                      "attrs": {
+                                        "end": 30
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "rating",
+                                      "attrs": {
+                                        "value": 4
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "expected": {
+    "version": 1,
+    "blocks": [
+      {
+        "type": "richtext",
+        "data": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "group",
+              "attrs": {
+                "align": "full",
+                "constrained": true,
+                "style": {
+                  "padding": {
+                    "base": "lg"
+                  },
+                  "color": {
+                    "background": "#f8fafb"
+                  }
+                }
+              },
+              "content": [
+                {
+                  "type": "heading",
+                  "attrs": {
+                    "level": 2
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Lồng nhiều tầng"
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 100
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "constrained": false,
+                            "style": {
+                              "padding": {
+                                "base": "md"
+                              },
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "sm"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "heading",
+                                      "attrs": {
+                                        "level": 3
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "Cột lồng"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "tabs",
+                                      "content": [
+                                        {
+                                          "type": "tab",
+                                          "attrs": {
+                                            "title": "Tab A"
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "accordion",
+                                              "content": [
+                                                {
+                                                  "type": "details",
+                                                  "attrs": {
+                                                    "summary": "Lớp accordion",
+                                                    "open": true
+                                                  },
+                                                  "content": [
+                                                    {
+                                                      "type": "carousel",
+                                                      "attrs": {
+                                                        "slidesPerView": 2,
+                                                        "slidesMobile": 1
+                                                      },
+                                                      "content": [
+                                                        {
+                                                          "type": "group",
+                                                          "attrs": {
+                                                            "style": {
+                                                              "padding": {
+                                                                "base": "md"
+                                                              },
+                                                              "color": {
+                                                                "background": "#eef3f6"
+                                                              },
+                                                              "radius": "md"
+                                                            }
+                                                          },
+                                                          "content": [
+                                                            {
+                                                              "type": "paragraph",
+                                                              "content": [
+                                                                {
+                                                                  "type": "text",
+                                                                  "text": "Lá 1"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "buttons",
+                                                              "content": [
+                                                                {
+                                                                  "type": "button",
+                                                                  "attrs": {
+                                                                    "text": "Mở",
+                                                                    "href": "#",
+                                                                    "variant": "primary"
+                                                                  }
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "group",
+                                                          "attrs": {
+                                                            "style": {
+                                                              "padding": {
+                                                                "base": "md"
+                                                              },
+                                                              "color": {
+                                                                "background": "#eef3f6"
+                                                              },
+                                                              "radius": "md"
+                                                            }
+                                                          },
+                                                          "content": [
+                                                            {
+                                                              "type": "paragraph",
+                                                              "content": [
+                                                                {
+                                                                  "type": "text",
+                                                                  "text": "Lá 2"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "buttons",
+                                                              "content": [
+                                                                {
+                                                                  "type": "button",
+                                                                  "attrs": {
+                                                                    "text": "Mở",
+                                                                    "href": "#",
+                                                                    "variant": "primary"
+                                                                  }
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "type": "group",
+                                                          "attrs": {
+                                                            "style": {
+                                                              "padding": {
+                                                                "base": "md"
+                                                              },
+                                                              "color": {
+                                                                "background": "#eef3f6"
+                                                              },
+                                                              "radius": "md"
+                                                            }
+                                                          },
+                                                          "content": [
+                                                            {
+                                                              "type": "paragraph",
+                                                              "content": [
+                                                                {
+                                                                  "type": "text",
+                                                                  "text": "Lá 3"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "type": "buttons",
+                                                              "content": [
+                                                                {
+                                                                  "type": "button",
+                                                                  "attrs": {
+                                                                    "text": "Mở",
+                                                                    "href": "#",
+                                                                    "variant": "primary"
+                                                                  }
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "details",
+                                                  "attrs": {
+                                                    "summary": "Lớp hai"
+                                                  },
+                                                  "content": [
+                                                    {
+                                                      "type": "paragraph",
+                                                      "content": [
+                                                        {
+                                                          "type": "text",
+                                                          "text": "Nội dung"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "tab",
+                                          "attrs": {
+                                            "title": "Tab B"
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "paragraph",
+                                              "content": [
+                                                {
+                                                  "type": "text",
+                                                  "text": "Trống"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "paragraph",
+                                      "content": [
+                                        {
+                                          "type": "text",
+                                          "text": "Cột phải"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "progressBar",
+                                      "attrs": {
+                                        "value": 65,
+                                        "label": "Tiến độ"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "columns",
+                  "attrs": {
+                    "stack": true
+                  },
+                  "content": [
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "padding": "medium",
+                            "style": {
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "md"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 4
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ 1"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ trong cột trong hàng."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "counter",
+                                      "attrs": {
+                                        "end": 10
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "rating",
+                                      "attrs": {
+                                        "value": 4
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 33
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "padding": "medium",
+                            "style": {
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "md"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 4
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ 2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ trong cột trong hàng."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "counter",
+                                      "attrs": {
+                                        "end": 20
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "rating",
+                                      "attrs": {
+                                        "value": 4
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "column",
+                      "attrs": {
+                        "width": 34
+                      },
+                      "content": [
+                        {
+                          "type": "group",
+                          "attrs": {
+                            "padding": "medium",
+                            "style": {
+                              "color": {
+                                "background": "#ffffff"
+                              },
+                              "radius": "lg",
+                              "shadow": "md"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "heading",
+                              "attrs": {
+                                "level": 4
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ 3"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "paragraph",
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "text": "Thẻ trong cột trong hàng."
+                                }
+                              ]
+                            },
+                            {
+                              "type": "columns",
+                              "attrs": {
+                                "stack": true
+                              },
+                              "content": [
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "counter",
+                                      "attrs": {
+                                        "end": 30
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "column",
+                                  "attrs": {
+                                    "width": 50
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "rating",
+                                      "attrs": {
+                                        "value": 4
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

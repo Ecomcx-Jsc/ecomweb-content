@@ -18,9 +18,9 @@ function outsideWhere(sel: string) {
 }
 
 test("style.css: mọi selector có độ ưu tiên 0 (theme luôn ghi đè được)", () => {
-  const selectors = [...css.matchAll(/([^{}]+)\{/g)].map((m) => m[1].trim()).filter((s) => s && !s.startsWith("@") && !/^(from|to|\d+%)$/.test(s)); // bước của @keyframes không phải selector
+  const selectors = [...css.matchAll(/([^{}]+)\{/g)].map((m) => m[1].trim()).filter((s) => s && !s.startsWith("@") && !/^((from|to|\d+%)(\s*,\s*)?)+$/.test(s)); // bước của @keyframes không phải selector
   assert.ok(selectors.length > 20);
-  for (const s of selectors) assert.match(outsideWhere(s), /^[\s>+~]*(::(before|after|-webkit-details-marker))?$/, `selector có độ ưu tiên: ${s}`);
+  for (const s of selectors) assert.match(outsideWhere(s), /^[\s>+~]*(::(before|after|backdrop|-webkit-details-marker))?$/, `selector có độ ưu tiên: ${s}`);
 });
 
 test("style.css: nằm trọn trong @layer ecx-content", () => {

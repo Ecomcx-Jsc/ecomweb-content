@@ -38,6 +38,8 @@ export interface BlockStyle {
         color: string;
     };
     writingMode?: "vertical";
+    /** 1.31: làm mờ phần nền phía sau khối (kính mờ), px 0–40. */
+    backdropBlur?: string;
     color?: {
         text?: string;
         background?: string;
@@ -70,6 +72,24 @@ export interface BlockStyle {
         type: "sticky";
         top?: string;
     };
+    /** 1.31: định vị tuỳ ý — relative / absolute / fixed với khoảng lệch trên / phải / dưới / trái theo khổ. Absolute: khối cha tự thành `position:relative`. */
+    place?: {
+        type: "relative" | "absolute" | "fixed";
+        top?: Responsive<string>;
+        right?: Responsive<string>;
+        bottom?: Responsive<string>;
+        left?: Responsive<string>;
+    };
+    /** 1.31: biến đổi — xoay (độ), phóng, nghiêng (độ), dịch (độ dài), điểm gốc; theo khổ (khổ nhỏ kế thừa khổ lớn). */
+    transform?: {
+        rotate?: Responsive<number>;
+        scale?: Responsive<number>;
+        skewX?: Responsive<number>;
+        skewY?: Responsive<number>;
+        x?: Responsive<string>;
+        y?: Responsive<string>;
+        origin?: string;
+    };
     /** Khi rê chuột (1.15): màu chữ / nền / viền, bóng, nhấc lên. */
     hover?: {
         color?: {
@@ -90,13 +110,22 @@ export interface BlockStyle {
     zIndex?: number;
     grow?: number;
     order?: Responsive<number>;
+    /** 1.30: lịch hiển thị — website chỉ vẽ khối khi `now` nằm trong [from, until) (ISO UTC). Trình soạn vẫn thấy khối để sửa. */
+    schedule?: {
+        from?: string;
+        until?: string;
+    };
+    /** Ai thấy khối: chỉ khách (chưa đăng nhập) hoặc chỉ thành viên đã đăng nhập; bỏ trống = mọi người. Chỉ ẩn trên trình duyệt. */
+    audience?: "guest" | "user";
+    /** 1.30: CSS riêng của khối (viết với `selector`, lọc an toàn khi sinh CSS) — xem custom-css.ts. */
+    customCss?: string;
     /** 1.29: đường chia trên / dưới khối (hình tự vẽ, tô màu của khối kế bên). */
     divider?: {
         top?: BlockDivider;
         bottom?: BlockDivider;
     };
 }
-export declare const DIVIDER_SHAPES: readonly ["wave", "curve", "tilt", "triangle", "zigzag"];
+export declare const DIVIDER_SHAPES: readonly ["wave", "curve", "tilt", "triangle", "zigzag", "arrow", "stairs", "ripple", "mountains"];
 export interface BlockDivider {
     shape: (typeof DIVIDER_SHAPES)[number];
     color: string; /** px, 10–300 (mặc định 80) */
@@ -116,12 +145,18 @@ export interface BlockBackground {
     position?: Responsive<string>;
     repeat?: true;
     fixed?: true;
+    /** 1.31: video nền (mp4 / webm / ogg; đường dẫn trong site hoặc https) — tự phát, tắt tiếng, lặp, nằm dưới nội dung. */
+    video?: string;
     overlay?: string;
     overlayOpacity?: number;
     /** 1.28: lớp phủ chuyển màu / ảnh (xếp trên màu phủ) và kiểu hoà trộn với nền (mix-blend-mode). */
     overlayGradient?: string;
     overlayImage?: string;
     overlayBlend?: string;
+    /** 1.32: hiệu ứng riêng cho ẢNH nền (độ mờ 0–100, làm mờ px, hoà trộn với màu nền) — vẽ bằng lớp ::before dưới nội dung. */
+    imageOpacity?: number;
+    imageBlur?: number;
+    imageBlend?: string;
 }
 export declare const OVERLAY_BLENDS: readonly ["multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "difference", "exclusion", "hue", "saturation", "color", "luminosity"];
 /**
@@ -136,7 +171,12 @@ export interface BlockMotion {
     /** Chạy lại mỗi lần cuộn tới (mặc định: một lần). */
     repeat?: true;
     stagger?: true;
-    hover?: "lift" | "grow" | "brighten" | "glow";
+    hover?: (typeof MOTION_HOVER)[number];
+    ease?: (typeof MOTION_EASE)[number];
+    /** Chuyển động lặp liên tục (nổi, đập, xoay, lắc). */
+    loop?: (typeof MOTION_LOOP)[number];
+    /** Thị sai khi cuộn (trình duyệt hỗ trợ scroll-driven animation; còn lại đứng yên). */
+    parallax?: (typeof MOTION_PARALLAX)[number];
 }
 /** Bố cục của khối chứa. Không có `type` = luồng thường (khối con xếp dọc như văn bản). */
 export interface BlockLayout {
@@ -153,11 +193,19 @@ export interface BlockLayout {
     minColumnWidth?: string;
 }
 /** Hiệu ứng khi cuộn tới có sẵn ở lõi (keyframes `ecx-in-<mã>` trong style.css). Plugin thêm mã khác. */
-export declare const MOTION_IN: readonly ["fade", "slide-up", "slide-down", "slide-left", "slide-right", "zoom-in", "zoom-out", "blur-in"];
+export declare const MOTION_IN: readonly ["fade", "slide-up", "slide-down", "slide-left", "slide-right", "zoom-in", "zoom-out", "blur-in", "flip-x", "flip-y", "rotate-in", "bounce-in", "reveal-up", "reveal-left"];
+/** 1.31: nhịp chạy (easing) của hiệu ứng vào, hiệu ứng lặp liên tục và thị sai (parallax) khi cuộn. */
+export declare const MOTION_EASE: readonly ["smooth", "snappy", "bounce", "linear"];
+export declare const MOTION_LOOP: readonly ["float", "pulse", "spin", "swing"];
+export declare const MOTION_PARALLAX: readonly ["slow", "fast", "reverse"];
 /** Hiệu ứng khi rê chuột có sẵn ở lõi. */
-export declare const MOTION_HOVER: readonly ["lift", "grow", "brighten", "glow"];
+export declare const MOTION_HOVER: readonly ["lift", "grow", "brighten", "glow", "rotate", "tilt", "gray", "shrink"];
 /** Gradient: preset hoặc linear/radial-gradient(hướng?, 2–6 điểm màu hex/rgb/hsl kèm %) — dạng chuẩn hoá khoảng trắng. */
 export declare function normalizeGradient(v: unknown): string | undefined;
+/** Video nền của khối (từ style.background.video đã chuẩn hoá); không có → null. */
+export declare function blockBgVideo(style: unknown): string | null;
+export declare const PLACE_TYPES: readonly ["relative", "absolute", "fixed"];
+export declare const TRANSFORM_ORIGINS: readonly ["top left", "top", "top right", "left", "center", "right", "bottom left", "bottom", "bottom right"];
 export declare const DIVIDER_PATHS: Record<BlockDivider["shape"], string>;
 /** Chuẩn hoá `attrs.style`: giữ đúng thứ tự khoá, bỏ giá trị không hợp lệ. Rỗng → undefined. */
 export declare function normalizeStyle(v: unknown): BlockStyle | undefined;
@@ -222,3 +270,5 @@ export declare function normalizePresets(v: unknown): StylePresets;
 export declare function mergePresets(...list: unknown[]): StylePresets;
 /** Biến CSS của preset: `--ecx-color-*`, `--ecx-font-size-*`, `--ecx-spacing-*`, `--ecx-font-family-*`. */
 export declare function presetCss(presets: unknown, selector?: string): string;
+/** Khối có đang trong lịch hiển thị không (không đặt lịch → luôn hiện). Hết hạn = `until` đã qua; chưa tới = `from` chưa tới. */
+export declare function scheduleVisible(style: BlockStyle | undefined, now?: number): boolean;
