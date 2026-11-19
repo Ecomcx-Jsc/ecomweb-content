@@ -836,4 +836,15 @@
   /* Ô chọn phạm vi tìm kiếm nằm cạnh ô nhập */
   :where(.ecx-search) :where(.search-scope) { padding: .5em .7em; border: 1px solid var(--ecx-border, color-mix(in srgb, currentColor 16%, transparent)); border-radius: var(--ecx-radius-md, 8px); background: var(--ecx-color-background); color: inherit; font: inherit; }
 
+  /* Lottie: khung chứa poster + canvas; canvas phủ poster khi thư viện sẵn sàng, thiếu thư viện thì chỉ còn poster */
+  :where(.ecx-lottie) { position: relative; margin: var(--ecx-flow) auto; width: 100%; }
+  :where(.ecx-lottie.is-align-left) { margin-left: 0; margin-right: auto; }
+  :where(.ecx-lottie.is-align-right) { margin-left: auto; margin-right: 0; }
+  :where(.ecx-lottie-poster, .ecx-lottie-canvas) { display: block; width: 100%; height: 100%; object-fit: contain; }
+  :where(.ecx-lottie-canvas) { position: absolute; inset: 0; opacity: 0; transition: opacity .2s; }
+  :where(.ecx-lottie.is-ready .ecx-lottie-canvas) { opacity: 1; }
+  :where(.ecx-lottie.is-ready .ecx-lottie-poster) { visibility: hidden; }
+  :where(.ecx-lottie:not(:has(.ecx-lottie-poster))) { aspect-ratio: 1; }
+  :where(.ecx-lottie[data-trigger="hover"], .ecx-lottie[data-trigger="click"]) { cursor: pointer; }
+
 }

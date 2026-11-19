@@ -252,6 +252,10 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   iconList: { attrs: { items: { type: "json", default: [] }, icon: s({ pattern: ICON_VALUE, default: "check" }), layout: s({ enum: ["list", "inline"], default: "list" }), columns: i({ min: 1, max: 4, default: 1 }), iconAlign: s({ enum: ["top", "center", "bottom"], default: "top" }), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), stroke: n({ min: 0.5, max: 4, default: 2 }) } },
   // 1.28: Bản đồ — địa chỉ gõ tay → khung Google Maps (địa chỉ chỉ nằm trong tham số q của URL cố định, không nhúng được trang tuỳ ý)
   map: { attrs: { address: s(), zoom: i({ min: 1, max: 20, default: 14 }), height: i({ min: 150, max: 1000, default: 360 }), mapType: s({ enum: ["roadmap", "satellite"], default: "roadmap" }), title: s() } },
+  // lottie (1.29): hoạt ảnh .lottie / .json. Website nạp thư viện khi cần; thiếu thư viện hoặc lỗi tệp thì hiện `poster` (không có thì ẩn), trang không hỏng.
+  // trigger: auto = tự chạy (theo autoplay), hover = chạy khi rê chuột, click = chạy khi bấm, scroll = chạy khi cuộn tới.
+  lottie: { attrs: { src: url(), poster: url(), label: s(), loop: b({ default: true }), autoplay: b({ default: true }), speed: n({ min: 0.1, max: 5, default: 1 }),
+    trigger: s({ enum: ["auto", "hover", "click", "scroll"], default: "auto" }), height: i({ min: 40, max: 1200 }), maxWidth: i({ min: 40, max: 2000 }), align: s({ enum: ["left", "center", "right"], default: "center" }) } },
   counter: {
     attrs: {
       start: n({ default: 0 }), end: n({ default: 100 }), prefix: s(), suffix: s(), title: s(), duration: i({ min: 0, max: 10000, default: 2000 }),

@@ -868,7 +868,7 @@ export const BLOCK_SELECTORS = {
     paragraph: "p", heading: "h1,h2,h3,h4,h5,h6", bulletList: "ul", orderedList: "ol", blockquote: "blockquote", codeBlock: "pre",
     image: ".ecx-image", gallery: ".ecx-gallery", table: ".ecx-table table", group: ".ecx-group",
     columns: ".ecx-columns", column: ".ecx-column", buttons: ".ecx-buttons-group", button: ".ecx-button", spacer: ".ecx-spacer",
-    cover: ".ecx-cover", details: ".ecx-details", accordion: ".ecx-accordion", countdown: ".ecx-countdown", socialLinks: ".ecx-social", form: ".ecx-form-blocks",
+    cover: ".ecx-cover", details: ".ecx-details", accordion: ".ecx-accordion", countdown: ".ecx-countdown", lottie: ".ecx-lottie", socialLinks: ".ecx-social", form: ".ecx-form-blocks",
     iconBox: ".ecx-icon-box", imageBox: ".ecx-image-box", imageOverlay: ".ecx-image-overlay", iconList: ".ecx-icon-list", counter: ".ecx-counter", testimonial: ".ecx-testimonial", progressBar: ".ecx-progress", map: ".ecx-map",
     siteTitle: ".ecx-site-title", siteTagline: ".ecx-site-tagline", navigation: ".ecx-navigation", postTitle: ".ecx-post-title", postExcerpt: ".ecx-post-excerpt",
     postDate: ".ecx-post-date", featuredImage: ".ecx-featured-image", query: ".ecx-query",
