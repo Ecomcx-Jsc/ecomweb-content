@@ -79,7 +79,13 @@ function upgradeList(list: unknown[], parent: string | null, notes: string[]): u
           [...(title ? [para(title, [{ type: "bold" }])] : []), ...inner("group")]));
         break;
       }
-      case "pullquote": out.push(node("blockquote", { ...common(a), citation: a.citation, quoteAlign: "center" }, inner("blockquote"))); break;
+      case "pullquote": {
+        // Khối cũ là khối chữ (con là chữ trần); blockquote là khối chứa → bọc chữ trần vào một đoạn
+        const kidsOf = inner("blockquote");
+        const inline = kidsOf.length > 0 && kidsOf.every((c) => isObj(c) && (c.type === "text" || c.type === "hardBreak"));
+        out.push(node("blockquote", { ...common(a), citation: a.citation, quoteAlign: "center" }, inline ? [{ type: "paragraph", content: kidsOf }] : kidsOf));
+        break;
+      }
       case "preformatted": out.push(node("codeBlock", common(a), kids(n))); break;
       case "taskList":
         out.push(node("bulletList", { ...common(a), listMarker: "none" }, kids(n).map((it) => {

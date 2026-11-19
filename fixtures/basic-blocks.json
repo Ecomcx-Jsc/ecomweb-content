@@ -257,8 +257,13 @@
               },
               "content": [
                 {
-                  "type": "text",
-                  "text": "Trích dẫn nổi bật"
+                  "type": "paragraph",
+                  "content": [
+                    {
+                      "type": "text",
+                      "text": "Trích dẫn nổi bật"
+                    }
+                  ]
                 }
               ]
             },
