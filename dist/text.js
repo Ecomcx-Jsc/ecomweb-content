@@ -5,6 +5,8 @@ export function nodeText(node) {
         return node.text ?? "";
     if (node.type === "hardBreak")
         return "\n";
+    if (node.type === "inlineImage")
+        return typeof node.attrs?.alt === "string" ? node.attrs.alt : ""; // ảnh trong dòng chữ: chỉ đọc mô tả
     if (node.type === "button")
         return typeof node.attrs?.text === "string" && node.attrs.text ? node.attrs.text + "\n" : "";
     return (node.content ?? []).map(nodeText).join("") + (BLOCK_BREAK.has(node.type) ? "\n" : "");

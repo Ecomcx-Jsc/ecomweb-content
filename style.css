@@ -853,4 +853,7 @@
   :where(.ecx-lottie:not(:has(.ecx-lottie-poster))) { aspect-ratio: 1; }
   :where(.ecx-lottie[data-trigger="hover"], .ecx-lottie[data-trigger="click"]) { cursor: pointer; }
 
+  /* Ảnh trong dòng chữ (inlineImage): cao bằng chữ, căn giữa theo dòng; width / height / radius / valign đặt inline từ thuộc tính */
+  :where(.ecx-inline-image) { display: inline-block; height: 1.2em; width: auto; max-width: 100%; vertical-align: middle; margin: 0 .15em; }
+
 }

@@ -60,6 +60,10 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   blockquote: { attrs: { citation: s() } },
   codeBlock: { attrs: { language: s() } },
   hardBreak: {},
+  // inlineImage (1.30): ảnh nằm trong dòng chữ của tiêu đề / đoạn (logo giữa câu, biểu tượng cạnh từ). width / height theo em hoặc px (vd "1.2em", "24px"),
+  // valign = căn dọc so với chữ, radius = bo góc (vd "50%", "4px"). Là nút inline: không có content.
+  inlineImage: { attrs: { src: url(), alt: s(), width: s({ pattern: "^\\d{1,4}(\\.\\d{1,2})?(em|px|rem)$" }), height: s({ pattern: "^\\d{1,4}(\\.\\d{1,2})?(em|px|rem)$" }),
+    radius: s({ pattern: "^\\d{1,3}(\\.\\d{1,2})?(%|px|em)$" }), valign: s({ enum: ["baseline", "middle", "top", "bottom", "text-bottom"], default: "middle" }), href: url(), target: s({ enum: ["_self", "_blank"] }) } },
   image: {
     attrs: {
       src: url(), alt: s(), title: s(), width: n({ min: 1 }), height: n({ min: 1 }), srcset: s(), webpSrcset: s(),
