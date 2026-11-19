@@ -109,6 +109,14 @@ Preset có thêm `gradients`, `shadows` (tối đa 3 lớp bóng đã kiểm) v�
 - Website: khối có hiệu ứng cuộn nhận class `ecx-in` (`motionClasses(style)`); script của website đặt `html.ecx-js` rồi `.is-in` khi khối vào màn hình. Trạng thái ẩn chỉ áp khi có cả `html.ecx-js` lẫn `.ecx-in` → không có JS thì khối vẫn hiện. Tôn trọng `prefers-reduced-motion`. `--ecx-motion-distance` đổi quãng trượt, `--ecx-motion-ease` đổi nhịp.
 - CSS do `styleCss` sinh (`motionCss`); `ruleCss` / Global Styles không sinh trạng thái ẩn nên bỏ qua `motion`.
 
+## Khối Lottie (1.29) — `lottie`
+
+Hoạt ảnh `.lottie` / `.json`: `src` (đuôi quyết định loại — `lottieKind`), `poster` (ảnh tĩnh dự phòng), `trigger` (`auto` | `hover` | `click` | `scroll`), `loop`, `autoplay`, `speed` (0.1–5), `height`, `maxWidth`, `align`, `label` (cho trình đọc màn hình). `lottieConfig(attrs)` chốt mặc định và kẹp giá trị, dùng chung cho website và trình soạn. Thư viện phát (`@lottiefiles/dotlottie-web`) là **tuỳ chọn** ở phía website: thiếu thư viện hoặc tệp lỗi thì khối chỉ hiện `poster` — xem `docs/theme-guide.md` của core.
+
+## Nhịp giữa các khối — `.ecx-content` (1.30)
+
+`style.css` đặt `--ecx-flow` giữa các khối cấp trên cùng của `.ecx-content` (khối đầu không có lề trên), như layout "flow" của WordPress. Trình soạn và website cùng mang class này nên khoảng cách giống nhau mà theme không cần viết selector riêng; CSS của theme luôn thắng (file này ở `@layer ecx-content`, mọi selector trong `:where()`).
+
 ## Nhúng theo đường dẫn — `embedInfo`
 
 Khối `embed` chỉ lưu `url` (+ `caption`). `embedInfo(url)` nhận ra nhà cung cấp trong danh sách (YouTube, Vimeo, Loom, Spotify, SoundCloud, TikTok, X, Instagram, Facebook video, CodePen, Figma, Google Maps dạng embed) và **tự dựng** địa chỉ khung từ mã trong đường dẫn — không dùng HTML nhúng do người dùng dán, nên bài viết không chèn được khung tới trang tuỳ ý. Không nhận ra → `null`, website hiện liên kết thường. Trình soạn (xem trước) và website dùng chung hàm này.
