@@ -596,11 +596,13 @@ const shadowValue = (v: string) => (v === "none" ? "none" : `var(--ecx-shadow-${
 const gradientValue = (v: string) => (PRESET.test(v) ? `var(--ecx-gradient-${v})` : v);
 
 /** Khai báo khi rê chuột. */
-function hoverDeclarations(h: NonNullable<BlockStyle["hover"]>): string[] {
+function hoverDeclarations(h: NonNullable<BlockStyle["hover"]>, strong: boolean): string[] {
+  const imp = strong ? "!important" : "";
   const out: string[] = [];
-  if (h.color?.text) out.push(`color:${colorValue(h.color.text)}`);
-  if (h.color?.background) out.push(`background:${colorValue(h.color.background)}`);
-  if (h.border?.color) out.push(`border-color:${colorValue(h.border.color)}`);
+  // strong (kiểu của từng khối / phần): !important — nút có màu nền-chữ nội tuyến (style="color:…") sẽ thắng luật :hover nếu không ép. Global Styles giữ độ ưu tiên thấp
+  if (h.color?.text) out.push(`color:${colorValue(h.color.text)}${imp}`);
+  if (h.color?.background) out.push(`background:${colorValue(h.color.background)}${imp}`);
+  if (h.border?.color) out.push(`border-color:${colorValue(h.border.color)}${imp}`);
   if (h.shadow) out.push(`box-shadow:${shadowValue(h.shadow)}`);
   if (h.lift) out.push("transform:translateY(-2px)");
   return out;
@@ -691,14 +693,14 @@ export function styleClass(style: BlockStyle): string {
 
 /** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ + :hover. Rỗng → "". */
 export function styleCss(style: BlockStyle, cls = styleClass(style)): string {
-  return ruleCss(`.${cls}.${cls}`, style) + motionCss(style, cls) + scopeCustomCss(style.customCss, `.${cls}.${cls}`).css;
+  return ruleCss(`.${cls}.${cls}`, style, true) + motionCss(style, cls) + scopeCustomCss(style.customCss, `.${cls}.${cls}`).css;
 }
 
 /**
  * CSS của một kiểu dáng cho bộ chọn bất kỳ (danh sách cách nhau dấu phẩy) — dùng cho kiểu của từng khối và Global Styles
  * (kiểu mặc định theo loại khối / phần tử). Bộ chọn do mã gọi đưa vào, không lấy từ dữ liệu người dùng.
  */
-export function ruleCss(selector: string, style: BlockStyle): string {
+export function ruleCss(selector: string, style: BlockStyle, strongHover = false): string {
   const sel = selector;
   const each = (suffix: string) => sel.split(",").map((x) => `${x.trim()}${suffix}`).join(",");
   const d = declarations(style);
@@ -711,7 +713,7 @@ export function ruleCss(selector: string, style: BlockStyle): string {
     const q = h === "desktop" ? `(min-width:${BREAKPOINTS.tablet + 1}px)` : h === "tablet" ? `(min-width:${BREAKPOINTS.mobile + 1}px) and (max-width:${BREAKPOINTS.tablet}px)` : `(max-width:${BREAKPOINTS.mobile}px)`;
     css += `@media ${q}{${sel}{display:none!important}}`;
   }
-  if (style.hover) { const hv = hoverDeclarations(style.hover); if (hv.length) css += `${each(":hover")}{${hv.join(";")}}`; }
+  if (style.hover) { const hv = hoverDeclarations(style.hover, strongHover); if (hv.length) css += `${each(":hover")}{${hv.join(";")}}`; }
   if (style.link?.color) css += `${each(" a")}{color:${colorValue(style.link.color)}}`;
   if (style.link?.hover) css += `${each(" a:hover")}{color:${colorValue(style.link.hover)}}`;
   // Lớp phủ ảnh nền: ::before nằm giữa nền và nội dung (z-index -1 trong ngữ cảnh isolation của khối)

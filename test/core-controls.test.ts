@@ -86,3 +86,11 @@ test("1.32 ô ở tab Cài đặt: danh sách chia cột / xếp ngang, nhóm n�
   assert.equal(coreControlsFor("bulletList").listMarker.tab, "settings");
   assert.equal(coreControlsFor("bulletList").listGap.tab, undefined);
 });
+
+test("phần của nút: màu chữ / nền khi rê chuột thắng màu nội tuyến (!important)", () => {
+  const out = css("button", { parts: { button: { hover: { color: { text: "#111111", background: "#eeeeee" } } } } });
+  assert.match(out, /:hover\{[^}]*color:#111111!important/);
+  assert.match(out, /:hover\{[^}]*background:#eeeeee!important/);
+  // trạng thái thường không bị ép
+  assert.doesNotMatch(css("button", { parts: { button: { style: { color: { text: "#111111" } } } } }), /!important/);
+});

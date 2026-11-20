@@ -53,7 +53,7 @@ test("hover: màu, viền, bóng, nhấc lên → :hover + chuyển động", ()
   assert.deepEqual(s, { hover: { color: { text: "#fff", background: "primary" }, border: { color: "accent" }, shadow: "lg", lift: true } });
   const css = styleCss(s!, "h");
   assert.match(css, /\.h\.h\{transition:/);
-  assert.match(css, /\.h\.h:hover\{color:#fff;background:var\(--ecx-color-primary, primary\);border-color:var\(--ecx-color-accent, accent\);box-shadow:var\(--ecx-shadow-lg[^}]*\);transform:translateY\(-2px\)\}/);
+  assert.match(css, /\.h\.h:hover\{color:#fff!important;background:var\(--ecx-color-primary, primary\)!important;border-color:var\(--ecx-color-accent, accent\)!important;box-shadow:var\(--ecx-shadow-lg[^}]*\);transform:translateY\(-2px\)\}/);
   assert.equal(normalizeStyle({ hover: { color: { text: "red;}" } } }), undefined);
 });
 

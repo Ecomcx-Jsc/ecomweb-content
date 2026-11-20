@@ -130,7 +130,7 @@ function partsCss(list: readonly BlockControls[], type: string, vals: Record<str
     if (v.hidden && spec.toggle) { css += `${sel}{display:none!important}`; continue; }
     if (v.style) css += ruleCss(sel, v.style);
     // Rê chuột: lên cả khối (`.cls:hover <phần>`) hoặc lên chính phần (`.cls <phần>:hover`)
-    if (v.hover && spec.hover) css += ruleCss(suffixes.map((x) => (spec.hover === "self" ? `${base}${x}:hover` : `${base}:hover${x}`)).join(","), v.hover);
+    if (v.hover && spec.hover) css += ruleCss(suffixes.map((x) => (spec.hover === "self" ? `${base}${x}:hover` : `${base}:hover${x}`)).join(","), v.hover).replace(/([{;])(color|background|background-color|border-color):([^;}!]+)(?=[;}])/g, "$1$2:$3!important"); // hover thắng màu nội tuyến của nút
     const act = spec.active ? selectorList(spec.active) : null;
     if (v.active && act) css += ruleCss(act.map((x) => base + x).join(","), v.active);
   }

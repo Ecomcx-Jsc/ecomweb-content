@@ -603,7 +603,7 @@ function declarations(style) {
     if (style.position)
         out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, `z-index:${style.zIndex ?? 10}`);
     else if (style.zIndex !== undefined)
-        out.base.push(...(hasOverlay(style.background) ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
+        out.base.push(...(hasOverlay(style.background) || style.place ? [] : ["position:relative"]), `z-index:${style.zIndex}`); // đã định vị (place) → không ép relative đè absolute / fixed
     if (style.grow !== undefined)
         out.base.push(`flex-grow:${style.grow}`);
     // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
@@ -657,14 +657,16 @@ const SHADOWS = {
 const shadowValue = (v) => (v === "none" ? "none" : `var(--ecx-shadow-${v}${SHADOWS[v] ? `, ${SHADOWS[v]}` : ""})`);
 const gradientValue = (v) => (PRESET.test(v) ? `var(--ecx-gradient-${v})` : v);
 /** Khai báo khi rê chuột. */
-function hoverDeclarations(h) {
+function hoverDeclarations(h, strong) {
+    const imp = strong ? "!important" : "";
     const out = [];
+    // strong (kiểu của từng khối / phần): !important — nút có màu nền-chữ nội tuyến (style="color:…") sẽ thắng luật :hover nếu không ép. Global Styles giữ độ ưu tiên thấp
     if (h.color?.text)
-        out.push(`color:${colorValue(h.color.text)}`);
+        out.push(`color:${colorValue(h.color.text)}${imp}`);
     if (h.color?.background)
-        out.push(`background:${colorValue(h.color.background)}`);
+        out.push(`background:${colorValue(h.color.background)}${imp}`);
     if (h.border?.color)
-        out.push(`border-color:${colorValue(h.border.color)}`);
+        out.push(`border-color:${colorValue(h.border.color)}${imp}`);
     if (h.shadow)
         out.push(`box-shadow:${shadowValue(h.shadow)}`);
     if (h.lift)
@@ -761,13 +763,13 @@ export function styleClass(style) {
 }
 /** CSS của một kiểu dáng: `.cls.cls{…}` + media query cho tablet / mobile + ẩn theo khổ + :hover. Rỗng → "". */
 export function styleCss(style, cls = styleClass(style)) {
-    return ruleCss(`.${cls}.${cls}`, style) + motionCss(style, cls) + scopeCustomCss(style.customCss, `.${cls}.${cls}`).css;
+    return ruleCss(`.${cls}.${cls}`, style, true) + motionCss(style, cls) + scopeCustomCss(style.customCss, `.${cls}.${cls}`).css;
 }
 /**
  * CSS của một kiểu dáng cho bộ chọn bất kỳ (danh sách cách nhau dấu phẩy) — dùng cho kiểu của từng khối và Global Styles
  * (kiểu mặc định theo loại khối / phần tử). Bộ chọn do mã gọi đưa vào, không lấy từ dữ liệu người dùng.
  */
-export function ruleCss(selector, style) {
+export function ruleCss(selector, style, strongHover = false) {
     const sel = selector;
     const each = (suffix) => sel.split(",").map((x) => `${x.trim()}${suffix}`).join(",");
     const d = declarations(style);
@@ -784,7 +786,7 @@ export function ruleCss(selector, style) {
         css += `@media ${q}{${sel}{display:none!important}}`;
     }
     if (style.hover) {
-        const hv = hoverDeclarations(style.hover);
+        const hv = hoverDeclarations(style.hover, strongHover);
         if (hv.length)
             css += `${each(":hover")}{${hv.join(";")}}`;
     }

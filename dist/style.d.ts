@@ -230,7 +230,7 @@ export declare function styleCss(style: BlockStyle, cls?: string): string;
  * CSS của một kiểu dáng cho bộ chọn bất kỳ (danh sách cách nhau dấu phẩy) — dùng cho kiểu của từng khối và Global Styles
  * (kiểu mặc định theo loại khối / phần tử). Bộ chọn do mã gọi đưa vào, không lấy từ dữ liệu người dùng.
  */
-export declare function ruleCss(selector: string, style: BlockStyle): string;
+export declare function ruleCss(selector: string, style: BlockStyle, strongHover?: boolean): string;
 /** Gom CSS cho cả một cây nội dung: trả về css (mỗi class một lần) — website và trình soạn dùng chung. */
 export declare function collectStyles(styles: Iterable<BlockStyle>): string;
 /** Biến thể kiểu (`blockStyle`): tên preset → class `ecx-is-<tên>`. */
