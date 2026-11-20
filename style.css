@@ -472,6 +472,23 @@
   :where(.ecx-search) :where(button[type="submit"]) { min-height: var(--ecx-input-height); padding: var(--ecx-button-padding); border: 0; border-radius: var(--ecx-button-radius); cursor: pointer; font: inherit; font-weight: var(--ecx-button-font-weight);
     background: var(--ecx-button-bg, var(--ecx-color-primary)); color: var(--ecx-button-fg, var(--ecx-color-primary-fg)); }
   :where(.ecx-search) :where(button[type="submit"]:focus-visible) { outline: var(--ecx-focus-ring); outline-offset: var(--ecx-focus-offset); }
+  /* Form bình luận + danh sách bình luận (theme-sdk: form.comment-form, ol.comment-list): nhãn trên ô nhập, ô rộng hết dòng, tên / email chia đôi — theme ghi đè được (:where) */
+  :where(.comment-form) { display: grid; gap: .85rem; max-width: 40rem; margin: var(--ecx-flow, 1.5rem) 0; }
+  :where(.comment-form) :where(p) { margin: 0; }
+  :where(.comment-form) :where(label) { display: grid; gap: .3rem; font-weight: 500; font-size: .9375em; }
+  :where(.comment-form) :where(input, textarea) { box-sizing: border-box; width: 100%; min-height: var(--ecx-input-height); padding: var(--ecx-input-padding, .55em .75em); border: var(--ecx-border-width, 1px) solid var(--ecx-input-border, currentColor); border-radius: var(--ecx-input-radius, .375rem); background: var(--ecx-input-bg, var(--ecx-color-background, transparent)); color: inherit; font: inherit; font-weight: 400; }
+  :where(.comment-form) :where(textarea) { resize: vertical; }
+  :where(.comment-form) :where(input, textarea):where(:focus-visible) { outline: 2px solid var(--ecx-color-primary, currentColor); outline-offset: 1px; }
+  :where(.comment-form-row) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+  @media (max-width: 639px) { :where(.comment-form-row) { grid-template-columns: 1fr; } }
+  :where(.comment-form) :where(button[type="submit"]) { min-height: var(--ecx-input-height); padding: var(--ecx-button-padding, .6em 1.4em); border: 0; border-radius: var(--ecx-button-radius, .375rem); cursor: pointer; font: inherit; font-weight: var(--ecx-button-font-weight, 600); background: var(--ecx-button-bg, var(--ecx-color-primary, currentColor)); color: var(--ecx-button-fg, var(--ecx-color-primary-fg, Canvas)); }
+  :where(.comment-form) :where(button[type="submit"]:disabled) { opacity: .6; cursor: progress; }
+  :where(.comment-form) :where(.form-error) { color: var(--ecx-color-danger, currentColor); }
+  :where(.comment-list) { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  :where(.comment-list) :where(.comment-list) { margin-top: 1.25rem; padding-left: clamp(1rem, 4vw, 2.25rem); border-left: 2px solid color-mix(in srgb, currentColor 12%, transparent); }
+  :where(.comment-meta) { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; font-size: .875em; opacity: .85; }
+  :where(.comment-avatar) { border-radius: 50%; }
+  :where(.comment-content) :where(p) { margin: .4rem 0 0; }
   :where(.ecx-form) :where(.ecx-form-error) { color: var(--ecx-color-danger); font-size: .875em; }
   :where(.ecx-form-success) { padding: .75em 1em; border-radius: var(--ecx-radius-md); background: color-mix(in srgb, var(--ecx-color-success) 10%, transparent); }
 
