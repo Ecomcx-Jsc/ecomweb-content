@@ -40,7 +40,7 @@ export const CORE_NODES = {
             radius: s({ pattern: "^\\d{1,3}(\\.\\d{1,2})?(%|px|em)$" }), valign: s({ enum: ["baseline", "middle", "top", "bottom", "text-bottom"], default: "middle" }), href: url(), target: s({ enum: ["_self", "_blank"] }) } },
     image: {
         attrs: {
-            src: url(), alt: s(), title: s(), width: n({ min: 1 }), height: n({ min: 1 }), srcset: s(), webpSrcset: s(), avifSrcset: s(),
+            src: url(), alt: s(), title: s(), width: n({ min: 1 }), height: n({ min: 1 }), srcset: s(), webpSrcset: s(),
             mediaId: { type: "json" }, size: s({ default: "large" }), caption: s(), align: s({ enum: ["left", "right", "center", "wide", "full"] }),
             href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), lightbox: b({ default: false }),
             // 1.28: tỉ lệ khung (cắt ảnh vừa khung) — xem image-fx.ts; bộ lọc / hiệu ứng rê / object-fit là ô của tab Kiểu dáng
@@ -216,15 +216,15 @@ export const CORE_NODES = {
             media: s({ enum: ["icon", "image", "number", "none"], default: "icon" }), number: s(), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), hover: s({ enum: ["none", "grow", "flip"], default: "none" }),
             linkMode: s({ enum: ["title", "box", "button"], default: "title" }), buttonText: s(),
             // 1.28: media là ảnh (gộp Hộp ảnh vào đây), căn dọc media khi nằm bên trái / phải, hộp cao bằng ô chứa
-            src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), avifSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }),
+            src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }),
             verticalAlign: s({ enum: ["top", "center", "bottom"], default: "top" }), fullHeight: b(),
         } },
     // Ảnh phủ chữ: ratio = tỉ lệ khung; overlayOpacity = độ đậm lớp màu khi rê (0–100), restOpacity = khi chưa rê; subtitleMode: hiện khi rê / luôn hiện; frameInset = khoảng viền khung trắng (px)
-    imageOverlay: { attrs: { align: wide, src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), avifSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), subtitle: s(), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), level: i({ min: 2, max: 6, default: 3 }),
+    imageOverlay: { attrs: { align: wide, src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), subtitle: s(), href: url(), linkTarget: s({ enum: ["_self", "_blank"] }), level: i({ min: 2, max: 6, default: 3 }),
             ratio: s({ enum: ["auto", "1/1", "4/3", "3/2", "16/9", "3/4", "2/3"], default: "4/3" }), hAlign: s({ enum: ["left", "center", "right"], default: "center" }), vAlign: s({ enum: ["top", "center", "bottom"], default: "center" }),
             imageEffect: s({ enum: ["none", "zoom", "grayscale", "blur", "slide"], default: "zoom" }), overlayColor: s(), overlayOpacity: i({ min: 0, max: 100, default: 60 }), restOpacity: i({ min: 0, max: 100, default: 0 }),
             subtitleMode: s({ enum: ["hover", "always"], default: "hover" }), frame: b({ default: true }), frameInset: i({ min: 0, max: 40, default: 10 }), divider: b({ default: false }) } },
-    imageBox: { attrs: { src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), avifSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), textAlign: align } },
+    imageBox: { attrs: { src: url(), mediaId: { type: "json" }, alt: s(), srcset: s(), webpSrcset: s(), width: n({ min: 1 }), height: n({ min: 1 }), title: s(), text: s(), href: url(), level: i({ min: 2, max: 6, default: 3 }), textAlign: align } },
     /** items: [{ text, href?, icon? }] — icon riêng của mục thắng icon chung. */
     // 1.27: số cột (điện thoại về 1), căn icon theo dòng chữ, khung icon, độ dày nét; mục có icon "none" = không vẽ icon
     iconList: { attrs: { items: { type: "json", default: [] }, icon: s({ pattern: ICON_VALUE, default: "check" }), layout: s({ enum: ["list", "inline"], default: "list" }), columns: i({ min: 1, max: 4, default: 1 }), iconAlign: s({ enum: ["top", "center", "bottom"], default: "top" }), iconStyle: s({ enum: ["plain", "circle", "square"], default: "plain" }), stroke: n({ min: 0.5, max: 4, default: 2 }) } },

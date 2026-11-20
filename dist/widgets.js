@@ -143,13 +143,7 @@ function boxImage(a) {
         return null;
     const sizes = "(max-width: 768px) 100vw, 33vw";
     const tag = { tag: "img", props: { src, srcSet: str(a.srcset) || undefined, sizes: a.srcset ? sizes : undefined, alt: str(a.alt), width: Number(a.width) || undefined, height: Number(a.height) || undefined, loading: "lazy", decoding: "async" } };
-    // AVIF (nhẹ nhất) trước, rồi WebP, cuối cùng <img> — trình duyệt lấy định dạng đầu tiên nó đọc được
-    const sources = [];
-    if (a.avifSrcset)
-        sources.push({ tag: "source", props: { type: "image/avif", srcSet: str(a.avifSrcset), sizes } });
-    if (a.webpSrcset)
-        sources.push({ tag: "source", props: { type: "image/webp", srcSet: str(a.webpSrcset), sizes } });
-    return sources.length ? { tag: "picture", children: [...sources, tag] } : tag;
+    return a.webpSrcset ? { tag: "picture", children: [{ tag: "source", props: { type: "image/webp", srcSet: str(a.webpSrcset), sizes } }, tag] } : tag;
 }
 /** Địa chỉ khung bản đồ: host cố định, địa chỉ mã hoá trong `q` (không nhận URL do người dùng dán). Rỗng → null. */
 export function mapEmbedUrl(a) {
