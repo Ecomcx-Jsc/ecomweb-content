@@ -3,6 +3,7 @@ export { CONTAINER_TAGS, CORE_MARKS, CORE_NODES, DYNAMIC_NODES, FORM_FIELD_KINDS
 export { normalizeContent } from "./normalize.js";
 export { OVERRIDE_KEY, applyPatternOverrides, patternOverridables } from "./pattern-overrides.js";
 export { clipExcerpt } from "./excerpt.js";
+export { sizedImage } from "./image-size.js";
 export { lottieConfig, lottieKind } from "./lottie.js";
 export { BINDING_URL_ATTRS, CORE_BINDABLE } from "./bindings.js";
 export { migrateContent } from "./migrate.js";
