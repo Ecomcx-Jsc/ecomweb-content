@@ -173,7 +173,7 @@ export const CORE_NODES: Record<string, NodeSpec> = {
   copyright: { attrs: { text: s(), textAlign: align } },
   postTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), link: b({ default: false }), textAlign: align } },
   postContent: {},
-  postExcerpt: { attrs: { moreText: s() } },
+  postExcerpt: { attrs: { moreText: s(), length: i({ min: 0, max: 2000, default: 0 }) } },
   featuredImage: { attrs: { size: s({ default: "large" }), link: b({ default: false }), aspect: s({ enum: ["auto", "16/9", "4/3", "1/1", "3/4"], default: "auto" }) } },
   postDate: { attrs: { textAlign: align, displayType: s({ enum: ["published", "modified"], default: "published" }) } },
   postAuthor: { attrs: { avatar: b({ default: false }), showName: b({ default: true }), avatarSize: i({ min: 16, max: 128, default: 32 }), link: b({ default: true }), showBio: b({ default: false }) } },
