@@ -89,3 +89,10 @@ test("bản đồ: địa chỉ có emoji bị cắt giữa cặp ký tự thay 
   assert.match(url, /^https:\/\/www\.google\.com\/maps\?q=a+%EF%BF%BD&z=14/);
   assert.equal(mapEmbedUrl({ address: "Hà Nội 😀" }), "https://www.google.com/maps?q=H%C3%A0%20N%E1%BB%99i%20%F0%9F%98%80&z=14&t=m&output=embed");
 });
+
+test("ảnh của hộp: AVIF đứng trước WebP trong <picture>", () => {
+  const box = widgetMarkup("imageBox", { src: "/u/a.webp", title: "B", srcset: "/u/a.webp 800w", webpSrcset: "/u/a.webp 800w", avifSrcset: "/u/a.avif 800w" })!;
+  const json = JSON.stringify(box);
+  assert.ok(json.indexOf("image/avif") > 0 && json.indexOf("image/avif") < json.indexOf("image/webp"));
+  assert.ok(!JSON.stringify(widgetMarkup("imageBox", { src: "/u/a.webp", title: "B", webpSrcset: "/u/a.webp 800w" })).includes("image/avif"));
+});
