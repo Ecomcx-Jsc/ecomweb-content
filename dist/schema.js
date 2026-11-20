@@ -62,7 +62,8 @@ export const CORE_NODES = {
             // 1.32: cài đặt riêng của bảng (như khối Table của Kadence): kẻ sọc, sáng hàng khi rê, kiểu đường kẻ, mật độ, ghim hàng đầu, chú thích
             striped: b({ default: false }), hoverRows: b({ default: false }), lines: s({ enum: ["all", "rows", "columns", "none"], default: "all" }),
             density: s({ enum: ["compact", "normal", "roomy"], default: "normal" }), stickyHead: b({ default: false }), caption: s() } },
-    tableRow: {},
+    // colwidth: độ rộng cột (px, lưu ở mọi ô của cột); height của hàng (px) — kéo cạnh ô trong trình soạn
+    tableRow: { attrs: { height: i({ min: 16, max: 1200 }) } },
     tableHeader: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
     tableCell: { attrs: { colspan: i({ min: 1, default: 1 }), rowspan: i({ min: 1, default: 1 }), colwidth: { type: "json" } } },
     // Bố cục (1.2): cột, nhóm, hộp lưu ý chứa khối khác; nút; nhúng theo đường dẫn (embedInfo)
@@ -147,7 +148,7 @@ export const CORE_NODES = {
     copyright: { attrs: { text: s(), textAlign: align } },
     postTitle: { attrs: { level: i({ min: 1, max: 6, default: 1 }), link: b({ default: false }), textAlign: align } },
     postContent: {},
-    postExcerpt: { attrs: { moreText: s() } },
+    postExcerpt: { attrs: { moreText: s(), length: i({ min: 0, max: 2000, default: 0 }) } },
     featuredImage: { attrs: { size: s({ default: "large" }), link: b({ default: false }), aspect: s({ enum: ["auto", "16/9", "4/3", "1/1", "3/4"], default: "auto" }) } },
     postDate: { attrs: { textAlign: align, displayType: s({ enum: ["published", "modified"], default: "published" }) } },
     postAuthor: { attrs: { avatar: b({ default: false }), showName: b({ default: true }), avatarSize: i({ min: 16, max: 128, default: 32 }), link: b({ default: true }), showBio: b({ default: false }) } },
