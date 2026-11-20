@@ -670,6 +670,8 @@
   :where(.ecx-spacer.has-line.is-line-left)::before { left: 0; }
   :where(.ecx-spacer.has-line.is-line-right)::before { right: 0; }
   /* Ảnh: tỉ lệ khung (cắt vừa); object-fit / bộ lọc / hiệu ứng rê do ô Kiểu dáng đặt */
+  /* Bo góc đặt trên khung bao ngoài của ảnh (Kiểu dáng › Bo góc) phải cắt được chính ảnh */
+  :where([class*="ecx-s-"]):where(:has(> :is(img, picture)):not(:has(> :not(img, picture)))) { overflow: hidden; }
   :where(img.has-ratio) { width: 100%; height: auto; aspect-ratio: var(--ecx-img-ratio, 4/3); object-fit: cover; }
   /* Lời chứng thực nhiều mục: lưới theo số cột từng khổ (cùng biến với Slider); dạng slider dùng .ecx-carousel */
   :where(.ecx-testimonials) { --_per: var(--ecx-per, 3); --_gap: var(--ecx-gap, 1.5rem); display: grid; grid-template-columns: repeat(var(--_per), minmax(0, 1fr)); gap: var(--_gap); align-items: stretch; margin: var(--ecx-flow) 0; }

@@ -559,7 +559,7 @@ function declarations(style: BlockStyle): Record<Device, string[]> {
     if (t.origin) out.base.push(`transform-origin:${t.origin}`);
   }
   if (style.position) out.base.push("position:sticky", `top:${style.position.top ? spacing(style.position.top) : "0"}`, `z-index:${style.zIndex ?? 10}`);
-  else if (style.zIndex !== undefined) out.base.push(...(hasOverlay(style.background) ? [] : ["position:relative"]), `z-index:${style.zIndex}`);
+  else if (style.zIndex !== undefined) out.base.push(...(hasOverlay(style.background) || style.place ? [] : ["position:relative"]), `z-index:${style.zIndex}`); // đã định vị (place) → không ép relative đè absolute / fixed
   if (style.grow !== undefined) out.base.push(`flex-grow:${style.grow}`);
   // 1.22: ảnh nền — sau background (màu / chuyển màu) để không bị thuộc tính gộp ghi đè; chuyển màu phủ lên ảnh
   const bg = style.background;

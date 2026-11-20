@@ -77,3 +77,12 @@ test("style: chữ chuyển màu, màu liên kết + khi rê (1.26)", () => {
     ".x.x a{color:var(--ecx-color-primary, primary)}.x.x a:hover{color:#ff0000}");
   assert.equal(normalizeStyle({ textGradient: "url(x)", link: { color: "red;}" } }), undefined);
 });
+
+test("style: place + zIndex không ép position:relative đè lên absolute", () => {
+  const abs = styleCss(normalizeStyle({ place: { type: "absolute", top: { base: "0px" }, left: { base: "0px" } }, zIndex: 3 })!, "c");
+  assert.match(abs, /position:absolute/);
+  assert.doesNotMatch(abs.split("}")[0], /position:relative/); // luật của chính khối (luật `:has` cho khối cha vẫn là relative)
+  assert.match(abs, /z-index:3/);
+  // không có place: zIndex vẫn cần position:relative để có hiệu lực
+  assert.match(styleCss(normalizeStyle({ zIndex: 3 })!, "c"), /position:relative/);
+});
